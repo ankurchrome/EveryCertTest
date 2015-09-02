@@ -54,36 +54,24 @@ extern NSString *const KeyboardWillResignNotification;
 extern NSString *const ElementPdfDrawingFormat;
 extern NSString *const ElementPdfDrawingContent;
 
-//Table Names
-extern NSString *const SettingTable;
-extern NSString *const FormTable;
-extern NSString *const FormSectionTable;
-extern NSString *const ElementTable;
-extern NSString *const SubElementTable;
-extern NSString *const PickListOptionTable;
-extern NSString *const DataTable;
-extern NSString *const DataBinaryTable;
-extern NSString *const CertificateTable;
-extern NSString *const BurnerTypeTable;
-
 //Common Columns
 extern NSString *const ModifiedTimestampApp;
 extern NSString *const ModifiedTimeStamp;
 extern NSString *const Archive;
-extern NSString *const UUid;
+extern NSString *const Uuid;
 extern NSString *const IsDirty;
 extern NSString *const CompanyId;
+extern NSString *const UserId;
 
-//Setting Table Columns
-extern NSString *const SettingIdApp;
-extern NSString *const SettingEngineerName;
-extern NSString *const SettingEngineerSign;
-extern NSString *const SettingEngineerEmail;
-extern NSString *const SettingEngineerPassword;
+//CompanyUser Table
+extern NSString *const CompanyUserTable;
+extern NSString *const CompanyUserIdApp;
+extern NSString *const CompanyUserId;
+extern NSString *const CompanyUserFieldName;
+extern NSString *const CompanyUserData;
 
-
-//Form Table Columns
-extern NSString *const FormIdApp;
+//Form Table
+extern NSString *const FormTable;
 extern NSString *const FormId;
 extern NSString *const FormCategoryId;
 extern NSString *const FormName;
@@ -92,19 +80,20 @@ extern NSString *const FormBackgroundLayout;
 extern NSString *const FormStatus;
 extern NSString *const FormCompanyFormat;
 extern NSString *const FormSequenceOrder;
+extern NSString *const FormPermissionGroup;
 
-//FormSection Table Columns
+//FormSection Table
+extern NSString *const FormSectionTable;
 extern NSString *const FormSectionId;
-extern NSString *const FormSectionName;
+extern NSString *const FormSectionLabel;
 extern NSString *const FormSectionSequenceOrder;
 extern NSString *const FormSectionHeader;
 extern NSString *const FormSectionFooter;
 extern NSString *const FormSectionTitle;
 
-//Element Table Columns
+//Element Table
+extern NSString *const ElementTable;
 extern NSString *const ElementId;
-extern NSString *const ElementSectionId;
-extern NSString *const ElementFormId;
 extern NSString *const ElementFieldType;
 extern NSString *const ElementFieldName;
 extern NSString *const ElementSequenceOrder;
@@ -114,8 +103,8 @@ extern NSString *const ElementOriginY;
 extern NSString *const ElementHeight;
 extern NSString *const ElementWidth;
 extern NSString *const ElementPageNumber;
-extern NSString *const ElementMinChar;
-extern NSString *const ElementMaxChar;
+extern NSString *const ElementMinCharLimit;
+extern NSString *const ElementMaxCharLimit;
 extern NSString *const ElementPrintedTextFormat;
 extern NSString *const ElementLinkedElementId;
 extern NSString *const ElementPopUpMessage;
@@ -124,28 +113,68 @@ extern NSString *const ElementFieldNumberNew;
 extern NSString *const ElementLookUpListIdExisting;
 extern NSString *const ElementFieldNumberExisting;
 
-//SubElement Table Columns
+//SubElement Table
+extern NSString *const SubElementTable;
 extern NSString *const SubElementId;
 
-//Certificate Table Columns
+//Certificate Table
+extern NSString *const CertificateTable;
 extern NSString *const CertificateIdApp;
 extern NSString *const CertificateId;
-extern NSString *const CertificateFormId;
 extern NSString *const CertificateName;
 extern NSString *const CertificateIssuedApp;
 extern NSString *const CertificateDate;
 extern NSString *const CertificatePdf;
 
-//LookUp Table Columns
+//Data Table
+extern NSString *const DataTable;
+extern NSString *const DataIdApp;
+extern NSString *const DataId;
+extern NSString *const DataValue;
+
+//DataBinary Table
+extern NSString *const DataBinaryTable;
+extern NSString *const DataBinaryIdApp;
+extern NSString *const DataBinaryId;
+extern NSString *const DataBinaryValue;
+
+//LookUp Table
+extern NSString *const LookUpTable;
 extern NSString *const LookUpIdApp;
 extern NSString *const LookUpId;
 extern NSString *const LookUpListId;
 extern NSString *const LookUpRecordIdApp;
 extern NSString *const LookUpLinkedRecordIdApp;
 extern NSString *const LookUpFieldNumber;
-extern NSString *const Options;
+extern NSString *const LookUpOption;
 extern NSString *const LookUpDataValue;
 extern NSString *const LookUpSequenceOrder;
+
+//Record Table
+extern NSString *const RecordTable;
+extern NSString *const RecordIdApp;
+extern NSString *const RecordId;
+
+
+
+
+
+
+
+
+
+
+//Table Names
+extern NSString *const SettingTable;
+extern NSString *const PickListOptionTable;
+extern NSString *const BurnerTypeTable;
+
+//Setting Table Columns
+extern NSString *const SettingIdApp;
+extern NSString *const SettingEngineerName;
+extern NSString *const SettingEngineerSign;
+extern NSString *const SettingEngineerEmail;
+extern NSString *const SettingEngineerPassword;
 
 //PickListOptionTable Table Columns
 extern NSString *const PickListOptionIdApp;
@@ -154,16 +183,16 @@ extern NSString *const PickListOptionName;
 extern NSString *const PickListOptionValue;
 extern NSString *const PickListOptionSequenceOrder;
 
-//Data Table Columns
-extern NSString *const DataIdApp;
-extern NSString *const DataValue;
-extern NSString *const DataId;
-extern NSString *const RecordIdApp;
-
-//DataBinary Table Columns
-extern NSString *const DataBinaryIdApp;
-extern NSString *const DataBinaryId;
-extern NSString *const DataBinaryValue;
+//Elements Reuse Identifier
+extern NSString *const TextViewCustomCell;
+extern NSString *const TickBoxCustomCell;
+extern NSString *const TextLabelCustomCell;
+extern NSString *const TextFieldCustomCell;
+extern NSString *const SubElementsCustomCell;
+extern NSString *const SignatureViewCustomCell;
+extern NSString *const RadioButtonsCustomCell;
+extern NSString *const LookUpCustomCell;
+extern NSString *const PickListCustomCell;
 
 //Elements Reuse Identifier
 extern NSString *const TextViewReuseIdentifier;

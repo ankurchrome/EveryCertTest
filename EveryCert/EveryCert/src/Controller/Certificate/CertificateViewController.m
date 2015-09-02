@@ -15,8 +15,8 @@
 #import "TextLabelElementCell.h"
 #import "ElementHandler.h"
 
-#define IPHONE_WIDTH_PORTRAIT       300
-#define IPHONE_WIDTH_LANDSCAPE      300
+#define IPHONE_WIDTH_PORTRAIT  300
+#define IPHONE_WIDTH_LANDSCAPE 300
 
 @interface CertificateViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -29,10 +29,17 @@
     float _deviceHeight;
     float _deviceWidth;
     BOOL _certificateTableViewShow;
-    NSArray *_sectionModelArray;
+    
     FormSectionHandler *_sectionHandler;
     int _indexPathRow;
     BOOL _hidePannel;
+    
+    CertificateModel *_certificate;
+    NSArray *_formSections;
+    NSArray *_formElements;
+    NSArray *_currentSectionElements;
+    
+    NSInteger _currentSectionIndex;
 }
 @end
 
@@ -41,34 +48,47 @@ NSString *const HomeBarButton       = @"Home";
 
 @implementation CertificateViewController
 
-- (void)viewDidLoad {
+// Returns an initialized CertificateViewController with CertificateModel object
+- (id)initWithCertificate:(CertificateModel *)certificate
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _certificate = certificate;
+    }
+    
+    return self;
+}
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+    
+    ElementHandler *elementHandler = [ElementHandler new];
+    _formElements = [elementHandler getAllElementsOfForm:_certificate.formId];
+    
+    FormSectionHandler *sectionHandler = [FormSectionHandler new];
+    _formSections = [sectionHandler getAllSectionsOfForm:_certificate.formId];
+
+    _currentSectionIndex = 0;
+    [self showElementsForSectionIndex:_currentSectionIndex];
+
+    
     
     [self addNavigationBarButtonItem];
     [self setCertificateTableViewFrame];
+    
     _hidePannel = YES;
-    
-    [_elementTableView reloadWithElements:_elementModels];
-    _sectionHandler    = [FormSectionHandler new];
-    _sectionModelArray = [[NSArray alloc]initWithArray:[_sectionHandler allSectionsOfForm:_formId]];
-    NSMutableArray *_sectionIdArray = [NSMutableArray new];
-    
-    // Initialiae the Section Id Array and pass to the Property of ElementTableView
-    for(int i = 0; i < _sectionModelArray.count ; i++) {
-        FormSectionModel *sectionModel = [FormSectionModel new];
-        sectionModel = _sectionModelArray[i];
-        [_sectionIdArray addObject:[NSNumber numberWithInteger:sectionModel.sectionId]];
-    }
-    
-    _elementTableView.sectionIdArray = _sectionIdArray;
-    [_sectionTableView registerNib:[UINib nibWithNibName:@"TextLabelElementCell" bundle:nil]
-            forCellReuseIdentifier:TextLabelReuseIdentifier];
     
     //******** Send Notification When Device Orientation Changed
     [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:self];
     
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(deviceOrientationDidChanged:) name: UIDeviceOrientationDidChangeNotification object: nil];
-    
+
+    [_sectionTableView registerNib:[UINib nibWithNibName:@"TextLabelElementCell" bundle:nil]
+            forCellReuseIdentifier:TextLabelReuseIdentifier];
+
     // Drop Shadow on Table View
     _sectionTableView.clipsToBounds = NO;
     _sectionTableView.layer.shadowColor = [[UIColor blackColor] CGColor];
@@ -76,14 +96,35 @@ NSString *const HomeBarButton       = @"Home";
     _sectionTableView.layer.shadowOpacity = 0.5;
 }
 
+- (void)showElementsForSectionIndex:(NSInteger)sectionIndex
+{
+    FormSectionModel *formSection = nil;
+    NSPredicate *predicate = nil;
+    
+    if (_formSections && sectionIndex < _formSections.count)
+    {
+        formSection = [_formSections objectAtIndex:sectionIndex];
+    
+        predicate = [NSPredicate predicateWithFormat:@"section_id = %ld", formSection.sectionId];
+        
+        _currentSectionElements = [_formElements filteredArrayUsingPredicate:predicate];
+        
+        NSIndexPath *sectionIndexPath = [NSIndexPath indexPathForRow:sectionIndex inSection:0];
+        [_sectionTableView selectRowAtIndexPath:sectionIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        
+        [_elementTableView reloadWithElements:_currentSectionElements];
+    }
+}
+
 // This Method Select the Initial Row of the Section Table as Default
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     
     // Check Weather the Array Count is Not Zero
-    if(_sectionModelArray.count > 0)
+    if(_formSections.count > 0)
     {
-        FormSectionModel *sectionModel = _sectionModelArray[0];
+        FormSectionModel *sectionModel = _formSections[0];
         _toolBarTitle.text = sectionModel.title;                    // Set Label Title
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         [_sectionTableView selectRowAtIndexPath:indexPath animated:YES  scrollPosition:UITableViewScrollPositionBottom];                       // Set Initial Row Selected
@@ -142,7 +183,6 @@ NSString *const HomeBarButton       = @"Home";
         [_sectionTableView setFrameWidth:IPHONE_WIDTH_LANDSCAPE];
         _sectionTableView.frame = CGRectMake(-(CGRectGetMaxX(_sectionTableView.frame)), 0, IPHONE_WIDTH_LANDSCAPE, self.view.frame.size.width);
     }
-    
 }
 
 // Call when Device Orientation is change at run time
@@ -203,7 +243,7 @@ NSString *const HomeBarButton       = @"Home";
 
 - (IBAction)onClickNextToolBarButton:(id)sender
 {
-    if(_indexPathRow < _sectionModelArray.count-1)
+    if(_indexPathRow < _formSections.count-1)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:++_indexPathRow inSection:0];
         [_sectionTableView selectRowAtIndexPath:indexPath animated:NO  scrollPosition:UITableViewScrollPositionBottom];
@@ -294,7 +334,7 @@ NSString *const HomeBarButton       = @"Home";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _sectionModelArray.count;
+    return _formSections.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -306,7 +346,7 @@ NSString *const HomeBarButton       = @"Home";
         cell = [TextLabelElementCell new];
     }
     
-    cell = [cell initWithSectionModel:_sectionModelArray[indexPath.row]];
+    cell = [cell initWithSectionModel:_formSections[indexPath.row]];
     return cell;
 }
 
@@ -314,13 +354,12 @@ NSString *const HomeBarButton       = @"Home";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [_elementTableView reloadWithElements:_elementModels];
+    [_elementTableView reloadWithElements:_currentSectionElements];
     _indexPathRow = (int)indexPath.row;
     
     ElementHandler *elementHandler = [ElementHandler new];
-    FormSectionModel *sectionModel = _sectionModelArray[indexPath.row];
+    FormSectionModel *sectionModel = _formSections[indexPath.row];
     _toolBarTitle.text = sectionModel.title;
-    _elementTableView.elementModelList = (NSMutableArray *)[elementHandler allElementsOfSectionId:sectionModel.sectionId];
     [_elementTableView reloadData];
     
     if(!_hidePannel && iPHONE)

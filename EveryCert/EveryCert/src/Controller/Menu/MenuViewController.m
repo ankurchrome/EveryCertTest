@@ -14,15 +14,16 @@
 @interface MenuViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     __weak IBOutlet UITableView *_menuTableView;
-    NSArray                     *_menuOptionList;
+    
+    NSArray *_menuOptionList;
 }
 @end
 
-static NSString *MenuOptionCellIdentifier       = @"MenuOptionCell";
+static NSString *MenuOptionCellIdentifier     = @"MenuOptionCell";
 
-NSString *const MenuOptionNewCertificate        = @"Create New Certificate";
-NSString *const MenuOptionExistingCertificate   = @"Existing Certificate";
-NSString *const MenuOptionSetting               = @"Setting";
+NSString *const MenuOptionNewCertificate      = @"Create New Certificate";
+NSString *const MenuOptionExistingCertificate = @"Existing Certificate";
+NSString *const MenuOptionSetting             = @"Setting";
 
 @implementation MenuViewController
 

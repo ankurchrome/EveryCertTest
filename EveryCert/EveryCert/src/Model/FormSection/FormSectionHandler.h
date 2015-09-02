@@ -12,16 +12,10 @@
 @interface FormSectionHandler : BaseHandler
 
 /**
- Return a list of all the sections of specified form
+ Returns a list of all the sections of specified form
  @param  formIdApp A form id app being used in table 'section'
  @return NSArray A list of FormSectionModel objects
  */
-- (NSArray *)allSectionsOfForm:(NSInteger)formIdApp;
-
-/**
- This method is used to return all Section of the Model
- @return NSArray Returns all section Model
- */
-- (NSArray *)getAllSectionModel;
+- (NSArray *)getAllSectionsOfForm:(NSInteger)formIdApp;
 
 @end

@@ -14,65 +14,66 @@
 - (id)init
 {
     self = [super init];
-
+    
     if (self)
     {
-        self.tableName  = FormTable;
-        self.appIdField = FormIdApp;
-        self.fieldList  = [[NSArray alloc] initWithObjects:FormId, FormCategoryId, FormName, FormTitle, FormBackgroundLayout,ModifiedTimestampApp, ModifiedTimeStamp, Archive, FormStatus, FormCompanyFormat, FormSequenceOrder, nil];
+        self.tableName     = FormTable;
+        self.serverIdField = FormId;
+        self.tableColumns  = @[FormId, FormCategoryId, FormName, FormTitle, FormBackgroundLayout, FormStatus, FormCompanyFormat, FormSequenceOrder, FormPermissionGroup, ModifiedTimestampApp, ModifiedTimeStamp, Archive];
     }
-
+    
     return self;
 }
 
-//Fetch the form information from database for a specified form name
-- (FormModel *)formByName:(NSString *)formName
+//Returns a list of all forms with given permissions from the database
+- (NSArray *)getAllFormsWithPermissions:(NSString *)permissions
 {
     FUNCTION_START;
     
-    FormModel *formModel = nil;
+    //Create permission condition query
+    NSArray         *permissionList = nil;
+    NSMutableArray  *permissionCondList = nil;
+    NSMutableString *permissionCondQuery = nil;
     
-    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = '%@'", self.tableName, FormName, formName];
+    permissionCondQuery = [[NSMutableString alloc] initWithString:EMPTY_STRING];
     
-    [_database open];
-    
-    FMResultSet *result = [_database executeQuery:query];
-
-    if ([result next])
+    if ([CommonUtils isValidString:permissions])
     {
-        formModel = [FormModel new];
-        [formModel initWithResultSet:result];
+        permissionList     = [permissions componentsSeparatedByString:@","];
+        permissionCondList = [NSMutableArray new];
+        
+        for (NSString *permission in permissionList)
+        {
+            NSString *trimmedString = [permission stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            NSString *condition = [NSString stringWithFormat:@"%@ = %@", FormPermissionGroup, trimmedString];
+            [permissionCondList addObject:condition];
+        }
+        
+        if (permissionCondList.count > 0)
+        {
+            NSString *condQueryString = [permissionCondList componentsJoinedByString:@" OR "];
+            [permissionCondQuery appendFormat:@" AND (%@)", condQueryString];
+        }
     }
-    
-    [_database close];
-    
-    FUNCTION_END;
-    
-    return formModel;
-}
 
-//Return a list of all forms from the database
-- (NSArray *)allForms
-{
-    FUNCTION_START;
+    //Get all forms with permissions(if any)
+    NSMutableArray *allForms = nil;
+    NSString       *query     = nil;
+    FormModel      *formModel = nil;
+    FMResultSet    *result    = nil;
     
-    FormModel *formModel = nil;
-    NSMutableArray *allForms = [NSMutableArray new];
-    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@", FormTable];
+    query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ != 1 %@ ORDER BY %@, %@", self.tableName, Archive, permissionCondQuery, FormCategoryId, FormSequenceOrder];
     
-    [_database open];
+    result = [self.database executeQuery:query];
     
-    FMResultSet *result = [_database executeQuery:query];
+    allForms = [NSMutableArray new];
     
     while ([result next])
     {
-        formModel = [FormModel new];
-        [formModel initWithResultSet:result];
+        formModel = [[FormModel alloc] initWithResultSet:result];
         
         [allForms addObject:formModel];
     }
-    
-    [_database close];
     
     FUNCTION_END;
     return allForms;

@@ -10,25 +10,21 @@
 
 @interface CertificateModel : BaseModel
 
-
 @property (nonatomic, assign) NSInteger certIdApp;
 @property (nonatomic, assign) NSInteger certId;
 @property (nonatomic, assign) NSInteger formId;
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, assign) BOOL issuedApp;
-@property (nonatomic, strong) NSDate *date;
+@property (nonatomic, assign) BOOL      issuedApp;
+@property (nonatomic, strong) NSString *dateString;
+@property (nonatomic, strong) NSDate   *date;
 @property (nonatomic, strong) NSString *pdf;
+
+
+//TODO: check if this method is needed
 /**
  Returns a path where certificate will be save/already saved.
  @return NSString A path to certificate pdf
  */
 - (NSString *)pdfPath;
-
-/**
- This Method is used to create and initialize Certificate Model from the Result Set
- @param  FMResultSet Object of FMResult Set
- @return void
- */
-- (void)initWithResultSet:(FMResultSet *)resultSet;
 
 @end

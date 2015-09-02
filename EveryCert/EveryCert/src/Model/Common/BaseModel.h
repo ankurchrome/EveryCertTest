@@ -14,18 +14,25 @@
 //TODO:
 //1. Override description to all models
 
-@property (nonatomic, assign) double modifiedTimestampApp;
-@property (nonatomic, assign) double modifiedTimestamp;
 @property (nonatomic, assign) NSInteger archive;
 @property (nonatomic, strong) NSString *uuid;
 @property (nonatomic, assign) NSInteger isDirty;
 @property (nonatomic, assign) NSInteger companyId;
+@property (nonatomic, assign) double modifiedTimestampApp;
+@property (nonatomic, assign) double modifiedTimestamp;
 
 /**
- This Method is used to Initialize Model with the Result Set
- @param  FMResultSet Returns the object of FMResult set
+ This Method is used to Initialize a Model object with the specified Result Set
+ @param  FMResultSet An object containing info of a Model
+ @return An initialized BaseModel type object
+ */
+- (id)initWithResultSet: (FMResultSet *)resultSet;
+
+/**
+ Initialize object with the info stored in ResultSet
+ @param  FMResultSet An object containing info of a Model
  @return void
  */
-- (void)initWithResultSet: (FMResultSet *)resultSet;
+- (void)setFromResultSet: (FMResultSet *)resultSet;
 
 @end

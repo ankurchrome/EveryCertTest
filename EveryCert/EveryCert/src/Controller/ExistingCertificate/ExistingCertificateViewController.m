@@ -52,7 +52,7 @@ NSString *const HomeBarButtonTitle    = @"Home";
     
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(deviceOrientationDidChanged:) name: UIDeviceOrientationDidChangeNotification object: nil];
     _certHandler = [CertificateHandler new];
-    _existingCertsList = [_certHandler allExistingCertificates];
+    _existingCertsList = [_certHandler getAllExistingCertificatesOfCompany:0];
     
     // Register TextLabel Nib
     [_certificateTableView registerNib:[UINib nibWithNibName:@"TextLabelElementCell" bundle:nil] forCellReuseIdentifier:TextLabelReuseIdentifier];
@@ -357,7 +357,7 @@ NSString *const HomeBarButtonTitle    = @"Home";
     CertificateModel *certificateModel = _existingCertsList[indexPath.row];
     NSString *formName = certificateModel.name;
     FormHandler *formHandler = [FormHandler new];
-    FormModel *formModel = [formHandler formByName:formName];
+    FormModel *formModel = nil;
     if (LOGS_ON) NSLog(@"%@", formModel.backgroundLayout);
     NSURL *url = [NSURL URLWithString:formModel.backgroundLayout];
     

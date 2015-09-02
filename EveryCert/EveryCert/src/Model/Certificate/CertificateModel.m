@@ -10,6 +10,24 @@
 
 @implementation CertificateModel
 
+// Initialize object with the info stored in ResultSet
+- (void)setFromResultSet: (FMResultSet *)resultSet
+{
+    [super setFromResultSet:resultSet];
+    
+    if (resultSet)
+    {
+        self.certIdApp  = [resultSet intForColumn:CertificateIdApp];
+        self.certId     = [resultSet intForColumn:CertificateId];
+        self.formId     = [resultSet intForColumn:FormId];
+        self.name       = [resultSet stringForColumn:CertificateName];
+        self.issuedApp  = [resultSet boolForColumn:CertificateIssuedApp];
+        self.date       = [resultSet dateForColumn:CertificateDate];
+        self.dateString = [resultSet stringForColumn:CertificateDate];
+        self.pdf        = [resultSet stringForColumn:CertificatePdf];
+    }
+}
+
 //Returns a path where certificate will be save/already saved.
 - (NSString *)pdfPath
 {
@@ -24,19 +42,4 @@
     return pdfPath;
 }
 
-// This Method is used to Set all Model's Properties with the Result Set
-- (void)initWithResultSet:(FMResultSet *)resultSet
-{
-    [super initWithResultSet:resultSet];
-    if (resultSet)
-    {
-        self.certIdApp = [resultSet intForColumn:CertificateIdApp];
-        self.certId    = [resultSet intForColumn:CertificateId];
-        self.formId    = [resultSet intForColumn:FormId];
-        self.name      = [resultSet stringForColumn:CertificateName];
-        self.issuedApp = [resultSet boolForColumn:CertificateIssuedApp];
-        self.date      = [resultSet dateForColumn:CertificateDate];
-        self.pdf       = [resultSet stringForColumn:CertificatePdf];
-    }
-}
 @end

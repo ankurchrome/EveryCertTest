@@ -9,6 +9,8 @@
 #import "BaseModel.h"
 #import <UIKit/UIKit.h>
 
+@class DataModel, DataBinaryModel, CompanyUserModel;
+
 typedef enum : NSUInteger
 {
     ElementTypeSearch         = 0, // Not Used
@@ -24,14 +26,13 @@ typedef enum : NSUInteger
     ElementTypeTickBox        = 10,
     ElementTypeTextLabel      = 11,
     ElementTypePhoto          = 12 // Not Used
-}FormElementType;
+} FormElementType;
 
-@interface ElementModel : NSObject
+@interface ElementModel : BaseModel
 
 @property (assign, nonatomic) NSInteger elementId;
-@property (assign, nonatomic) NSInteger elementIdApp;
-@property (assign, nonatomic) NSInteger elementSectionId;
-@property (assign, nonatomic) NSInteger elementFormId;
+@property (assign, nonatomic) NSInteger sectionId;
+@property (assign, nonatomic) NSInteger formId;
 @property (assign, nonatomic) NSInteger fieldType;
 @property (strong, nonatomic) NSString  *fieldName;
 @property (assign, nonatomic) NSInteger sequenceOrder;
@@ -43,25 +44,28 @@ typedef enum : NSUInteger
 @property (assign, nonatomic) NSInteger pageNumber;
 @property (assign, nonatomic) NSInteger minCharLimit;
 @property (assign, nonatomic) NSInteger maxCharLimit;
-@property (strong, nonatomic) NSDictionary *elementPrintedTextFormat;
+@property (strong, nonatomic) NSDictionary *printedTextFormat;
 @property (assign, nonatomic) NSInteger linkedElementId;
-@property (strong, nonatomic) NSString  *modifiedTimestamp;
-@property (assign, nonatomic) NSInteger archive;
 @property (strong, nonatomic) NSString  *popUpMessage;
 @property (assign, nonatomic) NSInteger lookUpIdNew;
 @property (assign, nonatomic) NSInteger fieldNumberNew;
 @property (assign, nonatomic) NSInteger lookUpIdExisting;
 @property (assign, nonatomic) NSInteger fieldNumberExisting;
-@property (strong, nonatomic) NSArray  *subElements;
-@property (strong, nonatomic) NSString *dataValue;
-@property (strong, nonatomic) NSData   *dataBinary;
 
-/**
- This Method is used to initialize the Result Set
- @param  FMResultSet Object of FMResult Set
- @return void
- */
-- (void)initWithResultSet:(FMResultSet *)resultSet;
+@property (strong, nonatomic) NSArray  *subElements;
+
+//TODO: remove the unneccessary properties
+@property (assign, nonatomic) NSInteger  dataIdApp;
+@property (strong, nonatomic) NSString  *dataValue;
+@property (strong, nonatomic) DataModel *dataModel;
+
+@property (assign, nonatomic) NSInteger        dataBinaryIdApp;
+@property (strong, nonatomic) NSData          *dataBinaryValue;
+@property (strong, nonatomic) DataBinaryModel *dataBinaryModel;
+
+@property (assign, nonatomic) NSInteger        companyUserIdApp;
+@property (strong, nonatomic) NSString         *companyUserDataValue;
+@property (strong, nonatomic) CompanyUserModel *companyUserModel;
 
 @end
 

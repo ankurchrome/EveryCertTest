@@ -17,64 +17,40 @@
     
     if (self)
     {
-        self.tableName  = FormSectionTable;
-        self.appIdField = FormSectionId;
-        self.fieldList  = [[NSArray alloc] initWithObjects:FormSectionId, FormIdApp, FormSectionName, FormSectionSequenceOrder, FormSectionHeader, FormSectionFooter, FormSectionTitle, nil];
-    }    
+        self.tableName     = FormSectionTable;
+        self.serverIdField = FormSectionId;
+        self.tableColumns  = @[FormSectionId, FormId, FormSectionLabel, FormSectionSequenceOrder, FormSectionHeader, FormSectionFooter, FormSectionTitle, ModifiedTimeStamp, Archive];
+    }
+    
     return self;
 }
 
 // Return a list of all the sections of specified form
-- (NSArray *)allSectionsOfForm:(NSInteger)formIdApp
+- (NSArray *)getAllSectionsOfForm:(NSInteger)formIdApp
 {
     FUNCTION_START;
 
+    NSMutableArray   *formSectionModels = nil;
+    NSString         *query = nil;
     FormSectionModel *formSectionModel = nil;
-    NSMutableArray *formSectionModels = [NSMutableArray new];
+    FMResultSet      *result = nil;
     
-//    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld", self.tableName, FormId, (long)formIdApp];
-    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld", self.tableName, FormId, formIdApp];
+    query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ != 1 ORDER BY %@", self.tableName, FormId, (long)formIdApp, Archive, FormSectionSequenceOrder];
+    
+    result = [self.database executeQuery:query];
 
-    [_database open];
-    
-    FMResultSet *result = [_database executeQuery:query];
+    formSectionModels = [NSMutableArray new];
     
     while ([result next])
     {
-        formSectionModel = [self formSectionModelsFromResultSet:result];
-        
+        formSectionModel = [[FormSectionModel alloc] initWithResultSet:result];
+
         [formSectionModels addObject:formSectionModel];
     }
-    
-    [_database close];
     
     FUNCTION_END;
     
     return formSectionModels;
-}
-
-// Create FormModel object and initialized it with specified resultset
-- (FormSectionModel *)formSectionModelsFromResultSet:(FMResultSet *)resultSet
-{
-    FormSectionModel *formSectionModel = [FormSectionModel new];
-    
-    if (resultSet)
-    {
-        formSectionModel.sectionId  = [resultSet intForColumn:FormSectionId];
-        formSectionModel.formId     = [resultSet intForColumn:FormId];
-        formSectionModel.label      = [resultSet stringForColumn:FormSectionName];
-        formSectionModel.sequenceOrder = [resultSet intForColumn:FormSectionSequenceOrder];
-        formSectionModel.header    = [resultSet stringForColumn:FormSectionHeader];
-        formSectionModel.footer    = [resultSet stringForColumn:FormSectionFooter];
-        formSectionModel.title     = [resultSet stringForColumn:FormSectionTitle];
-    }
-    
-    return formSectionModel;
-}
-
-- (NSArray *)getAllSectionModel
-{
-    return [self allSectionsOfForm:1];
 }
 
 @end

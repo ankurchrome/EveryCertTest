@@ -10,21 +10,28 @@
 
 @implementation BaseModel
 
-// This Method is used to Initialize Model with the Result Set
-- (void)initWithResultSet: (FMResultSet *)resultSet
+// This Method is used to Initialize a Model object with the specified Result Set
+- (id)initWithResultSet: (FMResultSet *)resultSet
 {
-    [self setFromResultSet:resultSet];
+    self = [super init];
+    
+    if (self)
+    {
+        [self setFromResultSet:resultSet];
+    }
+    
+    return self;
 }
 
-// This Method is used to Set all Model's Properties with the Result Set
+// Initialize object with the info stored in ResultSet
 - (void)setFromResultSet: (FMResultSet *)resultSet
 {
-    self.modifiedTimestampApp = [resultSet doubleForColumn:ModifiedTimestampApp];
-    self.modifiedTimestamp = [resultSet doubleForColumn:ModifiedTimeStamp];
     self.archive = [resultSet intForColumn:Archive];
-    self.uuid = [resultSet stringForColumn:UUid];
+    self.uuid = [resultSet stringForColumn:Uuid];
     self.isDirty = [resultSet intForColumn:IsDirty];
     self.companyId = [resultSet intForColumn:CompanyId];
+    self.modifiedTimestampApp = [resultSet doubleForColumn:ModifiedTimestampApp];
+    self.modifiedTimestamp = [resultSet doubleForColumn:ModifiedTimeStamp];
 }
 
 @end

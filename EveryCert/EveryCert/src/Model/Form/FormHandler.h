@@ -12,16 +12,10 @@
 @interface FormHandler : BaseHandler
 
 /**
- Fetch the form information from database for a specified form name
- @param  NSString formName
- @return FormModel A FormModel object initialized with form information
- */
-- (FormModel *)formByName:(NSString *)formName;
-
-/**
- Return a list of all forms from the database
+ Returns a list of all forms with given permissions from the database
+ @param  permissions A list of permissions in string separated by commas
  @return NSArray A list of all forms
  */
-- (NSArray *)allForms;
+- (NSArray *)getAllFormsWithPermissions:(NSString *)permissions;
 
 @end

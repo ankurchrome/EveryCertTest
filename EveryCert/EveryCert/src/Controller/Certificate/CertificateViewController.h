@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class CertificateModel;
+
 @interface CertificateViewController : UIViewController
 
-@property (nonatomic, strong) NSArray *elementModels;
-@property NSInteger formId;
+/**
+ Returns an initialized CertificateViewController with CertificateModel object
+ @param  certificate CertificateModel object containing info about certificate
+ @return Returns an initialized CertificateViewController object
+ */
+- (id)initWithCertificate:(CertificateModel *)certificate;
 
 @end

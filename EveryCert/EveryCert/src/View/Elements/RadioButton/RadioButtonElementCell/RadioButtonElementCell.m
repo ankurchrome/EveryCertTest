@@ -51,7 +51,7 @@ NSString *const kRadioButtonTitle = @"RadioButtonTitle";
         }
     }
     
-    NSArray *radioButtons       =  element.elementPrintedTextFormat[kRadioButton];
+    NSArray *radioButtons       =  element.printedTextFormat[kRadioButton];
     NSArray *radioButtonOptions = [radioButtons valueForKeyPath:kRadioButtonTitle];
     
     if(radioButtonLayoutFormat == RadioButtonViewLayoutHorizontal)

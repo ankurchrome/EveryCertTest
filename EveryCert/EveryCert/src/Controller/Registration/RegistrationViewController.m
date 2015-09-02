@@ -7,13 +7,17 @@
 //
 
 #import "RegistrationViewController.h"
-#import "TextFieldElementCell.h"
+#import "ElementTableView.h"
+#import "ElementHandler.h"
 
-@interface RegistrationViewController ()<UITableViewDataSource, UITableViewDelegate>
+//#import "TextFieldElementCell.h"
+
+@interface RegistrationViewController ()
 {
+    IBOutlet ElementTableView *_signupElementTableView;
     __weak IBOutlet UILabel *_termsAndServicesLabel;
-    __weak IBOutlet UITableView *_signUpLabel;
-    NSArray *_elementsArray;
+
+    NSArray *_signupElements;
 }
 @end
 
@@ -21,55 +25,28 @@
 
 #pragma mark - Life Cycle
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
-    _elementsArray = @[@"Name", @"Email Address", @"Password"];
-    [_signUpLabel registerNib:[UINib nibWithNibName:@"TextFieldElementCell" bundle:nil] forCellReuseIdentifier:TextFieldReuseIdentifier];
-    _signUpLabel.estimatedRowHeight = 64.0;
-    _signUpLabel.rowHeight = UITableViewAutomaticDimension;
-    _signUpLabel.scrollEnabled = NO;
+    ElementHandler *elementHandler = [ElementHandler new];
+    [elementHandler.database open];
+    _signupElements = [elementHandler getSignUpElements];
+    [elementHandler.database close];
+    
+    [_signupElementTableView reloadWithElements:_signupElements];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.navigationItem.hidesBackButton = YES;          // Hide Back Button
+    self.navigationItem.hidesBackButton = YES;
 }
 
 #pragma mark - IBActions
 
-- (IBAction)onClickSignInButton:(id)sender {
+- (IBAction)onClickSignInButton:(id)sender
+{
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return _elementsArray.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    TextFieldElementCell *cell = [tableView dequeueReusableCellWithIdentifier:TextFieldReuseIdentifier];
-    if(!cell)
-    {
-        cell = [TextFieldElementCell new];
-    }
-    [cell initWithData:_elementsArray[indexPath.row]];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-}
-
-#pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 1.0;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return tableView.frameHeight / _elementsArray.count;
-}
 @end

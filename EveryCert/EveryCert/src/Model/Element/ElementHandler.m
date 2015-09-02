@@ -7,10 +7,11 @@
 //
 
 #import "ElementHandler.h"
-#import "ElementModel.h"
-#import "SubElementModel.h"
-#import "DataBinaryHandler.h"
 #import "Constant.h"
+#import "DataHandler.h"
+#import "DataBinaryHandler.h"
+#import "CompanyUserHandler.h"
+#import "SubElementHandler.h"
 
 @implementation ElementHandler
 
@@ -21,214 +22,194 @@
     
     if (self)
     {
-        self.tableName  = ElementTable;
-        self.appIdField = ElementId;
-        self.fieldList  = [[NSArray alloc] initWithObjects:ElementId, ElementSectionId, ElementFormId, ElementFieldType, ElementFieldName, ElementSequenceOrder, ElementLabel, ElementOriginX, ElementOriginY, ElementHeight, ElementWidth, ElementPageNumber, ElementMinChar, ElementMaxChar, ElementPrintedTextFormat, ElementLinkedElementId, ModifiedTimeStamp, Archive, ElementPopUpMessage, ElementLookUpListIdNew, ElementFieldNumberNew, ElementLookUpListIdExisting, ElementFieldNumberExisting, nil];
+        self.tableName     = ElementTable;
+        self.serverIdField = ElementId;
+        self.tableColumns  = @[ElementId, FormSectionId, FormId, ElementFieldType, ElementFieldName, ElementSequenceOrder, ElementLabel, ElementOriginX, ElementOriginY, ElementHeight, ElementWidth, ElementPageNumber, ElementMinCharLimit, ElementMaxCharLimit, ElementPrintedTextFormat, ElementLinkedElementId, ElementPopUpMessage, ElementLookUpListIdNew, ElementFieldNumberNew, ElementLookUpListIdExisting, ElementFieldNumberExisting, ModifiedTimeStamp, Archive];
     }
     
     return self;
 }
 
-// Fetch all elements with their stored data(if any) of given cert and its section from the 'element' and data table.
-- (NSArray *)allElementsOfCertificate:(NSInteger)certIdApp section:(NSInteger)sectionIdApp
+// Fetch all elements of given form with their stored data(if any) of given cert
+- (NSArray *)getAllElementsOfForm:(NSInteger)formId withDataOfCertificate:(NSInteger)certIdApp
 {
-    ElementModel *formElementModel = nil;
-    NSMutableArray *formElementModelList = [NSMutableArray new];
+    NSString          *query = nil;
+    FMResultSet       *result = nil;
+    ElementModel      *elementModel = nil;
+    NSMutableArray    *elementModelList = nil;
+    SubElementHandler *subElementHandler = nil;
     
-    NSString *columnString = [NSString stringWithFormat:@"t1.%@ as %@, t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@ t1.%@ as %@, t1.%@ as %@, t1.%@ as %@, t1.%@ as %@, t1.%@ as %@, t1.%@ as %@, t2.%@ as %@",  ElementId, ElementId, ElementSectionId, ElementSectionId, ElementFormId, ElementFormId, ElementFieldType, ElementFieldType, ElementFieldName, ElementFieldName, ElementSequenceOrder, ElementSequenceOrder, ElementLabel, ElementLabel, ElementOriginX, ElementOriginX, ElementOriginY, ElementOriginY, ElementHeight, ElementHeight, ElementWidth, ElementWidth, ElementPageNumber, ElementPageNumber, ElementMinChar, ElementMinChar, ElementMaxChar, ElementMaxChar, ElementPrintedTextFormat, ElementPrintedTextFormat, ElementLinkedElementId, ElementLinkedElementId, ModifiedTimeStamp, ModifiedTimeStamp, Archive, Archive, ElementPopUpMessage, ElementPopUpMessage, ElementLookUpListIdNew, ElementLookUpListIdNew, ElementFieldNumberNew, ElementFieldNumberNew, ElementLookUpListIdExisting, ElementLookUpListIdExisting, ElementFieldNumberExisting, ElementFieldNumberExisting, DataValue, DataValue];
+    query = [NSString stringWithFormat:
+             @"SELECT *\
+             FROM\
+             (SELECT * FROM %@ WHERE %@ = %ld) t1\
+             LEFT JOIN\
+             (SELECT * FROM %@ WHERE %@ = %ld) t2\
+             ON t1.%@ = t2.%@\
+             LEFT JOIN\
+             (SELECT * FROM %@ WHERE %@ = %ld) t3\
+             ON t1.%@ = t3.%@\
+             LEFT JOIN\
+             (SELECT * FROM %@) t4\
+             ON  t2.%@ = t4.%@\
+             AND t1.%@ = t4.%@\
+             AND t1.%@ = t4.%@\
+             AND t1.%@ != 1\
+             ORDER BY %@",
+             self.tableName, FormId, (long)formId, DataTable, CertificateIdApp, (long)certIdApp, ElementId, ElementId, DataBinaryTable, CertificateIdApp, (long)certIdApp, ElementId, ElementId, LookUpTable, RecordIdApp, RecordIdApp, ElementLookUpListIdExisting, LookUpListId, ElementFieldNumberExisting, LookUpFieldNumber, Archive, ElementSequenceOrder];
     
-    NSString *query = [NSString stringWithFormat:@"SELECT %@\
-                       FROM\
-                       (SELECT * FROM %@ WHERE %@ = %ld) t1\
-                       LEFT JOIN\
-                       (SELECT * FROM %@ WHERE %@ = %ld) t2\
-                       ON t1.%@ = t2.%@\
-                       ORDER BY t1.%@", columnString, self.tableName, FormSectionId, (long)sectionIdApp, DataTable, CertificateIdApp, (long)certIdApp, ElementId, ElementId, ElementSequenceOrder];
-    [_database open];
+    elementModelList  = [NSMutableArray new];
+    subElementHandler = [SubElementHandler new];
     
-    DataBinaryHandler *dataBinaryHandler = [DataBinaryHandler new];
-    DataBinaryModel *dataBinaryModel = nil;
-    
-    FMResultSet *result = [_database executeQuery:query];
+    result = [self.database executeQuery:query];
     
     while ([result next])
     {
-        formElementModel = [ElementModel new];
-        [formElementModel initWithResultSet:result];
-        formElementModel.dataValue = [result stringForColumn:DataValue];
+        elementModel = [[ElementModel alloc] initWithResultSet:result];
         
-        if (formElementModel.fieldType == ElementTypeSignature)
+        //TODO: remove the unneccessary properties and change the query accordingly
+        elementModel.dataIdApp = [result intForColumn:DataIdApp];
+        elementModel.dataValue = [result stringForColumn:DataValue];
+        elementModel.dataModel = [[DataModel alloc] initWithResultSet:result];
+        
+        elementModel.dataBinaryIdApp = [result intForColumn:DataBinaryIdApp];
+        elementModel.dataBinaryValue = [result dataForColumn:DataBinaryValue];
+        elementModel.dataBinaryModel = [[DataBinaryModel alloc] initWithResultSet:result];
+        
+        if (elementModel.fieldType == ElementTypeSubElements)
         {
-            dataBinaryModel = [dataBinaryHandler dataExistForCertificate:certIdApp
-                                                                 element:formElementModel.elementId];
-            formElementModel.dataBinary = dataBinaryModel.data;
+            elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId];
         }
         
-        if (formElementModel.fieldType == ElementTypeSubElements)
-        {
-            formElementModel.subElements = [self allSubElementsOfElement:formElementModel.elementId];
-        }
-        
-        [formElementModelList addObject:formElementModel];
-        
+        [elementModelList addObject:elementModel];
     }
     
-    [_database close];
-    
-    return formElementModelList;
+    return elementModelList;
 }
 
-// Fetch all sub elements of given element
-- (NSArray *)allSubElementsOfElement:(NSInteger)elementIdApp
+// Fetch all elements of given form
+- (NSArray *)getAllElementsOfForm:(NSInteger)formId
 {
-    SubElementModel *subElementModel = nil;
-    NSMutableArray  *subElementModelList = [NSMutableArray new];
-    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld ORDER BY %@", SubElementTable, ElementId, (long)elementIdApp, ElementSequenceOrder];
+    NSString          *query = nil;
+    FMResultSet       *result = nil;
+    ElementModel      *elementModel = nil;
+    NSMutableArray    *elementModelList = nil;
+    SubElementHandler *subElementHandler = nil;
     
-    FMResultSet *result = [_database executeQuery:query];
+    query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ != 1 ORDER BY %@",
+             self.tableName, FormId, (long)formId, Archive, ElementSequenceOrder];
+    
+    elementModelList  = [NSMutableArray new];
+    subElementHandler = [SubElementHandler new];
+    
+    result = [self.database executeQuery:query];
     
     while ([result next])
     {
-        subElementModel = [self formSubElementModelFromResultSet:result];
+        elementModel = [[ElementModel alloc] initWithResultSet:result];
         
-        [subElementModelList addObject:subElementModel];
+        if (elementModel.fieldType == ElementTypeSubElements)
+        {
+            elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId];
+        }
+        
+        [elementModelList addObject:elementModel];
     }
     
-    return subElementModelList;
+    return elementModelList;
 }
 
-// Create SubElementModel object and initialized it with specified resultset
-- (SubElementModel *)formSubElementModelFromResultSet:(FMResultSet *)resultSet
+// Fetch all elements for Login screen from database
+- (NSArray *)getLoginElements
 {
-    SubElementModel *formSubElementModel = [SubElementModel new];
+    NSArray *loginElements = [self getAllElementsOfSection:-3];
     
-    NSString *attributes         = nil;
-    NSData   *attributesData     = nil;
-    NSDictionary *attributesInfo = nil;
-    
-    if (resultSet)
-    {
-        formSubElementModel.subElementId       = [resultSet intForColumn:SubElementId];
-        formSubElementModel.elementId          = [resultSet intForColumn:ElementId];
-        formSubElementModel.fieldType          = [resultSet intForColumn:ElementFieldType];
-        formSubElementModel.fieldName          = [resultSet stringForColumn:ElementFieldName];
-        formSubElementModel.sequenceOrder      = [resultSet intForColumn:ElementSequenceOrder];
-        formSubElementModel.label              = [resultSet stringForColumn:ElementLabel];
-        formSubElementModel.originX            = [resultSet intForColumn:ElementOriginX];
-        formSubElementModel.originY            = [resultSet intForColumn:ElementOriginY];
-        formSubElementModel.height             = [resultSet intForColumn:ElementHeight];
-        formSubElementModel.width              = [resultSet intForColumn:ElementWidth];
-        formSubElementModel.pageNumber         = [resultSet intForColumn:ElementPageNumber];
-        formSubElementModel.minCharLimit       = [resultSet intForColumn:ElementMinChar];
-        formSubElementModel.maxCharLimit       = [resultSet intForColumn:ElementMaxChar];
-        formSubElementModel.linkedElementId    = [resultSet intForColumn:ElementLinkedElementId];
-        formSubElementModel.modifiedTimestamp  = [resultSet stringForColumn:ModifiedTimeStamp];
-        formSubElementModel.archive            = [resultSet intForColumn:Archive];
-        formSubElementModel.popUpMessage       = [resultSet stringForColumn:ElementPopUpMessage];
-        formSubElementModel.lookUpIdNew        = [resultSet intForColumn:ElementLookUpListIdNew];
-        formSubElementModel.fieldNumberNew     = [resultSet intForColumn:ElementFieldNumberNew];
-        formSubElementModel.lookUpIdExisting   = [resultSet intForColumn:ElementFieldNumberExisting];
-        formSubElementModel.fieldNumberExisting= [resultSet intForColumn:ElementFieldNumberExisting];
-        
-        
-        attributes     = [resultSet stringForColumn:ElementPrintedTextFormat];
-        attributesData = [attributes dataUsingEncoding:NSUTF8StringEncoding];
-        attributesInfo = [NSJSONSerialization JSONObjectWithData:attributesData
-                                                         options:NSJSONReadingMutableContainers
-                                                           error:nil];
-        formSubElementModel.printedTextFormat = attributesInfo;
-    }
-    
-    return formSubElementModel;
+    return loginElements;
 }
 
-//This Method is used to fetch all Elements in the Element Table that is related to Section Id
-- (NSArray *)allElementsOfSectionId:(NSInteger)sectionId
+// Fetch all elements for SignUp/CreateAccount screen from database
+- (NSArray *)getSignUpElements
 {
-    ElementModel *formElementModel = nil;
-    NSMutableArray  *formElementModelList = [NSMutableArray new];
-    NSString *query = [NSString stringWithFormat:@"Select * from %@ where %@ = %ld", ElementTable, ElementSectionId, (long)sectionId];
+    NSArray *signUpElements = [self getAllElementsOfSection:-4];
     
-    [_database open];
-    FMResultSet *result = [_database executeQuery:query];
+    return signUpElements;
+}
+
+// Fetch all elements of given section from database
+- (NSArray *)getAllElementsOfSection:(NSInteger)sectionId
+{
+    NSString       *query = nil;
+    FMResultSet    *result = nil;
+    ElementModel   *elementModel = nil;
+    NSMutableArray *elementModelList = nil;
+    
+    query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ != 1 ORDER BY %@",
+             self.tableName, FormSectionId, (long)sectionId, Archive, ElementSequenceOrder];
+    
+    elementModelList  = [NSMutableArray new];
+    
+    result = [self.database executeQuery:query];
     
     while ([result next])
     {
-        formElementModel = [ElementModel new];
-        [formElementModel initWithResultSet:result];
-        formElementModel.dataValue = [result stringForColumn:DataValue];
+        elementModel = [[ElementModel alloc] initWithResultSet:result];
         
-        if (formElementModel.fieldType == ElementTypeSubElements)
-        {
-            formElementModel.subElements = [self allSubElementsOfElement:formElementModel.elementId];
-        }
-        
-        if (LOGS_ON) NSLog(@"%@",formElementModel.fieldName);
-        [formElementModelList addObject:formElementModel];
+        [elementModelList addObject:elementModel];
     }
-    [_database close];
     
-    if (LOGS_ON) NSLog(@"%@", formElementModelList);
-    return formElementModelList;
+    return elementModelList;
 }
 
-//This Method is used to fetch all Elements in the Element Table that is related to Form Id
-- (NSArray *)allElementsOfFormId:(NSInteger)formId
+// Fetch all elements for Setting screen with their data from company_user & data_binary table
+- (NSArray *)getSettingElementsOfCompany:(NSInteger)companyId
 {
-    ElementModel *formElementModel = nil;
-    NSMutableArray  *formElementModelList = [NSMutableArray new];
-    NSString *query = [NSString stringWithFormat:@"Select * from %@ where %@ = %ld", ElementTable, ElementFormId, (long)formId];
+    NSString       *query = nil;
+    FMResultSet    *result = nil;
+    ElementModel   *elementModel = nil;
+    NSMutableArray *elementModelList = nil;
+    SubElementHandler *subElementHandler = nil;
     
-    [_database open];
-    FMResultSet *result = [_database executeQuery:query];
+    query = [NSString stringWithFormat:@"\
+             SELECT *\
+             FROM\
+             (SELECT * FROM %@ WHERE %@ = %ld OR %@ = %ld) t1\
+             LEFT JOIN\
+             (SELECT * FROM %@ WHERE %@ = %ld) t2\
+             ON t1.%@ = t2.%@\
+             LEFT JOIN\
+             (SELECT * FROM %@ WHERE %@ = %ld) t3\
+             ON t1.%@ = t3.%@\
+             WHERE t1.%@ != 1\
+             ORDER BY %@, %@",
+             self.tableName, FormSectionId, (long)-1, FormSectionId, (long)-2, CompanyUserTable, CompanyId, companyId, ElementFieldName, CompanyUserFieldName, DataBinaryTable, CompanyId, companyId, ElementId, ElementId, Archive, FormSectionId, ElementSequenceOrder];
+
+    elementModelList  = [NSMutableArray new];
+    subElementHandler = [SubElementHandler new];
+    
+    result = [self.database executeQuery:query];
     
     while ([result next])
     {
-        formElementModel = [ElementModel new];
-        [formElementModel initWithResultSet:result];
-        formElementModel.dataValue = [result stringForColumn:DataValue];
+        elementModel = [[ElementModel alloc] initWithResultSet:result];
         
-        if (formElementModel.fieldType == ElementTypeSubElements)
-        {
-            formElementModel.subElements = [self allSubElementsOfElement:formElementModel.elementId];
-        }
-        
-        if (LOGS_ON) NSLog(@"%@",formElementModel.fieldName);
-        [formElementModelList addObject:formElementModel];
-    }
-    [_database close];
-    
-    if (LOGS_ON) NSLog(@"%@", formElementModelList);
-    return formElementModelList;
-}
+        //TODO: remove the unneccessary properties and change the query accordingly
+        elementModel.dataBinaryIdApp = [result intForColumn:DataBinaryIdApp];
+        elementModel.dataBinaryValue = [result dataForColumn:DataBinaryValue];
+        elementModel.dataBinaryModel = [[DataBinaryModel alloc] initWithResultSet:result];
 
-//This Method is used to fetch all Sub Elements in the Element Table that is related to Section Id
-- (NSArray *)subElementsOfSectionId:(NSInteger)sectionId
-{
-    ElementModel *formElementModel = nil;
-    NSMutableArray  *formElementModelList = [NSMutableArray new];
-    NSString *query = [NSString stringWithFormat:@"Select * from %@ where %@ = %ld AND %@ = 1", ElementTable, ElementSectionId, (long)sectionId, ElementFieldType];
-    [_database open];
-    FMResultSet *result = [_database executeQuery:query];
-    
-    while ([result next])
-    {
-        formElementModel = [ElementModel new];
-        [formElementModel initWithResultSet:result];
-        formElementModel.dataValue = [result stringForColumn:DataValue];
+        elementModel.companyUserIdApp     = [result intForColumn:CompanyUserIdApp];
+        elementModel.companyUserDataValue = [result stringForColumn:CompanyUserData];
+        elementModel.companyUserModel     = [[CompanyUserModel alloc] initWithResultSet:result];
         
-        if (formElementModel.fieldType == ElementTypeSubElements)
+        if (elementModel.fieldType == ElementTypeSubElements)
         {
-            formElementModel.subElements = [self allSubElementsOfElement:formElementModel.elementId];
+            elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId];
         }
         
-        if (LOGS_ON) NSLog(@"%@",formElementModel.fieldName);
-        [formElementModelList addObject:formElementModel];
+        [elementModelList addObject:elementModel];
     }
-    [_database close];
     
-    if (LOGS_ON) NSLog(@"%@", formElementModelList);
-    return formElementModelList;
+    return elementModelList;
 }
 
 @end

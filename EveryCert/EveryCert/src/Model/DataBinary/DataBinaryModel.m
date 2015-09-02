@@ -1,14 +1,14 @@
 //
-//  DataModel.m
+//  DataBinaryModel.m
 //  MultiFormApp
 //
 //  Created by Ankur Pachauri on 06/07/15.
 //  Copyright (c) 2015 Self. All rights reserved.
 //
 
-#import "DataModel.h"
+#import "DataBinaryModel.h"
 
-@implementation DataModel
+@implementation DataBinaryModel
 
 // Initialize object with the info stored in ResultSet
 - (void)setFromResultSet: (FMResultSet *)resultSet
@@ -17,13 +17,11 @@
     
     if (resultSet)
     {
-        self.dataIdApp        = [resultSet intForColumn:DataIdApp];
-        self.dataId           = [resultSet intForColumn:DataId];
+        self.dataBinaryIdApp  = [resultSet intForColumn:DataBinaryIdApp];
+        self.dataBinaryId     = [resultSet intForColumn:DataBinaryId];
         self.certificateIdApp = [resultSet intForColumn:CertificateId];
         self.elementId        = [resultSet intForColumn:ElementId];
-        self.recordIdApp      = [resultSet intForColumn:RecordIdApp];
-        self.formId           = [resultSet intForColumn:FormId];
-        self.data             = [resultSet stringForColumn:DataValue];
+        self.dataBinary       = [resultSet dataForColumn:DataBinaryValue];
     }
 }
 

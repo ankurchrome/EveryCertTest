@@ -18,8 +18,10 @@
     if (self)
     {
         NSString *databasePath = [[CommonUtils getDocumentDirPath] stringByAppendingPathComponent:DATABASE_NAME];
-        _database = [FMDatabase databaseWithPath:databasePath];
+        self.database = [FMDatabase databaseWithPath:databasePath];
         if (LOGS_ON) NSLog(@"Database Path = %@", databasePath);
+        
+        self.commonTableColumns = [[NSArray alloc] initWithObjects:ModifiedTimestampApp, ModifiedTimeStamp, Archive, IsDirty, Uuid, nil];
     }
     
     return self;

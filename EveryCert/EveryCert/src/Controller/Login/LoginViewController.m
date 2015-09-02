@@ -7,31 +7,34 @@
 //
 
 #import "LoginViewController.h"
-#import "TextFieldElementCell.h"
+#import "ElementTableView.h"
+#import "ElementHandler.h"
 
-@interface LoginViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface LoginViewController ()
 {
-    NSArray *_elementsArray;
-    __weak IBOutlet UITableView *_loginTableView;
+    NSArray *_loginElements;
+    IBOutlet ElementTableView *_loginElementTableView;
 }
 @end
 
 @implementation LoginViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+
+    ElementHandler *elementHandler = [ElementHandler new];
+    [elementHandler.database open];
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    _loginElements = [elementHandler getLoginElements];
+    [elementHandler.database close];
     
-    _elementsArray = @[@"Email Address", @"Password"];
-    [_loginTableView registerNib:[UINib nibWithNibName:@"TextFieldElementCell" bundle:nil] forCellReuseIdentifier:TextFieldReuseIdentifier];
-    _loginTableView.estimatedRowHeight = 70.0;
-    _loginTableView.rowHeight = UITableViewAutomaticDimension;
-    _loginTableView.scrollEnabled = NO;
+    [_loginElementTableView reloadWithElements:_loginElements];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    //TODO:
     self.navigationController.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = nil;
     
@@ -41,12 +44,16 @@
 
 #pragma mark - IBActions
 
-- (IBAction)onClickForgetPasswordButton:(id)sender {
+- (IBAction)onClickForgetPasswordButton:(id)sender
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Forgot password"
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Forgot password" message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"Email";
     }];
+    
     UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"Reset your password" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         // Code for Handling the AlertButton
@@ -54,42 +61,6 @@
     }];
     [alertController addAction:alertAction];
     [self presentViewController:alertController animated:YES completion:nil];
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return _elementsArray.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    TextFieldElementCell *cell = [tableView dequeueReusableCellWithIdentifier:TextFieldReuseIdentifier];
-    if(!cell)
-    {
-        cell = [TextFieldElementCell new];
-    }
-    [cell initWithData:_elementsArray[indexPath.row]];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-}
-
-#pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 1.0;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return tableView.frameHeight / _elementsArray.count;
 }
 
 @end

@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
-
-@property (nonatomic, strong) NSArray *elementModelList;
+@interface SettingViewController : UIViewController
 
 @end

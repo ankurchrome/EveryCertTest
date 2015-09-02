@@ -10,39 +10,36 @@
 
 @implementation FormModel
 
-// Create FormModel object and initialized it with specified resultset
-- (void)initWithResultSet:(FMResultSet *)resultSet
+// Initialize object with the info stored in ResultSet
+- (void)setFromResultSet: (FMResultSet *)resultSet
 {
     NSString *attributes         = nil;
     NSData   *attributesData     = nil;
     NSDictionary *attributesInfo = nil;
+
+    self.formId     = [resultSet intForColumn:FormId];
+    self.categoryId = [resultSet intForColumn:FormCategoryId];
+    self.name       = [resultSet stringForColumn:FormName];
+    self.title      = [resultSet stringForColumn:FormTitle];
+    self.backgroundLayout     = [resultSet stringForColumn:FormBackgroundLayout];
+    self.status               = [resultSet boolForColumn:FormStatus];
+    self.sequenceOrder        = [resultSet intForColumn:FormSequenceOrder];
+    self.permissionGroup      = [resultSet intForColumn:FormPermissionGroup];
+    self.archive              = [resultSet intForColumn:Archive];
+    self.modifiedTimestampApp = [resultSet doubleForColumn:ModifiedTimestampApp];
+    self.modifiedTimestamp    = [resultSet doubleForColumn:ModifiedTimeStamp];
+
+    attributes     = [resultSet stringForColumn:FormCompanyFormat];
+    attributesData = [attributes dataUsingEncoding:NSUTF8StringEncoding];
     
-    if (resultSet)
+    if (attributesData)
     {
-        self.formId                = [resultSet intForColumn:FormId];
-        self.categoryId            = [resultSet intForColumn:FormCategoryId];
-        self.name                  = [resultSet stringForColumn:FormName];
-        self.title                 = [resultSet stringForColumn:FormTitle];
-        self.backgroundLayout      = [resultSet stringForColumn:FormBackgroundLayout];
-        self.modifiedTimestampApp  = [resultSet doubleForColumn:ModifiedTimestampApp];
-        self.modifiedTimestamp     = [resultSet doubleForColumn:ModifiedTimeStamp];
-        self.archive               = [resultSet intForColumn:Archive];
-        self.status                = [resultSet intForColumn:FormStatus];
-        self.companyFormat         = [resultSet stringForColumn:FormCompanyFormat];
-        self.formSequenceOrder     = [resultSet stringForColumn:FormSequenceOrder];
-        
-        attributes     = [resultSet stringForColumn:FormCompanyFormat];
-        attributesData = [attributes dataUsingEncoding:NSUTF8StringEncoding];
-        
-        if (attributesData)
-        {
-            attributesInfo = [NSJSONSerialization JSONObjectWithData:attributesData
-                                                             options:NSJSONReadingMutableContainers
-                                                               error:nil];
-        }
-        
-        self.companyAttributes = attributesInfo;
+        attributesInfo = [NSJSONSerialization JSONObjectWithData:attributesData
+                                                         options:NSJSONReadingMutableContainers
+                                                           error:nil];
     }
+    
+    self.companyFormat = attributesInfo;
 }
 
 @end

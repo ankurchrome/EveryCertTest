@@ -8,7 +8,7 @@
 
 #import "BaseModel.h"
 
-@interface FormSectionModel : NSObject
+@interface FormSectionModel : BaseModel
 
 @property (nonatomic, assign) NSInteger sectionId;
 @property (nonatomic, assign) NSInteger formId;

@@ -20,11 +20,4 @@
 @property (nonatomic, strong) NSString  *dataValue;
 @property (nonatomic, assign) NSInteger sequenceOrder;
 
-/**
- Create LookUpModel object and initialized it with specified resultset
- @param  FMResultSet Object of FMResult Set
- @return void
- */
-- (void)initWithResultSet:(FMResultSet *)resultSet;
-
 @end

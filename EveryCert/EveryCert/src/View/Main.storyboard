@@ -151,7 +151,7 @@
                                             <segue destination="sjf-s4-f77" kind="show" id="HRm-l9-FMG"/>
                                         </connections>
                                     </button>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="8N2-BA-irC">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="8N2-BA-irC" customClass="ElementTableView">
                                         <rect key="frame" x="0.0" y="71" width="560" height="120"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
@@ -184,10 +184,6 @@
                                                 <include reference="vX2-vF-1lB"/>
                                             </mask>
                                         </variation>
-                                        <connections>
-                                            <outlet property="dataSource" destination="RXU-YZ-2CA" id="tWT-jl-eIj"/>
-                                            <outlet property="delegate" destination="RXU-YZ-2CA" id="Hyn-Gd-akY"/>
-                                        </connections>
                                     </tableView>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ScD-Cy-0fo">
                                         <rect key="frame" x="208" y="296" width="144" height="30"/>
@@ -683,7 +679,7 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
-                        <outlet property="_loginTableView" destination="8N2-BA-irC" id="WTc-jm-ihu"/>
+                        <outlet property="_loginElementTableView" destination="8N2-BA-irC" id="B5O-eF-oBx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o6R-37-mrH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -773,7 +769,7 @@
                                             </mask>
                                         </variation>
                                     </label>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Vo4-OH-n87">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Vo4-OH-n87" customClass="ElementTableView">
                                         <rect key="frame" x="0.0" y="71" width="560" height="150"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="163" id="I1I-1W-3PX"/>
@@ -804,10 +800,6 @@
                                                 <include reference="I1I-1W-3PX"/>
                                             </mask>
                                         </variation>
-                                        <connections>
-                                            <outlet property="dataSource" destination="nlA-fg-cuc" id="dMf-9E-LJI"/>
-                                            <outlet property="delegate" destination="nlA-fg-cuc" id="SfD-4l-1Tt"/>
-                                        </connections>
                                     </tableView>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K8k-bi-9aO">
                                         <rect key="frame" x="195" y="265" width="181" height="30"/>
@@ -1310,7 +1302,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="_signUpLabel" destination="Vo4-OH-n87" id="e1g-oK-oSc"/>
+                        <outlet property="_signupElementTableView" destination="Vo4-OH-n87" id="vSO-tz-MCN"/>
                         <outlet property="_termsAndServicesLabel" destination="kmh-Nd-Ara" id="0uH-3b-gxb"/>
                     </connections>
                 </viewController>
@@ -1330,12 +1322,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SF8-ry-wcr">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SF8-ry-wcr" customClass="ElementTableView">
                                 <rect key="frame" x="16" y="79" width="568" height="521"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="VZz-rw-tVY" id="9SE-WE-AKl"/>
-                                    <outlet property="delegate" destination="VZz-rw-tVY" id="eVA-SX-GlW"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1424,7 +1412,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="_settingTableView" destination="SF8-ry-wcr" id="3uf-JV-pOn"/>
+                        <outlet property="_settingElementTableView" destination="SF8-ry-wcr" id="qlb-wM-2OR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pem-Qn-KxF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2618,6 +2606,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Enn-sh-nvA"/>
+        <segue reference="HRm-l9-FMG"/>
     </inferredMetricsTieBreakers>
 </document>

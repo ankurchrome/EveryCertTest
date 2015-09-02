@@ -10,6 +10,7 @@
 #import "CertificateViewController.h"
 #import "FormHandler.h"
 #import "FormModel.h"
+#import "CertificateHandler.h"
 
 @interface FormsListViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -20,11 +21,15 @@
 
 @implementation FormsListViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     FormHandler *formHandler = [FormHandler new];
-    _allFormsList            = [[NSArray alloc]initWithArray:[formHandler allForms]];
+    
+    //TODO: permissions will come from company_user table if no then 0 will be default
+    _allFormsList = [formHandler getAllFormsWithPermissions:@"0"];
+    
 //    self.navigationController.navigationBar.translucent = NO;
 }
 
@@ -71,10 +76,20 @@
     UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     CertificateViewController *certificateViewController = [mainStoryBoard instantiateViewControllerWithIdentifier:CertificateViewControllerIdentifier];
     
-    FormModel *formModel             = _allFormsList[indexPath.row];
-    certificateViewController.formId = formModel.formId;
+    FormModel *formModel = _allFormsList[indexPath.row];
     
-    [self.navigationController pushViewController:certificateViewController animated:YES];
+    CertificateModel *newCertificate = [CertificateModel new];
+    newCertificate.formId = formModel.formId;
+    
+    CertificateHandler *certHandler = [CertificateHandler new];
+    NSInteger rowId = [certHandler insertCertificate:newCertificate];
+    
+    if (rowId > 0)
+    {
+        newCertificate.certIdApp = rowId;
+        certificateViewController = [certificateViewController initWithCertificate:newCertificate];
+        [self.navigationController pushViewController:certificateViewController animated:YES];
+    }
 }
 
 @end

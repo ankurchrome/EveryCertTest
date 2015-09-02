@@ -53,7 +53,7 @@
         {
             for (ElementTableViewCell *elementView in self.subElementViews)
             {
-                NSString *subElementKey = @(elementView.elementModel.elementIdApp).stringValue;
+                NSString *subElementKey = @(elementView.elementModel.elementId).stringValue;
                 NSString *value = nil;
                 
                 if (subElementKey)

@@ -7,37 +7,49 @@
 //
 
 #import "BaseHandler.h"
-#import "SubElementModel.h"
+#import "ElementModel.h"
 
 @interface ElementHandler : BaseHandler
 
 /**
- Fetch all elements with their stored data(if any) of given cert and its section from the 'element' and data table.
- @param certIdApp Certificate id to check for data if exist
- @param sectionIdApp Section id of certificate's form
- @returns An array of FormElementModel objects with their data(if any), which represent each UIElement of the form
+ Fetch all elements of given form with their stored data(if any) of given cert
+ @param formId Form id to identify the form type in element table
+ @param certIdApp Certificate id to check the data if exist
+ @return NSArray An array of ElementModel objects with their data(if any)
  */
-- (NSArray *)allElementsOfCertificate:(NSInteger)certIdApp section:(NSInteger)sectionIdApp;
+- (NSArray *)getAllElementsOfForm:(NSInteger)formId withDataOfCertificate:(NSInteger)certIdApp;
 
 /**
- This Method is used to fetch all Elements in the Element Table that is related to Section Id
- @param  NSInteger Section id of certificate's form
- @return NSArray An Array of Elements Model with respecty to an Section Id
+ Fetch all elements of given form
+ @param formId Form id to identify the form type in element table
+ @return NSArray An array of ElementModel objects of given form
  */
-- (NSArray *)allElementsOfSectionId:(NSInteger)sectionId;
+- (NSArray *)getAllElementsOfForm:(NSInteger)formId;
 
 /**
- This Method is used to fetch all Elements in the Element Table that is related to Form Id
- @param  NSInteger Section id of certificate's form
- @return NSArray An Array of Elements Model with respecty to an Section Id
+ Fetch all elements for Login screen from database
+ @return NSArray An array of ElementModel objects for Login screen
  */
-- (NSArray *)allElementsOfFormId:(NSInteger)formId;
+- (NSArray *)getLoginElements;
 
 /**
- This Method is used to fetch all Sub Elements in the Element Table that is related to Section Id
- @param  NSInteger Section id of certificate's form
- @return NSArray An Array of Elements Model with respecty to an Section Id
+ Fetch all elements for SignUp/CreateAccount screen from database
+ @return NSArray An array of ElementModel objects for SignUp screen
  */
-- (NSArray *)subElementsOfSectionId:(NSInteger)sectionId;
+- (NSArray *)getSignUpElements;
+
+/**
+ Fetch all elements of given section from database
+ @param  sectionId Section id of element table
+ @return NSArray An array of ElementModel objects of given section
+ */
+- (NSArray *)getAllElementsOfSection:(NSInteger)sectionId;
+
+/**
+ Fetch all elements for Setting screen with their data from company_user & data_binary table
+ @param  companyId Company Id of logged user
+ @return NSArray An array of ElementModel objects with data
+ */
+- (NSArray *)getSettingElementsOfCompany:(NSInteger)companyId;
 
 @end

@@ -14,9 +14,9 @@
 /**
  Insert a certificate object into certificate table.
  @param  certificate A certificate model containing info about the cert
- @return BOOL return Yes if certificate saved successfully otherwise No
+ @return NSInteger return a valid row id if certificate saved successfully otherwise return 0
  */
-- (BOOL)insertCertificate:(CertificateModel *)certificate;
+- (NSInteger)insertCertificate:(CertificateModel *)certificate;
 
 /**
  Update certificate information into its database table
@@ -26,9 +26,10 @@
 - (BOOL)updateCertificate:(CertificateModel *)certificate;
 
 /**
- Fetch all the existing certificates from the database
+ Fetch all the existing certificates of given company
+ @param  companyId CompanyId stored in certificate table to get all certificates
  @return NSArray returns a list of existing certificates
  */
-- (NSArray *)allExistingCertificates;
+- (NSArray *)getAllExistingCertificatesOfCompany:(NSInteger)companyId;
 
 @end

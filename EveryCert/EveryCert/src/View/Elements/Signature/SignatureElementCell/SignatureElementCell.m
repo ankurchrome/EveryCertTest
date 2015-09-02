@@ -57,7 +57,7 @@
 
 - (void)showSignatureView:(UITapGestureRecognizer *)senderTap
 {
-    UIImage *signImage = [UIImage imageWithData:self.elementModel.dataBinary];
+    UIImage *signImage = [UIImage imageWithData:self.elementModel.dataBinaryValue];
 
     SignatureViewController *signatureVC = [[SignatureViewController alloc] initWithImage:signImage];
     
@@ -94,7 +94,7 @@
         self.elementModel.dataValue = nil;
     }
     
-    self.elementModel.dataBinary = UIImagePNGRepresentation(pickedImage);
+    self.elementModel.dataBinaryValue = UIImagePNGRepresentation(pickedImage);
 }
 
 @end

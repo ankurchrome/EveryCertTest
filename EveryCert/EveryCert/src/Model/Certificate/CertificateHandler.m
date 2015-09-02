@@ -17,74 +17,74 @@
     
     if (self)
     {
-        self.tableName  = CertificateTable;
-        self.appIdField = CertificateIdApp;
-        self.fieldList  = [[NSArray alloc] initWithObjects:CertificateIdApp, CertificateId, FormIdApp, CertificateName, CertificateIssuedApp, CertificateDate, CertificatePdf, ModifiedTimestampApp, ModifiedTimeStamp, Archive, UUid, IsDirty, CompanyId, nil];
+        self.tableName     = CertificateTable;
+        self.appIdField    = CertificateIdApp;
+        self.serverIdField = CertificateId;
+        self.tableColumns  = @[CertificateIdApp, CertificateId, FormId, CertificateName, CertificateIssuedApp, CertificateDate, CertificatePdf, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
     }
     
     return self;
 }
 
-// Insert a certificate object into certificate table.
-- (BOOL)insertCertificate:(CertificateModel *)certificate
+// Insert a certificate object into certificate table and returns row id for inserted row
+- (NSInteger)insertCertificate:(CertificateModel *)certificate
 {
-    certificate.modifiedTimestamp = [[NSDate date] timeIntervalSince1970];
+    BOOL success = false;
+    NSInteger rowId = 0;
+    NSString *query = nil;
     
-    [_database open];
+    certificate.isDirty = true;
+    certificate.uuid = [[NSUUID new] UUIDString];
+    certificate.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
     
-   NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", CertificateTable, CertificateIdApp, CertificateId, CertificateFormId, CertificateName, CertificateIssuedApp, CertificateDate, CertificatePdf, ModifiedTimestampApp, ModifiedTimeStamp, Archive, UUid, IsDirty, CompanyId];
+   query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", self.tableName, FormId, CertificateName, CertificateIssuedApp, CertificateDate, CertificatePdf, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
 
-    BOOL isExecuted = [_database executeUpdate:query, @(certificate.certIdApp), @(certificate.certId), @(certificate.formId), certificate.name, certificate.issuedApp, certificate.date, certificate.pdf, @(certificate.modifiedTimestamp), certificate.modifiedTimestampApp, @(certificate.archive), certificate.uuid, @(certificate.isDirty), certificate.companyId];
+    success = [self.database executeUpdate:query, @(certificate.formId), certificate.name, certificate.issuedApp, certificate.date, certificate.pdf, @(certificate.modifiedTimestamp), certificate.modifiedTimestampApp, @(certificate.archive), certificate.uuid, @(certificate.isDirty), certificate.companyId];
     
-//    BOOL isExecuted = [_database executeUpdate:query, @(certificate.certIdApp), @(certificate.formIdApp), certificate.name, @(certificate.issuedApp), @(certificate.date), @(certificate.modifiedTimestamp), certificate.date, certificate.pdf];
-//    
-    if (isExecuted)
+    if (success)
     {
-        certificate.certIdApp = (int)[_database lastInsertRowId];
+        rowId = [self.database lastInsertRowId];
     }
     
-    [_database close];
-    
-    return isExecuted;
+    return rowId;
 }
 
 // Update certificate information into its database table
 - (BOOL)updateCertificate:(CertificateModel *)certificate
 {
-    certificate.modifiedTimestamp = [[NSDate date] timeIntervalSince1970];
+    BOOL success = false;
+    NSString *query = nil;
     
-    [_database open];
+    certificate.isDirty = true;
+    certificate.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
     
-    NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ? WHERE %@ = ? ", self.tableName,CertificateIdApp, CertificateId, CertificateFormId, CertificateName, CertificateIssuedApp, CertificateDate, CertificatePdf, ModifiedTimestampApp, ModifiedTimeStamp, Archive, UUid, IsDirty, CompanyId, CertificateIdApp];
+    query = [NSString stringWithFormat:@"UPDATE %@ SET %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ? WHERE %@ = ? ", self.tableName, CertificateId, FormId, CertificateName, CertificateIssuedApp, CertificateDate, CertificatePdf, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId, CertificateIdApp];
     
+    success = [self.database executeUpdate:query, @(certificate.certId), @(certificate.formId), certificate.name, certificate.issuedApp, certificate.date, certificate.pdf, certificate.modifiedTimestamp, certificate.modifiedTimestampApp, @(certificate.archive), certificate.uuid, @(certificate.isDirty), certificate.companyId, @(certificate.certIdApp)];
     
-    BOOL isExecuted = [_database executeUpdate:query, @(certificate.certIdApp), @(certificate.certId), @(certificate.formId), certificate.name, certificate.issuedApp, certificate.date, certificate.pdf, certificate.modifiedTimestamp, certificate.modifiedTimestampApp, @(certificate.archive), certificate.uuid, @(certificate.isDirty), certificate.companyId, @(certificate.certIdApp)];
-    
-    [_database close];
-    
-    return isExecuted;
+    return success;
 }
 
-// Fetch all the existing certificates from the database
-- (NSArray *)allExistingCertificates
+// Fetch all the existing certificates of given company
+- (NSArray *)getAllExistingCertificatesOfCompany:(NSInteger)companyId
 {
+    NSString *query = nil;
+    FMResultSet *result = nil;
     CertificateModel *certificateModel = nil;
-    NSMutableArray *certificateModelList = [NSMutableArray new];
+    NSMutableArray   *certificateModelList = nil;
     
-    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY %@ DESC", self.tableName, ModifiedTimestampApp];
+    query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ != 1 ORDER BY %@ DESC", self.tableName, CompanyId, companyId, Archive, ModifiedTimestampApp];
     
-    [_database open];
-    
-    FMResultSet *result = [_database executeQuery:query];
+    result = [self.database executeQuery:query];
+
+    certificateModelList = [NSMutableArray new];
     
     while ([result next])
     {
-        certificateModel = [CertificateModel new];
-        [certificateModel initWithResultSet:result];
+        certificateModel = [[CertificateModel alloc] initWithResultSet:result];
+
         [certificateModelList addObject:certificateModel];
     }
-    
-    [_database close];
     
     FUNCTION_END;
     

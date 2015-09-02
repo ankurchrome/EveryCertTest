@@ -10,15 +10,13 @@
 #import "FMDatabase.h"
 
 @interface BaseHandler : NSObject
-{
-    @protected
-    
-    FMDatabase *_database;
-}
+
+@property(nonatomic, strong) FMDatabase *database;
 
 @property(nonatomic, strong) NSString *tableName;
 @property(nonatomic, strong) NSString *appIdField;
 @property(nonatomic, strong) NSString *serverIdField;
-@property(nonatomic, strong) NSArray  *fieldList;
+@property(nonatomic, strong) NSArray  *commonTableColumns;
+@property(nonatomic, strong) NSArray  *tableColumns;
 
 @end

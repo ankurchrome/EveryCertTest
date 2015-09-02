@@ -10,4 +10,18 @@
 
 @implementation FormSectionModel
 
+// Initialize object with the info stored in ResultSet
+- (void)setFromResultSet: (FMResultSet *)resultSet
+{
+    self.sectionId = [resultSet intForColumn:FormSectionId];
+    self.formId    = [resultSet intForColumn:FormId];
+    self.label     = [resultSet stringForColumn:FormSectionLabel];
+    self.header    = [resultSet stringForColumn:FormSectionHeader];
+    self.footer    = [resultSet stringForColumn:FormSectionFooter];
+    self.title     = [resultSet stringForColumn:FormSectionTitle];
+    self.archive   = [resultSet intForColumn:Archive];
+    self.sequenceOrder     = [resultSet intForColumn:FormSectionSequenceOrder];
+    self.modifiedTimestamp = [resultSet doubleForColumn:ModifiedTimeStamp];
+}
+
 @end
