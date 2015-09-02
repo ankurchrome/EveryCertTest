@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextLabelCustomCell" id="5d7-hG-V1O" customClass="TextLabelElementCell">
+            <rect key="frame" x="0.0" y="0.0" width="568" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5d7-hG-V1O" id="FzL-2q-5IU">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SPX-wa-GmY">
+                        <rect key="frame" x="5" y="4" width="555" height="35"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="SPX-wa-GmY" firstAttribute="leading" secondItem="FzL-2q-5IU" secondAttribute="leadingMargin" constant="-3" id="HUb-eJ-Tpw"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="SPX-wa-GmY" secondAttribute="bottom" constant="-4" id="KPh-Vi-65c"/>
+                    <constraint firstItem="SPX-wa-GmY" firstAttribute="trailing" secondItem="FzL-2q-5IU" secondAttribute="trailingMargin" id="O7e-7c-yUZ"/>
+                    <constraint firstItem="SPX-wa-GmY" firstAttribute="top" secondItem="FzL-2q-5IU" secondAttribute="topMargin" constant="-4" id="fRi-n4-9aF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="_textLabel" destination="SPX-wa-GmY" id="PYu-qg-WwH"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="242"/>
+        </tableViewCell>
+    </objects>
+</document>

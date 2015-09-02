@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TickBoxCustomCell" id="v0L-nH-jCa" customClass="TickBoxElementCell">
+            <rect key="frame" x="0.0" y="0.0" width="568" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="v0L-nH-jCa" id="XRT-wh-xad">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hM-mR-qbY">
+                        <rect key="frame" x="5" y="11" width="514" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iqd-kG-CQR">
+                        <rect key="frame" x="521" y="7" width="34" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="34" id="6E0-EH-R3J"/>
+                            <constraint firstAttribute="height" constant="30" id="qBt-P9-YPC"/>
+                        </constraints>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <state key="normal" backgroundImage="checkBox.png">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="selected" backgroundImage="checkBoxChecked.png">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="onClickTickBoxButton:" destination="v0L-nH-jCa" eventType="touchUpInside" id="otL-Ae-uI8"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="centerY" secondItem="iqd-kG-CQR" secondAttribute="centerY" id="A7m-dS-jAu"/>
+                    <constraint firstItem="1hM-mR-qbY" firstAttribute="leading" secondItem="XRT-wh-xad" secondAttribute="leadingMargin" constant="-3" id="I1o-hX-1VT"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="iqd-kG-CQR" secondAttribute="trailing" constant="5" id="Lxb-CW-ujK"/>
+                    <constraint firstItem="iqd-kG-CQR" firstAttribute="leading" secondItem="1hM-mR-qbY" secondAttribute="trailing" constant="2" id="W34-GF-1d9"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="1hM-mR-qbY" secondAttribute="bottom" constant="3" id="kM2-SE-ABo"/>
+                    <constraint firstItem="1hM-mR-qbY" firstAttribute="top" secondItem="XRT-wh-xad" secondAttribute="topMargin" constant="3" id="tQj-wo-hKa"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="_textLabel" destination="1hM-mR-qbY" id="W5l-fK-a3a"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="checkBox.png" width="33" height="33"/>
+        <image name="checkBoxChecked.png" width="33" height="33"/>
+    </resources>
+</document>

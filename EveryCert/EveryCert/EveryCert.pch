@@ -1,0 +1,20 @@
+//
+//  EveryCert.pch
+//  EveryCert
+//
+//  Created by Mayur Sardana on 07/08/15.
+//  Copyright (c) 2015 ChromeInfo Technologies. All rights reserved.
+//
+
+#import "Constant.h"
+#import "CommonUtils.h"
+#import "AppDelegate.h"
+
+#ifndef EveryCert_EveryCert_pch
+#define EveryCert_EveryCert_pch
+
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif

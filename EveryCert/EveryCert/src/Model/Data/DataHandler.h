@@ -1,0 +1,36 @@
+//
+//  DataHandler.h
+//  MultiFormApp
+//
+//  Created by Ankur Pachauri on 06/07/15.
+//  Copyright (c) 2015 Self. All rights reserved.
+//
+
+#import "BaseHandler.h"
+#import "DataModel.h"
+
+@interface DataHandler : BaseHandler
+
+/**
+ Insert a DataModel object information into data table.
+ @param  dataModel A DataModel model containing value of an element of the form
+ @return BOOL return Yes if data model saved successfully otherwise No
+ */
+- (BOOL)insertDataModel:(DataModel *)dataModel;
+
+/**
+ Check for data into 'data' table for an element of a certificate.
+ @param  certIdApp App Id of certificate record
+ @param  elementIdApp App Id of element record
+ @return return DataModel object if data exist otherwise returns nil
+ */
+- (DataModel *)dataExistForCertificate:(NSInteger)certIdApp element:(NSInteger)elementIdApp;
+
+/**
+ Update a DataModel object information into data table.
+ @param  dataModel A DataModel model containing value of an element of the form
+ @return BOOL return Yes if data model updated successfully otherwise No
+ */
+- (BOOL)updateDataModel:(DataModel *)dataModel;
+
+@end

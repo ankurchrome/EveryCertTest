@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PickListCustomCell" id="1hb-Uf-DCJ" customClass="PickListElementCell">
+            <rect key="frame" x="0.0" y="0.0" width="568" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1hb-Uf-DCJ" id="GUF-Lc-S3j">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0w-uR-oCd">
+                        <rect key="frame" x="15" y="11" width="327" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ArrowRight.png" translatesAutoresizingMaskIntoConstraints="NO" id="8Un-sK-4a7">
+                        <rect key="frame" x="540" y="14" width="20" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="aVg-Mi-dBb"/>
+                            <constraint firstAttribute="height" constant="15" id="fpb-fv-H24"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MY3-v1-zGN">
+                        <rect key="frame" x="344" y="11" width="193" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="MY3-v1-zGN" secondAttribute="bottom" constant="3" id="1AL-6N-tl4"/>
+                    <constraint firstItem="z0w-uR-oCd" firstAttribute="leading" secondItem="GUF-Lc-S3j" secondAttribute="leadingMargin" constant="7" id="3db-QB-fWq"/>
+                    <constraint firstItem="z0w-uR-oCd" firstAttribute="top" secondItem="GUF-Lc-S3j" secondAttribute="topMargin" constant="3" id="4Ae-1c-dqn"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="z0w-uR-oCd" secondAttribute="bottom" constant="3" id="Fl1-KZ-woh"/>
+                    <constraint firstItem="MY3-v1-zGN" firstAttribute="leading" secondItem="z0w-uR-oCd" secondAttribute="trailing" constant="2" id="Jib-bu-3gg"/>
+                    <constraint firstItem="8Un-sK-4a7" firstAttribute="top" secondItem="GUF-Lc-S3j" secondAttribute="topMargin" constant="6" id="Ndf-XM-Epc"/>
+                    <constraint firstItem="8Un-sK-4a7" firstAttribute="leading" secondItem="MY3-v1-zGN" secondAttribute="trailing" constant="3" id="Xoe-Tk-EkV"/>
+                    <constraint firstItem="MY3-v1-zGN" firstAttribute="width" secondItem="z0w-uR-oCd" secondAttribute="height" multiplier="193:21" id="bGL-Wx-XfX"/>
+                    <constraint firstItem="MY3-v1-zGN" firstAttribute="top" secondItem="GUF-Lc-S3j" secondAttribute="topMargin" constant="3" id="rKC-RC-SSa"/>
+                    <constraint firstItem="8Un-sK-4a7" firstAttribute="trailing" secondItem="GUF-Lc-S3j" secondAttribute="trailingMargin" id="tUv-mF-i50"/>
+                    <constraint firstItem="MY3-v1-zGN" firstAttribute="leading" secondItem="z0w-uR-oCd" secondAttribute="trailing" constant="2" id="ux1-7s-flC"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="selectedOptionLabel" destination="MY3-v1-zGN" id="gtj-we-2nd"/>
+                <outlet property="titleLabel" destination="z0w-uR-oCd" id="R9U-ZF-7bL"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ArrowRight.png" width="30" height="30"/>
+    </resources>
+</document>
