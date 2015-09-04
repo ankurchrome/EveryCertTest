@@ -29,14 +29,18 @@
 // Insert a DataBinaryModel object information into data_binary table.
 - (BOOL)insertDataBinaryModel:(DataBinaryModel *)dataBinaryModel
 {
-    FUNCTION_START;
-
-    NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?)", DataBinaryTable, DataBinaryIdApp, DataBinaryId, CertificateIdApp, ElementId, DataBinaryValue, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
+    __block BOOL success = false;
     
-    BOOL isExecuted = [self.database executeUpdate:query, @(dataBinaryModel.dataBinaryIdApp), @(dataBinaryModel.dataBinaryId), @(dataBinaryModel.certificateIdApp), @(dataBinaryModel.elementId), dataBinaryModel.dataBinary, dataBinaryModel.modifiedTimestampApp, dataBinaryModel.modifiedTimestamp, @(dataBinaryModel.archive), dataBinaryModel.uuid, @(dataBinaryModel.isDirty), @(dataBinaryModel.companyId)];
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
-    FUNCTION_END;
-    return isExecuted;
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?)", self.tableName, DataBinaryIdApp, DataBinaryId, CertificateIdApp, ElementId, DataBinaryValue, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
+         
+         success = [db executeUpdate:query, @(dataBinaryModel.dataBinaryIdApp), @(dataBinaryModel.dataBinaryId), @(dataBinaryModel.certificateIdApp), @(dataBinaryModel.elementId), dataBinaryModel.dataBinary, dataBinaryModel.modifiedTimestampApp, dataBinaryModel.modifiedTimestamp, @(dataBinaryModel.archive), dataBinaryModel.uuid, @(dataBinaryModel.isDirty), @(dataBinaryModel.companyId)];
+     }];
+    
+    return success;
 }
 
 // Check for binary data into 'data_binary' table for an element of a certificate.
@@ -44,41 +48,40 @@
 {
     FUNCTION_START;
     
-    DataBinaryModel *dataBinaryModel = nil;
+    __block DataBinaryModel *dataBinaryModel = nil;
     
-    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ = %ld", DataBinaryTable, CertificateIdApp, (long)certIdApp, ElementId, (long)elementIdApp];
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
-    [self.database open];
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ = %ld", self.tableName, CertificateIdApp, (long)certIdApp, ElementId, (long)elementIdApp];
+         
+         FMResultSet *result = [db executeQuery:query];
+         
+         if ([result next])
+         {
+             dataBinaryModel = [[DataBinaryModel alloc] initWithResultSet:result];
+         }
+     }];
     
-    FMResultSet *result = [self.database executeQuery:query];
-    
-    if ([result next])
-    {
-        dataBinaryModel = [DataBinaryModel new];
-        [dataBinaryModel initWithResultSet:result];
-    }
-    
-    [self.database close];
-    
-    FUNCTION_END;
     return dataBinaryModel;
 }
 
 // Update a DataBinaryModel object information into data_binary table.
 - (BOOL)updateDataBinaryModel:(DataBinaryModel *)dataBinaryModel
 {
-    FUNCTION_START;
+    __block BOOL success = false;
     
-    [self.database open];
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
-    NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ? WHERE %@ = ? ", DataBinaryTable, DataBinaryIdApp, DataBinaryId, CertificateIdApp, ElementId, DataBinaryValue, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId, DataBinaryIdApp];
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ? WHERE %@ = ? ", self.tableName, DataBinaryIdApp, DataBinaryId, CertificateIdApp, ElementId, DataBinaryValue, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId, DataBinaryIdApp];
+         
+         success = [db executeUpdate:query, @(dataBinaryModel.dataBinaryIdApp), @(dataBinaryModel.dataBinaryId), @(dataBinaryModel.certificateIdApp), @(dataBinaryModel.elementId), dataBinaryModel.dataBinary, dataBinaryModel.modifiedTimestampApp, dataBinaryModel.modifiedTimestamp, @(dataBinaryModel.archive), dataBinaryModel.uuid, @(dataBinaryModel.isDirty), @(dataBinaryModel.companyId), @(dataBinaryModel.dataBinaryId)];
+     }];
     
-    BOOL isExecuted = [self.database executeUpdate:query, @(dataBinaryModel.dataBinaryIdApp), @(dataBinaryModel.dataBinaryId), @(dataBinaryModel.certificateIdApp), @(dataBinaryModel.elementId), dataBinaryModel.dataBinary, dataBinaryModel.modifiedTimestampApp, dataBinaryModel.modifiedTimestamp, @(dataBinaryModel.archive), dataBinaryModel.uuid, @(dataBinaryModel.isDirty), @(dataBinaryModel.companyId), @(dataBinaryModel.dataBinaryId)];
-    
-    [self.database close];
-    
-    FUNCTION_END;
-    return isExecuted;
+    return success;
 }
 
 @end

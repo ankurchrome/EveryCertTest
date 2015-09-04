@@ -49,6 +49,8 @@
 
 @end
 
+extern NSString *const HomeBarButtonTitle;
+
 //Common
 extern NSString *const KeyboardWillResignNotification;
 extern NSString *const ElementPdfDrawingFormat;

@@ -57,25 +57,23 @@
     }
 
     //Get all forms with permissions(if any)
-    NSMutableArray *allForms = nil;
-    NSString       *query     = nil;
-    FormModel      *formModel = nil;
-    FMResultSet    *result    = nil;
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    NSMutableArray  *allForms      = [NSMutableArray new];
     
-    query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ != 1 %@ ORDER BY %@, %@", self.tableName, Archive, permissionCondQuery, FormCategoryId, FormSequenceOrder];
-    
-    result = [self.database executeQuery:query];
-    
-    allForms = [NSMutableArray new];
-    
-    while ([result next])
+    [databaseQueue inDatabase:^(FMDatabase *db)
     {
-        formModel = [[FormModel alloc] initWithResultSet:result];
+        NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ != 1 %@ ORDER BY %@, %@", self.tableName, Archive, permissionCondQuery, FormCategoryId, FormSequenceOrder];
         
-        [allForms addObject:formModel];
-    }
-    
-    FUNCTION_END;
+        FMResultSet *result = [db executeQuery:query];
+
+        while ([result next])
+        {
+            FormModel *formModel = [[FormModel alloc] initWithResultSet:result];
+            
+            [allForms addObject:formModel];
+        }
+    }];
+
     return allForms;
 }
 

@@ -12,6 +12,12 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+@property (assign, nonatomic) NSInteger loggedUserId;
+@property (assign, nonatomic) NSInteger loggedUserCompanyId;
+@property (strong, nonatomic) NSString *loggedUserFullName;
+@property (strong, nonatomic) NSString *loggedUserEmail;
+@property (strong, nonatomic) NSString *loggedUserPassword;
+@property (strong, nonatomic) NSString *loggedUserPermissionGroup;
 
 @end
 

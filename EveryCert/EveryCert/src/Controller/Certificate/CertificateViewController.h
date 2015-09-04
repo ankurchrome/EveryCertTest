@@ -13,10 +13,11 @@
 @interface CertificateViewController : UIViewController
 
 /**
- Returns an initialized CertificateViewController with CertificateModel object
+ Initialize CertificateViewController with CertificateModel object
  @param  certificate CertificateModel object containing info about certificate
- @return Returns an initialized CertificateViewController object
+ @return void
  */
-- (id)initWithCertificate:(CertificateModel *)certificate;
+- (void)initializeWithCertificate:(CertificateModel *)certificate;
+
 
 @end

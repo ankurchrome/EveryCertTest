@@ -10,6 +10,8 @@
 
 @implementation Constant
 
+NSString *const HomeBarButtonTitle = @"Home";
+
 //Common
 NSString *const KeyboardWillResignNotification = @"ResignKeyboard";
 

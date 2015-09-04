@@ -33,56 +33,55 @@
 // Fetch all elements of given form with their stored data(if any) of given cert
 - (NSArray *)getAllElementsOfForm:(NSInteger)formId withDataOfCertificate:(NSInteger)certIdApp
 {
-    NSString          *query = nil;
-    FMResultSet       *result = nil;
-    ElementModel      *elementModel = nil;
-    NSMutableArray    *elementModelList = nil;
-    SubElementHandler *subElementHandler = nil;
+    FMDatabaseQueue *databaseQueue    = [[FMDBDataSource sharedManager] databaseQueue];
+    NSMutableArray  *elementModelList = [NSMutableArray new];
     
-    query = [NSString stringWithFormat:
-             @"SELECT *\
-             FROM\
-             (SELECT * FROM %@ WHERE %@ = %ld) t1\
-             LEFT JOIN\
-             (SELECT * FROM %@ WHERE %@ = %ld) t2\
-             ON t1.%@ = t2.%@\
-             LEFT JOIN\
-             (SELECT * FROM %@ WHERE %@ = %ld) t3\
-             ON t1.%@ = t3.%@\
-             LEFT JOIN\
-             (SELECT * FROM %@) t4\
-             ON  t2.%@ = t4.%@\
-             AND t1.%@ = t4.%@\
-             AND t1.%@ = t4.%@\
-             AND t1.%@ != 1\
-             ORDER BY %@",
-             self.tableName, FormId, (long)formId, DataTable, CertificateIdApp, (long)certIdApp, ElementId, ElementId, DataBinaryTable, CertificateIdApp, (long)certIdApp, ElementId, ElementId, LookUpTable, RecordIdApp, RecordIdApp, ElementLookUpListIdExisting, LookUpListId, ElementFieldNumberExisting, LookUpFieldNumber, Archive, ElementSequenceOrder];
-    
-    elementModelList  = [NSMutableArray new];
-    subElementHandler = [SubElementHandler new];
-    
-    result = [self.database executeQuery:query];
-    
-    while ([result next])
+    [databaseQueue inDatabase:^(FMDatabase *db)
     {
-        elementModel = [[ElementModel alloc] initWithResultSet:result];
+        NSString *query = [NSString stringWithFormat:
+                             @"SELECT *\
+                             FROM\
+                             (SELECT * FROM %@ WHERE %@ = %ld) t1\
+                             LEFT JOIN\
+                             (SELECT * FROM %@ WHERE %@ = %ld) t2\
+                             ON t1.%@ = t2.%@\
+                             LEFT JOIN\
+                             (SELECT * FROM %@ WHERE %@ = %ld) t3\
+                             ON t1.%@ = t3.%@\
+                             LEFT JOIN\
+                             (SELECT * FROM %@) t4\
+                             ON  t2.%@ = t4.%@\
+                             AND t1.%@ = t4.%@\
+                             AND t1.%@ = t4.%@\
+                             AND t1.%@ != 1\
+                             ORDER BY %@",
+                           self.tableName, FormId, (long)formId, DataTable, CertificateIdApp, (long)certIdApp, ElementId, ElementId, DataBinaryTable, CertificateIdApp, (long)certIdApp, ElementId, ElementId, LookUpTable, RecordIdApp, RecordIdApp, ElementLookUpListIdExisting, LookUpListId, ElementFieldNumberExisting, LookUpFieldNumber, Archive, ElementSequenceOrder];
         
-        //TODO: remove the unneccessary properties and change the query accordingly
-        elementModel.dataIdApp = [result intForColumn:DataIdApp];
-        elementModel.dataValue = [result stringForColumn:DataValue];
-        elementModel.dataModel = [[DataModel alloc] initWithResultSet:result];
+        SubElementHandler *subElementHandler = [SubElementHandler new];
         
-        elementModel.dataBinaryIdApp = [result intForColumn:DataBinaryIdApp];
-        elementModel.dataBinaryValue = [result dataForColumn:DataBinaryValue];
-        elementModel.dataBinaryModel = [[DataBinaryModel alloc] initWithResultSet:result];
+        FMResultSet *result = [db executeQuery:query];
         
-        if (elementModel.fieldType == ElementTypeSubElements)
+        while ([result next])
         {
-            elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId];
+            ElementModel *elementModel = [[ElementModel alloc] initWithResultSet:result];
+            
+            //TODO: remove the unneccessary properties and change the query accordingly
+            elementModel.dataIdApp = [result intForColumn:DataIdApp];
+            elementModel.dataValue = [result stringForColumn:DataValue];
+            elementModel.dataModel = [[DataModel alloc] initWithResultSet:result];
+            
+            elementModel.dataBinaryIdApp = [result intForColumn:DataBinaryIdApp];
+            elementModel.dataBinaryValue = [result dataForColumn:DataBinaryValue];
+            elementModel.dataBinaryModel = [[DataBinaryModel alloc] initWithResultSet:result];
+            
+            if (elementModel.fieldType == ElementTypeSubElements)
+            {
+                elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId];
+            }
+            
+            [elementModelList addObject:elementModel];
         }
-        
-        [elementModelList addObject:elementModel];
-    }
+    }];
     
     return elementModelList;
 }
@@ -90,31 +89,29 @@
 // Fetch all elements of given form
 - (NSArray *)getAllElementsOfForm:(NSInteger)formId
 {
-    NSString          *query = nil;
-    FMResultSet       *result = nil;
-    ElementModel      *elementModel = nil;
-    NSMutableArray    *elementModelList = nil;
-    SubElementHandler *subElementHandler = nil;
+    FMDatabaseQueue *databaseQueue    = [[FMDBDataSource sharedManager] databaseQueue];
+    NSMutableArray  *elementModelList = [NSMutableArray new];
     
-    query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ != 1 ORDER BY %@",
-             self.tableName, FormId, (long)formId, Archive, ElementSequenceOrder];
-    
-    elementModelList  = [NSMutableArray new];
-    subElementHandler = [SubElementHandler new];
-    
-    result = [self.database executeQuery:query];
-    
-    while ([result next])
-    {
-        elementModel = [[ElementModel alloc] initWithResultSet:result];
-        
-        if (elementModel.fieldType == ElementTypeSubElements)
-        {
-            elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId];
-        }
-        
-        [elementModelList addObject:elementModel];
-    }
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ != 1 ORDER BY %@",self.tableName, FormId, (long)formId, Archive, ElementSequenceOrder];
+         
+         SubElementHandler *subElementHandler = [SubElementHandler new];
+
+         FMResultSet *result = [db executeQuery:query];
+         
+         while ([result next])
+         {
+             ElementModel *elementModel = [[ElementModel alloc] initWithResultSet:result];
+             
+             if (elementModel.fieldType == ElementTypeSubElements)
+             {
+                 elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId];
+             }
+             
+             [elementModelList addObject:elementModel];
+         }
+     }];
     
     return elementModelList;
 }
@@ -138,24 +135,22 @@
 // Fetch all elements of given section from database
 - (NSArray *)getAllElementsOfSection:(NSInteger)sectionId
 {
-    NSString       *query = nil;
-    FMResultSet    *result = nil;
-    ElementModel   *elementModel = nil;
-    NSMutableArray *elementModelList = nil;
+    FMDatabaseQueue *databaseQueue    = [[FMDBDataSource sharedManager] databaseQueue];
+    NSMutableArray  *elementModelList = [NSMutableArray new];
     
-    query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ != 1 ORDER BY %@",
-             self.tableName, FormSectionId, (long)sectionId, Archive, ElementSequenceOrder];
-    
-    elementModelList  = [NSMutableArray new];
-    
-    result = [self.database executeQuery:query];
-    
-    while ([result next])
-    {
-        elementModel = [[ElementModel alloc] initWithResultSet:result];
-        
-        [elementModelList addObject:elementModel];
-    }
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ != 1 ORDER BY %@", self.tableName, FormSectionId, (long)sectionId, Archive, ElementSequenceOrder];
+         
+         FMResultSet *result = [db executeQuery:query];
+         
+         while ([result next])
+         {
+             ElementModel *elementModel = [[ElementModel alloc] initWithResultSet:result];
+             
+             [elementModelList addObject:elementModel];
+         }
+     }];
     
     return elementModelList;
 }
@@ -163,51 +158,50 @@
 // Fetch all elements for Setting screen with their data from company_user & data_binary table
 - (NSArray *)getSettingElementsOfCompany:(NSInteger)companyId
 {
-    NSString       *query = nil;
-    FMResultSet    *result = nil;
-    ElementModel   *elementModel = nil;
-    NSMutableArray *elementModelList = nil;
-    SubElementHandler *subElementHandler = nil;
+    FMDatabaseQueue *databaseQueue    = [[FMDBDataSource sharedManager] databaseQueue];
+    NSMutableArray  *elementModelList = [NSMutableArray new];
     
-    query = [NSString stringWithFormat:@"\
-             SELECT *\
-             FROM\
-             (SELECT * FROM %@ WHERE %@ = %ld OR %@ = %ld) t1\
-             LEFT JOIN\
-             (SELECT * FROM %@ WHERE %@ = %ld) t2\
-             ON t1.%@ = t2.%@\
-             LEFT JOIN\
-             (SELECT * FROM %@ WHERE %@ = %ld) t3\
-             ON t1.%@ = t3.%@\
-             WHERE t1.%@ != 1\
-             ORDER BY %@, %@",
-             self.tableName, FormSectionId, (long)-1, FormSectionId, (long)-2, CompanyUserTable, CompanyId, companyId, ElementFieldName, CompanyUserFieldName, DataBinaryTable, CompanyId, companyId, ElementId, ElementId, Archive, FormSectionId, ElementSequenceOrder];
-
-    elementModelList  = [NSMutableArray new];
-    subElementHandler = [SubElementHandler new];
-    
-    result = [self.database executeQuery:query];
-    
-    while ([result next])
-    {
-        elementModel = [[ElementModel alloc] initWithResultSet:result];
-        
-        //TODO: remove the unneccessary properties and change the query accordingly
-        elementModel.dataBinaryIdApp = [result intForColumn:DataBinaryIdApp];
-        elementModel.dataBinaryValue = [result dataForColumn:DataBinaryValue];
-        elementModel.dataBinaryModel = [[DataBinaryModel alloc] initWithResultSet:result];
-
-        elementModel.companyUserIdApp     = [result intForColumn:CompanyUserIdApp];
-        elementModel.companyUserDataValue = [result stringForColumn:CompanyUserData];
-        elementModel.companyUserModel     = [[CompanyUserModel alloc] initWithResultSet:result];
-        
-        if (elementModel.fieldType == ElementTypeSubElements)
-        {
-            elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId];
-        }
-        
-        [elementModelList addObject:elementModel];
-    }
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"\
+                            SELECT *\
+                            FROM\
+                            (SELECT * FROM %@ WHERE %@ = %ld OR %@ = %ld) t1\
+                            LEFT JOIN\
+                            (SELECT * FROM %@ WHERE %@ = %ld) t2\
+                            ON t1.%@ = t2.%@\
+                            LEFT JOIN\
+                            (SELECT * FROM %@ WHERE %@ = %ld) t3\
+                            ON t1.%@ = t3.%@\
+                            WHERE t1.%@ != 1\
+                            ORDER BY %@, %@",
+                            self.tableName, FormSectionId, (long)-1, FormSectionId, (long)-2, CompanyUserTable, CompanyId, (long)companyId, ElementFieldName, CompanyUserFieldName, DataBinaryTable, CompanyId, (long)companyId, ElementId, ElementId, Archive, FormSectionId, ElementSequenceOrder];
+         
+         SubElementHandler *subElementHandler = [SubElementHandler new];
+         
+         FMResultSet *result = [db executeQuery:query];
+         
+         while ([result next])
+         {
+             ElementModel *elementModel = [[ElementModel alloc] initWithResultSet:result];
+             
+             //TODO: remove the unneccessary properties and change the query accordingly
+             elementModel.dataIdApp = [result intForColumn:DataIdApp];
+             elementModel.dataValue = [result stringForColumn:DataValue];
+             elementModel.dataModel = [[DataModel alloc] initWithResultSet:result];
+             
+             elementModel.dataBinaryIdApp = [result intForColumn:DataBinaryIdApp];
+             elementModel.dataBinaryValue = [result dataForColumn:DataBinaryValue];
+             elementModel.dataBinaryModel = [[DataBinaryModel alloc] initWithResultSet:result];
+             
+             if (elementModel.fieldType == ElementTypeSubElements)
+             {
+                 elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId];
+             }
+             
+             [elementModelList addObject:elementModel];
+         }
+     }];
     
     return elementModelList;
 }

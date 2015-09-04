@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "ElementTableView.h"
 #import "ElementHandler.h"
+#import "CompanyUserHandler.h"
 
 @interface LoginViewController ()
 {
@@ -19,48 +20,65 @@
 
 @implementation LoginViewController
 
+NSString *const ForgotPasswordAlertTitle       = @"Forgot password";
+NSString *const ForgotPasswordEmailPlaceholder = @"Email";
+NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
+
+#pragma mark - LifeCycle Methods
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     ElementHandler *elementHandler = [ElementHandler new];
-    [elementHandler.database open];
-    
     _loginElements = [elementHandler getLoginElements];
-    [elementHandler.database close];
     
     [_loginElementTableView reloadWithElements:_loginElements];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    //TODO:
-    self.navigationController.navigationItem.hidesBackButton = YES;
-    self.navigationItem.leftBarButtonItem = nil;
-    
-    // Change the color of Navigation Bar's Title Color on view Appear
-    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-}
-
 #pragma mark - IBActions
 
+//Show an alert to reset the password
 - (IBAction)onClickForgetPasswordButton:(id)sender
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Forgot password"
-                                                                             message:nil
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = nil;
+    UIAlertAction     *resetPasswordAction = nil;
     
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = @"Email";
+    alertController = [UIAlertController alertControllerWithTitle:ForgotPasswordAlertTitle
+                                                          message:nil
+                                                   preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
+    {
+        textField.placeholder = ForgotPasswordEmailPlaceholder;
     }];
     
-    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"Reset your password" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        
-        // Code for Handling the AlertButton
+    resetPasswordAction = [UIAlertAction actionWithTitle:ForgotPasswordResetActionTitle
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction *action)
+    {
         
     }];
-    [alertController addAction:alertAction];
+    
+    [alertController addAction:resetPasswordAction];
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if ([identifier isEqualToString:@"SignIn"])
+    {
+        CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
+        
+        BOOL isLoggedIn = [companyUserHandler checkLoginWithElements:_loginElements];
+        
+        if (!isLoggedIn)
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 @end

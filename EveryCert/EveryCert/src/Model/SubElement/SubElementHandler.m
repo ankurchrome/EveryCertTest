@@ -28,23 +28,22 @@
 // Fetch all sub elements of given element
 - (NSArray *)getAllSubElementsOfElement:(NSInteger)elementIdApp
 {
-    NSString        *query = nil;
-    FMResultSet     *result = nil;
-    SubElementModel *subElementModel = nil;
-    NSMutableArray  *subElementModelList = nil;
+    FMDatabaseQueue *databaseQueue       = [[FMDBDataSource sharedManager] databaseQueue];
+    NSMutableArray  *subElementModelList = [NSMutableArray new];
     
-    query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld ORDER BY %@", SubElementTable, ElementId, (long)elementIdApp, ElementSequenceOrder];
-    
-    result = [self.database executeQuery:query];
-    
-    subElementModelList = [NSMutableArray new];
-    
-    while ([result next])
-    {
-        subElementModel = [[SubElementModel alloc] initWithResultSet:result];
-        
-        [subElementModelList addObject:subElementModel];
-    }
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld ORDER BY %@", SubElementTable, ElementId, (long)elementIdApp, ElementSequenceOrder];
+         
+         FMResultSet *result = [db executeQuery:query];
+         
+         while ([result next])
+         {
+             SubElementModel *subElementModel = [[SubElementModel alloc] initWithResultSet:result];
+             
+             [subElementModelList addObject:subElementModel];
+         }
+     }];
     
     return subElementModelList;
 }

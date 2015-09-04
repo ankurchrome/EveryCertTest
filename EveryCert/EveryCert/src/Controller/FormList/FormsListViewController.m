@@ -8,47 +8,41 @@
 
 #import "FormsListViewController.h"
 #import "CertificateViewController.h"
-#import "FormHandler.h"
-#import "FormModel.h"
 #import "CertificateHandler.h"
+#import "FormHandler.h"
 
 @interface FormsListViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     __weak IBOutlet UITableView *_tableView;
+    
     NSArray *_allFormsList;
 }
 @end
 
 @implementation FormsListViewController
 
+static NSString *const FormsListCellIdentifier = @"customCell";
+
+#pragma mark - LifeCycle Methods
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     FormHandler *formHandler = [FormHandler new];
-    
+
     //TODO: permissions will come from company_user table if no then 0 will be default
-    _allFormsList = [formHandler getAllFormsWithPermissions:@"0"];
-    
-//    self.navigationController.navigationBar.translucent = NO;
+    _allFormsList = [formHandler getAllFormsWithPermissions:APP_DELEGATE.loggedUserPermissionGroup];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+#pragma mark - IBActions
+
+- (IBAction)onClickHomeBarButton:(id)sender
 {
-    // Change the color of Navigation Bar's Title Color on view Appear
-    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-}
-
-#pragma mark -IBActions
-
-
-- (IBAction)onClickHomeBarButton:(id)sender {
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
-#pragma mark TableView DataSource
+#pragma mark - UITableViewDataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -57,13 +51,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"customCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if(!cell) {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:FormsListCellIdentifier];
+    
+    if(!cell)
+    {
         cell = [UITableViewCell new];
     }
+    
     FormModel *formModel = _allFormsList[indexPath.row];
+    
     cell.textLabel.text = formModel.title;
+    
     return cell;
 }
 
@@ -71,24 +69,33 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *const CertificateViewControllerIdentifier  = @"CertificateViewController";
+    //Instantiate CertificateViewController object from Storyboard
+    UIStoryboard *mainStoryBoard = nil;
+    CertificateViewController *certificateVC = nil;
     
-    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    CertificateViewController *certificateViewController = [mainStoryBoard instantiateViewControllerWithIdentifier:CertificateViewControllerIdentifier];
+    mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    certificateVC  = [mainStoryBoard instantiateViewControllerWithIdentifier:@"CertificateViewController"];
+
+    //Create a new certificate with selected form
+    NSInteger           certRowId = 0;
+    FormModel          *formModel = nil;
+    CertificateModel   *newCertificate = nil;
+    CertificateHandler *certHandler = nil;
     
-    FormModel *formModel = _allFormsList[indexPath.row];
+    formModel = _allFormsList[indexPath.row];
     
-    CertificateModel *newCertificate = [CertificateModel new];
+    newCertificate = [CertificateModel new];
     newCertificate.formId = formModel.formId;
     
-    CertificateHandler *certHandler = [CertificateHandler new];
-    NSInteger rowId = [certHandler insertCertificate:newCertificate];
+    certHandler = [CertificateHandler new];
     
-    if (rowId > 0)
+    certRowId   = [certHandler insertCertificate:newCertificate];
+    
+    if (certRowId > 0)
     {
-        newCertificate.certIdApp = rowId;
-        certificateViewController = [certificateViewController initWithCertificate:newCertificate];
-        [self.navigationController pushViewController:certificateViewController animated:YES];
+        newCertificate.certIdApp = certRowId;
+        [certificateVC initializeWithCertificate:newCertificate];
+        [self.navigationController pushViewController:certificateVC animated:YES];
     }
 }
 

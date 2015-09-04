@@ -30,25 +30,22 @@
 {
     FUNCTION_START;
 
-    NSMutableArray   *formSectionModels = nil;
-    NSString         *query = nil;
-    FormSectionModel *formSectionModel = nil;
-    FMResultSet      *result = nil;
+    FMDatabaseQueue *databaseQueue     = [[FMDBDataSource sharedManager] databaseQueue];
+    NSMutableArray  *formSectionModels = [NSMutableArray new];
     
-    query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ != 1 ORDER BY %@", self.tableName, FormId, (long)formIdApp, Archive, FormSectionSequenceOrder];
-    
-    result = [self.database executeQuery:query];
-
-    formSectionModels = [NSMutableArray new];
-    
-    while ([result next])
+    [databaseQueue inDatabase:^(FMDatabase *db)
     {
-        formSectionModel = [[FormSectionModel alloc] initWithResultSet:result];
-
-        [formSectionModels addObject:formSectionModel];
-    }
-    
-    FUNCTION_END;
+        NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ != 1 ORDER BY %@", self.tableName, FormId, (long)formIdApp, Archive, FormSectionSequenceOrder];
+        
+        FMResultSet *result = [db executeQuery:query];
+        
+        while ([result next])
+        {
+            FormSectionModel *formSectionModel = [[FormSectionModel alloc] initWithResultSet:result];
+            
+            [formSectionModels addObject:formSectionModel];
+        }
+    }];
     
     return formSectionModels;
 }

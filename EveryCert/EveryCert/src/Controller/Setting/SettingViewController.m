@@ -26,9 +26,7 @@
 
     //TODO: Get company id from logged user
     ElementHandler *elementHandler = [ElementHandler new];
-    [elementHandler.database open];
-    _settingElements = [elementHandler getSettingElementsOfCompany:14];
-    [elementHandler.database close];
+    _settingElements = [elementHandler getSettingElementsOfCompany:APP_DELEGATE.loggedUserCompanyId];
     
     [_settingElementTableView reloadWithElements:_settingElements];
 }

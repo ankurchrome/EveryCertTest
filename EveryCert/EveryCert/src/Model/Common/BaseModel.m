@@ -10,6 +10,18 @@
 
 @implementation BaseModel
 
+- (id)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _uuid = EMPTY_STRING;
+    }
+    
+    return self;
+}
+
 // This Method is used to Initialize a Model object with the specified Result Set
 - (id)initWithResultSet: (FMResultSet *)resultSet
 {

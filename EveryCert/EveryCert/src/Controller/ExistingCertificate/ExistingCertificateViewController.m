@@ -35,8 +35,7 @@
 }
 @end
 
-NSString *const MenuOptionImageNamed  = @"MenuOption.png";
-NSString *const HomeBarButtonTitle    = @"Home";
+NSString *const MenuOptionImageNamed = @"MenuOption.png";
 
 @implementation ExistingCertificateViewController
 

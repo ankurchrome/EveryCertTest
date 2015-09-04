@@ -29,22 +29,27 @@
 // Insert a certificate object into certificate table and returns row id for inserted row
 - (NSInteger)insertCertificate:(CertificateModel *)certificate
 {
-    BOOL success = false;
-    NSInteger rowId = 0;
-    NSString *query = nil;
+    __block NSInteger rowId = 0;
     
-    certificate.isDirty = true;
-    certificate.uuid = [[NSUUID new] UUIDString];
-    certificate.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
-   query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", self.tableName, FormId, CertificateName, CertificateIssuedApp, CertificateDate, CertificatePdf, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
-
-    success = [self.database executeUpdate:query, @(certificate.formId), certificate.name, certificate.issuedApp, certificate.date, certificate.pdf, @(certificate.modifiedTimestamp), certificate.modifiedTimestampApp, @(certificate.archive), certificate.uuid, @(certificate.isDirty), certificate.companyId];
-    
-    if (success)
+    [databaseQueue inDatabase:^(FMDatabase *db)
     {
-        rowId = [self.database lastInsertRowId];
-    }
+        BOOL success = false;
+        
+        certificate.isDirty = true;
+        certificate.uuid = [[NSUUID new] UUIDString];
+        certificate.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
+        
+        NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?)", self.tableName, FormId, CertificateName, CertificateIssuedApp, CertificateDate, CertificatePdf, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
+        
+        success = [db executeUpdate:query, @(certificate.formId), certificate.name, @(certificate.issuedApp).stringValue, certificate.date, certificate.pdf, @(certificate.modifiedTimestamp).stringValue, @(certificate.modifiedTimestampApp).stringValue, @(certificate.archive), certificate.uuid, @(certificate.isDirty), @(certificate.companyId).stringValue];
+        
+        if (success)
+        {
+            rowId = (NSInteger)[db lastInsertRowId];
+        }
+    }];
     
     return rowId;
 }
@@ -52,15 +57,19 @@
 // Update certificate information into its database table
 - (BOOL)updateCertificate:(CertificateModel *)certificate
 {
-    BOOL success = false;
-    NSString *query = nil;
+    __block BOOL success = false;
     
-    certificate.isDirty = true;
-    certificate.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
-    query = [NSString stringWithFormat:@"UPDATE %@ SET %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ? WHERE %@ = ? ", self.tableName, CertificateId, FormId, CertificateName, CertificateIssuedApp, CertificateDate, CertificatePdf, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId, CertificateIdApp];
-    
-    success = [self.database executeUpdate:query, @(certificate.certId), @(certificate.formId), certificate.name, certificate.issuedApp, certificate.date, certificate.pdf, certificate.modifiedTimestamp, certificate.modifiedTimestampApp, @(certificate.archive), certificate.uuid, @(certificate.isDirty), certificate.companyId, @(certificate.certIdApp)];
+    [databaseQueue inDatabase:^(FMDatabase *db)
+    {
+        certificate.isDirty = true;
+        certificate.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
+        
+        NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ? WHERE %@ = ? ", self.tableName, CertificateId, FormId, CertificateName, CertificateIssuedApp, CertificateDate, CertificatePdf, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId, CertificateIdApp];
+        
+        success = [db executeUpdate:query, @(certificate.certId), @(certificate.formId), certificate.name, certificate.issuedApp, certificate.date, certificate.pdf, certificate.modifiedTimestamp, certificate.modifiedTimestampApp, @(certificate.archive), certificate.uuid, @(certificate.isDirty), certificate.companyId, @(certificate.certIdApp)];
+    }];
     
     return success;
 }
@@ -68,25 +77,26 @@
 // Fetch all the existing certificates of given company
 - (NSArray *)getAllExistingCertificatesOfCompany:(NSInteger)companyId
 {
-    NSString *query = nil;
-    FMResultSet *result = nil;
-    CertificateModel *certificateModel = nil;
-    NSMutableArray   *certificateModelList = nil;
+    FMDatabaseQueue *databaseQueue        = [[FMDBDataSource sharedManager] databaseQueue];
+    NSMutableArray  *certificateModelList = [NSMutableArray new];
     
-    query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ != 1 ORDER BY %@ DESC", self.tableName, CompanyId, companyId, Archive, ModifiedTimestampApp];
-    
-    result = [self.database executeQuery:query];
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = nil;
+         FMResultSet *result = nil;
+         CertificateModel *certificateModel = nil;
 
-    certificateModelList = [NSMutableArray new];
-    
-    while ([result next])
-    {
-        certificateModel = [[CertificateModel alloc] initWithResultSet:result];
-
-        [certificateModelList addObject:certificateModel];
-    }
-    
-    FUNCTION_END;
+         query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld AND %@ != 1 ORDER BY %@ DESC", self.tableName, CompanyId, (long)companyId, Archive, ModifiedTimestampApp];
+         
+         result = [db executeQuery:query];
+         
+         while ([result next])
+         {
+             certificateModel = [[CertificateModel alloc] initWithResultSet:result];
+             
+             [certificateModelList addObject:certificateModel];
+         }
+     }];
     
     return certificateModelList;
 }

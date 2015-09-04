@@ -10,6 +10,21 @@
 
 @implementation CertificateModel
 
+- (id)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _name = EMPTY_STRING;
+        _date = [NSDate date];
+        _dateString = EMPTY_STRING;
+        _pdf = EMPTY_STRING;
+    }
+    
+    return self;
+}
+
 // Initialize object with the info stored in ResultSet
 - (void)setFromResultSet: (FMResultSet *)resultSet
 {

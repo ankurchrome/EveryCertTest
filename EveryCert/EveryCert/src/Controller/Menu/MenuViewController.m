@@ -7,9 +7,9 @@
 //
 
 #import "MenuViewController.h"
-#import "SettingViewController.h"
 #import "FormsListViewController.h"
 #import "ExistingCertificateViewController.h"
+#import "SettingViewController.h"
 
 @interface MenuViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -19,40 +19,33 @@
 }
 @end
 
-static NSString *MenuOptionCellIdentifier     = @"MenuOptionCell";
+static NSString *const MenuOptionCellIdentifier  = @"MenuOptionCell";
 
-NSString *const MenuOptionNewCertificate      = @"Create New Certificate";
-NSString *const MenuOptionExistingCertificate = @"Existing Certificate";
-NSString *const MenuOptionSetting             = @"Setting";
+NSString *const MenuOptionRowNewCertificate      = @"Create New Certificate";
+NSString *const MenuOptionRowExistingCertificate = @"Existing Certificate";
+NSString *const MenuOptionRowSetting             = @"Setting";
 
 @implementation MenuViewController
 
-#pragma mark - LifeCycle
+#pragma mark - LifeCycle Methods
 
-- (void)viewWillAppear:(BOOL)animated {
-    self.navigationItem.hidesBackButton = YES;
-    self.navigationController.navigationBar.translucent = NO;
-}
-
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
-    _menuOptionList = @[MenuOptionNewCertificate, MenuOptionExistingCertificate, MenuOptionSetting];
+    _menuOptionList = @[MenuOptionRowNewCertificate,
+                        MenuOptionRowExistingCertificate,
+                        MenuOptionRowSetting];
 }
 
 #pragma mark - IBActions
 
-- (IBAction)onClickLogoutButton:(id)sender {
+- (IBAction)onClickLogoutButton:(id)sender
+{
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-#pragma mark - TableView Delegate and DataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
+#pragma mark - UITableViewDataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -62,33 +55,44 @@ NSString *const MenuOptionSetting             = @"Setting";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MenuOptionCellIdentifier];
+    
     cell.textLabel.text = _menuOptionList[indexPath.row];
 
-    if(!cell) {
+    if(!cell)
+    {
         cell = [UITableViewCell new];
     }
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-       return cell;
+    
+    return cell;
 }
+
+#pragma mark - UITableViewDelegate Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];    
+    UIViewController *nextVC = nil;
     
-    if([_menuOptionList[indexPath.row] isEqualToString: MenuOptionNewCertificate])
+    NSString     *selectedRow = _menuOptionList[indexPath.row];
+    UIStoryboard *storyBoard  = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    if([selectedRow isEqualToString:MenuOptionRowNewCertificate])
     {
-        FormsListViewController *formList = [storyBoard instantiateViewControllerWithIdentifier:@"FormList"];
-        [self.navigationController pushViewController:formList animated:YES];
+        nextVC = [storyBoard instantiateViewControllerWithIdentifier:@"FormList"];
     }
-    else if([_menuOptionList[indexPath.row] isEqualToString: MenuOptionExistingCertificate])
+    else if([selectedRow isEqualToString:MenuOptionRowNewCertificate])
     {
-        ExistingCertificateViewController *existingCertificate = [storyBoard instantiateViewControllerWithIdentifier:@"ExistingCertificate"];
-        [self.navigationController pushViewController:existingCertificate animated:YES];
+        nextVC = [storyBoard instantiateViewControllerWithIdentifier:@"ExistingCertificate"];
     }
-    else if([_menuOptionList[indexPath.row] isEqualToString: MenuOptionSetting])
+    else if([selectedRow isEqualToString:MenuOptionRowNewCertificate])
     {
-        SettingViewController *setting = [storyBoard instantiateViewControllerWithIdentifier:@"Setting"];
-        [self.navigationController pushViewController:setting animated:YES];
+        nextVC = [storyBoard instantiateViewControllerWithIdentifier:@"Setting"];
+    }
+    
+    if (nextVC)
+    {
+        [self.navigationController pushViewController:nextVC animated:YES];
     }
 }
 

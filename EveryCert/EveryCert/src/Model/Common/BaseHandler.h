@@ -7,11 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FMDatabase.h"
+#import "FMDBDataSource.h"
 
 @interface BaseHandler : NSObject
-
-@property(nonatomic, strong) FMDatabase *database;
 
 @property(nonatomic, strong) NSString *tableName;
 @property(nonatomic, strong) NSString *appIdField;

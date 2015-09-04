@@ -10,12 +10,9 @@
 #import "ElementTableView.h"
 #import "ElementHandler.h"
 
-//#import "TextFieldElementCell.h"
-
 @interface RegistrationViewController ()
 {
     IBOutlet ElementTableView *_signupElementTableView;
-    __weak IBOutlet UILabel *_termsAndServicesLabel;
 
     NSArray *_signupElements;
 }
@@ -23,23 +20,16 @@
 
 @implementation RegistrationViewController
 
-#pragma mark - Life Cycle
+#pragma mark - LifeCycle Methods
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     ElementHandler *elementHandler = [ElementHandler new];
-    [elementHandler.database open];
     _signupElements = [elementHandler getSignUpElements];
-    [elementHandler.database close];
     
     [_signupElementTableView reloadWithElements:_signupElements];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    self.navigationItem.hidesBackButton = YES;
 }
 
 #pragma mark - IBActions

@@ -80,7 +80,7 @@
 		77DC23E51B6F4A9600624211 /* EveryCertTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DC23E41B6F4A9600624211 /* EveryCertTests.m */; };
 		77F8E4A91B821F0300C214A4 /* Everycert.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 77F8E4A81B821F0300C214A4 /* Everycert.sqlite */; };
 		77F8E4AC1B82220600C214A4 /* Everycert.sql in Resources */ = {isa = PBXBuildFile; fileRef = 77F8E4AB1B82220600C214A4 /* Everycert.sql */; };
-		77F8E4AE1B822D0E00C214A4 /* EverycertWithData.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 77F8E4AD1B822D0E00C214A4 /* EverycertWithData.sqlite */; };
+		C34301F81B9832FD007AC6BB /* EverycertWithData.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */; };
 		C38E89BB1B9705D500790752 /* CertificateHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89861B9705D500790752 /* CertificateHandler.m */; };
 		C38E89BC1B9705D500790752 /* CertificateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89881B9705D500790752 /* CertificateModel.m */; };
 		C38E89BD1B9705D500790752 /* BaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E898B1B9705D500790752 /* BaseHandler.m */; };
@@ -103,6 +103,7 @@
 		C38E89CE1B9705D500790752 /* RecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89B51B9705D500790752 /* RecordModel.m */; };
 		C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89B81B9705D500790752 /* SubElementHandler.m */; };
 		C38E89D01B9705D500790752 /* SubElementModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89BA1B9705D500790752 /* SubElementModel.m */; };
+		C3C7862C1B99B75A00788D62 /* FMDBDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C7862B1B99B75A00788D62 /* FMDBDataSource.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,7 +208,7 @@
 		77C035C61B78B25F009228F1 /* MenuOption@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MenuOption@3x.png"; sourceTree = "<group>"; };
 		77DBB9141B6F553900F02932 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		77DBB9151B6F553900F02932 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		77DBB9191B6F555C00F02932 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		77DBB9191B6F555C00F02932 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = ../LaunchScreen.xib; sourceTree = "<group>"; };
 		77DBB91A1B6F555C00F02932 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		77DBB91D1B6F560600F02932 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		77DBB91E1B6F560600F02932 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -228,7 +229,7 @@
 		77DC23E41B6F4A9600624211 /* EveryCertTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EveryCertTests.m; sourceTree = "<group>"; };
 		77F8E4A81B821F0300C214A4 /* Everycert.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Everycert.sqlite; sourceTree = "<group>"; };
 		77F8E4AB1B82220600C214A4 /* Everycert.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Everycert.sql; sourceTree = "<group>"; };
-		77F8E4AD1B822D0E00C214A4 /* EverycertWithData.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = EverycertWithData.sqlite; sourceTree = "<group>"; };
+		C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = EverycertWithData.sqlite; sourceTree = "<group>"; };
 		C38E89851B9705D500790752 /* CertificateHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateHandler.h; sourceTree = "<group>"; };
 		C38E89861B9705D500790752 /* CertificateHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateHandler.m; sourceTree = "<group>"; };
 		C38E89871B9705D500790752 /* CertificateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateModel.h; sourceTree = "<group>"; };
@@ -273,6 +274,8 @@
 		C38E89B81B9705D500790752 /* SubElementHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementHandler.m; sourceTree = "<group>"; };
 		C38E89B91B9705D500790752 /* SubElementModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubElementModel.h; sourceTree = "<group>"; };
 		C38E89BA1B9705D500790752 /* SubElementModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementModel.m; sourceTree = "<group>"; };
+		C3C7862A1B99B75A00788D62 /* FMDBDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDBDataSource.h; sourceTree = "<group>"; };
+		C3C7862B1B99B75A00788D62 /* FMDBDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBDataSource.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +355,8 @@
 		779637881B747BE90001ADC2 /* FMDB */ = {
 			isa = PBXGroup;
 			children = (
+				C3C7862A1B99B75A00788D62 /* FMDBDataSource.h */,
+				C3C7862B1B99B75A00788D62 /* FMDBDataSource.m */,
 				779637891B747BE90001ADC2 /* fmdb */,
 			);
 			path = FMDB;
@@ -360,17 +365,17 @@
 		779637891B747BE90001ADC2 /* fmdb */ = {
 			isa = PBXGroup;
 			children = (
+				779637921B747BE90001ADC2 /* FMDB.h */,
 				7796378A1B747BE90001ADC2 /* FMDatabase.h */,
 				7796378B1B747BE90001ADC2 /* FMDatabase.m */,
-				7796378C1B747BE90001ADC2 /* FMDatabaseAdditions.h */,
-				7796378D1B747BE90001ADC2 /* FMDatabaseAdditions.m */,
-				7796378E1B747BE90001ADC2 /* FMDatabasePool.h */,
-				7796378F1B747BE90001ADC2 /* FMDatabasePool.m */,
 				779637901B747BE90001ADC2 /* FMDatabaseQueue.h */,
 				779637911B747BE90001ADC2 /* FMDatabaseQueue.m */,
-				779637921B747BE90001ADC2 /* FMDB.h */,
+				7796378E1B747BE90001ADC2 /* FMDatabasePool.h */,
+				7796378F1B747BE90001ADC2 /* FMDatabasePool.m */,
 				779637931B747BE90001ADC2 /* FMResultSet.h */,
 				779637941B747BE90001ADC2 /* FMResultSet.m */,
+				7796378C1B747BE90001ADC2 /* FMDatabaseAdditions.h */,
+				7796378D1B747BE90001ADC2 /* FMDatabaseAdditions.m */,
 			);
 			path = fmdb;
 			sourceTree = "<group>";
@@ -408,6 +413,7 @@
 		779A9D481B7C7D0700D86FED /* Elements */ = {
 			isa = PBXGroup;
 			children = (
+				77DBB9191B6F555C00F02932 /* LaunchScreen.xib */,
 				776F91751B81B99E00D3A6E9 /* ElementTable */,
 				776F91791B81BA1700D3A6E9 /* ElementTableViewCell */,
 				779A9D731B7C7D0700D86FED /* TextField */,
@@ -687,7 +693,6 @@
 			isa = PBXGroup;
 			children = (
 				779A9D481B7C7D0700D86FED /* Elements */,
-				77DBB9191B6F555C00F02932 /* LaunchScreen.xib */,
 				77DBB91A1B6F555C00F02932 /* Main.storyboard */,
 			);
 			path = View;
@@ -781,7 +786,7 @@
 			children = (
 				77F8E4AB1B82220600C214A4 /* Everycert.sql */,
 				77F8E4A81B821F0300C214A4 /* Everycert.sqlite */,
-				77F8E4AD1B822D0E00C214A4 /* EverycertWithData.sqlite */,
+				C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -811,17 +816,17 @@
 		C38E89831B9705D500790752 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C38E89841B9705D500790752 /* Certificate */,
 				C38E89891B9705D500790752 /* Common */,
 				C38E898E1B9705D500790752 /* CompanyUser */,
-				C38E89931B9705D500790752 /* Data */,
-				C38E89981B9705D500790752 /* DataBinary */,
-				C38E899D1B9705D500790752 /* Element */,
 				C38E89A21B9705D500790752 /* Form */,
 				C38E89A71B9705D500790752 /* FormSection */,
+				C38E899D1B9705D500790752 /* Element */,
+				C38E89B61B9705D500790752 /* SubElement */,
+				C38E89841B9705D500790752 /* Certificate */,
+				C38E89931B9705D500790752 /* Data */,
+				C38E89981B9705D500790752 /* DataBinary */,
 				C38E89AC1B9705D500790752 /* LookUp */,
 				C38E89B11B9705D500790752 /* Record */,
-				C38E89B61B9705D500790752 /* SubElement */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -829,10 +834,10 @@
 		C38E89841B9705D500790752 /* Certificate */ = {
 			isa = PBXGroup;
 			children = (
-				C38E89851B9705D500790752 /* CertificateHandler.h */,
-				C38E89861B9705D500790752 /* CertificateHandler.m */,
 				C38E89871B9705D500790752 /* CertificateModel.h */,
 				C38E89881B9705D500790752 /* CertificateModel.m */,
+				C38E89851B9705D500790752 /* CertificateHandler.h */,
+				C38E89861B9705D500790752 /* CertificateHandler.m */,
 			);
 			path = Certificate;
 			sourceTree = "<group>";
@@ -840,10 +845,10 @@
 		C38E89891B9705D500790752 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				C38E898A1B9705D500790752 /* BaseHandler.h */,
-				C38E898B1B9705D500790752 /* BaseHandler.m */,
 				C38E898C1B9705D500790752 /* BaseModel.h */,
 				C38E898D1B9705D500790752 /* BaseModel.m */,
+				C38E898A1B9705D500790752 /* BaseHandler.h */,
+				C38E898B1B9705D500790752 /* BaseHandler.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -851,10 +856,10 @@
 		C38E898E1B9705D500790752 /* CompanyUser */ = {
 			isa = PBXGroup;
 			children = (
-				C38E898F1B9705D500790752 /* CompanyUserHandler.h */,
-				C38E89901B9705D500790752 /* CompanyUserHandler.m */,
 				C38E89911B9705D500790752 /* CompanyUserModel.h */,
 				C38E89921B9705D500790752 /* CompanyUserModel.m */,
+				C38E898F1B9705D500790752 /* CompanyUserHandler.h */,
+				C38E89901B9705D500790752 /* CompanyUserHandler.m */,
 			);
 			path = CompanyUser;
 			sourceTree = "<group>";
@@ -862,10 +867,10 @@
 		C38E89931B9705D500790752 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				C38E89941B9705D500790752 /* DataHandler.h */,
-				C38E89951B9705D500790752 /* DataHandler.m */,
 				C38E89961B9705D500790752 /* DataModel.h */,
 				C38E89971B9705D500790752 /* DataModel.m */,
+				C38E89941B9705D500790752 /* DataHandler.h */,
+				C38E89951B9705D500790752 /* DataHandler.m */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -873,10 +878,10 @@
 		C38E89981B9705D500790752 /* DataBinary */ = {
 			isa = PBXGroup;
 			children = (
-				C38E89991B9705D500790752 /* DataBinaryHandler.h */,
-				C38E899A1B9705D500790752 /* DataBinaryHandler.m */,
 				C38E899B1B9705D500790752 /* DataBinaryModel.h */,
 				C38E899C1B9705D500790752 /* DataBinaryModel.m */,
+				C38E89991B9705D500790752 /* DataBinaryHandler.h */,
+				C38E899A1B9705D500790752 /* DataBinaryHandler.m */,
 			);
 			path = DataBinary;
 			sourceTree = "<group>";
@@ -884,10 +889,10 @@
 		C38E899D1B9705D500790752 /* Element */ = {
 			isa = PBXGroup;
 			children = (
-				C38E899E1B9705D500790752 /* ElementHandler.h */,
-				C38E899F1B9705D500790752 /* ElementHandler.m */,
 				C38E89A01B9705D500790752 /* ElementModel.h */,
 				C38E89A11B9705D500790752 /* ElementModel.m */,
+				C38E899E1B9705D500790752 /* ElementHandler.h */,
+				C38E899F1B9705D500790752 /* ElementHandler.m */,
 			);
 			path = Element;
 			sourceTree = "<group>";
@@ -895,10 +900,10 @@
 		C38E89A21B9705D500790752 /* Form */ = {
 			isa = PBXGroup;
 			children = (
-				C38E89A31B9705D500790752 /* FormHandler.h */,
-				C38E89A41B9705D500790752 /* FormHandler.m */,
 				C38E89A51B9705D500790752 /* FormModel.h */,
 				C38E89A61B9705D500790752 /* FormModel.m */,
+				C38E89A31B9705D500790752 /* FormHandler.h */,
+				C38E89A41B9705D500790752 /* FormHandler.m */,
 			);
 			path = Form;
 			sourceTree = "<group>";
@@ -906,10 +911,10 @@
 		C38E89A71B9705D500790752 /* FormSection */ = {
 			isa = PBXGroup;
 			children = (
-				C38E89A81B9705D500790752 /* FormSectionHandler.h */,
-				C38E89A91B9705D500790752 /* FormSectionHandler.m */,
 				C38E89AA1B9705D500790752 /* FormSectionModel.h */,
 				C38E89AB1B9705D500790752 /* FormSectionModel.m */,
+				C38E89A81B9705D500790752 /* FormSectionHandler.h */,
+				C38E89A91B9705D500790752 /* FormSectionHandler.m */,
 			);
 			path = FormSection;
 			sourceTree = "<group>";
@@ -917,10 +922,10 @@
 		C38E89AC1B9705D500790752 /* LookUp */ = {
 			isa = PBXGroup;
 			children = (
-				C38E89AD1B9705D500790752 /* LookUpHandler.h */,
-				C38E89AE1B9705D500790752 /* LookUpHandler.m */,
 				C38E89AF1B9705D500790752 /* LookUpModel.h */,
 				C38E89B01B9705D500790752 /* LookUpModel.m */,
+				C38E89AD1B9705D500790752 /* LookUpHandler.h */,
+				C38E89AE1B9705D500790752 /* LookUpHandler.m */,
 			);
 			path = LookUp;
 			sourceTree = "<group>";
@@ -928,10 +933,10 @@
 		C38E89B11B9705D500790752 /* Record */ = {
 			isa = PBXGroup;
 			children = (
-				C38E89B21B9705D500790752 /* RecordHandler.h */,
-				C38E89B31B9705D500790752 /* RecordHandler.m */,
 				C38E89B41B9705D500790752 /* RecordModel.h */,
 				C38E89B51B9705D500790752 /* RecordModel.m */,
+				C38E89B21B9705D500790752 /* RecordHandler.h */,
+				C38E89B31B9705D500790752 /* RecordHandler.m */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -939,10 +944,10 @@
 		C38E89B61B9705D500790752 /* SubElement */ = {
 			isa = PBXGroup;
 			children = (
-				C38E89B71B9705D500790752 /* SubElementHandler.h */,
-				C38E89B81B9705D500790752 /* SubElementHandler.m */,
 				C38E89B91B9705D500790752 /* SubElementModel.h */,
 				C38E89BA1B9705D500790752 /* SubElementModel.m */,
+				C38E89B71B9705D500790752 /* SubElementHandler.h */,
+				C38E89B81B9705D500790752 /* SubElementHandler.m */,
 			);
 			path = SubElement;
 			sourceTree = "<group>";
@@ -1062,7 +1067,7 @@
 				779637A21B747BE90001ADC2 /* LICENSE in Resources */,
 				779A9D9C1B7C7D0700D86FED /* TickBoxElementCell.xib in Resources */,
 				77DC23D61B6F4A9600624211 /* Images.xcassets in Resources */,
-				77F8E4AE1B822D0E00C214A4 /* EverycertWithData.sqlite in Resources */,
+				C34301F81B9832FD007AC6BB /* EverycertWithData.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1108,6 +1113,7 @@
 				C38E89BF1B9705D500790752 /* CompanyUserHandler.m in Sources */,
 				779A9D8D1B7C7D0700D86FED /* RadioButtonView.m in Sources */,
 				C38E89BE1B9705D500790752 /* BaseModel.m in Sources */,
+				C3C7862C1B99B75A00788D62 /* FMDBDataSource.m in Sources */,
 				C38E89C41B9705D500790752 /* DataBinaryModel.m in Sources */,
 				C38E89C81B9705D500790752 /* FormModel.m in Sources */,
 				779A9D871B7C7D0700D86FED /* PickListElementCell.m in Sources */,
