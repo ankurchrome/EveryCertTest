@@ -10,11 +10,4 @@
 
 @interface SubElementCell : ElementTableViewCell
 
-/**
- Initialize Cell Element with their information
- @param  FormElementModel object which contains info like section, title etc.
- @return id initialize a cell
- */
-- (SubElementCell *)initWithModel:(ElementModel *)formElement;
-
 @end

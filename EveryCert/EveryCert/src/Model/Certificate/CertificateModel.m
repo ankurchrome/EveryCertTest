@@ -18,7 +18,7 @@
     {
         _name = EMPTY_STRING;
         _date = [NSDate date];
-        _dateString = EMPTY_STRING;
+//        _dateString = EMPTY_STRING;
         _pdf = EMPTY_STRING;
     }
     
@@ -32,14 +32,13 @@
     
     if (resultSet)
     {
-        self.certIdApp  = [resultSet intForColumn:CertificateIdApp];
-        self.certId     = [resultSet intForColumn:CertificateId];
-        self.formId     = [resultSet intForColumn:FormId];
-        self.name       = [resultSet stringForColumn:CertificateName];
-        self.issuedApp  = [resultSet boolForColumn:CertificateIssuedApp];
-        self.date       = [resultSet dateForColumn:CertificateDate];
-        self.dateString = [resultSet stringForColumn:CertificateDate];
-        self.pdf        = [resultSet stringForColumn:CertificatePdf];
+        self.certIdApp     = [resultSet intForColumn:CertificateIdApp];
+        self.certId        = [resultSet intForColumn:CertificateId];
+        self.formId        = [resultSet intForColumn:FormId];
+        self.name          = [resultSet stringForColumn:CertificateName];
+        self.issuedApp     = [resultSet boolForColumn:CertificateIssuedApp];
+        self.dateTimestamp = [resultSet doubleForColumn:CertificateDate];
+        self.pdf           = [resultSet stringForColumn:CertificatePdf];
     }
 }
 
@@ -51,7 +50,7 @@
     NSString *certPdfName = [NSString stringWithFormat:@"%@-%ld", self.name, (long)self.certIdApp];
     
     NSString *pdfPath = [FORMS_DIR stringByAppendingPathComponent:certPdfName];
-    pdfPath = [pdfPath stringByAppendingPathExtension:PDF_EXTENSION];
+    pdfPath = [pdfPath stringByAppendingPathExtension:FILE_TYPE_PDF];
     
     FUNCTION_END;
     return pdfPath;

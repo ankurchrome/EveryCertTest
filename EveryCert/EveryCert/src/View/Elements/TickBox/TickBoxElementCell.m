@@ -14,33 +14,22 @@
 }
 
 - (void)awakeFromNib {
-    // Initialization code
- }
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
 }
 
-- (TickBoxElementCell *)initWithModel:(ElementModel *)formElement
+- (void)initializeWithElementModel:(ElementModel *)elementModel
 {
-    [self fillWithData:formElement.dataValue];
-    _textLabel.text = formElement.label;
-    return self;
-}
-
-- (IBAction)onClickTickBoxButton:(UIButton *)tickBoxButton {
-    //Add arrowImageView with arrow sign
-    if(!tickBoxButton.selected)
-        tickBoxButton.selected = YES;
-    else
-        tickBoxButton.selected = NO;
-}
-
-- (void)autoFillBillingAddressFields
-{
+    [super initializeWithElementModel:elementModel];
     
+    _textLabel.text = elementModel.label;
+}
+
+- (IBAction)onClickTickBoxButton:(UIButton *)tickBoxButton
+{
+    tickBoxButton.selected = !tickBoxButton.selected;
 }
 
 @end

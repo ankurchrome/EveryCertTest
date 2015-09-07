@@ -10,18 +10,4 @@
 
 @interface TextFieldElementCell : ElementTableViewCell<UITextFieldDelegate>
 
-/**
- Initialize Cell Element with their information
- @param  FormElementModel object which contains info like section, title etc.
- @return id initialize a cell
- */
-- (TextFieldElementCell *)initWithModel:(ElementModel *)formElement;
-
-/**
- Initialize the Table View with the Data from Dictionary
- @param  NSString Contains the Label text String
- @return void Returns nothing
- */
-- (void)initWithData:(NSString *)string;
-
 @end

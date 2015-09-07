@@ -1,5 +1,5 @@
 //
-//  TextLabelElementCell.h
+//  RadioButtonElementCell.h
 //  EveryCert
 //
 //  Created by Mayur Sardana on 12/08/15.
@@ -7,9 +7,7 @@
 //
 
 #import "ElementTableViewCell.h"
-#import "FormSectionModel.h"
-#import "CertificateModel.h"
 
-@interface TextLabelElementCell : ElementTableViewCell
+@interface RadioButtonElementCell : ElementTableViewCell
 
 @end

@@ -16,15 +16,12 @@
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    BOOL databaseCopied = [CommonUtils copyApplicationDatabaseIfRequired];
     
-    BOOL        databaseCopied = false;
-   
-    databaseCopied = [CommonUtils copyApplicationDatabaseIfRequired];
+    if (LOGS_ON) NSLog(@"Document Dir: %@", [CommonUtils getDocumentDirPath]);
     
-    
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     return YES;
 }
 

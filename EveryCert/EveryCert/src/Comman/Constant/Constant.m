@@ -12,13 +12,17 @@
 
 NSString *const HomeBarButtonTitle = @"Home";
 
-//Common
+#pragma mark - Common
 NSString *const KeyboardWillResignNotification = @"ResignKeyboard";
-
 NSString *const ElementPdfDrawingFormat  = @"ElementPdfFormat";
 NSString *const ElementPdfDrawingContent = @"ElementPdfContent";
 
-//Common Columns
+NSString *const LoggedUserFullName = @"LoggedUserFullName";
+NSString *const LoggedUserEmail    = @"LoggedUserEmail";
+NSString *const LoggedUserPassword = @"LoggedUserPassword";
+NSString *const LoggedUserPermissionGroup = @"LoggedUserPermissionGroup";
+
+#pragma mark - Common Columns
 NSString *const ModifiedTimestampApp = @"modified_timestamp_app";
 NSString *const ModifiedTimeStamp    = @"modified_timeStamp";
 NSString *const Archive   = @"archive";
@@ -27,14 +31,19 @@ NSString *const IsDirty   = @"is_dirty";
 NSString *const CompanyId = @"company_id";
 NSString *const UserId    = @"user_id";
 
-//CompanyUser Table
+#pragma mark - CompanyUser Table
 NSString *const CompanyUserTable     = @"company_user";
 NSString *const CompanyUserIdApp     = @"company_user_id_app";
 NSString *const CompanyUserId        = @"company_user_id";
 NSString *const CompanyUserFieldName = @"field_name";
 NSString *const CompanyUserData      = @"data";
 
-//Form Table
+NSString *const CompanyUserFieldNameEmail           = @"user_email";
+NSString *const CompanyUserFieldNamePassword        = @"user_password";
+NSString *const CompanyUserFieldNameFullName        = @"user_full_name";
+NSString *const CompanyUserFieldNamePermissionGroup = @"permission_group";
+
+#pragma mark - Form Table
 NSString *const FormTable            = @"form";
 NSString *const FormId               = @"form_id";
 NSString *const FormCategoryId       = @"category_id";
@@ -46,7 +55,7 @@ NSString *const FormCompanyFormat    = @"company_format";
 NSString *const FormSequenceOrder    = @"sequence_order";
 NSString *const FormPermissionGroup  = @"permission_group";
 
-//FormSection Table
+#pragma mark - FormSection Table
 NSString *const FormSectionTable  = @"section";
 NSString *const FormSectionId     = @"section_id";
 NSString *const FormSectionLabel  = @"section_label";
@@ -55,7 +64,7 @@ NSString *const FormSectionHeader = @"section_header";
 NSString *const FormSectionFooter = @"section_footer";
 NSString *const FormSectionTitle  = @"section_title";
 
-//Element Table
+#pragma mark - Element Table
 NSString *const ElementTable                = @"element";
 NSString *const ElementId                   = @"element_id";
 NSString *const ElementFieldType            = @"field_type";
@@ -77,11 +86,11 @@ NSString *const ElementLookUpListIdExisting = @"lookup_list_id_existing";
 NSString *const ElementFieldNumberNew       = @"field_no_new";
 NSString *const ElementFieldNumberExisting  = @"field_no_existing";
 
-//SubElement Table
+#pragma mark - SubElement Table
 NSString *const SubElementTable = @"sub_element";
 NSString *const SubElementId    = @"sub_element_id";
 
-//Certificate Table
+#pragma mark - Certificate Table
 NSString *const CertificateTable     = @"certificate";
 NSString *const CertificateIdApp     = @"cert_id_app";
 NSString *const CertificateId        = @"cert_id";
@@ -90,19 +99,19 @@ NSString *const CertificateIssuedApp = @"issued_app";
 NSString *const CertificateDate      = @"date";
 NSString *const CertificatePdf       = @"pdf";
 
-//Data Table
+#pragma mark - Data Table
 NSString *const DataTable = @"data";
 NSString *const DataIdApp = @"data_id_app";
-NSString *const DataId    = @"dataId";
+NSString *const DataId    = @"data_id";
 NSString *const DataValue = @"data";
 
-//DataBinary Table
+#pragma mark - DataBinary Table
 NSString *const DataBinaryTable = @"data_binary";
 NSString *const DataBinaryIdApp = @"data_binary_id_app";
 NSString *const DataBinaryId    = @"data_binary_id";
 NSString *const DataBinaryValue = @"data_binary";
 
-//LookUp Table
+#pragma mark - LookUp Table
 NSString *const LookUpTable         = @"lookup";
 NSString *const LookUpIdApp         = @"lookup_id_app";
 NSString *const LookUpId            = @"lookup_id";
@@ -114,108 +123,31 @@ NSString *const LookUpOption        = @"option";
 NSString *const LookUpDataValue     = @"data";
 NSString *const LookUpSequenceOrder = @"sequence_order";
 
-//Record Table
+#pragma mark - Record Table
 NSString *const RecordTable = @"record";
 NSString *const RecordIdApp = @"record_id_app";
 NSString *const RecordId    = @"record_id";
 
+#pragma mark - ElementCell Reuse Identifier
+NSString *const ElementCellReuseIdentifierTextField     = @"ElementCellTextField";
+NSString *const ElementCellReuseIdentifierTextView      = @"ElementCellTextView";
+NSString *const ElementCellReuseIdentifierPickList      = @"ElementCellPickList";
+NSString *const ElementCellReuseIdentifierLookUp        = @"ElementCellLookUp";
+NSString *const ElementCellReuseIdentifierSignatureView = @"ElementCellSignatureView";
+NSString *const ElementCellReuseIdentifierSubElement    = @"ElementCellSubElement";
+NSString *const ElementCellReuseIdentifierRadioButton   = @"ElementCellRadioButton";
+NSString *const ElementCellReuseIdentifierTickBox       = @"ElementCellTickBox";
+NSString *const ElementCellReuseIdentifierTextLabel     = @"ElementCellTextLabel";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Table Names
-NSString *const SettingTable = @"setting";
-NSString *const PickListOptionTable = @"picklist_option";
-NSString *const MakeTable = @"make";
-NSString *const ModelTable = @"model";
-NSString *const BurnerTypeTable = @"burner_type";
-
-//Common Columns
-
-
-//Setting Table Columns
-NSString *const SettingIdApp = @"setting_id_app";
-NSString *const SettingEngineerName = @"engg_name";
-NSString *const SettingEngineerSign = @"engg_sign";
-NSString *const SettingEngineerEmail = @"engg_email";
-NSString *const SettingEngineerPassword = @"engg_password";
-
-//Form Table Columns
-
-//FormSection Table Columns
-
-
-//Element Table Columns
-
-
-//SubElement Table Columns
-
-
-//Certificate Table Columns
-
-
-//LookUp Table Columns
-
-
-//PickListOption Table Columns
-NSString *const PickListOptionIdApp = @"option_id_app";
-NSString *const PickListOptionType = @"type";
-NSString *const PickListOptionName = @"option";
-NSString *const PickListOptionValue = @"value";
-NSString *const PickListOptionSequenceOrder = @"sequence_order";
-
-//Data Table Columns
-
-//DataBinary Table Columns
-
-
-
-//BurnerType Table Column
-NSString *const BurnerTypeId = @"burner_id";
-NSString *const BurnerType   = @"burner_type";
-
-//Elements Reuse Identifier
-NSString *const TextViewCustomCell      = @"TextViewCustomCell";
-NSString *const TickBoxCustomCell       = @"TickBoxCustomCell";
-NSString *const TextLabelCustomCell     = @"TextLabelCustomCell";
-NSString *const TextFieldCustomCell     = @"TextFieldCustomCell";
-NSString *const SubElementsCustomCell   = @"SubElementsCustomCell";
-NSString *const SignatureViewCustomCell = @"SignatureViewCustomCell";
-NSString *const RadioButtonsCustomCell  = @"RadioButtonsCustomCell";
-NSString *const LookUpCustomCell        = @"LookUpCustomCell";
-NSString *const PickListCustomCell      = @"PickListCustomCell";
-
-
-//Elements Reuse Identifier
-NSString *const TextViewReuseIdentifier        = @"TextViewCustomCell";
-NSString *const TickBoxReuseIdentifier         = @"TickBoxCustomCell";
-NSString *const TextLabelReuseIdentifier       = @"TextLabelCustomCell";
-NSString *const TextFieldReuseIdentifier       = @"TextFieldCustomCell";
-NSString *const SubElementsReuseIdentifier     = @"SubElementsCustomCell";
-NSString *const SignatureViewReuseIdentifier   = @"SignatureViewCustomCell";
-NSString *const RadioButtonsReuseIdentifier  = @"RadioButtonsCustomCell";
-NSString *const LookUpReuseIdentifier          = @"LookUpCustomCell";
-NSString *const PickListReuseIdentifier        = @"PickListCustomCell";
+#pragma mark - ElementCell Reuse Identifier
+NSString *const ElementCellNibNameTextField     = @"TextFieldElementCell";
+NSString *const ElementCellNibNameTextView      = @"TextViewElementCell";
+NSString *const ElementCellNibNamePickList      = @"PickListElementCell";
+NSString *const ElementCellNibNameLookUp        = @"LookupElementCell";
+NSString *const ElementCellNibNameSignatureView = @"SignatureElementCell";
+NSString *const ElementCellNibNameSubElement    = @"SubElementCell";
+NSString *const ElementCellNibNameRadioButton   = @"RadioButtonElementCell";
+NSString *const ElementCellNibNameTickBox       = @"TickBoxElementCell";
+NSString *const ElementCellNibNameTextLabel     = @"TextLabelElementCell";
 
 @end

@@ -8,12 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@class CertificateModel;
+@class FormModel, CertificateModel;
 
 @interface CertificateViewController : UIViewController
 
 /**
- Initialize CertificateViewController with CertificateModel object
+ Initialize CertificateViewController by creating a new certificate of given form type
+ @param  form A FormModel object will be used to create a new certificate
+ @return void
+ */
+- (void)initializeWithForm:(FormModel *)form;
+
+/**
+ Initialize CertificateViewController with given existing certificate
  @param  certificate CertificateModel object containing info about certificate
  @return void
  */

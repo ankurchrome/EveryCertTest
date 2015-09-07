@@ -7,6 +7,8 @@
 //
 
 #import "ExistingCertificateViewController.h"
+#import "CertificateViewController.h"
+
 #import "UIView+Extension.h"
 #import "MenuViewController.h"
 #import "CertificateHandler.h"
@@ -32,9 +34,13 @@
     BOOL  _certificateTableViewShow;
     BOOL  _hidePannel;
     MFMailComposeViewController  *_mailComposeVC;
+    
+    CertificateModel *_selectedCertificate;
 }
 @end
 
+
+NSString *const ExistingCertCellReuseIdentifier = @"ExistingCertCellIdentifier";
 NSString *const MenuOptionImageNamed = @"MenuOption.png";
 
 @implementation ExistingCertificateViewController
@@ -42,6 +48,8 @@ NSString *const MenuOptionImageNamed = @"MenuOption.png";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self addNavigationBarButtonItem];
     [self setCertificateTableViewFrame];
@@ -54,7 +62,7 @@ NSString *const MenuOptionImageNamed = @"MenuOption.png";
     _existingCertsList = [_certHandler getAllExistingCertificatesOfCompany:0];
     
     // Register TextLabel Nib
-    [_certificateTableView registerNib:[UINib nibWithNibName:@"TextLabelElementCell" bundle:nil] forCellReuseIdentifier:TextLabelReuseIdentifier];
+    [_certificateTableView registerNib:[UINib nibWithNibName:ElementCellNibNameTextLabel bundle:nil] forCellReuseIdentifier:ElementCellReuseIdentifierTextLabel];
     
     // Drop Shadow on Table View
     _certificateTableView.clipsToBounds = NO;
@@ -65,7 +73,6 @@ NSString *const MenuOptionImageNamed = @"MenuOption.png";
     if(iPAD)
     {
         _certificateTableView.hidden = NO;
-    
     }
     
     _hidePannel = YES;
@@ -74,7 +81,8 @@ NSString *const MenuOptionImageNamed = @"MenuOption.png";
 }
 
 // This Method Select the Initial Row of the Section Table as Default
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     
     // Check Weather the Array Count is Not Zero
@@ -185,7 +193,14 @@ NSString *const MenuOptionImageNamed = @"MenuOption.png";
 
 #pragma mark- IBActions
 
-- (IBAction)onClickEditToolBarButton:(id)sender {
+- (IBAction)onClickEditToolBarButton:(id)sender
+{
+    //Instantiate CertificateViewController object from Storyboard
+    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    CertificateViewController *certificateVC  = [mainStoryBoard instantiateViewControllerWithIdentifier:@"CertificateViewController"];
+
+    [certificateVC initializeWithCertificate:_selectedCertificate];
+    [self.navigationController pushViewController:certificateVC animated:YES];
 }
 
 - (IBAction)onClickEmailToolBarButton:(id)sender {
@@ -337,7 +352,7 @@ NSString *const MenuOptionImageNamed = @"MenuOption.png";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TextLabelElementCell *cell = [tableView dequeueReusableCellWithIdentifier:TextLabelReuseIdentifier forIndexPath:indexPath];
+    TextLabelElementCell *cell = [tableView dequeueReusableCellWithIdentifier:ExistingCertCellReuseIdentifier forIndexPath:indexPath];
     
     if(!cell)
     {
@@ -345,7 +360,12 @@ NSString *const MenuOptionImageNamed = @"MenuOption.png";
     }
     
     CertificateModel *certificateModel = _existingCertsList[indexPath.row];
-    cell = [cell initWithCertificateModel:certificateModel];
+    
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    dateFormatter.dateFormat = @"dd-MM-yyyy hh:mm:ss";
+    
+    cell.textLabel.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:certificateModel.dateTimestamp]];
+    
     return cell;
 }
 
@@ -354,9 +374,13 @@ NSString *const MenuOptionImageNamed = @"MenuOption.png";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CertificateModel *certificateModel = _existingCertsList[indexPath.row];
+    
+    _selectedCertificate = certificateModel;
+    
     NSString *formName = certificateModel.name;
     FormHandler *formHandler = [FormHandler new];
     FormModel *formModel = nil;
+    
     if (LOGS_ON) NSLog(@"%@", formModel.backgroundLayout);
     NSURL *url = [NSURL URLWithString:formModel.backgroundLayout];
     

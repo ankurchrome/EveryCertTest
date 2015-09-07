@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#define RadioButtonHeight 40
+
+#define RADIO_BUTTON_HEIGHT 40
 
 typedef enum : NSUInteger
 {

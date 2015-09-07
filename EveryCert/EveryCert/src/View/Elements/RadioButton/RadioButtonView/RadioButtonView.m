@@ -42,7 +42,7 @@ NSString *const CheckedImage = @"RadioButtonChecked";
     else if (layout == RadioButtonViewLayoutVertical)
     {
         radioButtonFrame.size.width  = self.frame.size.width;
-        radioButtonFrame.size.height = RadioButtonHeight;
+        radioButtonFrame.size.height = RADIO_BUTTON_HEIGHT;
         radioButtonFrame.origin.x = 0;
     }
     
@@ -54,7 +54,7 @@ NSString *const CheckedImage = @"RadioButtonChecked";
         }
         else if (layout == RadioButtonViewLayoutVertical)
         {
-            radioButtonFrame.origin.y = optionIndex * RadioButtonHeight;
+            radioButtonFrame.origin.y = optionIndex * RADIO_BUTTON_HEIGHT;
         }
             UIButton *radioButton = [[UIButton alloc] initWithFrame:radioButtonFrame];
             

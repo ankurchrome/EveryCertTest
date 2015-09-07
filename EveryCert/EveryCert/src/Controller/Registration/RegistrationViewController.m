@@ -25,6 +25,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+ 
+    self.navigationItem.hidesBackButton = YES;
     
     ElementHandler *elementHandler = [ElementHandler new];
     _signupElements = [elementHandler getSignUpElements];

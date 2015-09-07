@@ -10,10 +10,17 @@
 #import "MenuViewController.h"
 #import "UIView+Extension.h"
 #import "ElementTableView.h"
-#import "TextFieldElementCell.h"
+
+#import "FormModel.h"
+#import "SubElementModel.h"
 #import "FormSectionHandler.h"
-#import "TextLabelElementCell.h"
 #import "ElementHandler.h"
+#import "DataHandler.h"
+#import "DataBinaryHandler.h"
+#import "CertificateHandler.h"
+
+#import "TextFieldElementCell.h"
+#import "TextLabelElementCell.h"
 
 #define IPHONE_WIDTH_PORTRAIT  300
 #define IPHONE_WIDTH_LANDSCAPE 300
@@ -34,22 +41,47 @@
     int  _indexPathRow;
     BOOL _hidePannel;
     
+    BOOL _isExistingCertificate;
+    
     CertificateModel *_certificate;
     NSArray  *_formSections;
     NSArray  *_formElements;
     NSArray  *_currentSectionElements;
     NSInteger _currentSectionIndex;
+    
+    DataHandler       *_dataHandler;
+    DataBinaryHandler *_dataBinaryHandler;
 }
 @end
 
 @implementation CertificateViewController
 
+NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
+
 #pragma mark - Initialization Methods
 
-// Initialize CertificateViewController with CertificateModel object
+// Initialize CertificateViewController by creating a new certificate of given form type
+- (void)initializeWithForm:(FormModel *)form
+{
+    //Create a new certificate with selected form
+    CertificateModel *newCertificate = [CertificateModel new];
+    newCertificate.formId = form.formId;
+    
+    CertificateHandler *certHandler = [CertificateHandler new];
+    NSInteger certRowId = [certHandler insertCertificate:newCertificate];
+    
+    if (certRowId > 0)
+    {
+        newCertificate.certIdApp = certRowId;
+        _certificate = newCertificate;
+    }
+}
+
+// Initialize CertificateViewController with given existing certificate
 - (void)initializeWithCertificate:(CertificateModel *)certificate
 {
     _certificate = certificate;
+    _isExistingCertificate = YES;
 }
 
 #pragma mark - LifeCycle Methods
@@ -62,7 +94,15 @@
     
     //Load form's sections and their elements
     ElementHandler *elementHandler = [ElementHandler new];
-    _formElements = [elementHandler getAllElementsOfForm:_certificate.formId];
+
+    if (_isExistingCertificate)
+    {
+        _formElements = [elementHandler getAllElementsOfForm:_certificate.formId withDataOfCertificate:_certificate.certIdApp];
+    }
+    else
+    {
+        _formElements = [elementHandler getAllElementsOfForm:_certificate.formId];
+    }
     
     FormSectionHandler *sectionHandler = [FormSectionHandler new];
     _formSections = [sectionHandler getAllSectionsOfForm:_certificate.formId];
@@ -70,26 +110,6 @@
     //Initially show first section's elements
     [self showElementsForSectionIndex:0];
 }
-
-//// This Method Select the Initial Row of the Section Table as Default
-//- (void)viewWillAppear:(BOOL)animated {
-//    [super viewWillAppear:animated];
-//    
-//    // Check Weather the Array Count is Not Zero
-//    if(_formSections.count > 0)
-//    {
-//        FormSectionModel *sectionModel = _formSections[0];
-//        _toolBarTitle.text = sectionModel.title;                    // Set Label Title
-//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-//        [_sectionTableView selectRowAtIndexPath:indexPath animated:YES  scrollPosition:UITableViewScrollPositionBottom];                       // Set Initial Row Selected
-//        [self tableView:_sectionTableView didSelectRowAtIndexPath:indexPath];
-//    }
-//}
-//
-//- (void)viewDidAppear:(BOOL)animated
-//{
-//    _sectionTableView.hidden = NO;
-//}
 
 #pragma mark -
 
@@ -154,8 +174,8 @@
                                                object:nil];
     
     //Setup section table view
-    UINib *sectionCellNib = [UINib nibWithNibName:@"TextLabelElementCell" bundle:nil];
-    [_sectionTableView registerNib:sectionCellNib forCellReuseIdentifier:TextLabelReuseIdentifier];
+    UINib *sectionCellNib = [UINib nibWithNibName:ElementCellNibNameTextLabel bundle:nil];
+    [_sectionTableView registerNib:sectionCellNib forCellReuseIdentifier:ElementCellReuseIdentifierTextLabel];
     
     _sectionTableView.clipsToBounds = NO;
     _sectionTableView.layer.shadowColor = [[UIColor blackColor] CGColor];
@@ -215,6 +235,175 @@
     {
         [self viewWillTransitionToSize];
     }
+}
+
+#pragma mark - Functionality Methods
+
+- (void)showElementsForSectionIndex:(NSInteger)sectionIndex
+{
+    FormSectionModel *formSection = nil;
+    NSPredicate *predicate = nil;
+    
+    if (_formSections && sectionIndex < _formSections.count)
+    {
+        formSection = [_formSections objectAtIndex:sectionIndex];
+        
+        _toolBarTitle.text = formSection.title;
+        
+        predicate = [NSPredicate predicateWithFormat:@"sectionId = %ld", formSection.sectionId];
+        
+        _currentSectionElements = [_formElements filteredArrayUsingPredicate:predicate];
+        
+        NSIndexPath *sectionIndexPath = [NSIndexPath indexPathForRow:sectionIndex inSection:0];
+        [_sectionTableView selectRowAtIndexPath:sectionIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        
+        [_elementTableView reloadWithElements:_currentSectionElements];
+    }
+}
+
+//Save the data for all given elements
+- (void)saveAllElements:(NSArray *)elements
+{
+    for (ElementModel *elementModel in elements)
+    {
+        switch (elementModel.fieldType)
+        {
+            case ElementTypeTextField:
+            case ElementTypeTextView:
+            case ElementTypePickListOption:
+            case ElementTypeRadioButton:
+            case ElementTypeLookup:
+            {
+                [self saveElementData:elementModel];
+            }
+                break;
+                
+            case ElementTypeSubElement:
+            {
+                //Create JSON content for Sub element's content
+                NSString *subElementContent = nil;
+                NSString *subElementKey     = nil;
+                NSData   *subElementData    = nil;
+                
+                NSMutableDictionary *subElementInfo = [NSMutableDictionary new];
+                
+                for (SubElementModel *subElementModel in elementModel.subElements)
+                {
+                    if (subElementModel.dataValue)
+                    {
+                        subElementKey = @(subElementModel.subElementId).stringValue;
+                        [subElementInfo setObject:subElementModel.dataValue forKey:subElementKey];
+                    }
+                }
+                
+                if (subElementInfo.count <= 0)
+                {
+                    continue;
+                }
+                
+                subElementData = [NSJSONSerialization dataWithJSONObject:subElementInfo options:0 error:nil];
+                subElementContent = [[NSString alloc] initWithData:subElementData encoding:NSUTF8StringEncoding];
+                elementModel.dataValue = subElementContent;
+                
+                [self saveElementData:elementModel];
+            }
+                break;
+                
+            case ElementTypeSignature:
+            {
+                [self saveElementDataBinary:elementModel];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+
+//Save element's text content to the database
+- (BOOL)saveElementData:(ElementModel *)elementModel
+{
+    FUNCTION_START;
+    
+    BOOL isSaved = false;
+    
+    if (!_dataHandler)
+    {
+        _dataHandler = [DataHandler new];
+    }
+    
+    if (elementModel.dataModel && elementModel.dataModel.dataIdApp > 0)
+    {
+        elementModel.dataModel.data = elementModel.dataValue;
+        isSaved = [_dataHandler updateDataModel:elementModel.dataModel];
+    }
+    else
+    {
+        if (![CommonUtils isValidString:elementModel.dataValue])
+        {
+            return isSaved;
+        }
+        
+        DataModel *dataModel = [DataModel new];
+        dataModel.certificateIdApp = _certificate.certIdApp;
+        dataModel.elementId = elementModel.elementId;
+        dataModel.data = elementModel.dataValue;
+        
+        isSaved = [_dataHandler insertDataModel:dataModel];
+    }
+    
+    FUNCTION_END;
+    return isSaved;
+}
+
+//Save element's binary content to the database
+- (BOOL)saveElementDataBinary:(ElementModel *)elementModel
+{
+    FUNCTION_START;
+    
+    BOOL isSaved = false;
+    
+    if (!_dataBinaryHandler)
+    {
+        _dataBinaryHandler = [DataBinaryHandler new];
+    }
+    
+    if (elementModel.dataBinaryModel && elementModel.dataBinaryModel.dataBinaryIdApp > 0)
+    {
+        elementModel.dataBinaryModel.dataBinary = elementModel.dataBinaryValue;
+        isSaved = [_dataBinaryHandler updateDataBinaryModel:elementModel.dataBinaryModel];
+    }
+    else
+    {
+        if (![CommonUtils isValidObject:elementModel.dataBinaryValue])
+        {
+            return isSaved;
+        }
+        
+        DataBinaryModel *dataBinaryModel = [DataBinaryModel new];
+        dataBinaryModel.certificateIdApp = _certificate.certIdApp;
+        dataBinaryModel.elementId        = elementModel.elementId;
+        dataBinaryModel.dataBinary       = elementModel.dataBinaryValue;
+        
+        isSaved = [_dataBinaryHandler insertDataBinaryModel:dataBinaryModel];
+    }
+    
+    FUNCTION_END;
+    return isSaved;
+}
+
+//Check All Elements Filled for only current Element Model
+- (BOOL)hasAllElementsFilled
+{
+    
+    return YES;
+}
+
+//Check Weather all Mandatore Elements are Totally Filled
+- (BOOL)hasMandatoryElementsFilled
+{
+    return YES;
 }
 
 #pragma mark - IBActions & Event Methods
@@ -297,6 +486,8 @@
 
 - (IBAction)onClickBackToolBarButton:(id)sender
 {
+    [self saveAllElements:_currentSectionElements];
+    
     if (--_currentSectionIndex < 0)
     {
         _currentSectionIndex = _formSections.count;
@@ -307,36 +498,14 @@
 
 - (IBAction)onClickNextToolBarButton:(id)sender
 {
+    [self saveAllElements:_currentSectionElements];
+    
     if (++_currentSectionIndex >= _formSections.count)
     {
         _currentSectionIndex = 0;
     }
     
     [self showElementsForSectionIndex:_currentSectionIndex];
-}
-
-#pragma mark -
-
-- (void)showElementsForSectionIndex:(NSInteger)sectionIndex
-{
-    FormSectionModel *formSection = nil;
-    NSPredicate *predicate = nil;
-    
-    if (_formSections && sectionIndex < _formSections.count)
-    {
-        formSection = [_formSections objectAtIndex:sectionIndex];
-        
-        _toolBarTitle.text = formSection.title;
-        
-        predicate = [NSPredicate predicateWithFormat:@"sectionId = %ld", formSection.sectionId];
-        
-        _currentSectionElements = [_formElements filteredArrayUsingPredicate:predicate];
-        
-        NSIndexPath *sectionIndexPath = [NSIndexPath indexPathForRow:sectionIndex inSection:0];
-        [_sectionTableView selectRowAtIndexPath:sectionIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        
-        [_elementTableView reloadWithElements:_currentSectionElements];
-    }
 }
 
 #pragma mark - UITableViewDataSource Methods
@@ -348,14 +517,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TextLabelElementCell *cell = [tableView dequeueReusableCellWithIdentifier:TextLabelReuseIdentifier forIndexPath:indexPath];
+    TextLabelElementCell *cell = [tableView dequeueReusableCellWithIdentifier:FormSectionCellReuseIdentifier forIndexPath:indexPath];
+    
+    FormSectionModel *formSection = _formSections[indexPath.row];
     
     if(!cell)
     {
         cell = [TextLabelElementCell new];
     }
     
-    cell = [cell initWithSectionModel:_formSections[indexPath.row]];
+    cell.textLabel.text = formSection.title;
+    
     return cell;
 }
 
@@ -363,6 +535,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row != _currentSectionIndex)
+    {
+        [self saveAllElements:_currentSectionElements];
+    }
+    
     [self showElementsForSectionIndex:indexPath.row];
     
     if(!_hidePannel && iPHONE)

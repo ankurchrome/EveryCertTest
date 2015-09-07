@@ -56,4 +56,7 @@
 
 + (void)showHUDWithText:(NSString *)text toView:(UIView *)view forTimeInterval:(NSInteger)timeInterval;
 
+//to show the alert message
++ (void)showAlertWithTitle:(NSString *)title message:(NSString *)msg;
+
 @end

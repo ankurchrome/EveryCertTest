@@ -8,6 +8,11 @@
 
 #import "SignatureElementCell.h"
 #import "SignatureDrawingView.h"
+#import "SignatureViewController.h"
+
+@interface SignatureElementCell ()<SignatureViewControllerDelegate>
+
+@end
 
 @implementation SignatureElementCell
 {    
@@ -16,44 +21,29 @@
     __weak IBOutlet UILabel *_titleLabel;
     __weak IBOutlet SignatureDrawingView *_signatureDrawingView;
 }
+
 - (void)awakeFromNib {
-    // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
-- (SignatureElementCell *)initWithModel:(ElementModel *)formElement
+- (void)initializeWithElementModel:(ElementModel *)elementModel
 {
-     [self fillWithData:formElement.dataValue];
-    _titleLabel.text = formElement.label;
-    return self;
+    [super initializeWithElementModel:elementModel];
+    
+    _titleLabel.text = elementModel.label;
 }
 
-//Fill the element controls with the given data
-- (void)fillWithData:(id)data
-{
-    FUNCTION_START;
-    
-    if (data && [data isKindOfClass:[NSData class]])
-    {
-        UIImage *image = [UIImage imageWithData:data];
-        
-        if (image)
-        {
-            _checkMarkImageView.image = [UIImage imageNamed:AccessoryCheckMarkImageName];
-        }
-        else
-        {
-            _checkMarkImageView.image = nil;
-        }
-    }
-    
-    FUNCTION_END;
+#pragma mark - IBActions
+
+- (IBAction)onClickClearSignatureDrawingButton:(id)sender {
+    //Reload the view
+    [_signatureDrawingView clearImage];
 }
+
+#pragma mark -
 
 - (void)showSignatureView:(UITapGestureRecognizer *)senderTap
 {
@@ -66,34 +56,12 @@
     
     UIViewController *rootController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
     [rootController presentViewController:signatureVC animated:YES completion:nil];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:KeyboardWillResignNotification
-                                                        object:nil];
 }
-
-#pragma mark - IBActions
-
-- (IBAction)onClickClearSignatureDrawingButton:(id)sender {
-        //Reload the view
-    [_signatureDrawingView clearImage];
-}
-
 
 #pragma mark - SignatureViewControllerDelegate Methods
 
 - (void)imagePicked:(UIImage *)pickedImage
 {
-    if (pickedImage)
-    {
-        _checkMarkImageView.image = [UIImage imageNamed:AccessoryCheckMarkImageName];
-        
-    }
-    else
-    {
-        _checkMarkImageView.image = nil;
-        self.elementModel.dataValue = nil;
-    }
-    
     self.elementModel.dataBinaryValue = UIImagePNGRepresentation(pickedImage);
 }
 

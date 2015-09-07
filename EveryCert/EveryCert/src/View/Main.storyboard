@@ -16,9 +16,10 @@
         <scene sceneID="3xD-NF-uMr">
             <objects>
                 <navigationController id="7VE-R4-iQz" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ORB-I2-R0q">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="ORB-I2-R0q">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" red="0.08235294118" green="0.4941176471" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="uRY-Jv-iQ0">
@@ -677,14 +678,13 @@
                             </view>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="_loginElementTableView" destination="8N2-BA-irC" id="B5O-eF-oBx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o6R-37-mrH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-334.5" y="303.75"/>
+            <point key="canvasLocation" x="-310" y="301"/>
         </scene>
         <!--Registration View Controller-->
         <scene sceneID="Lbt-Mz-Oac">
@@ -1689,6 +1689,15 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="272" id="Qwd-Ea-vMz"/>
                                 </constraints>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FormSectionCellIdentifier" id="PEw-5C-OxD">
+                                        <rect key="frame" x="0.0" y="0.0" width="49" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PEw-5C-OxD" id="D8z-1q-qec">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="Qwd-Ea-vMz"/>
@@ -2052,6 +2061,15 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="291" id="8Z1-B3-USD"/>
                                 </constraints>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExistingCertCellIdentifier" id="dji-9f-mWN">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dji-9f-mWN" id="9NK-7b-ubH">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="8Z1-B3-USD"/>
@@ -2225,6 +2243,15 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="gcP-cy-MQg">
                                 <rect key="frame" x="16" y="81" width="568" height="503"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FormTypeCellIdentifier" id="8Ah-UL-yEA">
+                                        <rect key="frame" x="0.0" y="0.0" width="568" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Ah-UL-yEA" id="HDc-Cg-inz">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="6qE-wE-Dki" id="PEe-eR-cqX"/>
                                     <outlet property="delegate" destination="6qE-wE-Dki" id="BKg-SE-ZIz"/>
@@ -2301,7 +2328,7 @@
                                 <rect key="frame" x="16" y="91" width="568" height="338"/>
                                 <color key="sectionIndexTrackingBackgroundColor" red="0.64079684540000004" green="1" blue="0.91826982290000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MenuOptionCell" id="gBx-1V-dMN">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MenuOptionCellIdentifier" id="gBx-1V-dMN">
                                         <rect key="frame" x="0.0" y="0.0" width="568" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gBx-1V-dMN" id="DMf-fp-4Mc">

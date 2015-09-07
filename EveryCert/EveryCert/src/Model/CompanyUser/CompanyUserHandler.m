@@ -11,11 +11,6 @@
 
 @implementation CompanyUserHandler
 
-NSString *const CompanyUserFieldNameUserEmail           = @"user_email";
-NSString *const CompanyUserFieldNameUserPassword        = @"user_password";
-NSString *const CompanyUserFieldNameUserFullName        = @"user_full_name";
-NSString *const CompanyUserFieldNameUserPermissionGroup = @"permission_group";
-
 //Returns an object initialized with table related info like table name, id field, columns etc.
 - (id)init
 {
@@ -44,7 +39,7 @@ NSString *const CompanyUserFieldNameUserPermissionGroup = @"permission_group";
         
         [databaseQueue inDatabase:^(FMDatabase *db)
         {
-            NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %@ AND %@ = %@", self.tableName, CompanyUserFieldName, element.fieldName, CompanyUserData, element.dataValue];
+            NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = '%@' AND %@ = '%@'", self.tableName, CompanyUserFieldName, element.fieldName, CompanyUserData, element.dataValue];
 
             FMResultSet *result = [db executeQuery:query];
             
@@ -76,6 +71,8 @@ NSString *const CompanyUserFieldNameUserPermissionGroup = @"permission_group";
     
     [databaseQueue inDatabase:^(FMDatabase *db)
     {
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+        
         NSString *query = [NSString stringWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE %@ = %ld", CompanyId, CompanyUserFieldName, CompanyUserData, self.tableName, UserId, (long)userId];
         
         FMResultSet *resultSet = [db executeQuery:query];
@@ -89,23 +86,38 @@ NSString *const CompanyUserFieldNameUserPermissionGroup = @"permission_group";
             APP_DELEGATE.loggedUserId = userId;
             APP_DELEGATE.loggedUserCompanyId = companyId;
             
-            if ([fieldName isEqualToString:CompanyUserFieldNameUserEmail])
+            [userDefault setInteger:userId    forKey:UserId];
+            [userDefault setInteger:companyId forKey:CompanyId];
+            
+            if (![CommonUtils isValidString:fieldData]) continue;
+                
+            if ([fieldName isEqualToString:CompanyUserFieldNameEmail])
             {
                 APP_DELEGATE.loggedUserEmail = fieldData;
+                
+                [userDefault setObject:fieldData forKey:LoggedUserEmail];
             }
-            else if ([fieldName isEqualToString:CompanyUserFieldNameUserPassword])
+            else if ([fieldName isEqualToString:CompanyUserFieldNamePassword])
             {
                 APP_DELEGATE.loggedUserPassword = fieldData;
+                
+                [userDefault setObject:fieldData forKey:LoggedUserPassword];
             }
-            else if ([fieldName isEqualToString:CompanyUserFieldNameUserFullName])
+            else if ([fieldName isEqualToString:CompanyUserFieldNameFullName])
             {
                 APP_DELEGATE.loggedUserFullName = fieldData;
+                
+                [userDefault setObject:fieldData forKey:LoggedUserFullName];
             }
-            else if ([fieldName isEqualToString:CompanyUserFieldNameUserPermissionGroup])
+            else if ([fieldName isEqualToString:CompanyUserFieldNamePermissionGroup])
             {
                 APP_DELEGATE.loggedUserPermissionGroup = fieldData;
+                
+                [userDefault setObject:fieldData forKey:LoggedUserPermissionGroup];
             }
         }
+        
+        [userDefault synchronize];
     }];
 }
 

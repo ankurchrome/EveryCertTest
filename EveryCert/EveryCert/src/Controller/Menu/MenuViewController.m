@@ -19,7 +19,7 @@
 }
 @end
 
-static NSString *const MenuOptionCellIdentifier  = @"MenuOptionCell";
+static NSString *const MenuOptionCellIdentifier  = @"MenuOptionCellIdentifier";
 
 NSString *const MenuOptionRowNewCertificate      = @"Create New Certificate";
 NSString *const MenuOptionRowExistingCertificate = @"Existing Certificate";
@@ -32,6 +32,8 @@ NSString *const MenuOptionRowSetting             = @"Setting";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.hidesBackButton = YES;
     
     _menuOptionList = @[MenuOptionRowNewCertificate,
                         MenuOptionRowExistingCertificate,
@@ -81,11 +83,11 @@ NSString *const MenuOptionRowSetting             = @"Setting";
     {
         nextVC = [storyBoard instantiateViewControllerWithIdentifier:@"FormList"];
     }
-    else if([selectedRow isEqualToString:MenuOptionRowNewCertificate])
+    else if([selectedRow isEqualToString:MenuOptionRowExistingCertificate])
     {
         nextVC = [storyBoard instantiateViewControllerWithIdentifier:@"ExistingCertificate"];
     }
-    else if([selectedRow isEqualToString:MenuOptionRowNewCertificate])
+    else if([selectedRow isEqualToString:MenuOptionRowSetting])
     {
         nextVC = [storyBoard instantiateViewControllerWithIdentifier:@"Setting"];
     }

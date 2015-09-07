@@ -48,4 +48,37 @@
     return subElementModelList;
 }
 
+// Fetch all sub elements of given element and initialize all sub elements with given element info
+- (NSArray *)getAllSubElementsOfElement:(NSInteger)elementIdApp withInfo:(NSString *)elementInfoText
+{
+    NSDictionary *subElementInfo = nil;
+    NSData *subElementData = [elementInfoText dataUsingEncoding:NSUTF8StringEncoding];
+    
+    if (subElementData)
+    {
+        subElementInfo = [NSJSONSerialization JSONObjectWithData:subElementData options:NSJSONReadingMutableContainers error:nil];
+    }
+
+    FMDatabaseQueue *databaseQueue       = [[FMDBDataSource sharedManager] databaseQueue];
+    NSMutableArray  *subElementModelList = [NSMutableArray new];
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = %ld ORDER BY %@", SubElementTable, ElementId, (long)elementIdApp, ElementSequenceOrder];
+         
+         FMResultSet *result = [db executeQuery:query];
+         
+         while ([result next])
+         {
+             SubElementModel *subElementModel = [[SubElementModel alloc] initWithResultSet:result];
+             NSString *subElementKey   = @(subElementModel.subElementId).stringValue;
+             subElementModel.dataValue = [subElementInfo valueForKey:subElementKey];
+             
+             [subElementModelList addObject:subElementModel];
+         }
+     }];
+    
+    return subElementModelList;
+}
+
 @end

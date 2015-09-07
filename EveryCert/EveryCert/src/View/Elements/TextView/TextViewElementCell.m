@@ -10,46 +10,28 @@
 
 @implementation TextViewElementCell
 {
-    __weak IBOutlet UILabel *_titleLabel;
+    __weak IBOutlet UILabel    *_titleLabel;
+    __weak IBOutlet UILabel    *_charLimitLabel;
     __weak IBOutlet UITextView *_textView;
-    __weak IBOutlet UILabel *_charLimitLabel;
-    NSInteger maxCharLimit;
 }
 
 - (void)awakeFromNib {
-    // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
-- (TextViewElementCell *)initWithModel:(ElementModel *)formElement
+- (void)initializeWithElementModel:(ElementModel *)elementModel
 {
-    [self fillWithData:formElement.dataValue];
-    _titleLabel.text = formElement.label;
-    _charLimitLabel.text = [@(formElement.maxCharLimit) stringValue];
-    maxCharLimit   = [_charLimitLabel.text integerValue];
-    _textView.delegate = self;
-    return self;
+    [super initializeWithElementModel:elementModel];
+    
+    _titleLabel.text     = elementModel.label;
+    _textView.text       = elementModel.dataValue;
+    _charLimitLabel.text = [@(elementModel.maxCharLimit) stringValue];
 }
 
-//Fill the element controls with the given data
-- (void)fillWithData:(id)data
-{
-    FUNCTION_START;
-    
-    if (data && [data isKindOfClass:[NSString class]])
-    {
-        _textView.text = data;
-    }
-    
-    FUNCTION_END;
-}
-
-#pragma mark UITextFieldDelegate Methods
+#pragma mark UITextViewDelegate Methods
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
@@ -60,18 +42,17 @@
 {
     NSString *updatedString = [textView.text stringByReplacingCharactersInRange:range withString:text];
     
-    NSInteger remainingChars = maxCharLimit;
+    NSInteger remainingChars = self.elementModel.maxCharLimit;
     
-    if (updatedString && maxCharLimit > 0)
+    if (updatedString && self.elementModel.maxCharLimit > 0)
     {
-        remainingChars = maxCharLimit - updatedString.length;
+        remainingChars = self.elementModel.maxCharLimit - updatedString.length;
         
         if (remainingChars >= 0)
         {
             _charLimitLabel.text = @(remainingChars).stringValue;
         }
     }
-    
     
     if (remainingChars < 0)
     {
@@ -81,30 +62,6 @@
     self.elementModel.dataValue = updatedString;
     
     return YES;
-}
-
-- (void)resignKeyboard
-{
-    if (_textView.isFirstResponder) {
-        [_textView resignFirstResponder];
-    }
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:KeyboardWillResignNotification
-                                                  object:nil];
-}
-
-- (void)doneChanges:(id)sender
-{
-    [_textView resignFirstResponder];
-}
-
-- (void)cancelKeyBoard:(UIBarButtonItem *)sender
-{
-    [_textView resignFirstResponder];
 }
 
 @end

@@ -29,9 +29,24 @@ NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = APP_BG_COLOR;
 
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     ElementHandler *elementHandler = [ElementHandler new];
     _loginElements = [elementHandler getLoginElements];
+    
+    for (ElementModel *element in _loginElements)
+    {
+        if ([element.fieldName isEqualToString:CompanyUserFieldNameEmail])
+        {
+            element.dataValue = [userDefaults objectForKey:LoggedUserEmail];
+        }
+        else if ([element.fieldName isEqualToString:CompanyUserFieldNamePassword])
+        {
+            element.dataValue = [userDefaults objectForKey:LoggedUserPassword];
+        }
+    }
     
     [_loginElementTableView reloadWithElements:_loginElements];
 }
@@ -74,6 +89,9 @@ NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
         
         if (!isLoggedIn)
         {
+            //TODO: Server login code will go here
+            [CommonUtils showAlertWithTitle:nil message:@"Server login is required"];
+            
             return NO;
         }
     }

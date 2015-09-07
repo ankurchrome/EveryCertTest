@@ -28,22 +28,4 @@
  */
 - (void)reloadWithElements:(NSArray *)elementModelArray;
 
-/**
- Save data of all elements of selected section of form
- @return void
- */
-- (void)saveAllElementsData;
-
-/*!
- Check All Elements Filled for only current Element Model
- @return : BOOL A Object under which all Elements in a Table View are checked
- */
-- (BOOL)hasAllElementsFilled;
-
-/**
- Check Weather all Mandatore Elements are Totally Filled
- @return BOOL A Object under which all Mandatory Elements are checked
- */
-- (BOOL)hasMandatoryElementsFilled;
-
 @end

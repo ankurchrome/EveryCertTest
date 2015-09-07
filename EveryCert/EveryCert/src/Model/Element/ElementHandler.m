@@ -39,7 +39,7 @@
     [databaseQueue inDatabase:^(FMDatabase *db)
     {
         NSString *query = [NSString stringWithFormat:
-                             @"SELECT *\
+                             @"SELECT t1.*, t2.*, t3.*\
                              FROM\
                              (SELECT * FROM %@ WHERE %@ = %ld) t1\
                              LEFT JOIN\
@@ -63,6 +63,8 @@
         
         while ([result next])
         {
+            if (LOGS_ON) NSLog(@"Result Info: %@", [result resultDictionary]);
+            
             ElementModel *elementModel = [[ElementModel alloc] initWithResultSet:result];
             
             //TODO: remove the unneccessary properties and change the query accordingly
@@ -74,9 +76,9 @@
             elementModel.dataBinaryValue = [result dataForColumn:DataBinaryValue];
             elementModel.dataBinaryModel = [[DataBinaryModel alloc] initWithResultSet:result];
             
-            if (elementModel.fieldType == ElementTypeSubElements)
+            if (elementModel.fieldType == ElementTypeSubElement)
             {
-                elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId];
+                elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId withInfo:elementModel.dataValue];
             }
             
             [elementModelList addObject:elementModel];
@@ -104,7 +106,7 @@
          {
              ElementModel *elementModel = [[ElementModel alloc] initWithResultSet:result];
              
-             if (elementModel.fieldType == ElementTypeSubElements)
+             if (elementModel.fieldType == ElementTypeSubElement)
              {
                  elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId];
              }
@@ -194,9 +196,9 @@
              elementModel.dataBinaryValue = [result dataForColumn:DataBinaryValue];
              elementModel.dataBinaryModel = [[DataBinaryModel alloc] initWithResultSet:result];
              
-             if (elementModel.fieldType == ElementTypeSubElements)
+             if (elementModel.fieldType == ElementTypeSubElement)
              {
-                 elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId];
+                 elementModel.subElements = [subElementHandler getAllSubElementsOfElement:elementModel.elementId withInfo:elementModel.dataValue];
              }
              
              [elementModelList addObject:elementModel];

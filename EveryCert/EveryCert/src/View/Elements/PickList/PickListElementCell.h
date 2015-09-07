@@ -7,14 +7,10 @@
 //
 
 #import "ElementTableViewCell.h"
-#import "PickListViewController.h"
 
-@interface PickListElementCell : ElementTableViewCell<PickListViewControllerDelegate>
+@interface PickListElementCell : ElementTableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *selectedOptionLabel;
-@property (nonatomic, strong) NSArray *selectedOptions;
-
 
 @end

@@ -15,10 +15,10 @@
 @property (nonatomic, assign) NSInteger formId;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, assign) BOOL      issuedApp;
+@property (nonatomic, assign) double    dateTimestamp;
 @property (nonatomic, strong) NSString *dateString;
 @property (nonatomic, strong) NSDate   *date;
 @property (nonatomic, strong) NSString *pdf;
-
 
 //TODO: check if this method is needed
 /**

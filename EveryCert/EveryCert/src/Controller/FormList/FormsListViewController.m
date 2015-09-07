@@ -8,7 +8,6 @@
 
 #import "FormsListViewController.h"
 #import "CertificateViewController.h"
-#import "CertificateHandler.h"
 #import "FormHandler.h"
 
 @interface FormsListViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -21,7 +20,7 @@
 
 @implementation FormsListViewController
 
-static NSString *const FormsListCellIdentifier = @"customCell";
+static NSString *const FormsListCellIdentifier = @"FormTypeCellIdentifier";
 
 #pragma mark - LifeCycle Methods
 
@@ -30,8 +29,6 @@ static NSString *const FormsListCellIdentifier = @"customCell";
     [super viewDidLoad];
     
     FormHandler *formHandler = [FormHandler new];
-
-    //TODO: permissions will come from company_user table if no then 0 will be default
     _allFormsList = [formHandler getAllFormsWithPermissions:APP_DELEGATE.loggedUserPermissionGroup];
 }
 
@@ -69,34 +66,14 @@ static NSString *const FormsListCellIdentifier = @"customCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    FormModel *formModel = _allFormsList[indexPath.row];
+    
     //Instantiate CertificateViewController object from Storyboard
-    UIStoryboard *mainStoryBoard = nil;
-    CertificateViewController *certificateVC = nil;
-    
-    mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    certificateVC  = [mainStoryBoard instantiateViewControllerWithIdentifier:@"CertificateViewController"];
+    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    CertificateViewController *certificateVC  = [mainStoryBoard instantiateViewControllerWithIdentifier:@"CertificateViewController"];
 
-    //Create a new certificate with selected form
-    NSInteger           certRowId = 0;
-    FormModel          *formModel = nil;
-    CertificateModel   *newCertificate = nil;
-    CertificateHandler *certHandler = nil;
-    
-    formModel = _allFormsList[indexPath.row];
-    
-    newCertificate = [CertificateModel new];
-    newCertificate.formId = formModel.formId;
-    
-    certHandler = [CertificateHandler new];
-    
-    certRowId   = [certHandler insertCertificate:newCertificate];
-    
-    if (certRowId > 0)
-    {
-        newCertificate.certIdApp = certRowId;
-        [certificateVC initializeWithCertificate:newCertificate];
-        [self.navigationController pushViewController:certificateVC animated:YES];
-    }
+    [certificateVC initializeWithForm:formModel];
+    [self.navigationController pushViewController:certificateVC animated:YES];
 }
 
 @end

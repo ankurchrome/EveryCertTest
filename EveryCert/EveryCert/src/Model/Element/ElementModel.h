@@ -20,7 +20,7 @@ typedef enum : NSUInteger
     ElementTypeLookup         = 4, // Not Used
     ElementTypeSignature      = 5,
     ElementTypePickListOption = 6,
-    ElementTypeSubElements    = 7,
+    ElementTypeSubElement     = 7,
     ElementTypeRadioButton    = 8,
     ElementTypeLine           = 9, // Not Used
     ElementTypeTickBox        = 10,
@@ -72,9 +72,11 @@ typedef enum : NSUInteger
 extern NSString *const kElementFontSize;
 extern NSString *const kElementFontColor;
 extern NSString *const kElementFontName;
-extern NSString *const kElementPickListType;
-extern NSString *const kElementRadioButtons;
-extern NSString *const kElementRadioButtonTitle;
-extern NSString *const kElementRadioButtonSelectedIndex;
 extern NSString *const kDefaultText;
 
+extern NSString *const kElementPickListType;
+
+extern NSString *const kElementRadioButtons;
+extern NSString *const kElementRadioButtonTitle;
+extern NSString *const kElementRadioButtonValue;
+extern NSString *const kElementRadioButtonSelectedIndex;

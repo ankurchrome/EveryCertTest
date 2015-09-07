@@ -40,16 +40,10 @@
 		779A9D841B7C7D0700D86FED /* DrawingPDF.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D4D1B7C7D0700D86FED /* DrawingPDF.m */; };
 		779A9D851B7C7D0700D86FED /* LookupElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D501B7C7D0700D86FED /* LookupElementCell.m */; };
 		779A9D861B7C7D0700D86FED /* LookupElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D511B7C7D0700D86FED /* LookupElementCell.xib */; };
-		779A9D871B7C7D0700D86FED /* PickListElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D551B7C7D0700D86FED /* PickListElementCell.m */; };
-		779A9D881B7C7D0700D86FED /* PickListElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D561B7C7D0700D86FED /* PickListElementCell.xib */; };
 		779A9D891B7C7D0700D86FED /* PickListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D591B7C7D0700D86FED /* PickListViewController.m */; };
 		779A9D8A1B7C7D0700D86FED /* PickListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D5A1B7C7D0700D86FED /* PickListViewController.xib */; };
-		779A9D8B1B7C7D0700D86FED /* RadioButtonElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D5E1B7C7D0700D86FED /* RadioButtonElementCell.m */; };
-		779A9D8C1B7C7D0700D86FED /* RadioButtonElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D5F1B7C7D0700D86FED /* RadioButtonElementCell.xib */; };
 		779A9D8D1B7C7D0700D86FED /* RadioButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D621B7C7D0700D86FED /* RadioButtonView.m */; };
 		779A9D8E1B7C7D0700D86FED /* SignatureDrawingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D661B7C7D0700D86FED /* SignatureDrawingView.m */; };
-		779A9D8F1B7C7D0700D86FED /* SignatureElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D691B7C7D0700D86FED /* SignatureElementCell.m */; };
-		779A9D901B7C7D0700D86FED /* SignatureElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D6A1B7C7D0700D86FED /* SignatureElementCell.xib */; };
 		779A9D911B7C7D0700D86FED /* SignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D6D1B7C7D0700D86FED /* SignatureViewController.m */; };
 		779A9D921B7C7D0700D86FED /* SignatureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D6E1B7C7D0700D86FED /* SignatureViewController.xib */; };
 		779A9D931B7C7D0700D86FED /* SubElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D711B7C7D0700D86FED /* SubElementCell.m */; };
@@ -104,6 +98,12 @@
 		C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89B81B9705D500790752 /* SubElementHandler.m */; };
 		C38E89D01B9705D500790752 /* SubElementModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89BA1B9705D500790752 /* SubElementModel.m */; };
 		C3C7862C1B99B75A00788D62 /* FMDBDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C7862B1B99B75A00788D62 /* FMDBDataSource.m */; };
+		C3FFB4371B9B36180089A0B2 /* PickListElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3FFB4341B9B36180089A0B2 /* PickListElementCell.xib */; };
+		C3FFB4381B9B36180089A0B2 /* PickListElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FFB4361B9B36180089A0B2 /* PickListElementCell.m */; };
+		C3FFB43C1B9B3CF40089A0B2 /* SignatureElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3FFB4391B9B3CF40089A0B2 /* SignatureElementCell.xib */; };
+		C3FFB43D1B9B3CF40089A0B2 /* SignatureElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FFB43B1B9B3CF40089A0B2 /* SignatureElementCell.m */; };
+		C3FFB4411B9B6FC30089A0B2 /* RadioButtonElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FFB43E1B9B6FC30089A0B2 /* RadioButtonElementCell.m */; };
+		C3FFB4421B9B6FC30089A0B2 /* RadioButtonElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3FFB43F1B9B6FC30089A0B2 /* RadioButtonElementCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,22 +165,13 @@
 		779A9D4F1B7C7D0700D86FED /* LookupElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupElementCell.h; sourceTree = "<group>"; };
 		779A9D501B7C7D0700D86FED /* LookupElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupElementCell.m; sourceTree = "<group>"; };
 		779A9D511B7C7D0700D86FED /* LookupElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LookupElementCell.xib; sourceTree = "<group>"; };
-		779A9D541B7C7D0700D86FED /* PickListElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickListElementCell.h; sourceTree = "<group>"; };
-		779A9D551B7C7D0700D86FED /* PickListElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickListElementCell.m; sourceTree = "<group>"; };
-		779A9D561B7C7D0700D86FED /* PickListElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickListElementCell.xib; sourceTree = "<group>"; };
 		779A9D581B7C7D0700D86FED /* PickListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickListViewController.h; sourceTree = "<group>"; };
 		779A9D591B7C7D0700D86FED /* PickListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickListViewController.m; sourceTree = "<group>"; };
 		779A9D5A1B7C7D0700D86FED /* PickListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickListViewController.xib; sourceTree = "<group>"; };
-		779A9D5D1B7C7D0700D86FED /* RadioButtonElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButtonElementCell.h; sourceTree = "<group>"; };
-		779A9D5E1B7C7D0700D86FED /* RadioButtonElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButtonElementCell.m; sourceTree = "<group>"; };
-		779A9D5F1B7C7D0700D86FED /* RadioButtonElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RadioButtonElementCell.xib; sourceTree = "<group>"; };
 		779A9D611B7C7D0700D86FED /* RadioButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButtonView.h; sourceTree = "<group>"; };
 		779A9D621B7C7D0700D86FED /* RadioButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButtonView.m; sourceTree = "<group>"; };
 		779A9D651B7C7D0700D86FED /* SignatureDrawingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignatureDrawingView.h; sourceTree = "<group>"; };
 		779A9D661B7C7D0700D86FED /* SignatureDrawingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureDrawingView.m; sourceTree = "<group>"; };
-		779A9D681B7C7D0700D86FED /* SignatureElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignatureElementCell.h; sourceTree = "<group>"; };
-		779A9D691B7C7D0700D86FED /* SignatureElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureElementCell.m; sourceTree = "<group>"; };
-		779A9D6A1B7C7D0700D86FED /* SignatureElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignatureElementCell.xib; sourceTree = "<group>"; };
 		779A9D6C1B7C7D0700D86FED /* SignatureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignatureViewController.h; sourceTree = "<group>"; };
 		779A9D6D1B7C7D0700D86FED /* SignatureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureViewController.m; sourceTree = "<group>"; };
 		779A9D6E1B7C7D0700D86FED /* SignatureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignatureViewController.xib; sourceTree = "<group>"; };
@@ -208,7 +199,7 @@
 		77C035C61B78B25F009228F1 /* MenuOption@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MenuOption@3x.png"; sourceTree = "<group>"; };
 		77DBB9141B6F553900F02932 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		77DBB9151B6F553900F02932 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		77DBB9191B6F555C00F02932 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = ../LaunchScreen.xib; sourceTree = "<group>"; };
+		77DBB9191B6F555C00F02932 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		77DBB91A1B6F555C00F02932 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		77DBB91D1B6F560600F02932 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		77DBB91E1B6F560600F02932 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -276,6 +267,15 @@
 		C38E89BA1B9705D500790752 /* SubElementModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementModel.m; sourceTree = "<group>"; };
 		C3C7862A1B99B75A00788D62 /* FMDBDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDBDataSource.h; sourceTree = "<group>"; };
 		C3C7862B1B99B75A00788D62 /* FMDBDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBDataSource.m; sourceTree = "<group>"; };
+		C3FFB4341B9B36180089A0B2 /* PickListElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickListElementCell.xib; sourceTree = "<group>"; };
+		C3FFB4351B9B36180089A0B2 /* PickListElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickListElementCell.h; sourceTree = "<group>"; };
+		C3FFB4361B9B36180089A0B2 /* PickListElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickListElementCell.m; sourceTree = "<group>"; };
+		C3FFB4391B9B3CF40089A0B2 /* SignatureElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignatureElementCell.xib; sourceTree = "<group>"; };
+		C3FFB43A1B9B3CF40089A0B2 /* SignatureElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignatureElementCell.h; sourceTree = "<group>"; };
+		C3FFB43B1B9B3CF40089A0B2 /* SignatureElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureElementCell.m; sourceTree = "<group>"; };
+		C3FFB43E1B9B6FC30089A0B2 /* RadioButtonElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButtonElementCell.m; sourceTree = "<group>"; };
+		C3FFB43F1B9B6FC30089A0B2 /* RadioButtonElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RadioButtonElementCell.xib; sourceTree = "<group>"; };
+		C3FFB4401B9B6FC30089A0B2 /* RadioButtonElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButtonElementCell.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,18 +413,17 @@
 		779A9D481B7C7D0700D86FED /* Elements */ = {
 			isa = PBXGroup;
 			children = (
-				77DBB9191B6F555C00F02932 /* LaunchScreen.xib */,
 				776F91751B81B99E00D3A6E9 /* ElementTable */,
 				776F91791B81BA1700D3A6E9 /* ElementTableViewCell */,
 				779A9D731B7C7D0700D86FED /* TextField */,
 				779A9D7B1B7C7D0700D86FED /* TextView */,
-				779A9D771B7C7D0700D86FED /* TextLabel */,
-				779A9D6F1B7C7D0700D86FED /* SubElement */,
-				779A9D7F1B7C7D0700D86FED /* TickBox */,
-				779A9D5B1B7C7D0700D86FED /* RadioButton */,
-				779A9D631B7C7D0700D86FED /* Signature */,
-				779A9D4E1B7C7D0700D86FED /* Lookup */,
 				779A9D521B7C7D0700D86FED /* PickList */,
+				779A9D4E1B7C7D0700D86FED /* Lookup */,
+				779A9D631B7C7D0700D86FED /* Signature */,
+				779A9D6F1B7C7D0700D86FED /* SubElement */,
+				779A9D5B1B7C7D0700D86FED /* RadioButton */,
+				779A9D7F1B7C7D0700D86FED /* TickBox */,
+				779A9D771B7C7D0700D86FED /* TextLabel */,
 				779A9D4B1B7C7D0700D86FED /* FormsPdfDrawing */,
 			);
 			path = Elements;
@@ -452,20 +451,12 @@
 		779A9D521B7C7D0700D86FED /* PickList */ = {
 			isa = PBXGroup;
 			children = (
-				779A9D531B7C7D0700D86FED /* PickListElementCell */,
+				C3FFB4351B9B36180089A0B2 /* PickListElementCell.h */,
+				C3FFB4361B9B36180089A0B2 /* PickListElementCell.m */,
+				C3FFB4341B9B36180089A0B2 /* PickListElementCell.xib */,
 				779A9D571B7C7D0700D86FED /* PickListViewController */,
 			);
 			path = PickList;
-			sourceTree = "<group>";
-		};
-		779A9D531B7C7D0700D86FED /* PickListElementCell */ = {
-			isa = PBXGroup;
-			children = (
-				779A9D541B7C7D0700D86FED /* PickListElementCell.h */,
-				779A9D551B7C7D0700D86FED /* PickListElementCell.m */,
-				779A9D561B7C7D0700D86FED /* PickListElementCell.xib */,
-			);
-			path = PickListElementCell;
 			sourceTree = "<group>";
 		};
 		779A9D571B7C7D0700D86FED /* PickListViewController */ = {
@@ -481,20 +472,12 @@
 		779A9D5B1B7C7D0700D86FED /* RadioButton */ = {
 			isa = PBXGroup;
 			children = (
-				779A9D5C1B7C7D0700D86FED /* RadioButtonElementCell */,
+				C3FFB4401B9B6FC30089A0B2 /* RadioButtonElementCell.h */,
+				C3FFB43E1B9B6FC30089A0B2 /* RadioButtonElementCell.m */,
+				C3FFB43F1B9B6FC30089A0B2 /* RadioButtonElementCell.xib */,
 				779A9D601B7C7D0700D86FED /* RadioButtonView */,
 			);
 			path = RadioButton;
-			sourceTree = "<group>";
-		};
-		779A9D5C1B7C7D0700D86FED /* RadioButtonElementCell */ = {
-			isa = PBXGroup;
-			children = (
-				779A9D5D1B7C7D0700D86FED /* RadioButtonElementCell.h */,
-				779A9D5E1B7C7D0700D86FED /* RadioButtonElementCell.m */,
-				779A9D5F1B7C7D0700D86FED /* RadioButtonElementCell.xib */,
-			);
-			path = RadioButtonElementCell;
 			sourceTree = "<group>";
 		};
 		779A9D601B7C7D0700D86FED /* RadioButtonView */ = {
@@ -509,8 +492,10 @@
 		779A9D631B7C7D0700D86FED /* Signature */ = {
 			isa = PBXGroup;
 			children = (
+				C3FFB43A1B9B3CF40089A0B2 /* SignatureElementCell.h */,
+				C3FFB43B1B9B3CF40089A0B2 /* SignatureElementCell.m */,
+				C3FFB4391B9B3CF40089A0B2 /* SignatureElementCell.xib */,
 				779A9D641B7C7D0700D86FED /* SignatureDrawingView */,
-				779A9D671B7C7D0700D86FED /* SignatureElementCell */,
 				779A9D6B1B7C7D0700D86FED /* SignatureViewController */,
 			);
 			path = Signature;
@@ -523,16 +508,6 @@
 				779A9D661B7C7D0700D86FED /* SignatureDrawingView.m */,
 			);
 			path = SignatureDrawingView;
-			sourceTree = "<group>";
-		};
-		779A9D671B7C7D0700D86FED /* SignatureElementCell */ = {
-			isa = PBXGroup;
-			children = (
-				779A9D681B7C7D0700D86FED /* SignatureElementCell.h */,
-				779A9D691B7C7D0700D86FED /* SignatureElementCell.m */,
-				779A9D6A1B7C7D0700D86FED /* SignatureElementCell.xib */,
-			);
-			path = SignatureElementCell;
 			sourceTree = "<group>";
 		};
 		779A9D6B1B7C7D0700D86FED /* SignatureViewController */ = {
@@ -629,9 +604,9 @@
 		77DBB90C1B6F553900F02932 /* Comman */ = {
 			isa = PBXGroup;
 			children = (
-				7771264F1B94350A00C6FDF1 /* KeyBoardAvoiding */,
-				779638301B7481260001ADC2 /* CommanUtils */,
 				7796377F1B747BCF0001ADC2 /* Constant */,
+				779638301B7481260001ADC2 /* CommanUtils */,
+				7771264F1B94350A00C6FDF1 /* KeyBoardAvoiding */,
 				779637831B747BE90001ADC2 /* Categories */,
 				779637881B747BE90001ADC2 /* FMDB */,
 				779637951B747BE90001ADC2 /* MBProgressHUD */,
@@ -692,8 +667,9 @@
 		77DBB9171B6F553900F02932 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				779A9D481B7C7D0700D86FED /* Elements */,
 				77DBB91A1B6F555C00F02932 /* Main.storyboard */,
+				77DBB9191B6F555C00F02932 /* LaunchScreen.xib */,
+				779A9D481B7C7D0700D86FED /* Elements */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1033,8 +1009,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				779638D81B74B4460001ADC2 /* RadioButtonUnchecked.png in Resources */,
+				C3FFB4371B9B36180089A0B2 /* PickListElementCell.xib in Resources */,
 				77C035C81B78B25F009228F1 /* MenuOption@2x.png in Resources */,
 				779A9D8A1B7C7D0700D86FED /* PickListViewController.xib in Resources */,
+				C3FFB4421B9B6FC30089A0B2 /* RadioButtonElementCell.xib in Resources */,
 				779638CD1B74B4460001ADC2 /* ArrowRight_old.png in Resources */,
 				779638D21B74B4460001ADC2 /* checkBoxChecked@2x.png in Resources */,
 				77C035C71B78B25F009228F1 /* MenuOption.png in Resources */,
@@ -1043,22 +1021,20 @@
 				779A9D941B7C7D0700D86FED /* SubElementCell.xib in Resources */,
 				779638CF1B74B4460001ADC2 /* checkBox.png in Resources */,
 				779638CE1B74B4460001ADC2 /* ArrowRight.png in Resources */,
-				779A9D8C1B7C7D0700D86FED /* RadioButtonElementCell.xib in Resources */,
 				779638CC1B74B4460001ADC2 /* ArrowDown.png in Resources */,
 				779638D71B74B4460001ADC2 /* RadioButtonChecked@2x.png in Resources */,
 				77F8E4AC1B82220600C214A4 /* Everycert.sql in Resources */,
 				779A9D921B7C7D0700D86FED /* SignatureViewController.xib in Resources */,
 				77C035C91B78B25F009228F1 /* MenuOption@3x.png in Resources */,
 				779638D91B74B4460001ADC2 /* RadioButtonUnchecked@2x.png in Resources */,
-				779A9D881B7C7D0700D86FED /* PickListElementCell.xib in Resources */,
 				779A9D9A1B7C7D0700D86FED /* TextViewElementCell.xib in Resources */,
 				77F8E4A91B821F0300C214A4 /* Everycert.sqlite in Resources */,
+				C3FFB43C1B9B3CF40089A0B2 /* SignatureElementCell.xib in Resources */,
 				779638D01B74B4460001ADC2 /* checkBox@2x.png in Resources */,
 				77DBB91B1B6F555C00F02932 /* LaunchScreen.xib in Resources */,
 				779638D11B74B4460001ADC2 /* checkBoxChecked.png in Resources */,
 				779637A41B747BE90001ADC2 /* MBProgressHUD.podspec in Resources */,
 				779638D61B74B4460001ADC2 /* RadioButtonChecked.png in Resources */,
-				779A9D901B7C7D0700D86FED /* SignatureElementCell.xib in Resources */,
 				779A9D961B7C7D0700D86FED /* TextFieldElementCell.xib in Resources */,
 				779A9D981B7C7D0700D86FED /* TextLabelElementCell.xib in Resources */,
 				779638D51B74B4460001ADC2 /* checkmark.png in Resources */,
@@ -1097,11 +1073,10 @@
 				779637A31B747BE90001ADC2 /* MBProgressHUD.m in Sources */,
 				779A9D851B7C7D0700D86FED /* LookupElementCell.m in Sources */,
 				77DBB9341B6F596700F02932 /* ExistingCertificateViewController.m in Sources */,
+				C3FFB43D1B9B3CF40089A0B2 /* SignatureElementCell.m in Sources */,
 				C38E89C01B9705D500790752 /* CompanyUserModel.m in Sources */,
 				C38E89C21B9705D500790752 /* DataModel.m in Sources */,
-				779A9D8B1B7C7D0700D86FED /* RadioButtonElementCell.m in Sources */,
 				C38E89D01B9705D500790752 /* SubElementModel.m in Sources */,
-				779A9D8F1B7C7D0700D86FED /* SignatureElementCell.m in Sources */,
 				779637A51B747BE90001ADC2 /* README.mdown in Sources */,
 				779A9D8E1B7C7D0700D86FED /* SignatureDrawingView.m in Sources */,
 				C38E89CB1B9705D500790752 /* LookUpHandler.m in Sources */,
@@ -1116,7 +1091,6 @@
 				C3C7862C1B99B75A00788D62 /* FMDBDataSource.m in Sources */,
 				C38E89C41B9705D500790752 /* DataBinaryModel.m in Sources */,
 				C38E89C81B9705D500790752 /* FormModel.m in Sources */,
-				779A9D871B7C7D0700D86FED /* PickListElementCell.m in Sources */,
 				C38E89C91B9705D500790752 /* FormSectionHandler.m in Sources */,
 				776F917C1B81BA1700D3A6E9 /* ElementTableViewCell.m in Sources */,
 				779638331B7481260001ADC2 /* CommonUtils.m in Sources */,
@@ -1142,8 +1116,10 @@
 				7796379F1B747BE90001ADC2 /* FMDatabasePool.m in Sources */,
 				77C035C21B7897E3009228F1 /* CertificateViewController.m in Sources */,
 				779A9D9B1B7C7D0700D86FED /* TickBoxElementCell.m in Sources */,
+				C3FFB4381B9B36180089A0B2 /* PickListElementCell.m in Sources */,
 				779A9D951B7C7D0700D86FED /* TextFieldElementCell.m in Sources */,
 				779637A01B747BE90001ADC2 /* FMDatabaseQueue.m in Sources */,
+				C3FFB4411B9B6FC30089A0B2 /* RadioButtonElementCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
