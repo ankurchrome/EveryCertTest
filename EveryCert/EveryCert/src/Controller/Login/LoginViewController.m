@@ -54,7 +54,7 @@ NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
 #pragma mark - IBActions
 
 //Show an alert to reset the password
-- (IBAction)onClickForgetPasswordButton:(id)sender
+- (IBAction)forgetPasswordButtonTapped:(id)sender
 {
     UIAlertController *alertController = nil;
     UIAlertAction     *resetPasswordAction = nil;

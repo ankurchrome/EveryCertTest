@@ -98,6 +98,8 @@
 		C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89B81B9705D500790752 /* SubElementHandler.m */; };
 		C38E89D01B9705D500790752 /* SubElementModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89BA1B9705D500790752 /* SubElementModel.m */; };
 		C3C7862C1B99B75A00788D62 /* FMDBDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C7862B1B99B75A00788D62 /* FMDBDataSource.m */; };
+		C3E441751BA059180020700F /* FormTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E441741BA059180020700F /* FormTypeTableViewCell.m */; };
+		C3E441781BA06D2F0020700F /* FormSectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E441771BA06D2F0020700F /* FormSectionTableViewCell.m */; };
 		C3FFB4371B9B36180089A0B2 /* PickListElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3FFB4341B9B36180089A0B2 /* PickListElementCell.xib */; };
 		C3FFB4381B9B36180089A0B2 /* PickListElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FFB4361B9B36180089A0B2 /* PickListElementCell.m */; };
 		C3FFB43C1B9B3CF40089A0B2 /* SignatureElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3FFB4391B9B3CF40089A0B2 /* SignatureElementCell.xib */; };
@@ -267,6 +269,10 @@
 		C38E89BA1B9705D500790752 /* SubElementModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementModel.m; sourceTree = "<group>"; };
 		C3C7862A1B99B75A00788D62 /* FMDBDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDBDataSource.h; sourceTree = "<group>"; };
 		C3C7862B1B99B75A00788D62 /* FMDBDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBDataSource.m; sourceTree = "<group>"; };
+		C3E441731BA059180020700F /* FormTypeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FormTypeTableViewCell.h; path = EveryCert/src/Controller/FormList/FormTypeTableViewCell.h; sourceTree = SOURCE_ROOT; };
+		C3E441741BA059180020700F /* FormTypeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormTypeTableViewCell.m; path = EveryCert/src/Controller/FormList/FormTypeTableViewCell.m; sourceTree = SOURCE_ROOT; };
+		C3E441761BA06D2F0020700F /* FormSectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormSectionTableViewCell.h; sourceTree = "<group>"; };
+		C3E441771BA06D2F0020700F /* FormSectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormSectionTableViewCell.m; sourceTree = "<group>"; };
 		C3FFB4341B9B36180089A0B2 /* PickListElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickListElementCell.xib; sourceTree = "<group>"; };
 		C3FFB4351B9B36180089A0B2 /* PickListElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickListElementCell.h; sourceTree = "<group>"; };
 		C3FFB4361B9B36180089A0B2 /* PickListElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickListElementCell.m; sourceTree = "<group>"; };
@@ -329,6 +335,8 @@
 			children = (
 				77C035BC1B789794009228F1 /* FormsListViewController.h */,
 				77C035BD1B789794009228F1 /* FormsListViewController.m */,
+				C3E441731BA059180020700F /* FormTypeTableViewCell.h */,
+				C3E441741BA059180020700F /* FormTypeTableViewCell.m */,
 			);
 			name = FormsList;
 			path = Form;
@@ -575,6 +583,8 @@
 			children = (
 				77C035C01B7897E3009228F1 /* CertificateViewController.h */,
 				77C035C11B7897E3009228F1 /* CertificateViewController.m */,
+				C3E441761BA06D2F0020700F /* FormSectionTableViewCell.h */,
+				C3E441771BA06D2F0020700F /* FormSectionTableViewCell.m */,
 			);
 			path = Certificate;
 			sourceTree = "<group>";
@@ -1108,12 +1118,14 @@
 				C38E89C31B9705D500790752 /* DataBinaryHandler.m in Sources */,
 				C38E89BC1B9705D500790752 /* CertificateModel.m in Sources */,
 				779A9D931B7C7D0700D86FED /* SubElementCell.m in Sources */,
+				C3E441751BA059180020700F /* FormTypeTableViewCell.m in Sources */,
 				C38E89BB1B9705D500790752 /* CertificateHandler.m in Sources */,
 				C38E89CE1B9705D500790752 /* RecordModel.m in Sources */,
 				77DBB9371B6F60C300F02932 /* SettingViewController.m in Sources */,
 				C38E89BD1B9705D500790752 /* BaseHandler.m in Sources */,
 				C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */,
 				7796379F1B747BE90001ADC2 /* FMDatabasePool.m in Sources */,
+				C3E441781BA06D2F0020700F /* FormSectionTableViewCell.m in Sources */,
 				77C035C21B7897E3009228F1 /* CertificateViewController.m in Sources */,
 				779A9D9B1B7C7D0700D86FED /* TickBoxElementCell.m in Sources */,
 				C3FFB4381B9B36180089A0B2 /* PickListElementCell.m in Sources */,

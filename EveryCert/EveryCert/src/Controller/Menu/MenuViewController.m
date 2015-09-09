@@ -14,16 +14,15 @@
 @interface MenuViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     __weak IBOutlet UITableView *_menuTableView;
+    IBOutlet UILabel *_lastSyncLabel;
     
     NSArray *_menuOptionList;
 }
 @end
 
-static NSString *const MenuOptionCellIdentifier  = @"MenuOptionCellIdentifier";
-
-NSString *const MenuOptionRowNewCertificate      = @"Create New Certificate";
-NSString *const MenuOptionRowExistingCertificate = @"Existing Certificate";
-NSString *const MenuOptionRowSetting             = @"Setting";
+NSString *const MenuCellIdentifierNewCertificate      = @"MenuCellIdentifierNewCert";
+NSString *const MenuCellIdentifierExistingCertificate = @"MenuCellIdentifierExistingCert";
+NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSetting";
 
 @implementation MenuViewController
 
@@ -34,10 +33,11 @@ NSString *const MenuOptionRowSetting             = @"Setting";
     [super viewDidLoad];
     
     self.navigationItem.hidesBackButton = YES;
+    self.view.backgroundColor = APP_BG_COLOR;
     
-    _menuOptionList = @[MenuOptionRowNewCertificate,
-                        MenuOptionRowExistingCertificate,
-                        MenuOptionRowSetting];
+    _menuOptionList = @[MenuCellIdentifierNewCertificate,
+                        MenuCellIdentifierExistingCertificate,
+                        MenuCellIdentifierSetting];
 }
 
 #pragma mark - IBActions
@@ -45,6 +45,11 @@ NSString *const MenuOptionRowSetting             = @"Setting";
 - (IBAction)onClickLogoutButton:(id)sender
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (IBAction)backupDataButtonTapped:(id)sender
+{
+    
 }
 
 #pragma mark - UITableViewDataSource Methods
@@ -56,46 +61,17 @@ NSString *const MenuOptionRowSetting             = @"Setting";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MenuOptionCellIdentifier];
+    NSString *cellIdentifier = _menuOptionList[indexPath.row];
     
-    cell.textLabel.text = _menuOptionList[indexPath.row];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
 
     if(!cell)
     {
         cell = [UITableViewCell new];
     }
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     return cell;
-}
-
-#pragma mark - UITableViewDelegate Methods
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UIViewController *nextVC = nil;
-    
-    NSString     *selectedRow = _menuOptionList[indexPath.row];
-    UIStoryboard *storyBoard  = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-    if([selectedRow isEqualToString:MenuOptionRowNewCertificate])
-    {
-        nextVC = [storyBoard instantiateViewControllerWithIdentifier:@"FormList"];
-    }
-    else if([selectedRow isEqualToString:MenuOptionRowExistingCertificate])
-    {
-        nextVC = [storyBoard instantiateViewControllerWithIdentifier:@"ExistingCertificate"];
-    }
-    else if([selectedRow isEqualToString:MenuOptionRowSetting])
-    {
-        nextVC = [storyBoard instantiateViewControllerWithIdentifier:@"Setting"];
-    }
-    
-    if (nextVC)
-    {
-        [self.navigationController pushViewController:nextVC animated:YES];
-    }
 }
 
 @end

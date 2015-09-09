@@ -27,6 +27,7 @@
     [super viewDidLoad];
  
     self.navigationItem.hidesBackButton = YES;
+    self.view.backgroundColor = APP_BG_COLOR;
     
     ElementHandler *elementHandler = [ElementHandler new];
     _signupElements = [elementHandler getSignUpElements];
@@ -36,7 +37,7 @@
 
 #pragma mark - IBActions
 
-- (IBAction)onClickSignInButton:(id)sender
+- (IBAction)signInButtonTapped:(id)sender
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
 }

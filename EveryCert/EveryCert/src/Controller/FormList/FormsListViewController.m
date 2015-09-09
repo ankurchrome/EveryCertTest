@@ -8,11 +8,12 @@
 
 #import "FormsListViewController.h"
 #import "CertificateViewController.h"
+#import "FormTypeTableViewCell.h"
 #import "FormHandler.h"
 
 @interface FormsListViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
-    __weak IBOutlet UITableView *_tableView;
+    __weak IBOutlet UITableView *_formListTableView;
     
     NSArray *_allFormsList;
 }
@@ -28,8 +29,18 @@ static NSString *const FormsListCellIdentifier = @"FormTypeCellIdentifier";
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = APP_BG_COLOR;
+    
+    _formListTableView.estimatedRowHeight = 44.0;
+    _formListTableView.rowHeight = UITableViewAutomaticDimension;
+
     FormHandler *formHandler = [FormHandler new];
     _allFormsList = [formHandler getAllFormsWithPermissions:APP_DELEGATE.loggedUserPermissionGroup];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [_formListTableView reloadData];
 }
 
 #pragma mark - IBActions
@@ -48,16 +59,18 @@ static NSString *const FormsListCellIdentifier = @"FormTypeCellIdentifier";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:FormsListCellIdentifier];
-    
-    if(!cell)
-    {
-        cell = [UITableViewCell new];
-    }
+    FormTypeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:FormsListCellIdentifier];
     
     FormModel *formModel = _allFormsList[indexPath.row];
     
-    cell.textLabel.text = formModel.title;
+    cell.titleLabel.text = formModel.title;
+    cell.statusLabel.hidden = !formModel.status;//hide status label if form is saved
+    cell.downloadImageView.hidden = formModel.status;//show download icon if form is not saved
+    
+    if (formModel.status)
+    {
+        cell.statusLabel.text = @"installed";
+    }
     
     return cell;
 }

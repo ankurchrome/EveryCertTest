@@ -7,8 +7,9 @@
 //
 
 #import "CertificateViewController.h"
-#import "MenuViewController.h"
 #import "UIView+Extension.h"
+#import "MenuViewController.h"
+#import "FormSectionTableViewCell.h"
 #import "ElementTableView.h"
 
 #import "FormModel.h"
@@ -19,38 +20,31 @@
 #import "DataBinaryHandler.h"
 #import "CertificateHandler.h"
 
-#import "TextFieldElementCell.h"
-#import "TextLabelElementCell.h"
-
-#define IPHONE_WIDTH_PORTRAIT  300
-#define IPHONE_WIDTH_LANDSCAPE 300
-
 @interface CertificateViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
-    __weak IBOutlet UIButton    *_nextToolBarButton;
-    __weak IBOutlet UILabel     *_toolBarTitle;
+    __weak IBOutlet ElementTableView *_elementTableView;
     __weak IBOutlet UITableView *_sectionTableView;
-    __weak IBOutlet UIView      *_backgroundView;
+    __weak IBOutlet UIView      *_sectionView;
 
-    __weak IBOutlet ElementTableView  *_elementTableView;
+    IBOutlet UILabel *_sectionTitleLabel;
     
-    float _deviceHeight;
-    float _deviceWidth;
-    BOOL  _certificateTableViewShow;
     
-    int  _indexPathRow;
-    BOOL _hidePannel;
+//    float _deviceHeight;
+//    float _deviceWidth;
+//    BOOL  _certificateTableViewShow;
+//    
+//    int  _indexPathRow;
+//    BOOL _hidePannel;
     
-    BOOL _isExistingCertificate;
-    
-    CertificateModel *_certificate;
-    NSArray  *_formSections;
-    NSArray  *_formElements;
-    NSArray  *_currentSectionElements;
-    NSInteger _currentSectionIndex;
-    
+    CertificateModel  *_certificate;
     DataHandler       *_dataHandler;
     DataBinaryHandler *_dataBinaryHandler;
+
+    NSArray   *_formSections;
+    NSArray   *_formElements;
+    NSArray   *_currentSectionElements;
+    NSInteger  _currentSectionIndex;
+    BOOL       _isExistingCertificate;
 }
 @end
 
@@ -115,126 +109,10 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
 
 - (void)makeUISetup
 {
-    // Add Navigation Bar Item According to the Current Device being used
-    UIBarButtonItem *homeBarButton = nil;
-    UIBarButtonItem *menuBarButton = nil;
-    UIImage *menuImage = nil;
-
-    homeBarButton = [[UIBarButtonItem alloc]initWithTitle:HomeBarButtonTitle
-                                                    style:UIBarButtonItemStylePlain
-                                                   target:self
-                                                   action:@selector(onClickHomeButton:)];
-    homeBarButton.tintColor = [UIColor whiteColor];
-
-    if (iPHONE)
-    {
-        menuImage     = [UIImage imageNamed:@"MenuOption"];
-        menuBarButton = [[UIBarButtonItem alloc]initWithImage:menuImage
-                                                        style:UIBarButtonItemStylePlain
-                                                       target:self
-                                                       action:@selector(onMenuButtonClick:)];
-        menuBarButton.tintColor = [UIColor whiteColor];
-        self.navigationItem.leftBarButtonItems = @[menuBarButton, homeBarButton];
-        _certificateTableViewShow = NO;
-    }
-    else if (iPAD)
-    {
-        self.navigationItem.leftBarButtonItem = homeBarButton;
-    }
-
-    // Set table view frame from the current Device being used
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    
-    if (orientation == UIDeviceOrientationPortrait ||
-        orientation == UIDeviceOrientationPortraitUpsideDown)
-    {
-        [_sectionTableView setFrameWidth:IPHONE_WIDTH_PORTRAIT];
-        _sectionTableView.frame = CGRectMake(-(CGRectGetMaxX(_sectionTableView.frame)), 0,IPHONE_WIDTH_PORTRAIT, self.view.frame.size.height);
-        _deviceWidth  = self.view.frame.size.width;
-        _deviceHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - 22;
-    }
-    else if(orientation == UIDeviceOrientationLandscapeLeft ||
-            orientation == UIDeviceOrientationLandscapeRight)
-    {
-        _deviceWidth  = self.view.frame.size.width;
-        _deviceHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height;
-        
-        [_sectionTableView setFrameWidth:IPHONE_WIDTH_LANDSCAPE];
-        _sectionTableView.frame = CGRectMake(-(CGRectGetMaxX(_sectionTableView.frame)), 0, IPHONE_WIDTH_LANDSCAPE, self.view.frame.size.width);
-    }
-    
-    _hidePannel = YES;
-    
-    // Send Notification When Device Orientation Changed
-    [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:self];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(deviceOrientationDidChanged:)
-                                                 name:UIDeviceOrientationDidChangeNotification
-                                               object:nil];
-    
-    //Setup section table view
-    UINib *sectionCellNib = [UINib nibWithNibName:ElementCellNibNameTextLabel bundle:nil];
-    [_sectionTableView registerNib:sectionCellNib forCellReuseIdentifier:ElementCellReuseIdentifierTextLabel];
-    
     _sectionTableView.clipsToBounds = NO;
     _sectionTableView.layer.shadowColor = [[UIColor blackColor] CGColor];
     _sectionTableView.layer.shadowOffset = CGSizeMake(0,5);
     _sectionTableView.layer.shadowOpacity = 0.5;
-}
-
-// Call when Device Orientation is change at run time
-- (void)viewWillTransitionToSize
-{
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    
-    if((_sectionTableView.frame.origin.x > 0))
-    {
-        if ((orientation == UIDeviceOrientationPortrait ||
-             orientation == UIDeviceOrientationPortraitUpsideDown))
-        {
-            _deviceWidth  = self.view.frame.size.width;
-            _deviceHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height;
-            _sectionTableView.frame = CGRectMake(_sectionTableView.frame.origin.x, 0, IPHONE_WIDTH_PORTRAIT, _deviceHeight);
-        }
-        else if((orientation == UIDeviceOrientationLandscapeLeft ||
-                 orientation == UIDeviceOrientationLandscapeRight))
-        {
-            _deviceWidth  = self.view.frame.size.width;
-            _deviceHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height;
-            _sectionTableView.frame = CGRectMake(_sectionTableView.frame.origin.x, 0, IPHONE_WIDTH_LANDSCAPE, _deviceWidth);
-        }
-    }
-    else
-    {
-        if ((orientation == UIDeviceOrientationPortrait ||
-             orientation == UIDeviceOrientationPortraitUpsideDown))
-        {
-            _deviceWidth  = self.view.frame.size.width;
-            _deviceHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height+42;
-            [_sectionTableView setFrameY:0];
-            [_sectionTableView setFrameWidth:IPHONE_WIDTH_PORTRAIT];
-            [_sectionTableView setFrameHeight:_deviceHeight];
-        }
-        else if((orientation == UIDeviceOrientationLandscapeLeft ||
-                 orientation == UIDeviceOrientationLandscapeRight))
-        {
-            _deviceWidth  = self.view.frame.size.width;
-            _deviceHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height+32;
-            [_sectionTableView setFrameY:0];
-            [_sectionTableView setFrameWidth:IPHONE_WIDTH_LANDSCAPE];
-            [_sectionTableView setFrameHeight:_deviceHeight];
-        }
-    }
-}
-
-// Call when Device Orientation is changed
-- (void)deviceOrientationDidChanged:(id)sender
-{
-    if(iPHONE)
-    {
-        [self viewWillTransitionToSize];
-    }
 }
 
 #pragma mark - Functionality Methods
@@ -248,7 +126,7 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
     {
         formSection = [_formSections objectAtIndex:sectionIndex];
         
-        _toolBarTitle.text = formSection.title;
+        _sectionTitleLabel.text = formSection.title;
         
         predicate = [NSPredicate predicateWithFormat:@"sectionId = %ld", formSection.sectionId];
         
@@ -408,46 +286,29 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
 
 #pragma mark - IBActions & Event Methods
 
-// When user Click on Menu Bar Button , the Tbale view move left - right
-- (void)onMenuButtonClick:(id)sender
+- (IBAction)previousSectionButtonTapped:(id)sender
 {
-    if(!_certificateTableViewShow)
-    {
-        [UIView animateWithDuration:.3 animations:^
-         {
-             [_sectionTableView setFrameX: 0];
-             [_sectionTableView setFrameHeight:_deviceHeight];
-         }];
-        
-        _certificateTableViewShow = YES;
-        _backgroundView.hidden    = NO;
-    }
-    else
-    {
-        [UIView animateWithDuration:.3 animations:^
-         {
-             [_sectionTableView setFrameX: -(CGRectGetMaxX(_sectionTableView.frame))];
-             [_sectionTableView setFrameHeight:_deviceHeight];
-         }];
-        
-        _certificateTableViewShow = NO;
-        _backgroundView.hidden    = YES;
-    }
+    
 }
 
-// Control will navigate to MenuOption Screen
-- (void)onClickHomeButton:(id)sender
+- (IBAction)nextSectionButtonTapped:(id)sender
 {
-    for(UIViewController *viewController in self.navigationController.viewControllers)
-    {
-        if([viewController isKindOfClass:[MenuViewController class]])
-        {
-            _sectionTableView.hidden = YES;
-            [self.navigationController popToViewController:viewController animated:YES];
-            return;
-        }
-    }
+    
 }
+
+- (IBAction)menuButtonTapped:(id)sender
+{
+    
+}
+
+- (IBAction)homeButtonTapped:(id)sender
+{
+    
+}
+
+
+
+#pragma mark -
 
 //Work when Click Single Tap on Background View
 - (IBAction)singleTapOnBackgroundView:(id)sender
@@ -517,16 +378,11 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TextLabelElementCell *cell = [tableView dequeueReusableCellWithIdentifier:FormSectionCellReuseIdentifier forIndexPath:indexPath];
+    FormSectionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:FormSectionCellReuseIdentifier forIndexPath:indexPath];
     
     FormSectionModel *formSection = _formSections[indexPath.row];
     
-    if(!cell)
-    {
-        cell = [TextLabelElementCell new];
-    }
-    
-    cell.textLabel.text = formSection.title;
+    cell.titleLabel.text = formSection.title;
     
     return cell;
 }
