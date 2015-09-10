@@ -7,312 +7,210 @@
 //
 
 #import "ExistingCertificateViewController.h"
-#import "CertificateViewController.h"
-
 #import "UIView+Extension.h"
-#import "MenuViewController.h"
-#import "CertificateHandler.h"
-#import "CertificateModel.h"
-#import "FormHandler.h"
-#import "FormModel.h"
-#import "TextLabelElementCell.h"
 #import <MessageUI/MessageUI.h>
+#import "ExistingCertificateTableViewCell.h"
+#import "CertificateViewController.h"
+#import "MenuViewController.h"
 
-#define IPHONE_WIDTH_PORTRAIT       300
-#define IPHONE_WIDTH_LANDSCAPE      300
+#import "CertificateHandler.h"
+
+#define EXIST_CERTS_LIST_SHOW_HIDE_ANIMATION_DURATION 0.3f
+#define EXIST_CERTS_LIST_BACKGROUND_ALPHA             0.6f
 
 @interface ExistingCertificateViewController ()<UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIWebViewDelegate>
 {
-    __weak IBOutlet UITableView *_certificateTableView;
-    __weak IBOutlet UIView *_backgroundView;
-    __weak IBOutlet UIWebView *_webView;
-    NSArray *_existingCertsList;
-    CertificateHandler *_certHandler;
-
-    float _deviceHeight;
-    float _deviceWidth;
-    BOOL  _certificateTableViewShow;
-    BOOL  _hidePannel;
+    __weak IBOutlet UITableView *_existingCertsTableView;
+    __weak IBOutlet UIView      *_existingCertsView;
+    __weak IBOutlet UIView      *_existingCertsFadedView;
+    __weak IBOutlet UIWebView   *_webView;
+    
     MFMailComposeViewController  *_mailComposeVC;
     
-    CertificateModel *_selectedCertificate;
+    CertificateHandler *_certHandler;
+    CertificateModel   *_selectedCertificate;
+    
+    NSArray *_existingCertsList;
 }
 @end
 
 
 NSString *const ExistingCertCellReuseIdentifier = @"ExistingCertCellIdentifier";
-NSString *const MenuOptionImageNamed = @"MenuOption.png";
 
 @implementation ExistingCertificateViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    
-    [self addNavigationBarButtonItem];
-    [self setCertificateTableViewFrame];
-    
-    //******** Send Notification When Device Orientation Changed
-    [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:self];
-    
-    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(deviceOrientationDidChanged:) name: UIDeviceOrientationDidChangeNotification object: nil];
+    [self makeUISetup];
+
     _certHandler = [CertificateHandler new];
     _existingCertsList = [_certHandler getAllExistingCertificatesOfCompany:0];
-    
-    // Register TextLabel Nib
-    [_certificateTableView registerNib:[UINib nibWithNibName:ElementCellNibNameTextLabel bundle:nil] forCellReuseIdentifier:ElementCellReuseIdentifierTextLabel];
-    
-    // Drop Shadow on Table View
-    _certificateTableView.clipsToBounds = NO;
-    _certificateTableView.layer.shadowColor = [[UIColor blackColor] CGColor];
-    _certificateTableView.layer.shadowOffset = CGSizeMake(0,5);
-    _certificateTableView.layer.shadowOpacity = 0.5;
-    
-    if(iPAD)
-    {
-        _certificateTableView.hidden = NO;
-    }
-    
-    _hidePannel = YES;
-    _certificateTableView.estimatedRowHeight =100.0;
-    _certificateTableView.rowHeight = UITableViewAutomaticDimension;
 }
 
-// This Method Select the Initial Row of the Section Table as Default
-- (void)viewWillAppear:(BOOL)animated
+#pragma mark -
+
+- (void)makeUISetup
 {
-    [super viewWillAppear:animated];
+    self.title = _selectedCertificate.name;
+    self.view.backgroundColor = APP_BG_COLOR;
     
-    // Check Weather the Array Count is Not Zero
-    if(_existingCertsList.count > 0)
-    {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [_certificateTableView selectRowAtIndexPath:indexPath animated:YES  scrollPosition:UITableViewScrollPositionBottom];                       // Set Initial Row Selected
-        [self tableView:_certificateTableView didSelectRowAtIndexPath:indexPath];
-    }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    _certificateTableView.hidden = NO;
-}
-
-#pragma mark - Private Method
-
-// Add Navigation Bar Item According to the Current Device being used
-- (void)addNavigationBarButtonItem
-{
-    if(iPHONE)  // If Device is iPhone
-    {
-        UIBarButtonItem *homeBarButton = [[UIBarButtonItem alloc]initWithTitle:HomeBarButtonTitle
-                                                                         style:UIBarButtonItemStylePlain target:self action:@selector(onClickHomeButton:)];
-        homeBarButton.tintColor        = [UIColor whiteColor];
-        UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc]initWithImage:
-                                          [UIImage imageNamed:MenuOptionImageNamed] style:UIBarButtonItemStylePlain target:self action:@selector(onMenuButtonClick:)];
-        _certificateTableViewShow       = NO;
-        menuBarButton.tintColor = [UIColor whiteColor];
-        self.navigationItem.leftBarButtonItems = @[menuBarButton, homeBarButton];
-    }
+    _existingCertsTableView.backgroundColor = APP_BG_COLOR;
+    _existingCertsTableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0);
     
-    else if (iPAD)  // If Device is iPad
-    {
-        UIBarButtonItem *homeBarButton = [[UIBarButtonItem alloc]initWithTitle:HomeBarButtonTitle style:UIBarButtonItemStylePlain target:self action:@selector(onClickHomeButton:)];
-        homeBarButton.tintColor        = [UIColor whiteColor];
-        self.navigationItem.leftBarButtonItem = homeBarButton;
-    }
+    _existingCertsTableView.clipsToBounds = NO;
+    _existingCertsTableView.layer.shadowColor = [[UIColor blackColor] CGColor];
+    _existingCertsTableView.layer.shadowOffset = CGSizeMake(0,5);
+    _existingCertsTableView.layer.shadowOpacity = 0.5;
 }
 
-// Set table view frame from the current Device being used
-- (void)setCertificateTableViewFrame
+- (void)showExistingCertsListView
 {
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    if (orientation == UIDeviceOrientationPortrait ||
-        orientation == UIDeviceOrientationPortraitUpsideDown) {
-        
-        [_certificateTableView setFrameWidth:IPHONE_WIDTH_PORTRAIT];
-        _certificateTableView.frame = CGRectMake(-(CGRectGetMaxX(_certificateTableView.frame)), 0,IPHONE_WIDTH_PORTRAIT, self.view.frame.size.height);
-        _deviceWidth  = self.view.frame.size.width;
-        _deviceHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - 22;
-    }
-    else if(orientation == UIDeviceOrientationLandscapeLeft ||
-            orientation == UIDeviceOrientationLandscapeRight)
-    {
-        _deviceWidth  = self.view.frame.size.width;
-        _deviceHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height;
-        
-        [_certificateTableView setFrameWidth:IPHONE_WIDTH_LANDSCAPE];
-        _certificateTableView.frame = CGRectMake(-(CGRectGetMaxX(_certificateTableView.frame)), 0, IPHONE_WIDTH_LANDSCAPE, self.view.frame.size.width);
-    }
-    if (LOGS_ON) NSLog(@"certificateTableView Frame = %@", _certificateTableView);
-}
-
-// Call when Device Orientation is change at run time
-- (void)viewWillTransitionToSize
-{
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    [_existingCertsTableView setFrameX:-_existingCertsTableView.frameWidth];
+    _existingCertsView.hidden = NO;
     
-    if((_certificateTableView.frame.origin.x > 0))
-    {
-        if ((orientation == UIDeviceOrientationPortrait ||
-             orientation == UIDeviceOrientationPortraitUpsideDown)) {
-            _deviceWidth  = self.view.frame.size.width;
-            _deviceHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height;
-            _certificateTableView.frame = CGRectMake(_certificateTableView.frame.origin.x, 0, IPHONE_WIDTH_PORTRAIT, _deviceHeight);
-        }
-        else if((orientation == UIDeviceOrientationLandscapeLeft ||
-                 orientation == UIDeviceOrientationLandscapeRight))
-        {
-            _deviceWidth  = self.view.frame.size.width;
-            _deviceHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height;
-            _certificateTableView.frame = CGRectMake(_certificateTableView.frame.origin.x, 0, IPHONE_WIDTH_LANDSCAPE, _deviceWidth);
-        }
-    }
-    else
-    {
-        if ((orientation == UIDeviceOrientationPortrait ||
-             orientation == UIDeviceOrientationPortraitUpsideDown)) {
-            _deviceWidth  = self.view.frame.size.width;
-            _deviceHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height+42;
-            [_certificateTableView setFrameY:0];
-            [_certificateTableView setFrameWidth:IPHONE_WIDTH_PORTRAIT];
-            [_certificateTableView setFrameHeight:_deviceHeight];
-        }
-        else if((orientation == UIDeviceOrientationLandscapeLeft ||
-                 orientation == UIDeviceOrientationLandscapeRight))
-        {
-            _deviceWidth  = self.view.frame.size.width;
-            _deviceHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height+32;
-            [_certificateTableView setFrameY:0];
-            [_certificateTableView setFrameWidth:IPHONE_WIDTH_LANDSCAPE];
-            [_certificateTableView setFrameHeight:_deviceHeight];
-        }
-    }
+    [UIView animateWithDuration:EXIST_CERTS_LIST_SHOW_HIDE_ANIMATION_DURATION
+                     animations:^
+     {
+         [_existingCertsTableView setFrameX:0];
+         _existingCertsFadedView.alpha = EXIST_CERTS_LIST_BACKGROUND_ALPHA;
+     }
+                     completion:^(BOOL finished)
+     {
+     }];
+}
+
+- (void)hideExistingCertsListView
+{
+    [UIView animateWithDuration:EXIST_CERTS_LIST_SHOW_HIDE_ANIMATION_DURATION
+                     animations:^
+     {
+         [_existingCertsTableView setFrameX:-_existingCertsTableView.frameWidth];
+         _existingCertsFadedView.alpha = 0.0;
+     }
+                     completion:^(BOOL finished)
+     {
+         _existingCertsView.hidden = YES;
+         [_existingCertsTableView setFrameX:0];
+     }];
 }
 
 #pragma mark- IBActions
 
-- (IBAction)onClickEditToolBarButton:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    //Instantiate CertificateViewController object from Storyboard
-    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    CertificateViewController *certificateVC  = [mainStoryBoard instantiateViewControllerWithIdentifier:@"CertificateViewController"];
-
-    [certificateVC initializeWithCertificate:_selectedCertificate];
-    [self.navigationController pushViewController:certificateVC animated:YES];
+    if ([segue.identifier isEqualToString:@"CertificateVC"])
+    {
+        CertificateViewController *certificateVC  = [segue destinationViewController];
+        
+        [certificateVC initializeWithCertificate:_selectedCertificate];
+    }
 }
 
-- (IBAction)onClickEmailToolBarButton:(id)sender {
-    NSArray *_toRecipients = nil;
+- (IBAction)menuButtonTapped:(id)sender
+{
+    if(_existingCertsView.hidden)
+    {
+        [self showExistingCertsListView];
+    }
+    else
+    {
+        [self hideExistingCertsListView];
+    }
+}
+
+- (IBAction)homeButtonTapped:(id)sender
+{
     
+}
+
+- (IBAction)existingCertsFadedViewTapped:(id)sender
+{
+    [self hideExistingCertsListView];
+}
+
+- (IBAction)onSwipeWebView:(id)sender
+{
+    [self showExistingCertsListView];
+}
+
+- (IBAction)emailButtonTapped:(id)sender
+{
     if (![MFMailComposeViewController canSendMail])
     {
-       // [CommonUtils showAlertWithTitle:@"Error" message:@"Check your account in Setting"];
+        [CommonUtils showAlertWithTitle:@"Error" message:@"No account configured, please check your setting"];
+        return;
     }
     
-    if ([CommonUtils isValidString:@"mayur.sardana@gmail.com"])
-    {
-        _toRecipients = @[@"Demo Recipients"];
-    }
+    NSString *subject = nil;
+    NSData *certPdfData = [NSData dataWithContentsOfFile:[_selectedCertificate pdfPath]];
     
     _mailComposeVC = [MFMailComposeViewController new];
-    [_mailComposeVC setToRecipients:_toRecipients];
-    [_mailComposeVC setSubject: @"DemoSubject"];
+    [_mailComposeVC setSubject:subject];
     _mailComposeVC.mailComposeDelegate = self;
     
-//    [_mailComposeVC addAttachmentData:self.documentData
-//                             mimeType:@"application/pdf"
-//                             fileName:[self.filePath lastPathComponent]];
+    [_mailComposeVC addAttachmentData:certPdfData
+                             mimeType:@"application/pdf"
+                             fileName:[_selectedCertificate pdfPath]];
     
     _mailComposeVC.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:_mailComposeVC animated:YES completion:nil];
 }
 
-- (IBAction)swipeRightOnWebView:(id)sender
+#pragma mark - UITableViewDataSource Methods
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(!_certificateTableViewShow && ! iPAD)
-    {
-        [UIView animateWithDuration:.3 animations:^{
-            [_certificateTableView setFrameX: 0];
-            [_certificateTableView setFrameHeight:_deviceHeight];
-        }];
-        _certificateTableViewShow = YES;
-        _backgroundView.hidden    = NO;
-    }
+    return _existingCertsList.count;
 }
 
-- (IBAction)singleTapOnBackgroundView:(id)sender
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(_certificateTableViewShow)
-    {
-        _certificateTableViewShow = NO;
-        [UIView animateWithDuration:.3 animations:^{
-            [_certificateTableView setFrameX: -(CGRectGetMaxX(_certificateTableView.frame))];
-            [_certificateTableView setFrameHeight:_deviceHeight];
-        } completion:^(BOOL finished) {
-            _certificateTableViewShow = NO;
-            _backgroundView.hidden    = YES;
-        }];
-    }
+    ExistingCertificateTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ExistingCertCellReuseIdentifier forIndexPath:indexPath];
+    
+    CertificateModel *certificateModel = _existingCertsList[indexPath.row];
+    
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    dateFormatter.dateFormat = @"dd-MM-yyyy hh:mm:ss";
+    
+    cell.nameLabel.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:certificateModel.dateTimestamp]];
+    
+    return cell;
 }
 
-#pragma mark - Selector
+#pragma mark - UITableViewDelegate Methods
 
-// When user Click on Menu Bar Button , the Tbale view move left - right
-- (void)onMenuButtonClick:(id)sender
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(!_certificateTableViewShow) {
-        [UIView animateWithDuration:.3 animations:^{
-            [_certificateTableView setFrameX: 0];
-            [_certificateTableView setFrameHeight:_deviceHeight];
-        }];
-        
-        _certificateTableViewShow = YES;
-        _backgroundView.hidden    = NO;
-    }
-    else {
-        [UIView animateWithDuration:.3 animations:^{
-            [_certificateTableView setFrameX: -(CGRectGetMaxX(_certificateTableView.frame))];
-            [_certificateTableView setFrameHeight:_deviceHeight];
-        }];
-        _certificateTableViewShow = NO;
-        _backgroundView.hidden    = YES;
-    }
+    CertificateModel *certificateModel = _existingCertsList[indexPath.row];
+    _selectedCertificate = certificateModel;
+    
+    NSURL *url = [NSURL URLWithString:[_selectedCertificate pdfPath]];
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+
+    [_webView loadRequest:requestObj];
+    
+    [self hideExistingCertsListView];
 }
 
-// Control will navigate to MenuOption Screen
-- (void)onClickHomeButton:(id)sender
-{
-    for(UIViewController *viewController in self.navigationController.viewControllers)
-    {
-        if([viewController isKindOfClass:[MenuViewController class]])
-        {
-            _certificateTableView.hidden = YES;
-            [self.navigationController popToViewController:viewController animated:YES];
-            return;
-        }
-    }
-}
+#pragma mark - WebViewDelegate Methods
 
-// Call when Device Orientation is changed
-- (void)deviceOrientationDidChanged:(id)sender
-{
-    if(iPHONE)
-    {
-        [self viewWillTransitionToSize];
-    }
-}
-
-#pragma mark - UIGestureRecognizerDelegate
-
-// This Mehtod Allows Gesture to work also on Web View
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     return YES;
 }
 
-#pragma mark - MFMailComposeViewControllerDelegate
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    if (LOGS_ON) NSLog(@"Error : %@ ", error.localizedDescription);
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate Methods
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
@@ -341,93 +239,6 @@ NSString *const MenuOptionImageNamed = @"MenuOption.png";
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return _existingCertsList.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    TextLabelElementCell *cell = [tableView dequeueReusableCellWithIdentifier:ExistingCertCellReuseIdentifier forIndexPath:indexPath];
-    
-    if(!cell)
-    {
-        cell = [TextLabelElementCell new];
-    }
-    
-    CertificateModel *certificateModel = _existingCertsList[indexPath.row];
-    
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    dateFormatter.dateFormat = @"dd-MM-yyyy hh:mm:ss";
-    
-    cell.textLabel.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:certificateModel.dateTimestamp]];
-    
-    return cell;
-}
-
-#pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CertificateModel *certificateModel = _existingCertsList[indexPath.row];
-    
-    _selectedCertificate = certificateModel;
-    
-    NSString *formName = certificateModel.name;
-    FormHandler *formHandler = [FormHandler new];
-    FormModel *formModel = nil;
-    
-    if (LOGS_ON) NSLog(@"%@", formModel.backgroundLayout);
-    NSURL *url = [NSURL URLWithString:formModel.backgroundLayout];
-    
-    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-    
-    [_webView loadRequest:requestObj];
-    
-    if(!_hidePannel && iPHONE)
-    {
-        [UIView animateWithDuration:.3 animations:^{
-            [_certificateTableView setFrameX: -(CGRectGetMaxX(_certificateTableView.frame))];
-            [_certificateTableView setFrameHeight:_deviceHeight];
-        } completion:^(BOOL finished) {
-            _certificateTableViewShow = NO;
-            _backgroundView.hidden    = YES;
-        }];
-    }
-    else
-    {
-        _hidePannel = NO;
-    }
-}
-
-#pragma mark - WebViewDelegate Methods
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    FUNCTION_START;
-    
-    FUNCTION_END;
-    return YES;
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    FUNCTION_START;
-    
-    FUNCTION_END;
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    FUNCTION_START;
-    
-    if (LOGS_ON) NSLog(@"Error : %@ ", error.localizedDescription);
-    
-    FUNCTION_END;
 }
 
 @end

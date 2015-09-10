@@ -20,21 +20,16 @@
 #import "DataBinaryHandler.h"
 #import "CertificateHandler.h"
 
+#define SECTION_LIST_SHOW_HIDE_ANIMATION_DURATION 0.3f
+#define SECTION_LIST_BACKGROUND_ALPHA             0.6f
+
 @interface CertificateViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     __weak IBOutlet ElementTableView *_elementTableView;
     __weak IBOutlet UITableView *_sectionTableView;
     __weak IBOutlet UIView      *_sectionView;
-
+    IBOutlet UIView *_sectionFadedView;
     IBOutlet UILabel *_sectionTitleLabel;
-    
-    
-//    float _deviceHeight;
-//    float _deviceWidth;
-//    BOOL  _certificateTableViewShow;
-//    
-//    int  _indexPathRow;
-//    BOOL _hidePannel;
     
     CertificateModel  *_certificate;
     DataHandler       *_dataHandler;
@@ -59,7 +54,10 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
 {
     //Create a new certificate with selected form
     CertificateModel *newCertificate = [CertificateModel new];
-    newCertificate.formId = form.formId;
+    newCertificate.formId    = form.formId;
+    newCertificate.name      = form.name;
+    newCertificate.date      = [NSDate date];
+    newCertificate.companyId = APP_DELEGATE.loggedUserCompanyId;
     
     CertificateHandler *certHandler = [CertificateHandler new];
     NSInteger certRowId = [certHandler insertCertificate:newCertificate];
@@ -109,6 +107,12 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
 
 - (void)makeUISetup
 {
+    self.title = _certificate.name;
+    self.view.backgroundColor = APP_BG_COLOR;
+    
+    _sectionTableView.backgroundColor = APP_BG_COLOR;
+    _sectionTableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0);
+    
     _sectionTableView.clipsToBounds = NO;
     _sectionTableView.layer.shadowColor = [[UIColor blackColor] CGColor];
     _sectionTableView.layer.shadowOffset = CGSizeMake(0,5);
@@ -137,6 +141,37 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
         
         [_elementTableView reloadWithElements:_currentSectionElements];
     }
+}
+
+- (void)showSectionView
+{
+    [_sectionTableView setFrameX:-_sectionTableView.frameWidth];
+    _sectionView.hidden = NO;
+    
+    [UIView animateWithDuration:SECTION_LIST_SHOW_HIDE_ANIMATION_DURATION
+                     animations:^
+     {
+         [_sectionTableView setFrameX:0];
+         _sectionFadedView.alpha = SECTION_LIST_BACKGROUND_ALPHA;
+     }
+                     completion:^(BOOL finished)
+     {
+     }];
+}
+
+- (void)hideSectionView
+{
+    [UIView animateWithDuration:SECTION_LIST_SHOW_HIDE_ANIMATION_DURATION
+                     animations:^
+     {
+         [_sectionTableView setFrameX:-_sectionTableView.frameWidth];
+         _sectionFadedView.alpha = 0.0;
+     }
+                     completion:^(BOOL finished)
+     {
+         _sectionView.hidden = YES;
+         [_sectionTableView setFrameX:0];
+     }];
 }
 
 //Save the data for all given elements
@@ -224,6 +259,7 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
         }
         
         DataModel *dataModel = [DataModel new];
+        dataModel.companyId = APP_DELEGATE.loggedUserCompanyId;
         dataModel.certificateIdApp = _certificate.certIdApp;
         dataModel.elementId = elementModel.elementId;
         dataModel.data = elementModel.dataValue;
@@ -260,6 +296,7 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
         }
         
         DataBinaryModel *dataBinaryModel = [DataBinaryModel new];
+        dataBinaryModel.companyId        = APP_DELEGATE.loggedUserCompanyId;
         dataBinaryModel.certificateIdApp = _certificate.certIdApp;
         dataBinaryModel.elementId        = elementModel.elementId;
         dataBinaryModel.dataBinary       = elementModel.dataBinaryValue;
@@ -274,7 +311,6 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
 //Check All Elements Filled for only current Element Model
 - (BOOL)hasAllElementsFilled
 {
-    
     return YES;
 }
 
@@ -288,65 +324,6 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
 
 - (IBAction)previousSectionButtonTapped:(id)sender
 {
-    
-}
-
-- (IBAction)nextSectionButtonTapped:(id)sender
-{
-    
-}
-
-- (IBAction)menuButtonTapped:(id)sender
-{
-    
-}
-
-- (IBAction)homeButtonTapped:(id)sender
-{
-    
-}
-
-
-
-#pragma mark -
-
-//Work when Click Single Tap on Background View
-- (IBAction)singleTapOnBackgroundView:(id)sender
-{
-    if(_certificateTableViewShow)
-    {
-        _certificateTableViewShow = NO;
-        [UIView animateWithDuration:.3 animations:^
-         {
-             [_sectionTableView setFrameX: -(CGRectGetMaxX(_sectionTableView.frame))];
-             [_sectionTableView setFrameHeight:_deviceHeight];
-         }
-                         completion:^(BOOL finished)
-         {
-             _certificateTableViewShow = NO;
-             _backgroundView.hidden    = YES;
-         }];
-    }
-}
-
-//Work when Click on BackGround View
-- (IBAction)swipeRightOnBackgroundView:(id)sender
-{
-    if(!_certificateTableViewShow && ! iPAD)
-    {
-        [UIView animateWithDuration:.3 animations:^
-         {
-             [_sectionTableView setFrameX: 0];
-             [_sectionTableView setFrameHeight:_deviceHeight];
-         }];
-        
-        _certificateTableViewShow = YES;
-        _backgroundView.hidden    = NO;
-    }
-}
-
-- (IBAction)onClickBackToolBarButton:(id)sender
-{
     [self saveAllElements:_currentSectionElements];
     
     if (--_currentSectionIndex < 0)
@@ -357,7 +334,7 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
     [self showElementsForSectionIndex:_currentSectionIndex];
 }
 
-- (IBAction)onClickNextToolBarButton:(id)sender
+- (IBAction)nextSectionButtonTapped:(id)sender
 {
     [self saveAllElements:_currentSectionElements];
     
@@ -367,6 +344,41 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
     }
     
     [self showElementsForSectionIndex:_currentSectionIndex];
+}
+
+- (IBAction)menuButtonTapped:(id)sender
+{
+    if(_sectionView.hidden)
+    {
+        [self showSectionView];
+    }
+    else
+    {
+        [self hideSectionView];
+    }
+}
+
+- (IBAction)homeButtonTapped:(id)sender
+{
+    if (APP_DELEGATE.homeVC)
+    {
+        [self.navigationController popToViewController:APP_DELEGATE.homeVC animated:YES];
+    }
+}
+
+- (IBAction)previewButtonTapped:(id)sender
+{
+    
+}
+
+- (IBAction)sectionFadedViewTapped:(id)sender
+{
+    [self hideSectionView];
+}
+
+- (IBAction)onSwipeElementTable:(id)sender
+{
+    [self showSectionView];
 }
 
 #pragma mark - UITableViewDataSource Methods
@@ -396,25 +408,8 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
         [self saveAllElements:_currentSectionElements];
     }
     
+    [self hideSectionView];
     [self showElementsForSectionIndex:indexPath.row];
-    
-    if(!_hidePannel && iPHONE)
-    {
-        [UIView animateWithDuration:.3 animations:^
-        {
-            [_sectionTableView setFrameX: -(CGRectGetMaxX(_sectionTableView.frame))];
-            [_sectionTableView setFrameHeight:_deviceHeight];
-        }
-                         completion:^(BOOL finished)
-        {
-            _certificateTableViewShow = NO;
-            _backgroundView.hidden    = YES;
-        }];
-    }
-    else
-    {
-        _hidePannel = NO;
-    }
 }
 
 @end

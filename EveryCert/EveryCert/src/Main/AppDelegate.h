@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class MenuViewController;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -18,6 +20,8 @@
 @property (strong, nonatomic) NSString *loggedUserEmail;
 @property (strong, nonatomic) NSString *loggedUserPassword;
 @property (strong, nonatomic) NSString *loggedUserPermissionGroup;
+
+@property (strong, nonatomic) MenuViewController *homeVC;
 
 @end
 

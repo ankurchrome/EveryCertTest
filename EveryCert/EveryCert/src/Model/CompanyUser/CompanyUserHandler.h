@@ -11,6 +11,19 @@
 
 @interface CompanyUserHandler : BaseHandler
 
+/**
+ Insert a CompanyUserModel object information into company_user table
+ @param  companyUser A CompanyUserModel object containing info about the user of a company
+ @return BOOL return Yes if CompanyUserModel saved successfully otherwise No
+ */
+- (BOOL)insertCompanyUser:(CompanyUserModel *)companyUser;
+
+/**
+ Update a CompanyUserModel object information into company_user table.
+ @param  companyUser A CompanyUserModel containing info about the user of a company
+ @return BOOL return Yes if CompanyUserModel updated successfully otherwise No
+ */
+- (BOOL)updateCompanyUser:(CompanyUserModel *)companyUser;
 
 /**
  Check login at the app with given elements

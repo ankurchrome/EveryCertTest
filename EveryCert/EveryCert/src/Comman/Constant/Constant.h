@@ -42,19 +42,45 @@
 
 @end
 
-extern NSString *const HomeBarButtonTitle;
+#pragma mark - Server Constants
+#pragma mark -
 
-#pragma mark - Common Constants
-extern NSString *const KeyboardWillResignNotification;
-extern NSString *const ElementPdfDrawingFormat;
-extern NSString *const ElementPdfDrawingContent;
+#pragma mark API Constants
+extern NSString *const BaseUrl;
+extern NSString *const UrlApiV1;
+extern NSString *const UrlTimestamp;
 
-extern NSString *const LoggedUserFullName;
-extern NSString *const LoggedUserEmail;
-extern NSString *const LoggedUserPassword;
-extern NSString *const LoggedUserPermissionGroup;
+extern NSString *const MethodDownload;
+extern NSString *const MethodDownloadSignature;
+extern NSString *const ConnectionTimeoutMessage;
+extern NSString *const ConnectionNotFoundMessage;
+extern NSString *const SyncTimeMessage;
 
-#pragma mark - Common Columns
+#pragma mark Key & Data Constants
+
+extern NSString *const kPdfFormatAlignment;
+extern NSString *const PdfFormatAlignLeft;
+extern NSString *const PdfFormatAlignRight;
+extern NSString *const PdfFormatAlignCenter;
+
+extern NSString *const kPdfFormatCapitalization;
+extern NSString *const PdfFormatCapitalizationAll;
+extern NSString *const PdfFormatCapitalizationNone;
+extern NSString *const PdfFormatCapitalizationWord;
+extern NSString *const PdfFormatCapitalizationSentences;
+
+extern NSString *const kPdfFormatKeyboard;
+extern NSString *const PdfFormatKeyboardPassword;
+extern NSString *const PdfFormatKeyboardEmail;
+extern NSString *const PdfFormatKeyboardAlphabetic;
+extern NSString *const PdfFormatKeyboardAlphaNumeric;
+extern NSString *const PdfFormatKeyboardNumeric;
+
+extern NSString *const kPdfFormatNumberOfLines;
+
+#pragma mark - Table Constants
+#pragma mark -
+#pragma mark Common Columns
 extern NSString *const ModifiedTimestampApp;
 extern NSString *const ModifiedTimeStamp;
 extern NSString *const Archive;
@@ -63,7 +89,7 @@ extern NSString *const IsDirty;
 extern NSString *const CompanyId;
 extern NSString *const UserId;
 
-#pragma mark - CompanyUser Table
+#pragma mark CompanyUser Table
 extern NSString *const CompanyUserTable;
 extern NSString *const CompanyUserIdApp;
 extern NSString *const CompanyUserId;
@@ -75,7 +101,7 @@ extern NSString *const CompanyUserFieldNamePassword;
 extern NSString *const CompanyUserFieldNameFullName;
 extern NSString *const CompanyUserFieldNamePermissionGroup;
 
-#pragma mark - Form Table
+#pragma mark Form Table
 extern NSString *const FormTable;
 extern NSString *const FormId;
 extern NSString *const FormCategoryId;
@@ -87,7 +113,7 @@ extern NSString *const FormCompanyFormat;
 extern NSString *const FormSequenceOrder;
 extern NSString *const FormPermissionGroup;
 
-#pragma mark - FormSection Table
+#pragma mark FormSection Table
 extern NSString *const FormSectionTable;
 extern NSString *const FormSectionId;
 extern NSString *const FormSectionLabel;
@@ -96,7 +122,7 @@ extern NSString *const FormSectionHeader;
 extern NSString *const FormSectionFooter;
 extern NSString *const FormSectionTitle;
 
-#pragma mark - Element Table
+#pragma mark Element Table
 extern NSString *const ElementTable;
 extern NSString *const ElementId;
 extern NSString *const ElementFieldType;
@@ -118,11 +144,11 @@ extern NSString *const ElementFieldNumberNew;
 extern NSString *const ElementLookUpListIdExisting;
 extern NSString *const ElementFieldNumberExisting;
 
-#pragma mark - SubElement Table
+#pragma mark SubElement Table
 extern NSString *const SubElementTable;
 extern NSString *const SubElementId;
 
-#pragma mark - Certificate Table
+#pragma mark Certificate Table
 extern NSString *const CertificateTable;
 extern NSString *const CertificateIdApp;
 extern NSString *const CertificateId;
@@ -131,19 +157,19 @@ extern NSString *const CertificateIssuedApp;
 extern NSString *const CertificateDate;
 extern NSString *const CertificatePdf;
 
-#pragma mark - Data Table
+#pragma mark Data Table
 extern NSString *const DataTable;
 extern NSString *const DataIdApp;
 extern NSString *const DataId;
 extern NSString *const DataValue;
 
-#pragma mark - DataBinary Table
+#pragma mark DataBinary Table
 extern NSString *const DataBinaryTable;
 extern NSString *const DataBinaryIdApp;
 extern NSString *const DataBinaryId;
 extern NSString *const DataBinaryValue;
 
-#pragma mark - LookUp Table
+#pragma mark LookUp Table
 extern NSString *const LookUpTable;
 extern NSString *const LookUpIdApp;
 extern NSString *const LookUpId;
@@ -155,12 +181,25 @@ extern NSString *const LookUpOption;
 extern NSString *const LookUpDataValue;
 extern NSString *const LookUpSequenceOrder;
 
-#pragma mark - Record Table
+#pragma mark Record Table
 extern NSString *const RecordTable;
 extern NSString *const RecordIdApp;
 extern NSString *const RecordId;
 
-#pragma mark - ElementCell Reuse Identifier
+#pragma mark - App Constants
+#pragma mark -
+
+extern NSString *const HomeBarButtonTitle;
+
+extern NSString *const ElementPdfDrawingFormat;
+extern NSString *const ElementPdfDrawingContent;
+
+extern NSString *const LoggedUserFullName;
+extern NSString *const LoggedUserEmail;
+extern NSString *const LoggedUserPassword;
+extern NSString *const LoggedUserPermissionGroup;
+
+#pragma mark ElementCell Reuse Identifier
 extern NSString *const ElementCellReuseIdentifierTextField;
 extern NSString *const ElementCellReuseIdentifierTextView;
 extern NSString *const ElementCellReuseIdentifierPickList;
@@ -171,7 +210,7 @@ extern NSString *const ElementCellReuseIdentifierRadioButton;
 extern NSString *const ElementCellReuseIdentifierTickBox;
 extern NSString *const ElementCellReuseIdentifierTextLabel;
 
-#pragma mark - ElementCell Reuse Identifier
+#pragma mark ElementCell Reuse Identifier
 extern NSString *const ElementCellNibNameTextField;
 extern NSString *const ElementCellNibNameTextView;
 extern NSString *const ElementCellNibNamePickList;

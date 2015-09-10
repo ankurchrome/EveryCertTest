@@ -31,6 +31,10 @@
 {
     __block BOOL success = false;
     
+    dataBinaryModel.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
+    dataBinaryModel.isDirty = true;
+    dataBinaryModel.uuid = [[NSUUID new] UUIDString];
+
     FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
     [databaseQueue inDatabase:^(FMDatabase *db)
@@ -72,6 +76,9 @@
 {
     __block BOOL success = false;
     
+    dataBinaryModel.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
+    dataBinaryModel.isDirty = true;
+
     FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
     [databaseQueue inDatabase:^(FMDatabase *db)

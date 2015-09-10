@@ -31,15 +31,15 @@
 {
     __block NSInteger rowId = 0;
     
+    certificate.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
+    certificate.isDirty = true;
+    certificate.uuid = [[NSUUID new] UUIDString];
+
     FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
     [databaseQueue inDatabase:^(FMDatabase *db)
     {
         BOOL success = false;
-        
-        certificate.isDirty = true;
-        certificate.uuid = [[NSUUID new] UUIDString];
-        certificate.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
         
         NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?)", self.tableName, FormId, CertificateName, CertificateIssuedApp, CertificateDate, CertificatePdf, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
         
@@ -58,14 +58,14 @@
 - (BOOL)updateCertificate:(CertificateModel *)certificate
 {
     __block BOOL success = false;
-    
+
+    certificate.isDirty = true;
+    certificate.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
+
     FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
     [databaseQueue inDatabase:^(FMDatabase *db)
     {
-        certificate.isDirty = true;
-        certificate.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
-        
         NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ? WHERE %@ = ? ", self.tableName, CertificateId, FormId, CertificateName, CertificateIssuedApp, CertificateDate, CertificatePdf, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId, CertificateIdApp];
         
         success = [db executeUpdate:query, @(certificate.certId), @(certificate.formId), certificate.name, certificate.issuedApp, certificate.date, certificate.pdf, certificate.modifiedTimestamp, certificate.modifiedTimestampApp, @(certificate.archive), certificate.uuid, @(certificate.isDirty), certificate.companyId, @(certificate.certIdApp)];

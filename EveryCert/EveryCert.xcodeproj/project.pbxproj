@@ -97,7 +97,12 @@
 		C38E89CE1B9705D500790752 /* RecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89B51B9705D500790752 /* RecordModel.m */; };
 		C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89B81B9705D500790752 /* SubElementHandler.m */; };
 		C38E89D01B9705D500790752 /* SubElementModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89BA1B9705D500790752 /* SubElementModel.m */; };
+		C3AE7E4D1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */; };
 		C3C7862C1B99B75A00788D62 /* FMDBDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C7862B1B99B75A00788D62 /* FMDBDataSource.m */; };
+		C3D44F661BA15AFA00FF7350 /* Back.png in Resources */ = {isa = PBXBuildFile; fileRef = C3D44F621BA15AFA00FF7350 /* Back.png */; };
+		C3D44F671BA15AFA00FF7350 /* Back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C3D44F631BA15AFA00FF7350 /* Back@2x.png */; };
+		C3D44F681BA15AFA00FF7350 /* Next.png in Resources */ = {isa = PBXBuildFile; fileRef = C3D44F641BA15AFA00FF7350 /* Next.png */; };
+		C3D44F691BA15AFA00FF7350 /* Next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C3D44F651BA15AFA00FF7350 /* Next@2x.png */; };
 		C3E441751BA059180020700F /* FormTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E441741BA059180020700F /* FormTypeTableViewCell.m */; };
 		C3E441781BA06D2F0020700F /* FormSectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E441771BA06D2F0020700F /* FormSectionTableViewCell.m */; };
 		C3FFB4371B9B36180089A0B2 /* PickListElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3FFB4341B9B36180089A0B2 /* PickListElementCell.xib */; };
@@ -267,8 +272,14 @@
 		C38E89B81B9705D500790752 /* SubElementHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementHandler.m; sourceTree = "<group>"; };
 		C38E89B91B9705D500790752 /* SubElementModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubElementModel.h; sourceTree = "<group>"; };
 		C38E89BA1B9705D500790752 /* SubElementModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementModel.m; sourceTree = "<group>"; };
+		C3AE7E4B1BA0C99800E8C126 /* ExistingCertificateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExistingCertificateTableViewCell.h; sourceTree = "<group>"; };
+		C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistingCertificateTableViewCell.m; sourceTree = "<group>"; };
 		C3C7862A1B99B75A00788D62 /* FMDBDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDBDataSource.h; sourceTree = "<group>"; };
 		C3C7862B1B99B75A00788D62 /* FMDBDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBDataSource.m; sourceTree = "<group>"; };
+		C3D44F621BA15AFA00FF7350 /* Back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back.png; sourceTree = "<group>"; };
+		C3D44F631BA15AFA00FF7350 /* Back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Back@2x.png"; sourceTree = "<group>"; };
+		C3D44F641BA15AFA00FF7350 /* Next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Next.png; sourceTree = "<group>"; };
+		C3D44F651BA15AFA00FF7350 /* Next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Next@2x.png"; sourceTree = "<group>"; };
 		C3E441731BA059180020700F /* FormTypeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FormTypeTableViewCell.h; path = EveryCert/src/Controller/FormList/FormTypeTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		C3E441741BA059180020700F /* FormTypeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormTypeTableViewCell.m; path = EveryCert/src/Controller/FormList/FormTypeTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		C3E441761BA06D2F0020700F /* FormSectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormSectionTableViewCell.h; sourceTree = "<group>"; };
@@ -689,6 +700,8 @@
 			children = (
 				77DBB9321B6F596700F02932 /* ExistingCertificateViewController.h */,
 				77DBB9331B6F596700F02932 /* ExistingCertificateViewController.m */,
+				C3AE7E4B1BA0C99800E8C126 /* ExistingCertificateTableViewCell.h */,
+				C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */,
 			);
 			path = ExistingCertificate;
 			sourceTree = "<group>";
@@ -780,6 +793,10 @@
 		77DC23F91B6F4DA400624211 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C3D44F621BA15AFA00FF7350 /* Back.png */,
+				C3D44F631BA15AFA00FF7350 /* Back@2x.png */,
+				C3D44F641BA15AFA00FF7350 /* Next.png */,
+				C3D44F651BA15AFA00FF7350 /* Next@2x.png */,
 				77C035C31B78B25F009228F1 /* MenuBarButtonImage */,
 				779638BE1B74B4460001ADC2 /* ArrowDown.png */,
 				779638BF1B74B4460001ADC2 /* ArrowRight_old.png */,
@@ -1019,10 +1036,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				779638D81B74B4460001ADC2 /* RadioButtonUnchecked.png in Resources */,
+				C3D44F661BA15AFA00FF7350 /* Back.png in Resources */,
 				C3FFB4371B9B36180089A0B2 /* PickListElementCell.xib in Resources */,
 				77C035C81B78B25F009228F1 /* MenuOption@2x.png in Resources */,
 				779A9D8A1B7C7D0700D86FED /* PickListViewController.xib in Resources */,
 				C3FFB4421B9B6FC30089A0B2 /* RadioButtonElementCell.xib in Resources */,
+				C3D44F681BA15AFA00FF7350 /* Next.png in Resources */,
 				779638CD1B74B4460001ADC2 /* ArrowRight_old.png in Resources */,
 				779638D21B74B4460001ADC2 /* checkBoxChecked@2x.png in Resources */,
 				77C035C71B78B25F009228F1 /* MenuOption.png in Resources */,
@@ -1039,9 +1058,11 @@
 				779638D91B74B4460001ADC2 /* RadioButtonUnchecked@2x.png in Resources */,
 				779A9D9A1B7C7D0700D86FED /* TextViewElementCell.xib in Resources */,
 				77F8E4A91B821F0300C214A4 /* Everycert.sqlite in Resources */,
+				C3D44F691BA15AFA00FF7350 /* Next@2x.png in Resources */,
 				C3FFB43C1B9B3CF40089A0B2 /* SignatureElementCell.xib in Resources */,
 				779638D01B74B4460001ADC2 /* checkBox@2x.png in Resources */,
 				77DBB91B1B6F555C00F02932 /* LaunchScreen.xib in Resources */,
+				C3D44F671BA15AFA00FF7350 /* Back@2x.png in Resources */,
 				779638D11B74B4460001ADC2 /* checkBoxChecked.png in Resources */,
 				779637A41B747BE90001ADC2 /* MBProgressHUD.podspec in Resources */,
 				779638D61B74B4460001ADC2 /* RadioButtonChecked.png in Resources */,
@@ -1123,6 +1144,7 @@
 				C38E89CE1B9705D500790752 /* RecordModel.m in Sources */,
 				77DBB9371B6F60C300F02932 /* SettingViewController.m in Sources */,
 				C38E89BD1B9705D500790752 /* BaseHandler.m in Sources */,
+				C3AE7E4D1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m in Sources */,
 				C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */,
 				7796379F1B747BE90001ADC2 /* FMDatabasePool.m in Sources */,
 				C3E441781BA06D2F0020700F /* FormSectionTableViewCell.m in Sources */,

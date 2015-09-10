@@ -19,18 +19,19 @@
 - (BOOL)insertDataModel:(DataModel *)dataModel;
 
 /**
+ Update a DataModel object information into data table.
+ @param  dataModel A DataModel model containing value of an element of the form
+ @return BOOL return Yes if data model updated successfully otherwise No
+ */
+- (BOOL)updateDataModel:(DataModel *)dataModel;
+
+//TODO: remove the method if not required
+/**
  Check for data into 'data' table for an element of a certificate.
  @param  certIdApp App Id of certificate record
  @param  elementIdApp App Id of element record
  @return return DataModel object if data exist otherwise returns nil
  */
 - (DataModel *)dataExistForCertificate:(NSInteger)certIdApp element:(NSInteger)elementIdApp;
-
-/**
- Update a DataModel object information into data table.
- @param  dataModel A DataModel model containing value of an element of the form
- @return BOOL return Yes if data model updated successfully otherwise No
- */
-- (BOOL)updateDataModel:(DataModel *)dataModel;
 
 @end

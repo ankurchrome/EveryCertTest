@@ -188,9 +188,9 @@
              ElementModel *elementModel = [[ElementModel alloc] initWithResultSet:result];
              
              //TODO: remove the unneccessary properties and change the query accordingly
-             elementModel.dataIdApp = [result intForColumn:DataIdApp];
-             elementModel.dataValue = [result stringForColumn:DataValue];
-             elementModel.dataModel = [[DataModel alloc] initWithResultSet:result];
+             elementModel.companyUserIdApp = [result intForColumn:CompanyUserIdApp];
+             elementModel.dataValue        = [result stringForColumn:CompanyUserData];
+             elementModel.companyUserModel = [[CompanyUserModel alloc] initWithResultSet:result];
              
              elementModel.dataBinaryIdApp = [result intForColumn:DataBinaryIdApp];
              elementModel.dataBinaryValue = [result dataForColumn:DataBinaryValue];

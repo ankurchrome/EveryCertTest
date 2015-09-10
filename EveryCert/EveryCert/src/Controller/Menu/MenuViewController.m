@@ -34,6 +34,7 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
     
     self.navigationItem.hidesBackButton = YES;
     self.view.backgroundColor = APP_BG_COLOR;
+    APP_DELEGATE.homeVC = self;
     
     _menuOptionList = @[MenuCellIdentifierNewCertificate,
                         MenuCellIdentifierExistingCertificate,
@@ -45,6 +46,7 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
 - (IBAction)onClickLogoutButton:(id)sender
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
+    APP_DELEGATE.homeVC = nil;
 }
 
 - (IBAction)backupDataButtonTapped:(id)sender

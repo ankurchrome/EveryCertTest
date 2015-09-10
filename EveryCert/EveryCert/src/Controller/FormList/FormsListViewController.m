@@ -75,18 +75,18 @@ static NSString *const FormsListCellIdentifier = @"FormTypeCellIdentifier";
     return cell;
 }
 
+
 #pragma mark TableView Delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    FormModel *formModel = _allFormsList[indexPath.row];
-    
-    //Instantiate CertificateViewController object from Storyboard
-    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    CertificateViewController *certificateVC  = [mainStoryBoard instantiateViewControllerWithIdentifier:@"CertificateViewController"];
-
-    [certificateVC initializeWithForm:formModel];
-    [self.navigationController pushViewController:certificateVC animated:YES];
+    if ([segue.identifier isEqualToString:@"ShowCertificate"])
+    {
+        NSIndexPath *indexPath = [_formListTableView indexPathForSelectedRow];
+        FormModel   *formModel = _allFormsList[indexPath.row];
+        CertificateViewController *certificateVC = [segue destinationViewController];
+        [certificateVC initializeWithForm:formModel];
+    }
 }
 
 @end

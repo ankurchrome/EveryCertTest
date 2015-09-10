@@ -31,10 +31,71 @@
     _textField.text = elementModel.dataValue;
     _charLimitLabel.text = [@(elementModel.maxCharLimit) stringValue];
     
+    //Set textfield capitalization
+    NSString *elementCapitalizationType = elementModel.printedTextFormat[kPdfFormatCapitalization];
+    
+    if ([elementCapitalizationType isEqualToString:PdfFormatCapitalizationAll])
+    {
+        _textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+    }
+    else if ([elementCapitalizationType isEqualToString:PdfFormatCapitalizationNone])
+    {
+        _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    }
+    else if ([elementCapitalizationType isEqualToString:PdfFormatCapitalizationWord])
+    {
+        _textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    }
+    else if ([elementCapitalizationType isEqualToString:PdfFormatCapitalizationSentences])
+    {
+        _textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    }
+    
+    //Set textfield Keyboard
+    NSString *elementKeyboardType = elementModel.printedTextFormat[kPdfFormatKeyboard];
+
+    if ([elementKeyboardType isEqualToString:PdfFormatKeyboardPassword])
+    {
+        _textField.secureTextEntry = YES;
+    }
+    else if ([elementKeyboardType isEqualToString:PdfFormatKeyboardAlphabetic])
+    {
+        _textField.keyboardType = UIKeyboardTypeAlphabet;
+    }
+    else if ([elementKeyboardType isEqualToString:PdfFormatKeyboardAlphaNumeric])
+    {
+        _textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    }
+    else if ([elementKeyboardType isEqualToString:PdfFormatKeyboardEmail])
+    {
+        _textField.keyboardType = UIKeyboardTypeEmailAddress;
+    }
+    else if ([elementKeyboardType isEqualToString:PdfFormatKeyboardNumeric])
+    {
+        _textField.keyboardType = UIKeyboardTypeNumberPad;
+    }
+
     [_textLabel sizeToFit];
+    [self setRemainingChars];
 }
 
-#pragma mark UITextFieldDelegate Methods
+#pragma mark -
+
+- (void)setRemainingChars
+{
+    NSInteger remainingCharsCount = self.elementModel.maxCharLimit - _textField.text.length;
+    
+    if (remainingCharsCount >= 0)
+    {
+        _charLimitLabel.text = @(remainingCharsCount).stringValue;
+    }
+    else
+    {
+        _charLimitLabel.text = @(0).stringValue;
+    }
+}
+
+#pragma mark - UITextFieldDelegate Methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -51,7 +112,7 @@
 {
     NSString *updatedString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     
-    NSInteger remainingChars = self.elementModel.maxCharLimit;
+    NSInteger remainingChars = 0;
     
     if (updatedString && self.elementModel.maxCharLimit > 0)
     {

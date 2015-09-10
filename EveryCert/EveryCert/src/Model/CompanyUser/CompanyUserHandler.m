@@ -27,6 +27,48 @@
     return self;
 }
 
+// Insert a CompanyUserModel object information into company_user table
+- (BOOL)insertCompanyUser:(CompanyUserModel *)companyUser
+{
+    __block BOOL success = false;
+    
+    companyUser.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
+    companyUser.isDirty = true;
+    companyUser.uuid = [[NSUUID new] UUIDString];
+
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?)", self.tableName, CompanyUserId, CompanyId, UserId, CompanyUserFieldName, CompanyUserData, ModifiedTimestampApp, ModifiedTimeStamp, Archive, IsDirty, Uuid];
+         
+         success = [db executeUpdate:query, @(companyUser.companyUserId), @(companyUser.companyId), @(companyUser.userId), companyUser.fieldName, companyUser.data, companyUser.modifiedTimestampApp, companyUser.modifiedTimestamp, @(companyUser.archive), @(companyUser.isDirty), companyUser.uuid];
+     }];
+    
+    return success;
+}
+
+// Update a CompanyUserModel object information into company_user table.
+- (BOOL)updateCompanyUser:(CompanyUserModel *)companyUser
+{
+    __block BOOL success = false;
+    
+    companyUser.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
+    companyUser.isDirty = true;
+    
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ? WHERE %@ = ? ", self.tableName, CompanyUserId, CompanyId, UserId, CompanyUserFieldName, CompanyUserData, ModifiedTimestampApp, ModifiedTimeStamp, Archive, IsDirty, Uuid, CompanyUserIdApp];
+         
+         success = [db executeUpdate:query, @(companyUser.companyUserId), @(companyUser.companyId), @(companyUser.userId), companyUser.fieldName, companyUser.data, companyUser.modifiedTimestampApp, companyUser.modifiedTimestamp, @(companyUser.archive), @(companyUser.isDirty), companyUser.uuid, @(companyUser.companyUserIdApp)];
+     }];
+    
+    return success;
+
+}
+
 // Check login at the app with given elements
 - (BOOL)checkLoginWithElements:(NSArray *)elements
 {

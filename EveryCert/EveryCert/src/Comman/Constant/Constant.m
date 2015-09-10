@@ -10,19 +10,45 @@
 
 @implementation Constant
 
-NSString *const HomeBarButtonTitle = @"Home";
+#pragma mark - Server Constants
+#pragma mark -
 
-#pragma mark - Common
-NSString *const KeyboardWillResignNotification = @"ResignKeyboard";
-NSString *const ElementPdfDrawingFormat  = @"ElementPdfFormat";
-NSString *const ElementPdfDrawingContent = @"ElementPdfContent";
+#pragma mark API Constants
+NSString *const BaseUrl = @"https://portal.everycert.co.uk/";
+NSString *const UrlApiV1 = @"api/v1/";
+NSString *const UrlTimestamp = @"?timestamp=";
 
-NSString *const LoggedUserFullName = @"LoggedUserFullName";
-NSString *const LoggedUserEmail    = @"LoggedUserEmail";
-NSString *const LoggedUserPassword = @"LoggedUserPassword";
-NSString *const LoggedUserPermissionGroup = @"LoggedUserPermissionGroup";
+NSString *const MethodDownload = @"download";
+NSString *const MethodDownloadSignature = @"downloadSig";
+NSString *const ConnectionTimeoutMessage = @"Connection time out, Please try again!";
+NSString *const ConnectionNotFoundMessage = @"Please check your internet connection and try again.";
+NSString *const SyncTimeMessage = @"Intial Sync will take up to 60 seconds please wait.";
 
-#pragma mark - Common Columns
+#pragma mark Key & Data Constants
+
+NSString *const kPdfFormatAlignment = @"Alignment";
+NSString *const PdfFormatAlignLeft = @"align_left";
+NSString *const PdfFormatAlignRight = @"align_right";
+NSString *const PdfFormatAlignCenter = @"align_centre";
+
+NSString *const kPdfFormatCapitalization = @"ElementCaps";
+NSString *const PdfFormatCapitalizationAll = @"uppercase";
+NSString *const PdfFormatCapitalizationNone = @"lowercase";
+NSString *const PdfFormatCapitalizationWord = @"capitalise_every_word";
+NSString *const PdfFormatCapitalizationSentences = @"capitalise";
+
+NSString *const kPdfFormatKeyboard = @"Keyboard";
+NSString *const PdfFormatKeyboardPassword = @"password";
+NSString *const PdfFormatKeyboardEmail = @"ankur";
+NSString *const PdfFormatKeyboardAlphabetic = @"ankur";
+NSString *const PdfFormatKeyboardAlphaNumeric = @"ankur";
+NSString *const PdfFormatKeyboardNumeric = @"ankur";
+
+NSString *const kPdfFormatNumberOfLines = @"number_lines";
+
+#pragma mark - Table Constants
+#pragma mark -
+#pragma mark Common Columns
 NSString *const ModifiedTimestampApp = @"modified_timestamp_app";
 NSString *const ModifiedTimeStamp    = @"modified_timeStamp";
 NSString *const Archive   = @"archive";
@@ -31,7 +57,7 @@ NSString *const IsDirty   = @"is_dirty";
 NSString *const CompanyId = @"company_id";
 NSString *const UserId    = @"user_id";
 
-#pragma mark - CompanyUser Table
+#pragma mark CompanyUser Table
 NSString *const CompanyUserTable     = @"company_user";
 NSString *const CompanyUserIdApp     = @"company_user_id_app";
 NSString *const CompanyUserId        = @"company_user_id";
@@ -43,7 +69,7 @@ NSString *const CompanyUserFieldNamePassword        = @"user_password";
 NSString *const CompanyUserFieldNameFullName        = @"user_full_name";
 NSString *const CompanyUserFieldNamePermissionGroup = @"permission_group";
 
-#pragma mark - Form Table
+#pragma mark Form Table
 NSString *const FormTable            = @"form";
 NSString *const FormId               = @"form_id";
 NSString *const FormCategoryId       = @"category_id";
@@ -55,7 +81,7 @@ NSString *const FormCompanyFormat    = @"company_format";
 NSString *const FormSequenceOrder    = @"sequence_order";
 NSString *const FormPermissionGroup  = @"permission_group";
 
-#pragma mark - FormSection Table
+#pragma mark FormSection Table
 NSString *const FormSectionTable  = @"section";
 NSString *const FormSectionId     = @"section_id";
 NSString *const FormSectionLabel  = @"section_label";
@@ -64,7 +90,7 @@ NSString *const FormSectionHeader = @"section_header";
 NSString *const FormSectionFooter = @"section_footer";
 NSString *const FormSectionTitle  = @"section_title";
 
-#pragma mark - Element Table
+#pragma mark Element Table
 NSString *const ElementTable                = @"element";
 NSString *const ElementId                   = @"element_id";
 NSString *const ElementFieldType            = @"field_type";
@@ -86,11 +112,11 @@ NSString *const ElementLookUpListIdExisting = @"lookup_list_id_existing";
 NSString *const ElementFieldNumberNew       = @"field_no_new";
 NSString *const ElementFieldNumberExisting  = @"field_no_existing";
 
-#pragma mark - SubElement Table
+#pragma mark SubElement Table
 NSString *const SubElementTable = @"sub_element";
 NSString *const SubElementId    = @"sub_element_id";
 
-#pragma mark - Certificate Table
+#pragma mark Certificate Table
 NSString *const CertificateTable     = @"certificate";
 NSString *const CertificateIdApp     = @"cert_id_app";
 NSString *const CertificateId        = @"cert_id";
@@ -99,19 +125,19 @@ NSString *const CertificateIssuedApp = @"issued_app";
 NSString *const CertificateDate      = @"date";
 NSString *const CertificatePdf       = @"pdf";
 
-#pragma mark - Data Table
+#pragma mark Data Table
 NSString *const DataTable = @"data";
 NSString *const DataIdApp = @"data_id_app";
 NSString *const DataId    = @"data_id";
 NSString *const DataValue = @"data";
 
-#pragma mark - DataBinary Table
+#pragma mark DataBinary Table
 NSString *const DataBinaryTable = @"data_binary";
 NSString *const DataBinaryIdApp = @"data_binary_id_app";
 NSString *const DataBinaryId    = @"data_binary_id";
 NSString *const DataBinaryValue = @"data_binary";
 
-#pragma mark - LookUp Table
+#pragma mark LookUp Table
 NSString *const LookUpTable         = @"lookup";
 NSString *const LookUpIdApp         = @"lookup_id_app";
 NSString *const LookUpId            = @"lookup_id";
@@ -123,12 +149,24 @@ NSString *const LookUpOption        = @"option";
 NSString *const LookUpDataValue     = @"data";
 NSString *const LookUpSequenceOrder = @"sequence_order";
 
-#pragma mark - Record Table
+#pragma mark Record Table
 NSString *const RecordTable = @"record";
 NSString *const RecordIdApp = @"record_id_app";
 NSString *const RecordId    = @"record_id";
 
-#pragma mark - ElementCell Reuse Identifier
+#pragma mark - App Constants
+#pragma mark -
+NSString *const HomeBarButtonTitle = @"Home";
+
+NSString *const ElementPdfDrawingFormat  = @"ElementPdfFormat";
+NSString *const ElementPdfDrawingContent = @"ElementPdfContent";
+
+NSString *const LoggedUserFullName = @"LoggedUserFullName";
+NSString *const LoggedUserEmail    = @"LoggedUserEmail";
+NSString *const LoggedUserPassword = @"LoggedUserPassword";
+NSString *const LoggedUserPermissionGroup = @"LoggedUserPermissionGroup";
+
+#pragma mark ElementCell Reuse Identifier
 NSString *const ElementCellReuseIdentifierTextField     = @"ElementCellTextField";
 NSString *const ElementCellReuseIdentifierTextView      = @"ElementCellTextView";
 NSString *const ElementCellReuseIdentifierPickList      = @"ElementCellPickList";
@@ -139,7 +177,7 @@ NSString *const ElementCellReuseIdentifierRadioButton   = @"ElementCellRadioButt
 NSString *const ElementCellReuseIdentifierTickBox       = @"ElementCellTickBox";
 NSString *const ElementCellReuseIdentifierTextLabel     = @"ElementCellTextLabel";
 
-#pragma mark - ElementCell Reuse Identifier
+#pragma mark ElementCell Reuse Identifier
 NSString *const ElementCellNibNameTextField     = @"TextFieldElementCell";
 NSString *const ElementCellNibNameTextView      = @"TextViewElementCell";
 NSString *const ElementCellNibNamePickList      = @"PickListElementCell";
