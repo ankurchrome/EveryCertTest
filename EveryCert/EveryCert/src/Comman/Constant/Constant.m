@@ -36,13 +36,13 @@ NSString *const PdfFormatCapitalizationAll = @"uppercase";
 NSString *const PdfFormatCapitalizationNone = @"lowercase";
 NSString *const PdfFormatCapitalizationWord = @"capitalise_every_word";
 NSString *const PdfFormatCapitalizationSentences = @"capitalise";
+NSString *const PdfFormatCapitalizationPassword = @"password";
+NSString *const PdfFormatCapitalizationEmail = @"email";
 
 NSString *const kPdfFormatKeyboard = @"Keyboard";
-NSString *const PdfFormatKeyboardPassword = @"password";
-NSString *const PdfFormatKeyboardEmail = @"ankur";
-NSString *const PdfFormatKeyboardAlphabetic = @"ankur";
-NSString *const PdfFormatKeyboardAlphaNumeric = @"ankur";
-NSString *const PdfFormatKeyboardNumeric = @"ankur";
+NSString *const PdfFormatKeyboardAlphabetic = @"alpha";
+NSString *const PdfFormatKeyboardAlphaNumeric = @"alphanumeric";
+NSString *const PdfFormatKeyboardNumeric = @"numeric";
 
 NSString *const kPdfFormatNumberOfLines = @"number_lines";
 

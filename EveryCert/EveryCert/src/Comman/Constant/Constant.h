@@ -57,7 +57,6 @@ extern NSString *const ConnectionNotFoundMessage;
 extern NSString *const SyncTimeMessage;
 
 #pragma mark Key & Data Constants
-
 extern NSString *const kPdfFormatAlignment;
 extern NSString *const PdfFormatAlignLeft;
 extern NSString *const PdfFormatAlignRight;
@@ -68,10 +67,10 @@ extern NSString *const PdfFormatCapitalizationAll;
 extern NSString *const PdfFormatCapitalizationNone;
 extern NSString *const PdfFormatCapitalizationWord;
 extern NSString *const PdfFormatCapitalizationSentences;
+extern NSString *const PdfFormatCapitalizationPassword;
+extern NSString *const PdfFormatCapitalizationEmail;
 
 extern NSString *const kPdfFormatKeyboard;
-extern NSString *const PdfFormatKeyboardPassword;
-extern NSString *const PdfFormatKeyboardEmail;
 extern NSString *const PdfFormatKeyboardAlphabetic;
 extern NSString *const PdfFormatKeyboardAlphaNumeric;
 extern NSString *const PdfFormatKeyboardNumeric;

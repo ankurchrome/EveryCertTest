@@ -32,9 +32,11 @@ NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
     
     self.view.backgroundColor = APP_BG_COLOR;
 
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     ElementHandler *elementHandler = [ElementHandler new];
     _loginElements = [elementHandler getLoginElements];
+
+    //Set user credentials if already logged In
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     for (ElementModel *element in _loginElements)
     {

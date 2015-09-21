@@ -50,25 +50,25 @@
     {
         _textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     }
-    
-    //Set textfield Keyboard
-    NSString *elementKeyboardType = elementModel.printedTextFormat[kPdfFormatKeyboard];
-
-    if ([elementKeyboardType isEqualToString:PdfFormatKeyboardPassword])
+    else if ([elementCapitalizationType isEqualToString:PdfFormatCapitalizationPassword])
     {
         _textField.secureTextEntry = YES;
     }
-    else if ([elementKeyboardType isEqualToString:PdfFormatKeyboardAlphabetic])
+    else if ([elementCapitalizationType isEqualToString:PdfFormatCapitalizationEmail])
+    {
+        _textField.keyboardType = UIKeyboardTypeEmailAddress;
+    }
+
+    //Set textfield Keyboard
+    NSString *elementKeyboardType = elementModel.printedTextFormat[kPdfFormatKeyboard];
+
+    if ([elementKeyboardType isEqualToString:PdfFormatKeyboardAlphabetic])
     {
         _textField.keyboardType = UIKeyboardTypeAlphabet;
     }
     else if ([elementKeyboardType isEqualToString:PdfFormatKeyboardAlphaNumeric])
     {
         _textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-    }
-    else if ([elementKeyboardType isEqualToString:PdfFormatKeyboardEmail])
-    {
-        _textField.keyboardType = UIKeyboardTypeEmailAddress;
     }
     else if ([elementKeyboardType isEqualToString:PdfFormatKeyboardNumeric])
     {
