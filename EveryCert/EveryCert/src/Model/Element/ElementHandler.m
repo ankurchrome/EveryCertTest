@@ -166,7 +166,7 @@
     [databaseQueue inDatabase:^(FMDatabase *db)
      {
          NSString *query = [NSString stringWithFormat:@"\
-                            SELECT *\
+                            SELECT t1.*, %@, %@, %@, %@\
                             FROM\
                             (SELECT * FROM %@ WHERE %@ = %ld OR %@ = %ld) t1\
                             LEFT JOIN\
@@ -177,7 +177,9 @@
                             ON t1.%@ = t3.%@\
                             WHERE t1.%@ != 1\
                             ORDER BY %@, %@",
-                            self.tableName, FormSectionId, (long)-1, FormSectionId, (long)-2, CompanyUserTable, CompanyId, (long)companyId, ElementFieldName, CompanyUserFieldName, DataBinaryTable, CompanyId, (long)companyId, ElementId, ElementId, Archive, FormSectionId, ElementSequenceOrder];
+                            CompanyUserIdApp, CompanyUserData, DataBinaryIdApp, DataBinaryValue, self.tableName, FormSectionId, (long)-1, FormSectionId, (long)-2, CompanyUserTable, CompanyId, (long)companyId, ElementFieldName, CompanyUserFieldName, DataBinaryTable, CompanyId, (long)companyId, ElementId, ElementId, Archive, FormSectionId, ElementSequenceOrder];
+         
+         if (LOGS_ON) NSLog(@"Setting elements query: %@", query);
          
          SubElementHandler *subElementHandler = [SubElementHandler new];
          
@@ -185,16 +187,16 @@
          
          while ([result next])
          {
+             if (LOGS_ON) NSLog(@"Result Info: %@", [result resultDictionary]);
+             
              ElementModel *elementModel = [[ElementModel alloc] initWithResultSet:result];
              
              //TODO: remove the unneccessary properties and change the query accordingly
              elementModel.companyUserIdApp = [result intForColumn:CompanyUserIdApp];
              elementModel.dataValue        = [result stringForColumn:CompanyUserData];
-             elementModel.companyUserModel = [[CompanyUserModel alloc] initWithResultSet:result];
              
              elementModel.dataBinaryIdApp = [result intForColumn:DataBinaryIdApp];
              elementModel.dataBinaryValue = [result dataForColumn:DataBinaryValue];
-             elementModel.dataBinaryModel = [[DataBinaryModel alloc] initWithResultSet:result];
              
              if (elementModel.fieldType == ElementTypeSubElement)
              {

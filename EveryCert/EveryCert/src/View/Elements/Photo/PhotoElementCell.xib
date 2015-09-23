@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ElementCellPhoto" rowHeight="292" id="E8h-aY-L5g" customClass="PhotoElementCell">
+            <rect key="frame" x="0.0" y="0.0" width="449" height="292"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E8h-aY-L5g" id="Uz3-7U-oW2">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="is6-ix-9vP">
+                        <rect key="frame" x="5" y="9" width="440" height="5"/>
+                        <color key="backgroundColor" red="0.086274509803921567" green="0.41176470588235292" blue="0.65098039215686276" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="5" id="2Hc-Tb-Kgb"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M90-xU-tyQ">
+                        <rect key="frame" x="5" y="245" width="440" height="5"/>
+                        <color key="backgroundColor" red="0.086274509799999996" green="0.41176470590000003" blue="0.65098039220000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="5" id="pxe-tc-uIe"/>
+                        </constraints>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="y99-7Q-R2i">
+                        <rect key="frame" x="5" y="8" width="440" height="245"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="245" id="zvo-gw-A6s"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mDo-0v-nEl">
+                        <rect key="frame" x="155" y="118" width="140" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="140" id="Vvf-rg-Z3u"/>
+                            <constraint firstAttribute="height" constant="30" id="lr6-kq-usJ"/>
+                        </constraints>
+                        <state key="normal" title="Click to Add Photos">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="onClickAddPhoto:" destination="E8h-aY-L5g" eventType="touchUpInside" id="ggR-jH-BGC"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwE-CX-IBS">
+                        <rect key="frame" x="196" y="258" width="59" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="59" id="YwE-3W-h4G"/>
+                            <constraint firstAttribute="height" constant="30" id="nTf-w5-3UM"/>
+                        </constraints>
+                        <state key="normal" title="Remove">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="onClickRemoveButton:" destination="E8h-aY-L5g" eventType="touchUpInside" id="YeI-L2-2ao"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="xwE-CX-IBS" secondAttribute="trailing" priority="500" constant="186" id="2nm-Qb-t99"/>
+                    <constraint firstItem="xwE-CX-IBS" firstAttribute="leading" secondItem="Uz3-7U-oW2" secondAttribute="leadingMargin" priority="500" constant="188" id="7RV-Yk-jV3"/>
+                    <constraint firstItem="mDo-0v-nEl" firstAttribute="top" secondItem="is6-ix-9vP" secondAttribute="bottom" constant="104" id="815-22-PM1"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="mDo-0v-nEl" secondAttribute="trailing" priority="500" constant="146" id="9AI-bK-XdX"/>
+                    <constraint firstItem="is6-ix-9vP" firstAttribute="leading" secondItem="Uz3-7U-oW2" secondAttribute="leadingMargin" constant="-3" id="AB4-TY-c5w"/>
+                    <constraint firstItem="y99-7Q-R2i" firstAttribute="leading" secondItem="Uz3-7U-oW2" secondAttribute="leadingMargin" constant="-3" id="BML-gs-S5I"/>
+                    <constraint firstAttribute="centerX" secondItem="mDo-0v-nEl" secondAttribute="centerX" id="Ihd-vx-9lP"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="is6-ix-9vP" secondAttribute="trailing" constant="-4" id="O3H-Fe-L6D"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="xwE-CX-IBS" secondAttribute="bottom" constant="-5" id="QV0-VO-WgW"/>
+                    <constraint firstItem="mDo-0v-nEl" firstAttribute="leading" secondItem="Uz3-7U-oW2" secondAttribute="leadingMargin" priority="500" constant="147" id="Vig-sH-S7w"/>
+                    <constraint firstItem="is6-ix-9vP" firstAttribute="top" secondItem="Uz3-7U-oW2" secondAttribute="topMargin" constant="1" id="Yk8-00-m7h"/>
+                    <constraint firstItem="M90-xU-tyQ" firstAttribute="top" secondItem="mDo-0v-nEl" secondAttribute="bottom" constant="97" id="aAU-hO-Llt"/>
+                    <constraint firstItem="y99-7Q-R2i" firstAttribute="top" secondItem="Uz3-7U-oW2" secondAttribute="topMargin" id="db8-yU-5yu"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="M90-xU-tyQ" secondAttribute="trailing" constant="-4" id="ff1-Hn-DOT"/>
+                    <constraint firstItem="M90-xU-tyQ" firstAttribute="leading" secondItem="Uz3-7U-oW2" secondAttribute="leadingMargin" constant="-3" id="gCE-lQ-cfz"/>
+                    <constraint firstAttribute="centerX" secondItem="xwE-CX-IBS" secondAttribute="centerX" constant="-1" id="slj-lV-R77"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="y99-7Q-R2i" secondAttribute="trailing" constant="-4" id="tdu-rH-Nju"/>
+                    <constraint firstItem="xwE-CX-IBS" firstAttribute="top" secondItem="M90-xU-tyQ" secondAttribute="bottom" constant="8" id="zVi-GQ-0X3"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="_imageView" destination="y99-7Q-R2i" id="7Lk-yM-Tvg"/>
+                <outlet property="_photoAddButton" destination="mDo-0v-nEl" id="shh-Iq-1Sj"/>
+                <outlet property="_removeButton" destination="xwE-CX-IBS" id="9KX-qG-QcN"/>
+            </connections>
+            <point key="canvasLocation" x="499.5" y="369"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -25,11 +25,15 @@
 
 @interface CertificateViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
-    __weak IBOutlet ElementTableView *_elementTableView;
-    __weak IBOutlet UITableView *_sectionTableView;
-    __weak IBOutlet UIView      *_sectionView;
-    IBOutlet UIView *_sectionFadedView;
-    IBOutlet UILabel *_sectionTitleLabel;
+    IBOutlet UIBarButtonItem  *_previewBarButton;
+    IBOutlet ElementTableView *_elementTableView;
+    IBOutlet UITableView      *_sectionTableView;
+    IBOutlet UIView   *_sectionView;
+    IBOutlet UIView   *_sectionFadedView;
+    IBOutlet UIButton *_menuButton;
+    IBOutlet UIButton *_prevSectionButton;
+    IBOutlet UIButton *_nextSectionButton;
+    IBOutlet UILabel  *_sectionTitleLabel;
     
     CertificateModel  *_certificate;
     DataHandler       *_dataHandler;
@@ -46,6 +50,8 @@
 @implementation CertificateViewController
 
 NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
+NSString *const ButtonTitlePreview = @"Preview";
+NSString *const ButtonTitleFinish  = @"Finish";
 
 #pragma mark - Initialization Methods
 
@@ -125,6 +131,13 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
 {
     FormSectionModel *formSection = nil;
     NSPredicate *predicate = nil;
+
+    //First Section
+    _prevSectionButton.enabled = !(sectionIndex == 0);
+    
+    //Last Section
+    _nextSectionButton.enabled = !(sectionIndex == (_formSections.count-1));
+    _previewBarButton.title    = _nextSectionButton.enabled ? ButtonTitlePreview : ButtonTitleFinish;
     
     if (_formSections && sectionIndex < _formSections.count)
     {
@@ -137,8 +150,9 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
         _currentSectionElements = [_formElements filteredArrayUsingPredicate:predicate];
         
         NSIndexPath *sectionIndexPath = [NSIndexPath indexPathForRow:sectionIndex inSection:0];
-        [_sectionTableView selectRowAtIndexPath:sectionIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        
+        [_sectionTableView selectRowAtIndexPath:sectionIndexPath
+                                       animated:NO
+                                 scrollPosition:UITableViewScrollPositionNone];
         [_elementTableView reloadWithElements:_currentSectionElements];
     }
 }
@@ -326,24 +340,24 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
 {
     [self saveAllElements:_currentSectionElements];
     
-    if (--_currentSectionIndex < 0)
-    {
-        _currentSectionIndex = _formSections.count;
-    }
+//    if (--_currentSectionIndex < 0)
+//    {
+//        _currentSectionIndex = _formSections.count;
+//    }
     
-    [self showElementsForSectionIndex:_currentSectionIndex];
+    [self showElementsForSectionIndex:--_currentSectionIndex];
 }
 
 - (IBAction)nextSectionButtonTapped:(id)sender
 {
     [self saveAllElements:_currentSectionElements];
     
-    if (++_currentSectionIndex >= _formSections.count)
-    {
-        _currentSectionIndex = 0;
-    }
+//    if (++_currentSectionIndex >= _formSections.count)
+//    {
+//        _currentSectionIndex = 0;
+//    }
     
-    [self showElementsForSectionIndex:_currentSectionIndex];
+    [self showElementsForSectionIndex:++_currentSectionIndex];
 }
 
 - (IBAction)menuButtonTapped:(id)sender
@@ -408,8 +422,10 @@ NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
         [self saveAllElements:_currentSectionElements];
     }
     
+    _currentSectionIndex = indexPath.row;
+    
     [self hideSectionView];
-    [self showElementsForSectionIndex:indexPath.row];
+    [self showElementsForSectionIndex:_currentSectionIndex];
 }
 
 @end

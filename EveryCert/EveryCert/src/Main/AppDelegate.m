@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    BOOL databaseCopied = [CommonUtils copyApplicationDatabaseIfRequired];
+    [CommonUtils copyApplicationDatabaseIfRequired];
     
     if (LOGS_ON) NSLog(@"Document Dir: %@", [CommonUtils getDocumentDirPath]);
     

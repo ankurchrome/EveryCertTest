@@ -167,25 +167,33 @@ NSString *const LoggedUserPassword = @"LoggedUserPassword";
 NSString *const LoggedUserPermissionGroup = @"LoggedUserPermissionGroup";
 
 #pragma mark ElementCell Reuse Identifier
-NSString *const ElementCellReuseIdentifierTextField     = @"ElementCellTextField";
-NSString *const ElementCellReuseIdentifierTextView      = @"ElementCellTextView";
-NSString *const ElementCellReuseIdentifierPickList      = @"ElementCellPickList";
-NSString *const ElementCellReuseIdentifierLookUp        = @"ElementCellLookUp";
-NSString *const ElementCellReuseIdentifierSignatureView = @"ElementCellSignatureView";
-NSString *const ElementCellReuseIdentifierSubElement    = @"ElementCellSubElement";
-NSString *const ElementCellReuseIdentifierRadioButton   = @"ElementCellRadioButton";
-NSString *const ElementCellReuseIdentifierTickBox       = @"ElementCellTickBox";
-NSString *const ElementCellReuseIdentifierTextLabel     = @"ElementCellTextLabel";
+NSString *const ElementCellReuseIdentifierSearch      = @"ElementCellSearch";
+NSString *const ElementCellReuseIdentifierTextField   = @"ElementCellTextField";
+NSString *const ElementCellReuseIdentifierTextView    = @"ElementCellTextView";
+NSString *const ElementCellReuseIdentifierPicker      = @"ElementCellPicker";
+NSString *const ElementCellReuseIdentifierLookUp      = @"ElementCellLookUp";
+NSString *const ElementCellReuseIdentifierSignature   = @"ElementCellSignature";
+NSString *const ElementCellReuseIdentifierPickList    = @"ElementCellPickList";
+NSString *const ElementCellReuseIdentifierSubElement  = @"ElementCellSubElement";
+NSString *const ElementCellReuseIdentifierRadioButton = @"ElementCellRadioButton";
+NSString *const ElementCellReuseIdentifierLine        = @"ElementCellLine";
+NSString *const ElementCellReuseIdentifierTickBox     = @"ElementCellTickBox";
+NSString *const ElementCellReuseIdentifierTextLabel   = @"ElementCellTextLabel";
+NSString *const ElementCellReuseIdentifierPhoto       = @"ElementCellPhoto";
 
 #pragma mark ElementCell Reuse Identifier
-NSString *const ElementCellNibNameTextField     = @"TextFieldElementCell";
-NSString *const ElementCellNibNameTextView      = @"TextViewElementCell";
-NSString *const ElementCellNibNamePickList      = @"PickListElementCell";
-NSString *const ElementCellNibNameLookUp        = @"LookupElementCell";
-NSString *const ElementCellNibNameSignatureView = @"SignatureElementCell";
-NSString *const ElementCellNibNameSubElement    = @"SubElementCell";
-NSString *const ElementCellNibNameRadioButton   = @"RadioButtonElementCell";
-NSString *const ElementCellNibNameTickBox       = @"TickBoxElementCell";
-NSString *const ElementCellNibNameTextLabel     = @"TextLabelElementCell";
+NSString *const ElementCellNibNameSearch      = @"SearchElementCell";
+NSString *const ElementCellNibNameTextField   = @"TextFieldElementCell";
+NSString *const ElementCellNibNameTextView    = @"TextViewElementCell";
+NSString *const ElementCellNibNamePicker      = @"PickerElementCell";
+NSString *const ElementCellNibNameLookUp      = @"LookupElementCell";
+NSString *const ElementCellNibNameSignature   = @"SignatureElementCell";
+NSString *const ElementCellNibNamePickList    = @"PickListElementCell";
+NSString *const ElementCellNibNameSubElement  = @"SubElementCell";
+NSString *const ElementCellNibNameRadioButton = @"RadioButtonElementCell";
+NSString *const ElementCellNibNameLine        = @"LineElementCell";
+NSString *const ElementCellNibNameTickBox     = @"TickBoxElementCell";
+NSString *const ElementCellNibNameTextLabel   = @"TextLabelElementCell";
+NSString *const ElementCellNibNamePhoto       = @"PhotoElementCell";
 
 @end

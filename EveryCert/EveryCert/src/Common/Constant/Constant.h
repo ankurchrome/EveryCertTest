@@ -17,7 +17,7 @@
 #define iPHONE [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone
 #define iPAD   [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad
 
-#define LOGS_ON YES
+#define LOGS_ON NO
 #define FUNCTION_START if(LOGS_ON) NSLog(@"%s method start here",__FUNCTION__)
 #define FUNCTION_END   if(LOGS_ON) NSLog(@"%s method end here",__FUNCTION__)
 
@@ -199,23 +199,31 @@ extern NSString *const LoggedUserPassword;
 extern NSString *const LoggedUserPermissionGroup;
 
 #pragma mark ElementCell Reuse Identifier
+extern NSString *const ElementCellReuseIdentifierSearch;
 extern NSString *const ElementCellReuseIdentifierTextField;
 extern NSString *const ElementCellReuseIdentifierTextView;
-extern NSString *const ElementCellReuseIdentifierPickList;
+extern NSString *const ElementCellReuseIdentifierPicker;
 extern NSString *const ElementCellReuseIdentifierLookUp;
-extern NSString *const ElementCellReuseIdentifierSignatureView;
+extern NSString *const ElementCellReuseIdentifierSignature;
+extern NSString *const ElementCellReuseIdentifierPickList;
 extern NSString *const ElementCellReuseIdentifierSubElement;
 extern NSString *const ElementCellReuseIdentifierRadioButton;
+extern NSString *const ElementCellReuseIdentifierLine;
 extern NSString *const ElementCellReuseIdentifierTickBox;
 extern NSString *const ElementCellReuseIdentifierTextLabel;
+extern NSString *const ElementCellReuseIdentifierPhoto;
 
 #pragma mark ElementCell Reuse Identifier
+extern NSString *const ElementCellNibNameSearch;
 extern NSString *const ElementCellNibNameTextField;
 extern NSString *const ElementCellNibNameTextView;
-extern NSString *const ElementCellNibNamePickList;
+extern NSString *const ElementCellNibNamePicker;
 extern NSString *const ElementCellNibNameLookUp;
-extern NSString *const ElementCellNibNameSignatureView;
+extern NSString *const ElementCellNibNameSignature;
+extern NSString *const ElementCellNibNamePickList;
 extern NSString *const ElementCellNibNameSubElement;
 extern NSString *const ElementCellNibNameRadioButton;
+extern NSString *const ElementCellNibNameLine;
 extern NSString *const ElementCellNibNameTickBox;
 extern NSString *const ElementCellNibNameTextLabel;
+extern NSString *const ElementCellNibNamePhoto;

@@ -66,7 +66,6 @@
      }];
     
     return success;
-
 }
 
 // Check login at the app with given elements

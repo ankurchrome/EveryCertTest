@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ElementCellPicker" id="tpu-ca-p5U" customClass="PickListElementCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tpu-ca-p5U" id="FzC-XB-Qgq">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Picker" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gpe-6x-AYJ">
+                        <rect key="frame" x="10" y="10" width="200" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="200" id="A7x-8a-7ir"/>
+                            <constraint firstAttribute="height" constant="21" id="hEa-Wj-H2U"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Gpe-6x-AYJ" firstAttribute="top" secondItem="FzC-XB-Qgq" secondAttribute="top" constant="10" id="1Ki-dI-bDc"/>
+                    <constraint firstItem="Gpe-6x-AYJ" firstAttribute="leading" secondItem="FzC-XB-Qgq" secondAttribute="leading" constant="10" id="vcN-6X-Sic"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="259" y="174"/>
+        </tableViewCell>
+    </objects>
+</document>

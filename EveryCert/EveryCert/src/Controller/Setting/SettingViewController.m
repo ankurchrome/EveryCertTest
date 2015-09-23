@@ -120,10 +120,16 @@
         _companyUserHandler = [CompanyUserHandler new];
     }
     
-    if (elementModel.companyUserModel && elementModel.companyUserModel.companyUserIdApp > 0)
+    if (elementModel.companyUserIdApp > 0)
     {
-        elementModel.companyUserModel.data = elementModel.dataValue;
-        isSaved = [_companyUserHandler updateCompanyUser:elementModel.companyUserModel];
+        NSDictionary *columnInfo = @{
+                                     CompanyUserData: elementModel.dataValue,
+                                     ModifiedTimestampApp: @([[NSDate date] timeIntervalSince1970]),
+                                     IsDirty: @(true)
+                                     };
+        
+        isSaved = [_companyUserHandler updateInfo:columnInfo
+                                      recordIdApp:elementModel.companyUserIdApp];
     }
     else
     {
@@ -157,10 +163,16 @@
         _dataBinaryHandler = [DataBinaryHandler new];
     }
     
-    if (elementModel.dataBinaryModel && elementModel.dataBinaryModel.dataBinaryIdApp > 0)
+    if (elementModel.dataBinaryIdApp > 0)
     {
-        elementModel.dataBinaryModel.dataBinary = elementModel.dataBinaryValue;
-        isSaved = [_dataBinaryHandler updateDataBinaryModel:elementModel.dataBinaryModel];
+        NSDictionary *columnInfo = @{
+                                     DataBinaryValue: elementModel.dataBinaryValue,
+                                     ModifiedTimestampApp: @([[NSDate date] timeIntervalSince1970]),
+                                     IsDirty: @(true)
+                                     };
+        
+        isSaved = [_companyUserHandler updateInfo:columnInfo
+                                      recordIdApp:elementModel.dataBinaryIdApp];
     }
     else
     {

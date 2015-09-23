@@ -48,6 +48,10 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
     
     elementCellInfoList = @[
                             @{
+                                ElementCellNibName: ElementCellNibNameSearch,
+                                ElementCellReuseIdentifier: ElementCellReuseIdentifierSearch
+                                },
+                            @{
                                 ElementCellNibName: ElementCellNibNameTextField,
                                 ElementCellReuseIdentifier: ElementCellReuseIdentifierTextField
                                 },
@@ -56,16 +60,20 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
                                 ElementCellReuseIdentifier: ElementCellReuseIdentifierTextView
                                 },
                             @{
-                                ElementCellNibName: ElementCellNibNamePickList,
-                                ElementCellReuseIdentifier: ElementCellReuseIdentifierPickList
+                                ElementCellNibName: ElementCellNibNamePicker,
+                                ElementCellReuseIdentifier: ElementCellReuseIdentifierPicker
                                 },
                             @{
                                 ElementCellNibName: ElementCellNibNameLookUp,
                                 ElementCellReuseIdentifier: ElementCellReuseIdentifierLookUp
                                 },
                             @{
-                                ElementCellNibName: ElementCellNibNameSignatureView,
-                                ElementCellReuseIdentifier: ElementCellReuseIdentifierSignatureView
+                                ElementCellNibName: ElementCellNibNameSignature,
+                                ElementCellReuseIdentifier: ElementCellReuseIdentifierSignature
+                                },
+                            @{
+                                ElementCellNibName: ElementCellNibNamePickList,
+                                ElementCellReuseIdentifier: ElementCellReuseIdentifierPickList
                                 },
                             @{
                                 ElementCellNibName: ElementCellNibNameSubElement,
@@ -76,12 +84,20 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
                                 ElementCellReuseIdentifier: ElementCellReuseIdentifierRadioButton
                                 },
                             @{
+                                ElementCellNibName: ElementCellNibNameLine,
+                                ElementCellReuseIdentifier: ElementCellReuseIdentifierLine
+                                },
+                            @{
                                 ElementCellNibName: ElementCellNibNameTickBox,
                                 ElementCellReuseIdentifier: ElementCellReuseIdentifierTickBox
                                 },
                             @{
                                 ElementCellNibName: ElementCellNibNameTextLabel,
                                 ElementCellReuseIdentifier: ElementCellReuseIdentifierTextLabel
+                                },
+                            @{
+                                ElementCellNibName: ElementCellNibNamePhoto,
+                                ElementCellReuseIdentifier: ElementCellReuseIdentifierPhoto
                                 },
                             ];
     
@@ -124,6 +140,12 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
     
     switch (elementModel.fieldType)
     {
+        case ElementTypeSearch:
+        {
+            reuseIdentifier = ElementCellReuseIdentifierSearch;
+        }
+            break;
+
         case ElementTypeTextField:
         {
             reuseIdentifier = ElementCellReuseIdentifierTextField;
@@ -136,39 +158,63 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
         }
             break;
             
-        case ElementTypeTextLabel:
+        case ElementTypePicker:
         {
-            reuseIdentifier = ElementCellReuseIdentifierTextLabel;
-        }
-            break;
-            
-        case ElementTypeSubElement:
-        {
-            reuseIdentifier = ElementCellReuseIdentifierSubElement;
-        }
-            break;
-            
-        case ElementTypeTickBox:
-        {
-            reuseIdentifier = ElementCellReuseIdentifierTickBox;
-        }
-            break;
-            
-        case ElementTypeRadioButton:
-        {
-            reuseIdentifier = ElementCellReuseIdentifierRadioButton;
-        }
-            break;
-            
-        case ElementTypeSignature:
-        {
-            reuseIdentifier = ElementCellReuseIdentifierSignatureView;
+            reuseIdentifier =ElementCellReuseIdentifierPicker;
         }
             break;
             
         case ElementTypeLookup:
         {
             reuseIdentifier = ElementCellReuseIdentifierLookUp;
+        }
+            break;
+
+        case ElementTypeSignature:
+        {
+            reuseIdentifier = ElementCellReuseIdentifierSignature;
+        }
+            break;
+
+        case ElementTypePickListOption:
+        {
+            reuseIdentifier = ElementCellReuseIdentifierPickList;
+        }
+            break;
+
+        case ElementTypeSubElement:
+        {
+            reuseIdentifier = ElementCellReuseIdentifierSubElement;
+        }
+            break;
+
+        case ElementTypeRadioButton:
+        {
+            reuseIdentifier = ElementCellReuseIdentifierRadioButton;
+        }
+            break;
+            
+        case ElementTypeLine:
+        {
+            reuseIdentifier = ElementCellReuseIdentifierLine;
+        }
+            break;
+ 
+        case ElementTypeTickBox:
+        {
+            reuseIdentifier = ElementCellReuseIdentifierTickBox;
+        }
+            break;
+
+        case ElementTypeTextLabel:
+        {
+            reuseIdentifier = ElementCellReuseIdentifierTextLabel;
+        }
+            break;
+            
+        case ElementTypePhoto:
+        {
+            reuseIdentifier = ElementCellReuseIdentifierPhoto;
         }
             break;
             
