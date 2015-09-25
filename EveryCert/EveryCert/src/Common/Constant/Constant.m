@@ -26,6 +26,13 @@ NSString *const SyncTimeMessage = @"Intial Sync will take up to 60 seconds pleas
 
 #pragma mark Key & Data Constants
 
+NSString *const kPdfFormatDefaultText = @"DefaultText";
+
+NSString *const kPdfFormatRadioButtons     = @"RadioButtons";
+NSString *const kPdfFormatRadioButtonTitle = @"RadioButtonTitle";
+NSString *const kPdfFormatRadioButtonValue = @"RadioButtonValue";
+NSString *const kPdfFormatRadioButtonSelectedIndex = @"RadioButtonSelectedIndex";
+
 NSString *const kPdfFormatAlignment = @"Alignment";
 NSString *const PdfFormatAlignLeft = @"align_left";
 NSString *const PdfFormatAlignRight = @"align_right";

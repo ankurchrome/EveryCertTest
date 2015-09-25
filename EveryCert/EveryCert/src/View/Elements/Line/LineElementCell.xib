@@ -2,31 +2,30 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ElementCellLine" rowHeight="5" id="BVT-ze-obe" customClass="LineElementCell">
-            <rect key="frame" x="0.0" y="0.0" width="549" height="5"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ElementCellLine" id="BVT-ze-obe" customClass="LineElementCell">
+            <rect key="frame" x="0.0" y="0.0" width="568" height="4"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BVT-ze-obe" id="Ju6-3J-xq0">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxE-JK-ol3">
-                        <rect key="frame" x="8" y="0.0" width="554" height="5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="3"/>
                         <color key="backgroundColor" red="0.082352941176470587" green="0.49411764705882355" blue="0.70980392156862748" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="5" id="OMG-HE-pym"/>
+                            <constraint firstAttribute="height" constant="3" id="dwc-m4-KZT"/>
                         </constraints>
                     </view>
                 </subviews>
                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="yxE-JK-ol3" firstAttribute="top" secondItem="Ju6-3J-xq0" secondAttribute="topMargin" constant="-8" id="TSY-wd-Cdw"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="yxE-JK-ol3" secondAttribute="trailing" constant="-21" id="cV8-p1-a63"/>
-                    <constraint firstItem="yxE-JK-ol3" firstAttribute="leading" secondItem="Ju6-3J-xq0" secondAttribute="leadingMargin" id="dOQ-FR-uaD"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="yxE-JK-ol3" secondAttribute="bottom" priority="500" constant="-9" id="zLl-ih-5pu"/>
+                    <constraint firstAttribute="bottom" secondItem="yxE-JK-ol3" secondAttribute="bottom" id="3Av-g3-A4e"/>
+                    <constraint firstItem="yxE-JK-ol3" firstAttribute="leading" secondItem="Ju6-3J-xq0" secondAttribute="leading" id="VNS-LN-9V3"/>
+                    <constraint firstAttribute="trailing" secondItem="yxE-JK-ol3" secondAttribute="trailing" id="jWW-JM-W14"/>
+                    <constraint firstItem="yxE-JK-ol3" firstAttribute="top" secondItem="Ju6-3J-xq0" secondAttribute="top" id="rkJ-it-PQg"/>
                 </constraints>
             </tableViewCellContentView>
             <point key="canvasLocation" x="500.5" y="-163.5"/>

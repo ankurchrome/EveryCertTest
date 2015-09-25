@@ -12,7 +12,8 @@
 @interface SignatureViewController ()
 {
     __weak IBOutlet SignatureDrawingView *_signatureView;
-    __weak IBOutlet UIView *_sigParentView;
+    IBOutlet UIBarButtonItem *_cancelBarButtonItem;
+    IBOutlet UIBarButtonItem *_doneBarButtonItem;
     
     UIImage *_selectedImage;
 }
@@ -38,7 +39,19 @@ NSString *const SignatureViewControllerNibName = @"SignatureViewController";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
- 
+
+    self.title = @"Signature";
+    self.view.backgroundColor = APP_BG_COLOR;
+    self.navigationItem.leftBarButtonItem  = _cancelBarButtonItem;
+    self.navigationItem.rightBarButtonItem = _doneBarButtonItem;
+    self.navigationController.navigationBar.barTintColor = APP_BLUE_COLOR;
+    self.navigationController.navigationBar.tintColor    = [UIColor whiteColor];
+    self.navigationController.navigationBar.barStyle     = UIBarStyleBlack;
+    
+    _signatureView.superview.layer.cornerRadius = 5;
+    _signatureView.superview.layer.borderWidth  = 1;
+    _signatureView.superview.layer.borderColor  = [[UIColor darkGrayColor] CGColor];
+
     if (_selectedImage)
     {
         [_signatureView setImage:_selectedImage];
@@ -52,7 +65,7 @@ NSString *const SignatureViewControllerNibName = @"SignatureViewController";
 
 #pragma mark - IBOutlet Methods
 
-- (IBAction)closeButtonTapped:(id)sender
+- (IBAction)cancelButtonTapped:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

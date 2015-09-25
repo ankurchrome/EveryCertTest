@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-#define RADIO_BUTTON_HEIGHT 40
+#define RADIO_BUTTON_HEIGHT 30
+#define RADIO_BUTTON_TITLE_FONT_SIZE   16
+#define RADIO_BUTTON_TITLE_FONT_COLOUR [UIColor darkGrayColor]
 
 typedef enum : NSUInteger
 {

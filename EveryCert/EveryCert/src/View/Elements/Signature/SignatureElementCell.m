@@ -7,7 +7,6 @@
 //
 
 #import "SignatureElementCell.h"
-#import "SignatureDrawingView.h"
 #import "SignatureViewController.h"
 
 @interface SignatureElementCell ()<SignatureViewControllerDelegate>
@@ -16,10 +15,10 @@
 
 @implementation SignatureElementCell
 {    
-    __weak IBOutlet UIImageView *_checkMarkImageView;
-    __weak IBOutlet UIImageView *_arrowImageView;
-    __weak IBOutlet UILabel *_titleLabel;
-    __weak IBOutlet SignatureDrawingView *_signatureDrawingView;
+    IBOutlet UILabel *_titleLabel;
+    IBOutlet UIView  *_signatureView;
+    IBOutlet UIImageView *_signImageView;
+    IBOutlet UIButton *_signatureButton;
 }
 
 - (void)awakeFromNib {
@@ -34,28 +33,29 @@
     [super initializeWithElementModel:elementModel];
     
     _titleLabel.text = elementModel.label;
+    
+    _signatureView.layer.cornerRadius = 5;
+    _signatureView.layer.borderWidth  = 1;
+    _signatureView.layer.borderColor  = [[UIColor darkGrayColor] CGColor];
+    
+    if (elementModel.dataBinaryValue)
+    {
+        _signImageView.image = [UIImage imageWithData:elementModel.dataBinaryValue];
+    }
 }
 
 #pragma mark - IBActions
 
-- (IBAction)onClickClearSignatureDrawingButton:(id)sender {
-    //Reload the view
-    [_signatureDrawingView clearImage];
-}
-
-#pragma mark -
-
-- (void)showSignatureView:(UITapGestureRecognizer *)senderTap
+- (IBAction)signatureViewTapped:(id)sender
 {
     UIImage *signImage = [UIImage imageWithData:self.elementModel.dataBinaryValue];
-
     SignatureViewController *signatureVC = [[SignatureViewController alloc] initWithImage:signImage];
-    
     signatureVC.delegate = self;
-    signatureVC.modalPresentationStyle = UIModalPresentationFormSheet;
     
+    UINavigationController *signatureNC = [[UINavigationController alloc] initWithRootViewController:signatureVC];
+    signatureNC.modalPresentationStyle = UIModalPresentationFormSheet;
     UIViewController *rootController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-    [rootController presentViewController:signatureVC animated:YES completion:nil];
+    [rootController presentViewController:signatureNC animated:YES completion:nil];
 }
 
 #pragma mark - SignatureViewControllerDelegate Methods
@@ -63,6 +63,7 @@
 - (void)imagePicked:(UIImage *)pickedImage
 {
     self.elementModel.dataBinaryValue = UIImagePNGRepresentation(pickedImage);
+    _signImageView.image = pickedImage;
 }
 
 @end

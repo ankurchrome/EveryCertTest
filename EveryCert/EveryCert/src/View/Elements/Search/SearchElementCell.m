@@ -8,14 +8,26 @@
 
 #import "SearchElementCell.h"
 
+@interface SearchElementCell ()<UISearchBarDelegate>
+{
+    IBOutlet UISearchBar *_searchBar;
+}
+@end
+
 @implementation SearchElementCell
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (void)initializeWithElementModel:(ElementModel *)elementModel
+{
+    [super initializeWithElementModel:elementModel];
+    
+    _searchBar.placeholder = elementModel.label;
 }
-*/
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (LOGS_ON) NSLog(@"Search text: %@", searchText);
+}
 
 @end

@@ -68,15 +68,3 @@ typedef enum : NSUInteger
 @property (strong, nonatomic) CompanyUserModel *companyUserModel;
 
 @end
-
-extern NSString *const kElementFontSize;
-extern NSString *const kElementFontColor;
-extern NSString *const kElementFontName;
-extern NSString *const kDefaultText;
-
-extern NSString *const kElementPickListType;
-
-extern NSString *const kElementRadioButtons;
-extern NSString *const kElementRadioButtonTitle;
-extern NSString *const kElementRadioButtonValue;
-extern NSString *const kElementRadioButtonSelectedIndex;

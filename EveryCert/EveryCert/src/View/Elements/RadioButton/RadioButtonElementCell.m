@@ -44,19 +44,21 @@
     _titleLabel.text = elementModel.label;
     [_radioButtonView removeAllSubviews];
     
-    _radioButtons       =  elementModel.printedTextFormat[kElementRadioButtons];
-    _radioButtonOptions = [_radioButtons valueForKeyPath:kElementRadioButtonTitle];
+    _radioButtons       =  elementModel.printedTextFormat[kPdfFormatRadioButtons];
+    _radioButtonOptions = [_radioButtons valueForKeyPath:kPdfFormatRadioButtonTitle];
     
     if(_radioButtons.count <= 3)
     {
         _viewHeigthConstraint.constant = RADIO_BUTTON_HEIGHT;
-        [_radioButtonView reloadWithOptions:_radioButtonOptions layout:RadioButtonViewLayoutHorizontal];
+        [_radioButtonView reloadWithOptions:_radioButtonOptions
+                                     layout:RadioButtonViewLayoutHorizontal];
     }
     else
     {
         [_radioButtonView setFrameHeight:_radioButtonOptions.count * RADIO_BUTTON_HEIGHT];
         _viewHeigthConstraint.constant = _radioButtonOptions.count * RADIO_BUTTON_HEIGHT;
-        [_radioButtonView reloadWithOptions:_radioButtonOptions layout:RadioButtonViewLayoutVertical];
+        [_radioButtonView reloadWithOptions:_radioButtonOptions
+                                     layout:RadioButtonViewLayoutVertical];
     }
     
     _radioButtonView.delegate = self;
@@ -71,7 +73,7 @@
     if (_radioButtons && radioButtonView.selectedButtonIndex < _radioButtons.count)
     {
         NSDictionary *radioButtonInfo = _radioButtons[radioButtonView.selectedButtonIndex];
-        self.elementModel.dataValue = radioButtonInfo[kElementRadioButtonValue];
+        self.elementModel.dataValue = radioButtonInfo[kPdfFormatRadioButtonValue];
     }
 }
 

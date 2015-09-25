@@ -10,9 +10,4 @@
 
 @implementation LineElementCell
 
-- (LineElementCell *)initWithModel:(ElementModel *)formElement
-{
-    return self;
-}
-
 @end

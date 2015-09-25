@@ -29,6 +29,10 @@
     _titleLabel.text     = elementModel.label;
     _textView.text       = elementModel.dataValue;
     _charLimitLabel.text = [@(elementModel.maxCharLimit) stringValue];
+
+    _textView.layer.cornerRadius = 5;
+    _textView.layer.borderWidth  = 1;
+    _textView.layer.borderColor  = [[UIColor darkGrayColor] CGColor];
 }
 
 #pragma mark UITextViewDelegate Methods

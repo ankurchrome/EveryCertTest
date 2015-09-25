@@ -8,20 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		779637A71B747CDF0001ADC2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 779637A61B747CDF0001ADC2 /* libsqlite3.0.dylib */; };
-		779638CC1B74B4460001ADC2 /* ArrowDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638BE1B74B4460001ADC2 /* ArrowDown.png */; };
-		779638CD1B74B4460001ADC2 /* ArrowRight_old.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638BF1B74B4460001ADC2 /* ArrowRight_old.png */; };
-		779638CE1B74B4460001ADC2 /* ArrowRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638C01B74B4460001ADC2 /* ArrowRight.png */; };
-		779638CF1B74B4460001ADC2 /* checkBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638C11B74B4460001ADC2 /* checkBox.png */; };
-		779638D01B74B4460001ADC2 /* checkBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638C21B74B4460001ADC2 /* checkBox@2x.png */; };
-		779638D11B74B4460001ADC2 /* checkBoxChecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638C31B74B4460001ADC2 /* checkBoxChecked.png */; };
-		779638D21B74B4460001ADC2 /* checkBoxChecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638C41B74B4460001ADC2 /* checkBoxChecked@2x.png */; };
-		779638D31B74B4460001ADC2 /* checkButtonCross.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638C51B74B4460001ADC2 /* checkButtonCross.png */; };
-		779638D41B74B4460001ADC2 /* checkButtonCross@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638C61B74B4460001ADC2 /* checkButtonCross@2x.png */; };
-		779638D51B74B4460001ADC2 /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638C71B74B4460001ADC2 /* checkmark.png */; };
-		779638D61B74B4460001ADC2 /* RadioButtonChecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638C81B74B4460001ADC2 /* RadioButtonChecked.png */; };
-		779638D71B74B4460001ADC2 /* RadioButtonChecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638C91B74B4460001ADC2 /* RadioButtonChecked@2x.png */; };
-		779638D81B74B4460001ADC2 /* RadioButtonUnchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638CA1B74B4460001ADC2 /* RadioButtonUnchecked.png */; };
-		779638D91B74B4460001ADC2 /* RadioButtonUnchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 779638CB1B74B4460001ADC2 /* RadioButtonUnchecked@2x.png */; };
 		779A9D851B7C7D0700D86FED /* LookupElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D501B7C7D0700D86FED /* LookupElementCell.m */; };
 		779A9D861B7C7D0700D86FED /* LookupElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D511B7C7D0700D86FED /* LookupElementCell.xib */; };
 		779A9D891B7C7D0700D86FED /* PickListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D591B7C7D0700D86FED /* PickListViewController.m */; };
@@ -42,9 +28,6 @@
 		779A9D9C1B7C7D0700D86FED /* TickBoxElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D821B7C7D0700D86FED /* TickBoxElementCell.xib */; };
 		77C035BE1B789794009228F1 /* FormsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C035BD1B789794009228F1 /* FormsListViewController.m */; };
 		77C035C21B7897E3009228F1 /* CertificateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C035C11B7897E3009228F1 /* CertificateViewController.m */; };
-		77C035C71B78B25F009228F1 /* MenuOption.png in Resources */ = {isa = PBXBuildFile; fileRef = 77C035C41B78B25F009228F1 /* MenuOption.png */; };
-		77C035C81B78B25F009228F1 /* MenuOption@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77C035C51B78B25F009228F1 /* MenuOption@2x.png */; };
-		77C035C91B78B25F009228F1 /* MenuOption@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77C035C61B78B25F009228F1 /* MenuOption@3x.png */; };
 		77DBB9181B6F553900F02932 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DBB9151B6F553900F02932 /* AppDelegate.m */; };
 		77DBB91B1B6F555C00F02932 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77DBB9191B6F555C00F02932 /* LaunchScreen.xib */; };
 		77DBB91C1B6F555C00F02932 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77DBB91A1B6F555C00F02932 /* Main.storyboard */; };
@@ -82,10 +65,6 @@
 		C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89B81B9705D500790752 /* SubElementHandler.m */; };
 		C38E89D01B9705D500790752 /* SubElementModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89BA1B9705D500790752 /* SubElementModel.m */; };
 		C3AE7E4D1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */; };
-		C3D44F661BA15AFA00FF7350 /* Back.png in Resources */ = {isa = PBXBuildFile; fileRef = C3D44F621BA15AFA00FF7350 /* Back.png */; };
-		C3D44F671BA15AFA00FF7350 /* Back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C3D44F631BA15AFA00FF7350 /* Back@2x.png */; };
-		C3D44F681BA15AFA00FF7350 /* Next.png in Resources */ = {isa = PBXBuildFile; fileRef = C3D44F641BA15AFA00FF7350 /* Next.png */; };
-		C3D44F691BA15AFA00FF7350 /* Next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C3D44F651BA15AFA00FF7350 /* Next@2x.png */; };
 		C3E441751BA059180020700F /* FormTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E441741BA059180020700F /* FormTypeTableViewCell.m */; };
 		C3E441781BA06D2F0020700F /* FormSectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E441771BA06D2F0020700F /* FormSectionTableViewCell.m */; };
 		C3EEB94E1BB2E5050090C4B0 /* ElementTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB94B1BB2E5050090C4B0 /* ElementTableView.m */; };
@@ -133,20 +112,6 @@
 
 /* Begin PBXFileReference section */
 		779637A61B747CDF0001ADC2 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		779638BE1B74B4460001ADC2 /* ArrowDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowDown.png; sourceTree = "<group>"; };
-		779638BF1B74B4460001ADC2 /* ArrowRight_old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowRight_old.png; sourceTree = "<group>"; };
-		779638C01B74B4460001ADC2 /* ArrowRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowRight.png; sourceTree = "<group>"; };
-		779638C11B74B4460001ADC2 /* checkBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkBox.png; sourceTree = "<group>"; };
-		779638C21B74B4460001ADC2 /* checkBox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkBox@2x.png"; sourceTree = "<group>"; };
-		779638C31B74B4460001ADC2 /* checkBoxChecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkBoxChecked.png; sourceTree = "<group>"; };
-		779638C41B74B4460001ADC2 /* checkBoxChecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkBoxChecked@2x.png"; sourceTree = "<group>"; };
-		779638C51B74B4460001ADC2 /* checkButtonCross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkButtonCross.png; sourceTree = "<group>"; };
-		779638C61B74B4460001ADC2 /* checkButtonCross@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkButtonCross@2x.png"; sourceTree = "<group>"; };
-		779638C71B74B4460001ADC2 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
-		779638C81B74B4460001ADC2 /* RadioButtonChecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RadioButtonChecked.png; sourceTree = "<group>"; };
-		779638C91B74B4460001ADC2 /* RadioButtonChecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RadioButtonChecked@2x.png"; sourceTree = "<group>"; };
-		779638CA1B74B4460001ADC2 /* RadioButtonUnchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RadioButtonUnchecked.png; sourceTree = "<group>"; };
-		779638CB1B74B4460001ADC2 /* RadioButtonUnchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RadioButtonUnchecked@2x.png"; sourceTree = "<group>"; };
 		779A9D4F1B7C7D0700D86FED /* LookupElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupElementCell.h; sourceTree = "<group>"; };
 		779A9D501B7C7D0700D86FED /* LookupElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupElementCell.m; sourceTree = "<group>"; };
 		779A9D511B7C7D0700D86FED /* LookupElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LookupElementCell.xib; sourceTree = "<group>"; };
@@ -179,9 +144,6 @@
 		77C035BD1B789794009228F1 /* FormsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormsListViewController.m; path = EveryCert/src/Controller/FormList/FormsListViewController.m; sourceTree = SOURCE_ROOT; };
 		77C035C01B7897E3009228F1 /* CertificateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateViewController.h; sourceTree = "<group>"; };
 		77C035C11B7897E3009228F1 /* CertificateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateViewController.m; sourceTree = "<group>"; };
-		77C035C41B78B25F009228F1 /* MenuOption.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MenuOption.png; sourceTree = "<group>"; };
-		77C035C51B78B25F009228F1 /* MenuOption@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MenuOption@2x.png"; sourceTree = "<group>"; };
-		77C035C61B78B25F009228F1 /* MenuOption@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MenuOption@3x.png"; sourceTree = "<group>"; };
 		77DBB9141B6F553900F02932 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		77DBB9151B6F553900F02932 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		77DBB9191B6F555C00F02932 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -252,10 +214,6 @@
 		C38E89BA1B9705D500790752 /* SubElementModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementModel.m; sourceTree = "<group>"; };
 		C3AE7E4B1BA0C99800E8C126 /* ExistingCertificateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExistingCertificateTableViewCell.h; sourceTree = "<group>"; };
 		C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistingCertificateTableViewCell.m; sourceTree = "<group>"; };
-		C3D44F621BA15AFA00FF7350 /* Back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back.png; sourceTree = "<group>"; };
-		C3D44F631BA15AFA00FF7350 /* Back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Back@2x.png"; sourceTree = "<group>"; };
-		C3D44F641BA15AFA00FF7350 /* Next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Next.png; sourceTree = "<group>"; };
-		C3D44F651BA15AFA00FF7350 /* Next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Next@2x.png"; sourceTree = "<group>"; };
 		C3E441731BA059180020700F /* FormTypeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FormTypeTableViewCell.h; path = EveryCert/src/Controller/FormList/FormTypeTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		C3E441741BA059180020700F /* FormTypeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormTypeTableViewCell.m; path = EveryCert/src/Controller/FormList/FormTypeTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		C3E441761BA06D2F0020700F /* FormSectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormSectionTableViewCell.h; sourceTree = "<group>"; };
@@ -522,16 +480,6 @@
 			path = Certificate;
 			sourceTree = "<group>";
 		};
-		77C035C31B78B25F009228F1 /* MenuBarButtonImage */ = {
-			isa = PBXGroup;
-			children = (
-				77C035C41B78B25F009228F1 /* MenuOption.png */,
-				77C035C51B78B25F009228F1 /* MenuOption@2x.png */,
-				77C035C61B78B25F009228F1 /* MenuOption@3x.png */,
-			);
-			path = MenuBarButtonImage;
-			sourceTree = "<group>";
-		};
 		77DBB90B1B6F553900F02932 /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -683,7 +631,6 @@
 			isa = PBXGroup;
 			children = (
 				77DC23F81B6F4DA400624211 /* Database */,
-				77DC23F91B6F4DA400624211 /* Images */,
 				77DC23D51B6F4A9600624211 /* Images.xcassets */,
 			);
 			path = Resources;
@@ -697,32 +644,6 @@
 				C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */,
 			);
 			path = Database;
-			sourceTree = "<group>";
-		};
-		77DC23F91B6F4DA400624211 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				C3D44F621BA15AFA00FF7350 /* Back.png */,
-				C3D44F631BA15AFA00FF7350 /* Back@2x.png */,
-				C3D44F641BA15AFA00FF7350 /* Next.png */,
-				C3D44F651BA15AFA00FF7350 /* Next@2x.png */,
-				77C035C31B78B25F009228F1 /* MenuBarButtonImage */,
-				779638BE1B74B4460001ADC2 /* ArrowDown.png */,
-				779638BF1B74B4460001ADC2 /* ArrowRight_old.png */,
-				779638C01B74B4460001ADC2 /* ArrowRight.png */,
-				779638C11B74B4460001ADC2 /* checkBox.png */,
-				779638C21B74B4460001ADC2 /* checkBox@2x.png */,
-				779638C31B74B4460001ADC2 /* checkBoxChecked.png */,
-				779638C41B74B4460001ADC2 /* checkBoxChecked@2x.png */,
-				779638C51B74B4460001ADC2 /* checkButtonCross.png */,
-				779638C61B74B4460001ADC2 /* checkButtonCross@2x.png */,
-				779638C71B74B4460001ADC2 /* checkmark.png */,
-				779638C81B74B4460001ADC2 /* RadioButtonChecked.png */,
-				779638C91B74B4460001ADC2 /* RadioButtonChecked@2x.png */,
-				779638CA1B74B4460001ADC2 /* RadioButtonUnchecked.png */,
-				779638CB1B74B4460001ADC2 /* RadioButtonUnchecked@2x.png */,
-			);
-			path = Images;
 			sourceTree = "<group>";
 		};
 		C38E89831B9705D500790752 /* Model */ = {
@@ -1083,46 +1004,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				779638D81B74B4460001ADC2 /* RadioButtonUnchecked.png in Resources */,
-				C3D44F661BA15AFA00FF7350 /* Back.png in Resources */,
 				C3FFB4371B9B36180089A0B2 /* PickListElementCell.xib in Resources */,
-				77C035C81B78B25F009228F1 /* MenuOption@2x.png in Resources */,
 				779A9D8A1B7C7D0700D86FED /* PickListViewController.xib in Resources */,
 				C3FFB4421B9B6FC30089A0B2 /* RadioButtonElementCell.xib in Resources */,
 				C3EEB9991BB2E8F90090C4B0 /* SearchElementCell.xib in Resources */,
-				C3D44F681BA15AFA00FF7350 /* Next.png in Resources */,
-				779638CD1B74B4460001ADC2 /* ArrowRight_old.png in Resources */,
-				779638D21B74B4460001ADC2 /* checkBoxChecked@2x.png in Resources */,
-				77C035C71B78B25F009228F1 /* MenuOption.png in Resources */,
-				779638D41B74B4460001ADC2 /* checkButtonCross@2x.png in Resources */,
 				77DBB91C1B6F555C00F02932 /* Main.storyboard in Resources */,
 				779A9D941B7C7D0700D86FED /* SubElementCell.xib in Resources */,
-				779638CF1B74B4460001ADC2 /* checkBox.png in Resources */,
-				779638CE1B74B4460001ADC2 /* ArrowRight.png in Resources */,
-				779638CC1B74B4460001ADC2 /* ArrowDown.png in Resources */,
-				779638D71B74B4460001ADC2 /* RadioButtonChecked@2x.png in Resources */,
 				77F8E4AC1B82220600C214A4 /* Everycert.sql in Resources */,
 				779A9D921B7C7D0700D86FED /* SignatureViewController.xib in Resources */,
-				77C035C91B78B25F009228F1 /* MenuOption@3x.png in Resources */,
-				779638D91B74B4460001ADC2 /* RadioButtonUnchecked@2x.png in Resources */,
 				779A9D9A1B7C7D0700D86FED /* TextViewElementCell.xib in Resources */,
 				77F8E4A91B821F0300C214A4 /* Everycert.sqlite in Resources */,
-				C3D44F691BA15AFA00FF7350 /* Next@2x.png in Resources */,
 				C3FFB43C1B9B3CF40089A0B2 /* SignatureElementCell.xib in Resources */,
 				C3EEB9561BB2E5B80090C4B0 /* LineElementCell.xib in Resources */,
-				779638D01B74B4460001ADC2 /* checkBox@2x.png in Resources */,
 				C3EEB98B1BB2E7040090C4B0 /* MBProgressHUD.podspec in Resources */,
 				77DBB91B1B6F555C00F02932 /* LaunchScreen.xib in Resources */,
 				C3EEB99E1BB2EB710090C4B0 /* PickerElementCell.xib in Resources */,
-				C3D44F671BA15AFA00FF7350 /* Back@2x.png in Resources */,
-				779638D11B74B4460001ADC2 /* checkBoxChecked.png in Resources */,
-				779638D61B74B4460001ADC2 /* RadioButtonChecked.png in Resources */,
 				779A9D961B7C7D0700D86FED /* TextFieldElementCell.xib in Resources */,
 				779A9D981B7C7D0700D86FED /* TextLabelElementCell.xib in Resources */,
-				779638D51B74B4460001ADC2 /* checkmark.png in Resources */,
 				C3EEB9911BB2E8060090C4B0 /* PhotoElementCell.xib in Resources */,
 				C3EEB9891BB2E7040090C4B0 /* LICENSE in Resources */,
-				779638D31B74B4460001ADC2 /* checkButtonCross.png in Resources */,
 				779A9D861B7C7D0700D86FED /* LookupElementCell.xib in Resources */,
 				779A9D9C1B7C7D0700D86FED /* TickBoxElementCell.xib in Resources */,
 				77DC23D61B6F4A9600624211 /* Images.xcassets in Resources */,

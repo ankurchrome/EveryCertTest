@@ -17,7 +17,7 @@
 #define iPHONE [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone
 #define iPAD   [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad
 
-#define LOGS_ON NO
+#define LOGS_ON YES
 #define FUNCTION_START if(LOGS_ON) NSLog(@"%s method start here",__FUNCTION__)
 #define FUNCTION_END   if(LOGS_ON) NSLog(@"%s method end here",__FUNCTION__)
 
@@ -34,7 +34,8 @@
 #define FILE_TYPE_SQL @"sql"
 #define FILE_TYPE_PDF @"pdf"
 
-#define APP_BG_COLOR [UIColor colorWithRed:236/255.0 green:236/255.0 blue:236/255.0 alpha:1.0];
+#define APP_BLUE_COLOR [UIColor colorWithRed:21/255.0 green:126/255.0 blue:181/255.0 alpha:1.0]
+#define APP_BG_COLOR   [UIColor colorWithRed:236/255.0 green:236/255.0 blue:236/255.0 alpha:1.0]
 #define CERTIFICATE_DATE_FORMAT @"yyyy-MM-dd HH:mm:ss"
 #define EMAIL_REGEX @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+"
 
@@ -46,6 +47,7 @@
 #pragma mark -
 
 #pragma mark API Constants
+
 extern NSString *const BaseUrl;
 extern NSString *const UrlApiV1;
 extern NSString *const UrlTimestamp;
@@ -57,6 +59,14 @@ extern NSString *const ConnectionNotFoundMessage;
 extern NSString *const SyncTimeMessage;
 
 #pragma mark Key & Data Constants
+
+extern NSString *const kPdfFormatDefaultText;
+
+extern NSString *const kPdfFormatRadioButtons;
+extern NSString *const kPdfFormatRadioButtonTitle;
+extern NSString *const kPdfFormatRadioButtonValue;
+extern NSString *const kPdfFormatRadioButtonSelectedIndex;
+
 extern NSString *const kPdfFormatAlignment;
 extern NSString *const PdfFormatAlignLeft;
 extern NSString *const PdfFormatAlignRight;

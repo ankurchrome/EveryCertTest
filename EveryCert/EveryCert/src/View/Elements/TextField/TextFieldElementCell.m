@@ -8,12 +8,15 @@
 
 #import "TextFieldElementCell.h"
 
+#define TEXTFIELD_TRAILING_CONSTANT_DEFAULT 5
+
 @implementation TextFieldElementCell
 {
     __weak IBOutlet UITextField *_textField;
     __weak IBOutlet UILabel     *_charLimitLabel;
     __weak IBOutlet UILabel     *_textLabel;
     __weak IBOutlet UIButton    *_defaultButton;
+    IBOutlet NSLayoutConstraint *_titleLabelLeadingConstraint;
 }
 
 - (void)awakeFromNib {
@@ -30,6 +33,21 @@
     _textLabel.text = elementModel.label;
     _textField.text = elementModel.dataValue;
     _charLimitLabel.text = [@(elementModel.maxCharLimit) stringValue];
+    
+    NSString *defaultText = elementModel.printedTextFormat[kPdfFormatDefaultText];
+    
+    if ([CommonUtils isValidString:defaultText])
+    {
+        _defaultButton.hidden = NO;
+        [_defaultButton setTitle:defaultText forState:UIControlStateNormal];
+        _titleLabelLeadingConstraint.constant = TEXTFIELD_TRAILING_CONSTANT_DEFAULT;
+    }
+    else
+    {
+        _defaultButton.hidden = YES;
+        [_defaultButton setTitle:EMPTY_STRING forState:UIControlStateNormal];
+        _titleLabelLeadingConstraint.constant = TEXTFIELD_TRAILING_CONSTANT_DEFAULT - _defaultButton.frame.size.width;
+    }
     
     //Set textfield capitalization
     NSString *elementCapitalizationType = elementModel.printedTextFormat[kPdfFormatCapitalization];

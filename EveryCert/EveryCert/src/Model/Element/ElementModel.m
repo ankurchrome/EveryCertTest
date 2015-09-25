@@ -10,18 +10,6 @@
 
 @implementation ElementModel
 
-NSString *const kElementFontSize  = @"ElementFontSize";
-NSString *const kElementFontColor = @"ElementFontColor";
-NSString *const kElementFontName  = @"ElementFontName";
-NSString *const kDefaultText      = @"DefaultText";
-
-NSString *const kElementPickListType = @"PickListType";
-
-NSString *const kElementRadioButtons     = @"RadioButtons";
-NSString *const kElementRadioButtonTitle = @"RadioButtonTitle";
-NSString *const kElementRadioButtonValue = @"RadioButtonValue";
-NSString *const kElementRadioButtonSelectedIndex = @"RadioButtonSelectedIndex";
-
 // Initialize object with the info stored in ResultSet
 - (void)setFromResultSet: (FMResultSet *)resultSet
 {

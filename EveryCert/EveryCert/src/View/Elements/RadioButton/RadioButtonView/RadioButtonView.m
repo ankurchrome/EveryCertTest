@@ -15,9 +15,6 @@
 }
 @end
 
-NSString *const UnCheckedImage = @"RadioButtonUnchecked";
-NSString *const CheckedImage = @"RadioButtonChecked";
-
 @implementation RadioButtonView
 
 // Initialize a radio group view containing radio buttons for all the given options. Arrange the radio buttons in row-column manner so that one row will contain given no of columns only.
@@ -58,12 +55,13 @@ NSString *const CheckedImage = @"RadioButtonChecked";
         }
             UIButton *radioButton = [[UIButton alloc] initWithFrame:radioButtonFrame];
             
-            [radioButton setImage:[UIImage imageNamed:UnCheckedImage]
+            [radioButton setImage:[UIImage imageNamed:@"RadioButtonUncheckedIcon"]
                          forState:UIControlStateNormal];
-            [radioButton setImage:[UIImage imageNamed:CheckedImage]
+            [radioButton setImage:[UIImage imageNamed:@"RadioButtonCheckedIcon"]
                          forState:UIControlStateSelected];
-            [radioButton setTitleColor:[UIColor blackColor]
+            [radioButton setTitleColor:RADIO_BUTTON_TITLE_FONT_COLOUR
                               forState:UIControlStateNormal];
+            radioButton.titleLabel.font = [UIFont systemFontOfSize:RADIO_BUTTON_TITLE_FONT_SIZE];
             [radioButton setTitle:options[optionIndex]
                          forState:UIControlStateNormal];
             [radioButton addTarget:self
@@ -74,11 +72,11 @@ NSString *const CheckedImage = @"RadioButtonChecked";
             radioButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
             radioButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
             radioButton.autoresizingMask =  UIViewAutoresizingFlexibleLeftMargin |
-            UIViewAutoresizingFlexibleRightMargin |
-            UIViewAutoresizingFlexibleTopMargin |
-            UIViewAutoresizingFlexibleBottomMargin |
-            UIViewAutoresizingFlexibleHeight |
-            UIViewAutoresizingFlexibleWidth;
+                                            UIViewAutoresizingFlexibleRightMargin |
+                                            UIViewAutoresizingFlexibleTopMargin |
+                                            UIViewAutoresizingFlexibleBottomMargin |
+                                            UIViewAutoresizingFlexibleHeight |
+                                            UIViewAutoresizingFlexibleWidth;
             [self addSubview:radioButton];
             [_radioButtons addObject:radioButton];
 }

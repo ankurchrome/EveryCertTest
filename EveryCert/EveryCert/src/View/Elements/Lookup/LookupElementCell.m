@@ -10,7 +10,8 @@
 
 @implementation LookupElementCell
 {
-    __weak IBOutlet UILabel *_textLabel;
+    IBOutlet UILabel     *_titleLabel;
+    IBOutlet UITextField *_textField;
 }
 
 - (void)awakeFromNib {
@@ -23,6 +24,8 @@
 - (void)initializeWithElementModel:(ElementModel *)elementModel
 {
     [super initializeWithElementModel:elementModel];
+    
+    _titleLabel.text = elementModel.label;
 }
 
 @end

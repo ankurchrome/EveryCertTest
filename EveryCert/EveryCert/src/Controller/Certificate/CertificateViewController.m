@@ -161,6 +161,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
 {
     [_sectionTableView setFrameX:-_sectionTableView.frameWidth];
     _sectionView.hidden = NO;
+    _sectionFadedView.alpha = 0.0;
     
     [UIView animateWithDuration:SECTION_LIST_SHOW_HIDE_ANIMATION_DURATION
                      animations:^

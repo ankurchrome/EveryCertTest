@@ -11,11 +11,4 @@
 
 @interface LineElementCell : ElementTableViewCell
 
-/**
- Initialize Cell Element with their information
- @param  FormElementModel object which contains info like section, title etc.
- @return id initialize a cell
- */
-- (LineElementCell *)initWithModel:(ElementModel *)formElement;
-
 @end
