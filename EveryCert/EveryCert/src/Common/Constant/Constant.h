@@ -183,7 +183,6 @@ extern NSString *const LookUpTable;
 extern NSString *const LookUpIdApp;
 extern NSString *const LookUpId;
 extern NSString *const LookUpListId;
-extern NSString *const LookUpRecordIdApp;
 extern NSString *const LookUpLinkedRecordIdApp;
 extern NSString *const LookUpFieldNumber;
 extern NSString *const LookUpOption;

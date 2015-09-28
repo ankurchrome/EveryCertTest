@@ -10,4 +10,6 @@
 
 @implementation ExistingCertificateTableViewCell
 
+NSString *const ExistingCertCellReuseIdentifier = @"ExistingCertCellIdentifier";
+
 @end

@@ -14,6 +14,7 @@
                 <subviews>
                     <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="qUk-Rm-HiH">
                         <rect key="frame" x="0.0" y="0.0" width="568" height="44"/>
+                        <gestureRecognizers/>
                         <textInputTraits key="textInputTraits"/>
                         <connections>
                             <outlet property="delegate" destination="jvc-MP-txh" id="BFr-Fo-oJJ"/>
@@ -30,7 +31,7 @@
             <connections>
                 <outlet property="_searchBar" destination="qUk-Rm-HiH" id="ik7-fD-QWk"/>
             </connections>
-            <point key="canvasLocation" x="394" y="235.5"/>
+            <point key="canvasLocation" x="451" y="229.5"/>
         </tableViewCell>
     </objects>
 </document>

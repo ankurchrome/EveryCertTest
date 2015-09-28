@@ -7,6 +7,7 @@
 //
 
 #import "BaseHandler.h"
+#import "LookUpModel.h"
 
 @interface LookUpHandler : BaseHandler
 

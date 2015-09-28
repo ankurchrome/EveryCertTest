@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -59,6 +59,13 @@
                             <action selector="onClickRemoveButton:" destination="E8h-aY-L5g" eventType="touchUpInside" id="YeI-L2-2ao"/>
                         </connections>
                     </button>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UPu-a0-4ij" userLabel="Separator">
+                        <rect key="frame" x="0.0" y="290" width="568" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="Lwa-Tm-e1c"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="xwE-CX-IBS" secondAttribute="trailing" priority="500" constant="186" id="2nm-Qb-t99"/>
@@ -68,12 +75,15 @@
                     <constraint firstItem="is6-ix-9vP" firstAttribute="leading" secondItem="Uz3-7U-oW2" secondAttribute="leadingMargin" constant="-3" id="AB4-TY-c5w"/>
                     <constraint firstItem="y99-7Q-R2i" firstAttribute="leading" secondItem="Uz3-7U-oW2" secondAttribute="leadingMargin" constant="-3" id="BML-gs-S5I"/>
                     <constraint firstAttribute="centerX" secondItem="mDo-0v-nEl" secondAttribute="centerX" id="Ihd-vx-9lP"/>
+                    <constraint firstAttribute="bottom" secondItem="UPu-a0-4ij" secondAttribute="bottom" id="JaP-uH-rV6"/>
                     <constraint firstAttribute="trailingMargin" secondItem="is6-ix-9vP" secondAttribute="trailing" constant="-4" id="O3H-Fe-L6D"/>
+                    <constraint firstAttribute="trailing" secondItem="UPu-a0-4ij" secondAttribute="trailing" constant="119" id="OkP-7e-MNQ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="xwE-CX-IBS" secondAttribute="bottom" constant="-5" id="QV0-VO-WgW"/>
                     <constraint firstItem="mDo-0v-nEl" firstAttribute="leading" secondItem="Uz3-7U-oW2" secondAttribute="leadingMargin" priority="500" constant="147" id="Vig-sH-S7w"/>
                     <constraint firstItem="is6-ix-9vP" firstAttribute="top" secondItem="Uz3-7U-oW2" secondAttribute="topMargin" constant="1" id="Yk8-00-m7h"/>
                     <constraint firstItem="M90-xU-tyQ" firstAttribute="top" secondItem="mDo-0v-nEl" secondAttribute="bottom" constant="97" id="aAU-hO-Llt"/>
                     <constraint firstItem="y99-7Q-R2i" firstAttribute="top" secondItem="Uz3-7U-oW2" secondAttribute="topMargin" id="db8-yU-5yu"/>
+                    <constraint firstItem="UPu-a0-4ij" firstAttribute="leading" secondItem="Uz3-7U-oW2" secondAttribute="leading" constant="10" id="eYH-7f-SVn"/>
                     <constraint firstAttribute="trailingMargin" secondItem="M90-xU-tyQ" secondAttribute="trailing" constant="-4" id="ff1-Hn-DOT"/>
                     <constraint firstItem="M90-xU-tyQ" firstAttribute="leading" secondItem="Uz3-7U-oW2" secondAttribute="leadingMargin" constant="-3" id="gCE-lQ-cfz"/>
                     <constraint firstAttribute="centerX" secondItem="xwE-CX-IBS" secondAttribute="centerX" constant="-1" id="slj-lV-R77"/>
@@ -86,7 +96,7 @@
                 <outlet property="_photoAddButton" destination="mDo-0v-nEl" id="shh-Iq-1Sj"/>
                 <outlet property="_removeButton" destination="xwE-CX-IBS" id="9KX-qG-QcN"/>
             </connections>
-            <point key="canvasLocation" x="499.5" y="369"/>
+            <point key="canvasLocation" x="355.5" y="319"/>
         </tableViewCell>
     </objects>
 </document>

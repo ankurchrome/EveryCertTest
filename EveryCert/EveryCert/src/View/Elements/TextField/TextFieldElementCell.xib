@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -52,11 +52,20 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ppQ-aO-57W" userLabel="Separator">
+                        <rect key="frame" x="10" y="78" width="558" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="HfK-Of-c1U"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="VUC-5W-F8g" firstAttribute="top" secondItem="skm-JR-UKi" secondAttribute="bottom" constant="14" id="005-bf-5g3"/>
                     <constraint firstItem="skm-JR-UKi" firstAttribute="top" secondItem="CK4-Jr-5GS" secondAttribute="top" constant="10" id="0Z5-M6-OxL"/>
+                    <constraint firstItem="ppQ-aO-57W" firstAttribute="leading" secondItem="CK4-Jr-5GS" secondAttribute="leading" constant="10" id="4Ft-zy-roD"/>
                     <constraint firstItem="4b9-dg-uKW" firstAttribute="top" secondItem="CK4-Jr-5GS" secondAttribute="top" constant="8" id="55E-Zj-hc4"/>
+                    <constraint firstAttribute="bottom" secondItem="ppQ-aO-57W" secondAttribute="bottom" id="ATt-p4-2uX"/>
                     <constraint firstItem="b1v-Bz-Lql" firstAttribute="leading" secondItem="VUC-5W-F8g" secondAttribute="trailing" constant="10" id="H33-8a-PPS"/>
                     <constraint firstAttribute="trailing" secondItem="4b9-dg-uKW" secondAttribute="trailing" constant="8" id="ICi-dy-pRW"/>
                     <constraint firstAttribute="bottom" secondItem="VUC-5W-F8g" secondAttribute="bottom" constant="9" id="IIW-Z6-qzm"/>
@@ -64,6 +73,7 @@
                     <constraint firstItem="4b9-dg-uKW" firstAttribute="leading" secondItem="skm-JR-UKi" secondAttribute="trailing" constant="5" id="N3R-S2-bes"/>
                     <constraint firstAttribute="trailing" secondItem="b1v-Bz-Lql" secondAttribute="trailing" constant="8" id="RRg-Fd-cpT"/>
                     <constraint firstItem="skm-JR-UKi" firstAttribute="leading" secondItem="CK4-Jr-5GS" secondAttribute="leading" constant="10" id="eC9-Lb-gYG"/>
+                    <constraint firstAttribute="trailing" secondItem="ppQ-aO-57W" secondAttribute="trailing" id="ezR-P8-dtp"/>
                     <constraint firstAttribute="bottom" secondItem="b1v-Bz-Lql" secondAttribute="bottom" constant="9" id="nOs-KR-v8J"/>
                 </constraints>
             </tableViewCellContentView>

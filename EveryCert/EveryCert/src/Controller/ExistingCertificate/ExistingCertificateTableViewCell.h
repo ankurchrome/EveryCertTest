@@ -12,4 +12,6 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 
+extern NSString *const ExistingCertCellReuseIdentifier;
+
 @end

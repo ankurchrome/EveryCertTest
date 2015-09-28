@@ -34,9 +34,6 @@
 }
 @end
 
-
-NSString *const ExistingCertCellReuseIdentifier = @"ExistingCertCellIdentifier";
-
 @implementation ExistingCertificateViewController
 
 - (void)viewDidLoad

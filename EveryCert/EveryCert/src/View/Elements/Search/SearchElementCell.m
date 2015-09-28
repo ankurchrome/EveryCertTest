@@ -7,6 +7,7 @@
 //
 
 #import "SearchElementCell.h"
+#import "LookupSearchViewController.h"
 
 @interface SearchElementCell ()<UISearchBarDelegate>
 {
@@ -24,6 +25,16 @@
 }
 
 #pragma mark - UISearchBarDelegate
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    UINavigationController *lookupSearchNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LookupSearchNC"];
+    lookupSearchNC.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    [APP_DELEGATE.window.rootViewController presentViewController:lookupSearchNC animated:YES completion:nil];
+
+    return NO;
+}
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {

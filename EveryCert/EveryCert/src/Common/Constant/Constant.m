@@ -149,7 +149,6 @@ NSString *const LookUpTable         = @"lookup";
 NSString *const LookUpIdApp         = @"lookup_id_app";
 NSString *const LookUpId            = @"lookup_id";
 NSString *const LookUpListId        = @"lookup_list_id";
-NSString *const LookUpRecordIdApp   = @"record_id_app";
 NSString *const LookUpLinkedRecordIdApp = @"linked_record_id_app";
 NSString *const LookUpFieldNumber   = @"field_no";
 NSString *const LookUpOption        = @"option";

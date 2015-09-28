@@ -115,14 +115,14 @@ NSString *const ButtonTitleFinish  = @"Finish";
 {
     self.title = _certificate.name;
     self.view.backgroundColor = APP_BG_COLOR;
-    
+
+    _elementTableView.superview.clipsToBounds = NO;
+    _elementTableView.superview.layer.shadowColor = [[UIColor blackColor] CGColor];
+    _elementTableView.superview.layer.shadowOffset = CGSizeMake(0,5);
+    _elementTableView.superview.layer.shadowOpacity = 0.5;
+
     _sectionTableView.backgroundColor = APP_BG_COLOR;
     _sectionTableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0);
-    
-    _sectionTableView.clipsToBounds = NO;
-    _sectionTableView.layer.shadowColor = [[UIColor blackColor] CGColor];
-    _sectionTableView.layer.shadowOffset = CGSizeMake(0,5);
-    _sectionTableView.layer.shadowOpacity = 0.5;
 }
 
 #pragma mark - Functionality Methods

@@ -246,6 +246,11 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
     return 1;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 1;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ElementModel *elementModel = _elementModels[indexPath.row];
