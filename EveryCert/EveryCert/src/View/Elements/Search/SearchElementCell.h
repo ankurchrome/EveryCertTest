@@ -8,6 +8,10 @@
 
 #import "ElementTableViewCell.h"
 
+@class ElementTableView;
+
 @interface SearchElementCell : ElementTableViewCell
+
+- (void)initializeWithElementModel:(ElementModel *)elementModel elementTable:(ElementTableView *)elementTableView;
 
 @end

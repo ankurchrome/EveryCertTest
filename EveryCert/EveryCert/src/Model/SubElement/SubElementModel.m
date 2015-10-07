@@ -35,10 +35,10 @@
         self.modifiedTimestamp  = [resultSet doubleForColumn:ModifiedTimeStamp];
         self.archive            = [resultSet boolForColumn:Archive];
         self.popUpMessage       = [resultSet stringForColumn:ElementPopUpMessage];
-        self.lookUpIdNew        = [resultSet intForColumn:ElementLookUpListIdNew];
-        self.fieldNumberNew     = [resultSet intForColumn:ElementFieldNumberNew];
-        self.lookUpIdExisting   = [resultSet intForColumn:ElementLookUpListIdExisting];
-        self.fieldNumberExisting= [resultSet intForColumn:ElementFieldNumberExisting];
+        self.lookUpListIdNew      = [resultSet intForColumn:ElementLookUpListIdNew];
+        self.fieldNumberNew       = [resultSet intForColumn:ElementFieldNumberNew];
+        self.lookUpListIdExisting = [resultSet intForColumn:ElementLookUpListIdExisting];
+        self.fieldNumberExisting  = [resultSet intForColumn:ElementFieldNumberExisting];
         
         attributes     = [resultSet stringForColumn:ElementPrintedTextFormat];
         attributesData = [attributes dataUsingEncoding:NSUTF8StringEncoding];

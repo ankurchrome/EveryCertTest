@@ -10,6 +10,12 @@
 
 @interface LookupRecordTableViewCell : UITableViewCell
 
+@property (strong, nonatomic) NSDictionary *lookupRecordInfo;
+
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+
+- (void)initializeWithLookupRecord:(NSDictionary *)lookupRecordInfo;
+
 extern NSString *const LookupRecordCellIdentifier;
 
 @end

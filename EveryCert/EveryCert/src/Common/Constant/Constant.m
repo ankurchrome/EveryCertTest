@@ -154,6 +154,7 @@ NSString *const LookUpFieldNumber   = @"field_no";
 NSString *const LookUpOption        = @"option";
 NSString *const LookUpDataValue     = @"data";
 NSString *const LookUpSequenceOrder = @"sequence_order";
+NSString *const LookUpRecordTitleColumnAlias = @"record_title";
 
 #pragma mark Record Table
 NSString *const RecordTable = @"record";

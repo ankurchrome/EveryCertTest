@@ -47,9 +47,9 @@ typedef enum : NSUInteger
 @property (strong, nonatomic) NSDictionary *printedTextFormat;
 @property (assign, nonatomic) NSInteger linkedElementId;
 @property (strong, nonatomic) NSString  *popUpMessage;
-@property (assign, nonatomic) NSInteger lookUpIdNew;
+@property (assign, nonatomic) NSInteger lookUpListIdNew;
 @property (assign, nonatomic) NSInteger fieldNumberNew;
-@property (assign, nonatomic) NSInteger lookUpIdExisting;
+@property (assign, nonatomic) NSInteger lookUpListIdExisting;
 @property (assign, nonatomic) NSInteger fieldNumberExisting;
 
 @property (strong, nonatomic) NSArray  *subElements;
@@ -66,5 +66,8 @@ typedef enum : NSUInteger
 @property (assign, nonatomic) NSInteger        companyUserIdApp;
 @property (strong, nonatomic) NSString         *companyUserDataValue;
 @property (strong, nonatomic) CompanyUserModel *companyUserModel;
+
+//@property (assign, nonatomic) NSInteger lookupIdApp;
+@property (assign, nonatomic) NSInteger recordIdApp;
 
 @end

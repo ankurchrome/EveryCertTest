@@ -19,4 +19,10 @@ NSString *const LookupRecordCellIdentifier = @"LookupRecordCellIdentifier";
     [super setSelected:selected animated:animated];
 }
 
+- (void)initializeWithLookupRecord:(NSDictionary *)lookupRecordInfo
+{
+    self.lookupRecordInfo = lookupRecordInfo;
+    self.titleLabel.text  = lookupRecordInfo[LookUpRecordTitleColumnAlias];
+}
+
 @end

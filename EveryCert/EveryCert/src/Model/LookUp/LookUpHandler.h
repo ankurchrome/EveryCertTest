@@ -11,4 +11,13 @@
 
 @interface LookUpHandler : BaseHandler
 
+- (NSInteger)getLookupIdAppOfFieldNo:(NSInteger)fieldNumber record:(NSInteger)recordIdApp;
+
+// Insert a LookupModel object information into lookup table.
+- (NSInteger)insertLookupModel:(LookUpModel *)lookupModel;
+
+- (NSArray *)getAllLookupRecordsForList:(NSInteger)lookupListId linkedRecordId:(NSInteger)linkedRecordIdApp companyId:(NSInteger)companyId;
+
+- (NSArray *)getAllFieldsOfRecord:(NSInteger)recordIdApp lookupList:(NSInteger)lookupListId;
+
 @end

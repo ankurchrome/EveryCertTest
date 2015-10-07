@@ -14,6 +14,8 @@
 
 @interface ElementTableView : KeyBoardScrollView
 
+@property (nonatomic, strong) NSArray *elementModels;
+
 /**
  Returns an initialized object with certificate & section info and fetch elements of specified form's section
  @param  certificate CertificateModel object containing information about the certificate

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class MenuViewController;
+@class MenuViewController, CertificateViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSString *loggedUserPermissionGroup;
 
 @property (strong, nonatomic) MenuViewController *homeVC;
+@property (strong, nonatomic) CertificateViewController *certificateVC;
 
 @end
 

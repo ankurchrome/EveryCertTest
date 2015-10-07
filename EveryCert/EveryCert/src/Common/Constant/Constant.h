@@ -188,6 +188,7 @@ extern NSString *const LookUpFieldNumber;
 extern NSString *const LookUpOption;
 extern NSString *const LookUpDataValue;
 extern NSString *const LookUpSequenceOrder;
+extern NSString *const LookUpRecordTitleColumnAlias;//Being used as alias of group_concat(data) in LookupHandler
 
 #pragma mark Record Table
 extern NSString *const RecordTable;

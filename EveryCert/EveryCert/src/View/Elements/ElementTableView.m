@@ -10,10 +10,11 @@
 #import "SubElementModel.h"
 #import "DataHandler.h"
 #import "DataBinaryHandler.h"
+#import "SearchElementCell.h"
 
 @interface ElementTableView ()<UITableViewDelegate, UITableViewDataSource>
 {
-    NSArray *_elementModels;
+    
 }
 @end
 
@@ -233,6 +234,11 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
     }
     
     [cell initializeWithElementModel:elementModel];
+    
+    if (elementModel.fieldType == ElementTypeSearch && [cell isKindOfClass:[SearchElementCell class]])
+    {
+        [(SearchElementCell *)cell initializeWithElementModel:elementModel elementTable:self];
+    }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     

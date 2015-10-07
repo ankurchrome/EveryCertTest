@@ -11,6 +11,8 @@
 #import "FormTypeTableViewCell.h"
 #import "FormHandler.h"
 
+#define FORM_LIST_ROW_HEIGHT 44.0
+
 @interface FormsListViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     __weak IBOutlet UITableView *_formListTableView;
@@ -31,7 +33,7 @@ static NSString *const FormsListCellIdentifier = @"FormTypeCellIdentifier";
     
     self.view.backgroundColor = APP_BG_COLOR;
     
-    _formListTableView.estimatedRowHeight = 44.0;
+    _formListTableView.estimatedRowHeight = FORM_LIST_ROW_HEIGHT;
     _formListTableView.rowHeight = UITableViewAutomaticDimension;
 
     FormHandler *formHandler = [FormHandler new];
@@ -74,7 +76,6 @@ static NSString *const FormsListCellIdentifier = @"FormTypeCellIdentifier";
     
     return cell;
 }
-
 
 #pragma mark TableView Delegate
 

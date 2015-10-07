@@ -19,6 +19,8 @@
 #import "DataHandler.h"
 #import "DataBinaryHandler.h"
 #import "CertificateHandler.h"
+#import "LookUpHandler.h"
+#import "RecordHandler.h"
 
 #define SECTION_LIST_SHOW_HIDE_ANIMATION_DURATION 0.3f
 #define SECTION_LIST_BACKGROUND_ALPHA             0.6f
@@ -38,12 +40,15 @@
     CertificateModel  *_certificate;
     DataHandler       *_dataHandler;
     DataBinaryHandler *_dataBinaryHandler;
+    LookUpHandler     *_lookupHandler;
 
     NSArray   *_formSections;
     NSArray   *_formElements;
     NSArray   *_currentSectionElements;
     NSInteger  _currentSectionIndex;
+    NSInteger  _currentSectionRecordIdApp;
     BOOL       _isExistingCertificate;
+    BOOL       _isLookupSection;
 }
 @end
 
@@ -87,6 +92,8 @@ NSString *const ButtonTitleFinish  = @"Finish";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    APP_DELEGATE.certificateVC = self;
     
     [self makeUISetup];
     
@@ -139,6 +146,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     _nextSectionButton.enabled = !(sectionIndex == (_formSections.count-1));
     _previewBarButton.title    = _nextSectionButton.enabled ? ButtonTitlePreview : ButtonTitleFinish;
     
+    //Reload element table with selected form section
     if (_formSections && sectionIndex < _formSections.count)
     {
         formSection = [_formSections objectAtIndex:sectionIndex];
@@ -155,6 +163,58 @@ NSString *const ButtonTitleFinish  = @"Finish";
                                  scrollPosition:UITableViewScrollPositionNone];
         [_elementTableView reloadWithElements:_currentSectionElements];
     }
+
+    //Check for lookup section
+    predicate = [NSPredicate predicateWithFormat:@"fieldType = %ld", ElementTypeSearch];
+    NSArray *searchElements = [_currentSectionElements filteredArrayUsingPredicate:predicate];
+    
+    if (searchElements && searchElements.count > 0)
+    {
+        _isLookupSection = YES;
+        ElementModel *searchElement = [searchElements firstObject];
+        _currentSectionRecordIdApp = searchElement.recordIdApp;
+    }
+    else
+    {
+        _isLookupSection = NO;
+        _currentSectionRecordIdApp = 0;
+    }
+}
+
+- (void)fillSelectedLookupRecord:(NSDictionary *)recordInfo
+{
+    if (!recordInfo) return;
+    
+    _lookupHandler = _lookupHandler ? _lookupHandler : [LookUpHandler new];
+    
+    _currentSectionRecordIdApp = [recordInfo[RecordIdApp] integerValue];
+    NSInteger lookupListId = [recordInfo[LookUpListId] integerValue];
+    
+    NSArray *lookupRecordFields = [_lookupHandler getAllFieldsOfRecord:_currentSectionRecordIdApp lookupList:lookupListId];
+    
+    for (ElementModel *elementModel in _currentSectionElements)
+    {
+        for (LookUpModel *lookupRecordField in lookupRecordFields)
+        {
+            if (elementModel.fieldNumberExisting == lookupRecordField.fieldNumber)
+            {
+                elementModel.dataValue   = lookupRecordField.dataValue;
+//                elementModel.lookupIdApp = lookupRecordField.lookUpIdApp;
+//                elementModel.recordIdApp = lookupRecordField.recordIdApp;
+            }
+        }
+    }
+    
+    [_elementTableView reloadData];
+}
+
+- (BOOL)createLookupRecord
+{
+    RecordHandler *recordHandler = [RecordHandler new];
+    
+    _currentSectionRecordIdApp = [recordHandler insertRecordForCompanyId:APP_DELEGATE.loggedUserCompanyId];
+    
+    return _currentSectionRecordIdApp > 0 ? YES : NO;
 }
 
 - (void)showSectionView
@@ -192,6 +252,12 @@ NSString *const ButtonTitleFinish  = @"Finish";
 //Save the data for all given elements
 - (void)saveAllElements:(NSArray *)elements
 {
+    //Create a new lookup record if not previously selected or creating a new
+    if (_isLookupSection && _currentSectionRecordIdApp <= 0)
+    {
+        if (![self createLookupRecord]) return;
+    }
+    
     for (ElementModel *elementModel in elements)
     {
         switch (elementModel.fieldType)
@@ -205,7 +271,14 @@ NSString *const ButtonTitleFinish  = @"Finish";
                 [self saveElementData:elementModel];
             }
                 break;
-                
+
+            case ElementTypeSearch:
+            {
+                elementModel.recordIdApp = _currentSectionRecordIdApp;
+                [self saveElementData:elementModel];
+            }
+                break;
+
             case ElementTypeSubElement:
             {
                 //Create JSON content for Sub element's content
@@ -256,9 +329,44 @@ NSString *const ButtonTitleFinish  = @"Finish";
     
     BOOL isSaved = false;
     
-    if (!_dataHandler)
+    _dataHandler   = _dataHandler ? _dataHandler : [DataHandler new];
+    _lookupHandler = _lookupHandler ? _lookupHandler : [LookUpHandler new];
+    
+    if (_isLookupSection)
     {
-        _dataHandler = [DataHandler new];
+        NSInteger lookupIdApp = [_lookupHandler getLookupIdAppOfFieldNo:elementModel.fieldNumberExisting record:_currentSectionRecordIdApp];
+        
+        if (lookupIdApp > 0)
+        {
+            //update lookup fields data with element data
+            NSDictionary *columnInfo = @{
+                                         LookUpDataValue: elementModel.dataValue,
+                                         ModifiedTimestampApp: @([[NSDate date] timeIntervalSince1970]),
+                                         IsDirty: @(true)
+                                         };
+            
+            isSaved = [_lookupHandler updateInfo:columnInfo recordIdApp:lookupIdApp];
+        }
+        else
+        {
+            if (![CommonUtils isValidString:elementModel.dataValue])
+            {
+                return isSaved;
+            }
+            
+            //Insert field data with newly created lookup record
+            LookUpModel *lookupModel = [LookUpModel new];
+            
+            lookupModel.lookUpListId  = elementModel.lookUpListIdExisting;
+            lookupModel.recordIdApp   = _currentSectionRecordIdApp;
+            lookupModel.fieldNumber   = elementModel.fieldNumberExisting;
+            lookupModel.option        = EMPTY_STRING;
+            lookupModel.dataValue     = elementModel.dataValue;
+            lookupModel.sequenceOrder = elementModel.sequenceOrder;
+            lookupModel.companyId     = APP_DELEGATE.loggedUserCompanyId;
+            
+            [_lookupHandler insertLookupModel:lookupModel];
+        }
     }
     
     if (elementModel.dataModel && elementModel.dataModel.dataIdApp > 0)
@@ -274,10 +382,12 @@ NSString *const ButtonTitleFinish  = @"Finish";
         }
         
         DataModel *dataModel = [DataModel new];
-        dataModel.companyId = APP_DELEGATE.loggedUserCompanyId;
         dataModel.certificateIdApp = _certificate.certIdApp;
-        dataModel.elementId = elementModel.elementId;
-        dataModel.data = elementModel.dataValue;
+        dataModel.elementId   = elementModel.elementId;
+        dataModel.recordIdApp = elementModel.recordIdApp;
+        dataModel.data        = elementModel.dataValue;
+        dataModel.companyId   = APP_DELEGATE.loggedUserCompanyId;
+        dataModel.formId      = _certificate.formId;
         
         isSaved = [_dataHandler insertDataModel:dataModel];
     }

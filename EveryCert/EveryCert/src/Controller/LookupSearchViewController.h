@@ -8,6 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@class ElementModel, LookupSearchViewController;
+
+@protocol LookupSearchViewControllerDelegate <NSObject>
+
+- (void)lookupSearchViewController:(LookupSearchViewController *)lookupSearchViewController didSelectLookupRecord:(NSDictionary *)lookupRecordInfo;
+
+@end
+
 @interface LookupSearchViewController : UIViewController
+
+@property (nonatomic, strong) id<LookupSearchViewControllerDelegate> delegate;
+
+- (void)initializeWithSearchElement:(ElementModel *)element;
+
+- (void)reloadWithLookupRecords:(NSArray *)lookupRecords;
 
 @end
