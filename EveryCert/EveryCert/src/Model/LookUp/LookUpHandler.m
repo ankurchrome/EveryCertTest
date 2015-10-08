@@ -96,16 +96,16 @@
     return lookupRecordsList;
 }
 
-- (NSArray *)getAllFieldsOfRecord:(NSInteger)recordIdApp lookupList:(NSInteger)lookupListId
+- (NSArray *)getAllFieldsOfRecord:(NSInteger)recordIdApp
 {
     FMDatabaseQueue *databaseQueue     = [[FMDBDataSource sharedManager] databaseQueue];
     NSMutableArray  *lookupRecordsList = [NSMutableArray new];
     
     [databaseQueue inDatabase:^(FMDatabase *db)
      {
-         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = ? AND %@ = ?", self.tableName, LookUpListId, RecordIdApp];
+         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = ?", self.tableName, RecordIdApp];
          
-         FMResultSet *result = [db executeQuery:query, @(lookupListId), @(recordIdApp)];
+         FMResultSet *result = [db executeQuery:query, @(recordIdApp)];
          
          while ([result next])
          {

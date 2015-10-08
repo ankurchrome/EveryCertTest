@@ -30,6 +30,7 @@
     
     _elementTableView = elementTableView;
     _searchBar.placeholder = elementModel.label;
+    elementModel.dataValue = EMPTY_STRING;
 }
 
 #pragma mark - UISearchBarDelegate
@@ -42,24 +43,40 @@
     {
         UIAlertController *alertController = nil;
         UIAlertAction     *yesAction = nil;
+        UIAlertAction     *noAction = nil;
         
-        alertController = [UIAlertController alertControllerWithTitle:self.elementModel.popUpMessage
-                                                              message:nil
+        alertController = [UIAlertController alertControllerWithTitle:@"Warning!"
+                                                              message:self.elementModel.popUpMessage
                                                        preferredStyle:UIAlertControllerStyleAlert];
         
         yesAction = [UIAlertAction actionWithTitle:@"Yes"
                                              style:UIAlertActionStyleDefault
                                            handler:^(UIAlertAction *action)
         {
-            
+            [self showLookupList];
         }];
         
-        [alertController addAction:yesAction];
-        [APP_DELEGATE.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        noAction = [UIAlertAction actionWithTitle:@"No"
+                                            style:UIAlertActionStyleCancel
+                                          handler:^(UIAlertAction *action) {
+        }];
 
-        return NO;
+        [alertController addAction:yesAction];
+        [alertController addAction:noAction];
+        [APP_DELEGATE.window.rootViewController presentViewController:alertController
+                                                             animated:YES
+                                                           completion:nil];
+    }
+    else
+    {
+        [self showLookupList];
     }
     
+    return NO;
+}
+
+- (void)showLookupList
+{
     //Get all lookup records for element's lookup list type
     NSArray *lookupRecords = [_lookupHandler getAllLookupRecordsForList:self.elementModel.lookUpListIdExisting linkedRecordId:self.elementModel.linkedElementId companyId:APP_DELEGATE.loggedUserCompanyId];
     
@@ -75,8 +92,6 @@
         
         [APP_DELEGATE.window.rootViewController presentViewController:lookupSearchNC animated:YES completion:nil];
     }
-    
-    return NO;
 }
 
 #pragma mark - LookupSearchViewControllerDelegate Methods
@@ -85,8 +100,22 @@
 {
     if (APP_DELEGATE.certificateVC)
     {
-        [APP_DELEGATE.certificateVC fillSelectedLookupRecord:lookupRecordInfo];
+        NSInteger recordIdApp = [lookupRecordInfo[RecordIdApp] integerValue];
+        [APP_DELEGATE.certificateVC setupForSelectedLookupRecord:recordIdApp];
     }
+}
+
+- (void)didSelectNewRecord:(LookupSearchViewController *)lookupSearchViewController
+{
+    if (APP_DELEGATE.certificateVC)
+    {
+        [APP_DELEGATE.certificateVC setupForNewLookupRecord];
+    }
+}
+
+- (void)didSelectCancel:(LookupSearchViewController *)lookupSearchViewController
+{
+    
 }
 
 @end

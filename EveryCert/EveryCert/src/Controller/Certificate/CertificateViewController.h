@@ -26,6 +26,8 @@
  */
 - (void)initializeWithCertificate:(CertificateModel *)certificate;
 
-- (void)fillSelectedLookupRecord:(NSDictionary *)recordInfo;
+- (void)setupForSelectedLookupRecord:(NSInteger)recordIdApp;
+
+- (void)setupForNewLookupRecord;
 
 @end

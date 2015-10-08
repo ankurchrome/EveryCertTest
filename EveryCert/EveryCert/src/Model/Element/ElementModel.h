@@ -57,15 +57,15 @@ typedef enum : NSUInteger
 //TODO: remove the unneccessary properties
 @property (assign, nonatomic) NSInteger  dataIdApp;
 @property (strong, nonatomic) NSString  *dataValue;
-@property (strong, nonatomic) DataModel *dataModel;
+//@property (strong, nonatomic) DataModel *dataModel;
 
 @property (assign, nonatomic) NSInteger        dataBinaryIdApp;
 @property (strong, nonatomic) NSData          *dataBinaryValue;
-@property (strong, nonatomic) DataBinaryModel *dataBinaryModel;
+//@property (strong, nonatomic) DataBinaryModel *dataBinaryModel;
 
 @property (assign, nonatomic) NSInteger        companyUserIdApp;
 @property (strong, nonatomic) NSString         *companyUserDataValue;
-@property (strong, nonatomic) CompanyUserModel *companyUserModel;
+//@property (strong, nonatomic) CompanyUserModel *companyUserModel;
 
 //@property (assign, nonatomic) NSInteger lookupIdApp;
 @property (assign, nonatomic) NSInteger recordIdApp;

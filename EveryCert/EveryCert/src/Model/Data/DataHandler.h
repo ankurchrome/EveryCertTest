@@ -34,4 +34,6 @@
  */
 - (DataModel *)dataExistForCertificate:(NSInteger)certIdApp element:(NSInteger)elementIdApp;
 
+- (void)deleteLinkedDataForRecord:(NSInteger)recordIdApp certificate:(NSInteger)certIdApp;
+
 @end

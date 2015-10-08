@@ -89,4 +89,53 @@
     return success;
 }
 
+- (void)deleteLinkedDataForRecord:(NSInteger)recordIdApp certificate:(NSInteger)certIdApp
+{
+    [self deleteDataForRecord:recordIdApp cert:certIdApp];
+    
+    NSInteger linkedRecordIdApp = [self getLinkedRecord:recordIdApp inCertificate:certIdApp];
+    
+    if (linkedRecordIdApp > 0)
+    {
+        [self deleteLinkedDataForRecord:linkedRecordIdApp certificate:certIdApp];
+    }
+}
+
+- (BOOL)deleteDataForRecord:(NSInteger)recordIdApp cert:(NSInteger)certIdApp
+{
+    __block BOOL success = false;
+    
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = ? AND %@ = ?", self.tableName, RecordIdApp, CertificateIdApp];
+         
+         success = [db executeUpdate:query, @(recordIdApp), @(certIdApp)];
+     }];
+    
+    return success;
+}
+
+- (NSInteger)getLinkedRecord:(NSInteger)recordIdApp inCertificate:(NSInteger)certIdApp
+{
+    __block NSInteger linkedRecordIdApp = 0;
+    
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"SELECT DISTINCT %@ FROM %@ WHERE %@ = ? AND %@ in (SELECT DISTINCT %@ FROM %@ WHERE %@ = ?)", RecordIdApp, self.tableName, CertificateIdApp, RecordIdApp, RecordIdApp, LookUpTable, LookUpLinkedRecordIdApp];
+
+         FMResultSet *result = [db executeQuery:query, @(certIdApp), @(recordIdApp)];
+         
+         if ([result next])
+         {
+             linkedRecordIdApp = [result intForColumn:RecordIdApp];
+         }
+     }];
+    
+    return linkedRecordIdApp;
+}
+
 @end

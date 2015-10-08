@@ -14,6 +14,10 @@
 
 - (void)lookupSearchViewController:(LookupSearchViewController *)lookupSearchViewController didSelectLookupRecord:(NSDictionary *)lookupRecordInfo;
 
+- (void)didSelectNewRecord:(LookupSearchViewController *)lookupSearchViewController;
+
+- (void)didSelectCancel:(LookupSearchViewController *)lookupSearchViewController;
+
 @end
 
 @interface LookupSearchViewController : UIViewController

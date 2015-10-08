@@ -181,16 +181,22 @@ NSString *const ButtonTitleFinish  = @"Finish";
     }
 }
 
-- (void)fillSelectedLookupRecord:(NSDictionary *)recordInfo
+#pragma mark - LookupRecords(SearchElement) Methods
+
+- (void)setupForSelectedLookupRecord:(NSInteger)recordIdApp
 {
-    if (!recordInfo) return;
-    
     _lookupHandler = _lookupHandler ? _lookupHandler : [LookUpHandler new];
+    _dataHandler   = _dataHandler ? _dataHandler : [DataHandler new];
+
+    if (_currentSectionRecordIdApp > 0)
+    {
+        [_dataHandler deleteLinkedDataForRecord:_currentSectionRecordIdApp
+                                    certificate:_certificate.certIdApp];
+    }
     
-    _currentSectionRecordIdApp = [recordInfo[RecordIdApp] integerValue];
-    NSInteger lookupListId = [recordInfo[LookUpListId] integerValue];
+    _currentSectionRecordIdApp = recordIdApp;
     
-    NSArray *lookupRecordFields = [_lookupHandler getAllFieldsOfRecord:_currentSectionRecordIdApp lookupList:lookupListId];
+    NSArray *lookupRecordFields = [_lookupHandler getAllFieldsOfRecord:_currentSectionRecordIdApp];
     
     for (ElementModel *elementModel in _currentSectionElements)
     {
@@ -199,10 +205,29 @@ NSString *const ButtonTitleFinish  = @"Finish";
             if (elementModel.fieldNumberExisting == lookupRecordField.fieldNumber)
             {
                 elementModel.dataValue   = lookupRecordField.dataValue;
-//                elementModel.lookupIdApp = lookupRecordField.lookUpIdApp;
-//                elementModel.recordIdApp = lookupRecordField.recordIdApp;
             }
         }
+    }
+    
+    [_elementTableView reloadData];
+}
+
+- (void)setupForNewLookupRecord
+{
+    _dataHandler = _dataHandler ? _dataHandler : [DataHandler new];
+    
+    if (_currentSectionRecordIdApp > 0)
+    {
+        [_dataHandler deleteLinkedDataForRecord:_currentSectionRecordIdApp
+                                    certificate:_certificate.certIdApp];
+    }
+    
+    _currentSectionRecordIdApp = 0;
+
+    for (ElementModel *elementModel in _currentSectionElements)
+    {
+        elementModel.recordIdApp = 0;
+        elementModel.dataValue   = EMPTY_STRING;
     }
     
     [_elementTableView reloadData];
@@ -252,12 +277,6 @@ NSString *const ButtonTitleFinish  = @"Finish";
 //Save the data for all given elements
 - (void)saveAllElements:(NSArray *)elements
 {
-    //Create a new lookup record if not previously selected or creating a new
-    if (_isLookupSection && _currentSectionRecordIdApp <= 0)
-    {
-        if (![self createLookupRecord]) return;
-    }
-    
     for (ElementModel *elementModel in elements)
     {
         switch (elementModel.fieldType)
@@ -267,14 +286,8 @@ NSString *const ButtonTitleFinish  = @"Finish";
             case ElementTypePickListOption:
             case ElementTypeRadioButton:
             case ElementTypeLookup:
-            {
-                [self saveElementData:elementModel];
-            }
-                break;
-
             case ElementTypeSearch:
             {
-                elementModel.recordIdApp = _currentSectionRecordIdApp;
                 [self saveElementData:elementModel];
             }
                 break;
@@ -331,6 +344,8 @@ NSString *const ButtonTitleFinish  = @"Finish";
     
     _dataHandler   = _dataHandler ? _dataHandler : [DataHandler new];
     _lookupHandler = _lookupHandler ? _lookupHandler : [LookUpHandler new];
+
+    elementModel.dataValue = elementModel.dataValue ? elementModel.dataValue : EMPTY_STRING;
     
     if (_isLookupSection)
     {
@@ -349,47 +364,67 @@ NSString *const ButtonTitleFinish  = @"Finish";
         }
         else
         {
-            if (![CommonUtils isValidString:elementModel.dataValue])
+            if ([CommonUtils isValidString:elementModel.dataValue])
             {
-                return isSaved;
+                //Create a new lookup record if not previously selected
+                if (_currentSectionRecordIdApp <= 0)
+                {
+                    [self createLookupRecord];
+                }
+                
+                //Insert field data with newly created lookup record
+                LookUpModel *lookupModel = [LookUpModel new];
+                
+                lookupModel.lookUpListId  = elementModel.lookUpListIdExisting;
+                lookupModel.recordIdApp   = _currentSectionRecordIdApp;
+                lookupModel.fieldNumber   = elementModel.fieldNumberExisting;
+                lookupModel.option        = EMPTY_STRING;
+                lookupModel.dataValue     = elementModel.dataValue;
+                lookupModel.sequenceOrder = elementModel.sequenceOrder;
+                lookupModel.companyId     = APP_DELEGATE.loggedUserCompanyId;
+                
+                [_lookupHandler insertLookupModel:lookupModel];
             }
-            
-            //Insert field data with newly created lookup record
-            LookUpModel *lookupModel = [LookUpModel new];
-            
-            lookupModel.lookUpListId  = elementModel.lookUpListIdExisting;
-            lookupModel.recordIdApp   = _currentSectionRecordIdApp;
-            lookupModel.fieldNumber   = elementModel.fieldNumberExisting;
-            lookupModel.option        = EMPTY_STRING;
-            lookupModel.dataValue     = elementModel.dataValue;
-            lookupModel.sequenceOrder = elementModel.sequenceOrder;
-            lookupModel.companyId     = APP_DELEGATE.loggedUserCompanyId;
-            
-            [_lookupHandler insertLookupModel:lookupModel];
         }
     }
     
-    if (elementModel.dataModel && elementModel.dataModel.dataIdApp > 0)
+    if (elementModel.dataIdApp > 0)
     {
-        elementModel.dataModel.data = elementModel.dataValue;
-        isSaved = [_dataHandler updateDataModel:elementModel.dataModel];
+        //update existing data with modified data
+        NSDictionary *columnInfo = @{
+                                     DataValue: elementModel.dataValue,
+                                     ModifiedTimestampApp: @([[NSDate date] timeIntervalSince1970]),
+                                     IsDirty: @(true)
+                                     };
+        
+        isSaved = [_dataHandler updateInfo:columnInfo recordIdApp:elementModel.dataIdApp];
     }
     else
     {
-        if (![CommonUtils isValidString:elementModel.dataValue])
+        if (![CommonUtils isValidString:elementModel.dataValue] && elementModel.fieldType != ElementTypeSearch)
         {
             return isSaved;
         }
         
+//        if (elementModel.fieldType == ElementTypeSearch)
+//        {
+//            elementModel.dataValue = EMPTY_STRING;
+//        }
+        
         DataModel *dataModel = [DataModel new];
         dataModel.certificateIdApp = _certificate.certIdApp;
         dataModel.elementId   = elementModel.elementId;
-        dataModel.recordIdApp = elementModel.recordIdApp;
+        dataModel.recordIdApp = _currentSectionRecordIdApp;
         dataModel.data        = elementModel.dataValue;
         dataModel.companyId   = APP_DELEGATE.loggedUserCompanyId;
         dataModel.formId      = _certificate.formId;
         
         isSaved = [_dataHandler insertDataModel:dataModel];
+        
+        if (isSaved)
+        {
+            elementModel.recordIdApp = _currentSectionRecordIdApp;
+        }
     }
     
     FUNCTION_END;
@@ -408,10 +443,16 @@ NSString *const ButtonTitleFinish  = @"Finish";
         _dataBinaryHandler = [DataBinaryHandler new];
     }
     
-    if (elementModel.dataBinaryModel && elementModel.dataBinaryModel.dataBinaryIdApp > 0)
+    if (elementModel.dataBinaryIdApp > 0)
     {
-        elementModel.dataBinaryModel.dataBinary = elementModel.dataBinaryValue;
-        isSaved = [_dataBinaryHandler updateDataBinaryModel:elementModel.dataBinaryModel];
+        //update existing binary data with modified data
+        NSDictionary *columnInfo = @{
+                                     DataBinaryValue: elementModel.dataBinaryValue,
+                                     ModifiedTimestampApp: @([[NSDate date] timeIntervalSince1970]),
+                                     IsDirty: @(true)
+                                     };
+        
+        isSaved = [_dataBinaryHandler updateInfo:columnInfo recordIdApp:elementModel.dataBinaryIdApp];
     }
     else
     {

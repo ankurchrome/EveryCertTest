@@ -92,7 +92,7 @@
 {
     __block BOOL success = false;
     
-    if (!columnInfo || columnInfo.count <=0 || recordIdApp <=0) return success;
+    if (!columnInfo || columnInfo.count <= 0 || recordIdApp <=0) return success;
         
     FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     

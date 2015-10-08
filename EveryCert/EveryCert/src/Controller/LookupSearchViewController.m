@@ -12,7 +12,7 @@
 
 #define LOOKUP_RECORD_ROW_HEIGHT 44.0
 
-@interface LookupSearchViewController ()
+@interface LookupSearchViewController ()<UISearchBarDelegate>
 {
     IBOutlet UIBarButtonItem *_cancelBarButton;
     IBOutlet UIBarButtonItem *_newBarButton;
@@ -21,6 +21,7 @@
     
     ElementModel *_elementModel;
     NSArray *_lookupRecords;
+    NSArray *_tableRecords;
 }
 @end
 
@@ -28,12 +29,16 @@
 
 NSString *const LookupSearchTitle = @"Select a record";
 
+#pragma mark - Initialization Methods
+
 - (void)initializeWithSearchElement:(ElementModel *)element
 {
     _elementModel = element;
     
     [self setupWithElement];
 }
+
+#pragma mark - ViewLifeCycle Methods
 
 - (void)viewDidLoad
 {
@@ -63,6 +68,8 @@ NSString *const LookupSearchTitle = @"Select a record";
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark - Functionality Methods
+
 - (void)setupWithElement
 {
     _searchBar.placeholder = _elementModel.label;
@@ -71,6 +78,7 @@ NSString *const LookupSearchTitle = @"Select a record";
 
 - (void)reloadWithLookupRecords:(NSArray *)lookupRecords
 {
+    _tableRecords  = lookupRecords;
     _lookupRecords = lookupRecords;
     
     if (_lookupTableView)
@@ -79,21 +87,53 @@ NSString *const LookupSearchTitle = @"Select a record";
     }
 }
 
+#pragma mark - IBActions
+
 - (IBAction)cancelButtonTapped:(id)sender
 {
+    if (_delegate && [_delegate respondsToSelector:@selector(didSelectCancel:)])
+    {
+        [_delegate didSelectCancel:self];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)newButtonTapped:(id)sender
 {
+    if (_delegate && [_delegate respondsToSelector:@selector(didSelectNewRecord:)])
+    {
+        [_delegate didSelectNewRecord:self];
+    }
+
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - UISearchBarDelegate Methods
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (!searchText || [searchText isEqualToString:EMPTY_STRING])
+    {
+        _tableRecords = _lookupRecords;
+    }
+    else
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"record_title contains[cd] %@", searchText];
+        
+        _tableRecords = [_lookupRecords filteredArrayUsingPredicate:predicate];
+    }
+    
+    [_lookupTableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _lookupRecords.count;
+    NSInteger noOfRows = _tableRecords ? _tableRecords.count : 0;
+    
+    return noOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -102,9 +142,9 @@ NSString *const LookupSearchTitle = @"Select a record";
     
     LookupRecordTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LookupRecordCellIdentifier forIndexPath:indexPath];
     
-    if (_lookupRecords &&  indexPath.row < _lookupRecords.count)
+    if (_tableRecords &&  indexPath.row < _tableRecords.count)
     {
-        lookupRecordInfo = _lookupRecords[indexPath.row];
+        lookupRecordInfo = _tableRecords[indexPath.row];
         
         [cell initializeWithLookupRecord:lookupRecordInfo];
     }

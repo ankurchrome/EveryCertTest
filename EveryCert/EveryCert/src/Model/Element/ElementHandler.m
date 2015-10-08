@@ -70,11 +70,13 @@
             //TODO: remove the unneccessary properties and change the query accordingly
             elementModel.dataIdApp = [result intForColumn:DataIdApp];
             elementModel.dataValue = [result stringForColumn:DataValue];
-            elementModel.dataModel = [[DataModel alloc] initWithResultSet:result];
+            elementModel.recordIdApp = [result intForColumn:RecordIdApp];
+            
+//            elementModel.dataModel = [[DataModel alloc] initWithResultSet:result];
             
             elementModel.dataBinaryIdApp = [result intForColumn:DataBinaryIdApp];
             elementModel.dataBinaryValue = [result dataForColumn:DataBinaryValue];
-            elementModel.dataBinaryModel = [[DataBinaryModel alloc] initWithResultSet:result];
+//            elementModel.dataBinaryModel = [[DataBinaryModel alloc] initWithResultSet:result];
             
             if (elementModel.fieldType == ElementTypeSubElement)
             {

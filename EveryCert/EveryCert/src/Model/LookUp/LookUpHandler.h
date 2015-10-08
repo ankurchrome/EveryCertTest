@@ -18,6 +18,6 @@
 
 - (NSArray *)getAllLookupRecordsForList:(NSInteger)lookupListId linkedRecordId:(NSInteger)linkedRecordIdApp companyId:(NSInteger)companyId;
 
-- (NSArray *)getAllFieldsOfRecord:(NSInteger)recordIdApp lookupList:(NSInteger)lookupListId;
+- (NSArray *)getAllFieldsOfRecord:(NSInteger)recordIdApp;
 
 @end
