@@ -7,7 +7,7 @@
 //
 
 #import "FormsListViewController.h"
-#import "CertificateViewController.h"
+#import "CertViewController.h"
 #import "FormTypeTableViewCell.h"
 #import "FormHandler.h"
 
@@ -85,7 +85,7 @@ static NSString *const FormsListCellIdentifier = @"FormTypeCellIdentifier";
     {
         NSIndexPath *indexPath = [_formListTableView indexPathForSelectedRow];
         FormModel   *formModel = _allFormsList[indexPath.row];
-        CertificateViewController *certificateVC = [segue destinationViewController];
+        CertViewController *certificateVC = [segue destinationViewController];
         [certificateVC initializeWithForm:formModel];
     }
 }

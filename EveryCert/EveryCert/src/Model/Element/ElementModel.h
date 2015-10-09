@@ -69,5 +69,6 @@ typedef enum : NSUInteger
 
 //@property (assign, nonatomic) NSInteger lookupIdApp;
 @property (assign, nonatomic) NSInteger recordIdApp;
+@property (assign, nonatomic) NSInteger linkedRecordIdApp;
 
 @end

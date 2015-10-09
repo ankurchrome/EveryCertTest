@@ -27,7 +27,7 @@
 		779A9D9B1B7C7D0700D86FED /* TickBoxElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D811B7C7D0700D86FED /* TickBoxElementCell.m */; };
 		779A9D9C1B7C7D0700D86FED /* TickBoxElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D821B7C7D0700D86FED /* TickBoxElementCell.xib */; };
 		77C035BE1B789794009228F1 /* FormsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C035BD1B789794009228F1 /* FormsListViewController.m */; };
-		77C035C21B7897E3009228F1 /* CertificateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C035C11B7897E3009228F1 /* CertificateViewController.m */; };
+		77C035C21B7897E3009228F1 /* CertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C035C11B7897E3009228F1 /* CertViewController.m */; };
 		77DBB9181B6F553900F02932 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DBB9151B6F553900F02932 /* AppDelegate.m */; };
 		77DBB91B1B6F555C00F02932 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77DBB9191B6F555C00F02932 /* LaunchScreen.xib */; };
 		77DBB91C1B6F555C00F02932 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77DBB91A1B6F555C00F02932 /* Main.storyboard */; };
@@ -146,8 +146,8 @@
 		779A9D821B7C7D0700D86FED /* TickBoxElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TickBoxElementCell.xib; sourceTree = "<group>"; };
 		77C035BC1B789794009228F1 /* FormsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FormsListViewController.h; path = EveryCert/src/Controller/FormList/FormsListViewController.h; sourceTree = SOURCE_ROOT; };
 		77C035BD1B789794009228F1 /* FormsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormsListViewController.m; path = EveryCert/src/Controller/FormList/FormsListViewController.m; sourceTree = SOURCE_ROOT; };
-		77C035C01B7897E3009228F1 /* CertificateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateViewController.h; sourceTree = "<group>"; };
-		77C035C11B7897E3009228F1 /* CertificateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateViewController.m; sourceTree = "<group>"; };
+		77C035C01B7897E3009228F1 /* CertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertViewController.h; sourceTree = "<group>"; };
+		77C035C11B7897E3009228F1 /* CertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertViewController.m; sourceTree = "<group>"; };
 		77DBB9141B6F553900F02932 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		77DBB9151B6F553900F02932 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		77DBB9191B6F555C00F02932 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -484,8 +484,8 @@
 		77C035BF1B7897C4009228F1 /* Certificate */ = {
 			isa = PBXGroup;
 			children = (
-				77C035C01B7897E3009228F1 /* CertificateViewController.h */,
-				77C035C11B7897E3009228F1 /* CertificateViewController.m */,
+				77C035C01B7897E3009228F1 /* CertViewController.h */,
+				77C035C11B7897E3009228F1 /* CertViewController.m */,
 				C3E441761BA06D2F0020700F /* FormSectionTableViewCell.h */,
 				C3E441771BA06D2F0020700F /* FormSectionTableViewCell.m */,
 			);
@@ -1128,7 +1128,7 @@
 				C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */,
 				C3EEB98A1BB2E7040090C4B0 /* MBProgressHUD.m in Sources */,
 				C3E441781BA06D2F0020700F /* FormSectionTableViewCell.m in Sources */,
-				77C035C21B7897E3009228F1 /* CertificateViewController.m in Sources */,
+				77C035C21B7897E3009228F1 /* CertViewController.m in Sources */,
 				779A9D9B1B7C7D0700D86FED /* TickBoxElementCell.m in Sources */,
 				C3FFB4381B9B36180089A0B2 /* PickListElementCell.m in Sources */,
 				779A9D951B7C7D0700D86FED /* TextFieldElementCell.m in Sources */,

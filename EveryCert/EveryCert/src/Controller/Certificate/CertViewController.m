@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 ChromeInfo Technologies. All rights reserved.
 //
 
-#import "CertificateViewController.h"
+#import "CertViewController.h"
 #import "UIView+Extension.h"
 #import "MenuViewController.h"
 #import "FormSectionTableViewCell.h"
@@ -25,7 +25,7 @@
 #define SECTION_LIST_SHOW_HIDE_ANIMATION_DURATION 0.3f
 #define SECTION_LIST_BACKGROUND_ALPHA             0.6f
 
-@interface CertificateViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface CertViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     IBOutlet UIBarButtonItem  *_previewBarButton;
     IBOutlet ElementTableView *_elementTableView;
@@ -37,13 +37,13 @@
     IBOutlet UIButton *_nextSectionButton;
     IBOutlet UILabel  *_sectionTitleLabel;
     
-    CertificateModel  *_certificate;
+    ElementModel      *_currentSearchElementModel;
+    ElementModel      *_linkedSearchElementModel;
+    LookUpHandler     *_lookupHandler;
     DataHandler       *_dataHandler;
     DataBinaryHandler *_dataBinaryHandler;
-    LookUpHandler     *_lookupHandler;
 
     NSArray   *_formSections;
-    NSArray   *_formElements;
     NSArray   *_currentSectionElements;
     NSInteger  _currentSectionIndex;
     NSInteger  _currentSectionRecordIdApp;
@@ -52,7 +52,7 @@
 }
 @end
 
-@implementation CertificateViewController
+@implementation CertViewController
 
 NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
 NSString *const ButtonTitlePreview = @"Preview";
@@ -61,12 +61,12 @@ NSString *const ButtonTitleFinish  = @"Finish";
 #pragma mark - Initialization Methods
 
 // Initialize CertificateViewController by creating a new certificate of given form type
-- (void)initializeWithForm:(FormModel *)form
+- (void)initializeWithForm:(FormModel *)formModel
 {
     //Create a new certificate with selected form
     CertificateModel *newCertificate = [CertificateModel new];
-    newCertificate.formId    = form.formId;
-    newCertificate.name      = form.name;
+    newCertificate.formId    = formModel.formId;
+    newCertificate.name      = formModel.name;
     newCertificate.date      = [NSDate date];
     newCertificate.companyId = APP_DELEGATE.loggedUserCompanyId;
     
@@ -171,13 +171,41 @@ NSString *const ButtonTitleFinish  = @"Finish";
     if (searchElements && searchElements.count > 0)
     {
         _isLookupSection = YES;
-        ElementModel *searchElement = [searchElements firstObject];
-        _currentSectionRecordIdApp = searchElement.recordIdApp;
+        _currentSearchElementModel = [searchElements firstObject];
+        _currentSectionRecordIdApp = _currentSearchElementModel.recordIdApp;
+        
+        //Check that if record existing for linked element
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"elementId = %ld", _currentSearchElementModel.linkedElementId];
+        NSArray *linkedElements = [_formElements filteredArrayUsingPredicate:predicate];
+        
+        if (linkedElements && linkedElements.count > 0)
+        {
+            _linkedSearchElementModel = [linkedElements firstObject];
+            _currentSearchElementModel.linkedRecordIdApp = _linkedSearchElementModel.recordIdApp;
+            
+            if (_linkedSearchElementModel.recordIdApp <= 0)
+            {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:ALERT_TITLE_WARNING message:_currentSearchElementModel.popUpMessage preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *okAction = [UIAlertAction actionWithTitle:ALERT_ACTION_TITLE_OK style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                           {
+                                               [APP_DELEGATE.certificateVC backToPreviousSection];
+                                           }];
+                
+                [alertController addAction:okAction];
+                [self presentViewController:alertController animated:YES completion:nil];
+            }
+        }
+        else
+        {
+            _linkedSearchElementModel = nil;
+        }
     }
     else
     {
         _isLookupSection = NO;
         _currentSectionRecordIdApp = 0;
+        _currentSearchElementModel = nil;
     }
 }
 
@@ -242,6 +270,11 @@ NSString *const ButtonTitleFinish  = @"Finish";
     return _currentSectionRecordIdApp > 0 ? YES : NO;
 }
 
+- (void)backToPreviousSection
+{
+    [self showElementsForSectionIndex:--_currentSectionIndex];
+}
+
 - (void)showSectionView
 {
     [_sectionTableView setFrameX:-_sectionTableView.frameWidth];
@@ -277,6 +310,14 @@ NSString *const ButtonTitleFinish  = @"Finish";
 //Save the data for all given elements
 - (void)saveAllElements:(NSArray *)elements
 {
+    if (![self hasMandatoryElementsFilled]) return;
+        
+    //Create a new lookup record if not previously selected
+    if (_isLookupSection && _currentSectionRecordIdApp <= 0)
+    {
+        [self createLookupRecord];
+    }
+    
     for (ElementModel *elementModel in elements)
     {
         switch (elementModel.fieldType)
@@ -366,12 +407,6 @@ NSString *const ButtonTitleFinish  = @"Finish";
         {
             if ([CommonUtils isValidString:elementModel.dataValue])
             {
-                //Create a new lookup record if not previously selected
-                if (_currentSectionRecordIdApp <= 0)
-                {
-                    [self createLookupRecord];
-                }
-                
                 //Insert field data with newly created lookup record
                 LookUpModel *lookupModel = [LookUpModel new];
                 
@@ -382,6 +417,11 @@ NSString *const ButtonTitleFinish  = @"Finish";
                 lookupModel.dataValue     = elementModel.dataValue;
                 lookupModel.sequenceOrder = elementModel.sequenceOrder;
                 lookupModel.companyId     = APP_DELEGATE.loggedUserCompanyId;
+                
+                if (_linkedSearchElementModel)
+                {
+                    lookupModel.linkedRecordIdApp = _linkedSearchElementModel.recordIdApp;
+                }
                 
                 [_lookupHandler insertLookupModel:lookupModel];
             }
@@ -424,6 +464,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
         if (isSaved)
         {
             elementModel.recordIdApp = _currentSectionRecordIdApp;
+            elementModel.dataIdApp = dataModel.dataIdApp;
         }
     }
     
@@ -483,7 +524,18 @@ NSString *const ButtonTitleFinish  = @"Finish";
 //Check Weather all Mandatore Elements are Totally Filled
 - (BOOL)hasMandatoryElementsFilled
 {
-    return YES;
+    BOOL result = false;
+    
+    for (ElementModel *elementModel in _currentSectionElements)
+    {
+        if ([CommonUtils isValidString:elementModel.dataValue])
+        {
+            result = YES;
+            break;
+        }
+    }
+    
+    return result;
 }
 
 #pragma mark - IBActions & Event Methods
@@ -492,22 +544,12 @@ NSString *const ButtonTitleFinish  = @"Finish";
 {
     [self saveAllElements:_currentSectionElements];
     
-//    if (--_currentSectionIndex < 0)
-//    {
-//        _currentSectionIndex = _formSections.count;
-//    }
-    
     [self showElementsForSectionIndex:--_currentSectionIndex];
 }
 
 - (IBAction)nextSectionButtonTapped:(id)sender
 {
     [self saveAllElements:_currentSectionElements];
-    
-//    if (++_currentSectionIndex >= _formSections.count)
-//    {
-//        _currentSectionIndex = 0;
-//    }
     
     [self showElementsForSectionIndex:++_currentSectionIndex];
 }

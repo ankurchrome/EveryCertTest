@@ -10,14 +10,17 @@
 
 @class FormModel, CertificateModel;
 
-@interface CertificateViewController : UIViewController
+@interface CertViewController : UIViewController
+
+@property (nonatomic, strong) CertificateModel  *certificate;
+@property (nonatomic, strong) NSArray *formElements;
 
 /**
  Initialize CertificateViewController by creating a new certificate of given form type
  @param  form A FormModel object will be used to create a new certificate
  @return void
  */
-- (void)initializeWithForm:(FormModel *)form;
+- (void)initializeWithForm:(FormModel *)formModel;
 
 /**
  Initialize CertificateViewController with given existing certificate
@@ -29,5 +32,7 @@
 - (void)setupForSelectedLookupRecord:(NSInteger)recordIdApp;
 
 - (void)setupForNewLookupRecord;
+
+- (void)backToPreviousSection;
 
 @end

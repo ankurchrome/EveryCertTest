@@ -8,7 +8,7 @@
 
 #import "SearchElementCell.h"
 #import "LookupSearchViewController.h"
-#import "CertificateViewController.h"
+#import "CertViewController.h"
 #import "LookUpHandler.h"
 #import "ElementTableView.h"
 
@@ -38,25 +38,25 @@
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
     _lookupHandler = _lookupHandler ? _lookupHandler : [LookUpHandler new];
-    
+
     if (self.elementModel.recordIdApp > 0)
     {
         UIAlertController *alertController = nil;
         UIAlertAction     *yesAction = nil;
         UIAlertAction     *noAction = nil;
         
-        alertController = [UIAlertController alertControllerWithTitle:@"Warning!"
+        alertController = [UIAlertController alertControllerWithTitle:ALERT_TITLE_WARNING
                                                               message:self.elementModel.popUpMessage
                                                        preferredStyle:UIAlertControllerStyleAlert];
         
-        yesAction = [UIAlertAction actionWithTitle:@"Yes"
+        yesAction = [UIAlertAction actionWithTitle:ALERT_ACTION_TITLE_YES
                                              style:UIAlertActionStyleDefault
                                            handler:^(UIAlertAction *action)
         {
             [self showLookupList];
         }];
         
-        noAction = [UIAlertAction actionWithTitle:@"No"
+        noAction = [UIAlertAction actionWithTitle:ALERT_ACTION_TITLE_NO
                                             style:UIAlertActionStyleCancel
                                           handler:^(UIAlertAction *action) {
         }];
@@ -78,7 +78,7 @@
 - (void)showLookupList
 {
     //Get all lookup records for element's lookup list type
-    NSArray *lookupRecords = [_lookupHandler getAllLookupRecordsForList:self.elementModel.lookUpListIdExisting linkedRecordId:self.elementModel.linkedElementId companyId:APP_DELEGATE.loggedUserCompanyId];
+    NSArray *lookupRecords = [_lookupHandler getAllLookupRecordsForList:self.elementModel.lookUpListIdExisting linkedRecordId:self.elementModel.linkedRecordIdApp companyId:APP_DELEGATE.loggedUserCompanyId];
     
     UINavigationController *lookupSearchNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LookupSearchNC"];
     lookupSearchNC.modalPresentationStyle = UIModalPresentationFormSheet;

@@ -10,7 +10,7 @@
 #import "UIView+Extension.h"
 #import <MessageUI/MessageUI.h>
 #import "ExistingCertificateTableViewCell.h"
-#import "CertificateViewController.h"
+#import "CertViewController.h"
 #import "MenuViewController.h"
 
 #import "CertificateHandler.h"
@@ -99,7 +99,7 @@
 {
     if ([segue.identifier isEqualToString:@"CertificateVC"])
     {
-        CertificateViewController *certificateVC  = [segue destinationViewController];
+        CertViewController *certificateVC  = [segue destinationViewController];
         
         [certificateVC initializeWithCertificate:_selectedCertificate];
     }

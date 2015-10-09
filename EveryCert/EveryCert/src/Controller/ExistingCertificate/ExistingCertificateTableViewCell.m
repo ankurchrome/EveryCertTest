@@ -7,9 +7,22 @@
 //
 
 #import "ExistingCertificateTableViewCell.h"
+#import "CertificateModel.h"
 
 @implementation ExistingCertificateTableViewCell
 
 NSString *const ExistingCertCellReuseIdentifier = @"ExistingCertCellIdentifier";
+
+- (void)initializeWithCertificate:(CertificateModel *)certificateModel
+{
+    _certificate = certificateModel;
+    
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    dateFormatter.dateFormat = @"dd-MM-yyyy hh:mm:ss";
+    
+    _nameLabel.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:certificateModel.dateTimestamp]];
+    
+    _nameLabel.textColor = certificateModel.issuedApp ? [UIColor blackColor] : [UIColor redColor];
+}
 
 @end

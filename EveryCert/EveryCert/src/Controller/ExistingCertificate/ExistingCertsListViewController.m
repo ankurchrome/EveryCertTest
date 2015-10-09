@@ -8,7 +8,7 @@
 
 #import "ExistingCertsListViewController.h"
 #import "ExistingCertificateTableViewCell.h"
-#import "CertificateViewController.h"
+#import "CertViewController.h"
 #import "CertificatePreviewViewController.h"
 #import "CertificateHandler.h"
 
@@ -40,22 +40,26 @@
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    if ([identifier isEqualToString:@"CertPreviewVC"] && !_selectedCertificate.issuedApp)
+    if ([identifier isEqualToString:@"CertPreviewVC"])
     {
-        return NO;
+        if ([sender isKindOfClass:[ExistingCertificateTableViewCell class]])
+        {
+            CertificateModel *certificateModel = ((ExistingCertificateTableViewCell *)sender).certificate;
+            
+             if (!certificateModel.issuedApp)
+             {
+                 CertViewController *certificateVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CertificateVC"];
+                 
+                 [certificateVC initializeWithCertificate:certificateModel];
+                 
+                 [self.navigationController pushViewController:certificateVC animated:YES];
+                 
+                 return NO;
+             }
+        }
     }
     
     return YES;
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"CertificateVC"])
-    {
-        CertificateViewController *certificateVC  = [segue destinationViewController];
-        
-        [certificateVC initializeWithCertificate:_selectedCertificate];
-    }
 }
 
 #pragma mark - UITableViewDataSource Methods
@@ -70,21 +74,17 @@
     ExistingCertificateTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ExistingCertCellReuseIdentifier forIndexPath:indexPath];
     
     CertificateModel *certificateModel = _existingCertsList[indexPath.row];
-    
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    dateFormatter.dateFormat = @"dd-MM-yyyy hh:mm:ss";
-    
-    cell.nameLabel.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:certificateModel.dateTimestamp]];
+
+    [cell initializeWithCertificate:certificateModel];
     
     return cell;
 }
 
-#pragma mark - UITableViewDelegate Methods
+#pragma mark - UITableViewDataSource Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CertificateModel *certificateModel = _existingCertsList[indexPath.row];
-    _selectedCertificate = certificateModel;
+    
 }
 
 @end

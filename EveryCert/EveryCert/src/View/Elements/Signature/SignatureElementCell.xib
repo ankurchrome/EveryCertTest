@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -62,7 +62,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7aP-eG-B8V" userLabel="Separator">
-                        <rect key="frame" x="10" y="288" width="558" height="1"/>
+                        <rect key="frame" x="0.0" y="288" width="568" height="1"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="1Ww-Dj-bfr"/>
@@ -74,7 +74,7 @@
                     <constraint firstAttribute="bottomMargin" secondItem="ykn-cV-foA" secondAttribute="bottom" constant="5" id="5zX-1S-whG"/>
                     <constraint firstItem="cRn-kg-BXJ" firstAttribute="top" secondItem="MIp-Lv-8W2" secondAttribute="bottom" constant="14" id="AlT-om-65M"/>
                     <constraint firstAttribute="trailing" secondItem="cRn-kg-BXJ" secondAttribute="trailing" constant="30" id="KWG-l4-PAU"/>
-                    <constraint firstItem="7aP-eG-B8V" firstAttribute="leading" secondItem="NHj-dc-ZPm" secondAttribute="leading" constant="10" id="S5R-jN-5PS"/>
+                    <constraint firstItem="7aP-eG-B8V" firstAttribute="leading" secondItem="NHj-dc-ZPm" secondAttribute="leading" id="S5R-jN-5PS"/>
                     <constraint firstItem="MIp-Lv-8W2" firstAttribute="leading" secondItem="NHj-dc-ZPm" secondAttribute="leading" constant="10" id="bDX-Yv-uOi"/>
                     <constraint firstItem="ykn-cV-foA" firstAttribute="top" secondItem="cRn-kg-BXJ" secondAttribute="bottom" constant="15" id="dnj-uL-zWu"/>
                     <constraint firstItem="cRn-kg-BXJ" firstAttribute="leading" secondItem="NHj-dc-ZPm" secondAttribute="leading" constant="30" id="gEq-WK-kr5"/>

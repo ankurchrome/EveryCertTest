@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class CertificateModel;
+
 @interface ExistingCertificateTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) CertificateModel *certificate;
+
+- (void)initializeWithCertificate:(CertificateModel *)certificateModel;
 
 extern NSString *const ExistingCertCellReuseIdentifier;
 
