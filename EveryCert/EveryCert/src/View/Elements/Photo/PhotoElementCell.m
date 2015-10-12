@@ -17,15 +17,17 @@
     __weak IBOutlet UIImageView *_imageView;
 }
 
-- (PhotoElementCell *)initWithModel:(ElementModel *)formElement
+- (void)initializeWithElementModel:(ElementModel *)elementModel
 {
+    [super initializeWithElementModel:elementModel];
+
     _imagePickerController.allowsEditing = YES;
     _imagePickerController = [[UIImagePickerController alloc]init];
-    if(!_imageView.image)
+    
+    if (!_imageView.image)
     {
         _imageView.image = nil;
     }
-    return self;
 }
 
 #pragma mark- IBAction

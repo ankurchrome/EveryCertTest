@@ -26,6 +26,10 @@ NSString *const SyncTimeMessage = @"Intial Sync will take up to 60 seconds pleas
 
 #pragma mark Key & Data Constants
 
+NSString *const kPdfFormatElementFontName  = @"ElementFontName";
+NSString *const kPdfFormatElementFontSize  = @"ElementFontSize";
+NSString *const kPdfFormatElementFontColor = @"ElementFontColor";
+
 NSString *const kPdfFormatDefaultText = @"DefaultText";
 
 NSString *const kPdfFormatRadioButtons     = @"RadioButtons";

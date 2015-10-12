@@ -9,6 +9,7 @@
 #import "CommonUtils.h"
 
 @implementation CommonUtils
+
 //Return true if given object is valid object otherwise false
 + (BOOL)isValidObject:(id)object
 {
@@ -49,10 +50,7 @@
     return isValid;
 }
 
-/*
- * @desc  : to show the alert message
- * @param : alert title & message as Nsstring.
- */
+// Show an alert with single button i.e "OK".
 + (void)showAlertWithTitle:(NSString *)title message:(NSString *)msg
 {
     FUNCTION_START;
@@ -301,6 +299,7 @@
     return databaseRemoved;
 }
 
+// Show a MBProgressHud on a view for short time of interval
 + (void)showHUDWithText:(NSString *)text toView:(UIView *)view forTimeInterval:(NSInteger)timeInterval
 {
     FUNCTION_START;

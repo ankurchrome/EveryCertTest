@@ -62,6 +62,21 @@
     return YES;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"CertPreviewVC"])
+    {
+        if ([sender isKindOfClass:[ExistingCertificateTableViewCell class]])
+        {
+            CertificateModel *certificateModel = ((ExistingCertificateTableViewCell *)sender).certificate;
+            
+                CertificatePreviewViewController *certPreviewVC = segue.destinationViewController;
+                
+                [certPreviewVC initializeWithCertificate:certificateModel];
+        }
+    }
+}
+
 #pragma mark - UITableViewDataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

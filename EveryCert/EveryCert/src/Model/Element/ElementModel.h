@@ -13,7 +13,7 @@
 
 typedef enum : NSUInteger
 {
-    ElementTypeSearch         = 0, // Not Used
+    ElementTypeSearch         = 0,
     ElementTypeTextField      = 1,
     ElementTypeTextView       = 2,
     ElementTypePicker         = 3, // Not Used
@@ -22,8 +22,8 @@ typedef enum : NSUInteger
     ElementTypePickListOption = 6,
     ElementTypeSubElement     = 7,
     ElementTypeRadioButton    = 8,
-    ElementTypeLine           = 9, // Not Used
-    ElementTypeTickBox        = 10,
+    ElementTypeLine           = 9,
+    ElementTypeTickBox        = 10, // Not Used
     ElementTypeTextLabel      = 11,
     ElementTypePhoto          = 12 // Not Used
 } FormElementType;

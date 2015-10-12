@@ -11,11 +11,4 @@
 
 @interface PhotoElementCell : ElementTableViewCell<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 
-/**
- Initialize Cell Element with their information
- @param  FormElementModel object which contains info like section, title etc.
- @return id initialize a cell
- */
-- (PhotoElementCell *)initWithModel:(ElementModel *)formElement;
-
 @end

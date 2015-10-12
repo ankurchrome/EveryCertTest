@@ -20,6 +20,8 @@
 {
     [CommonUtils copyApplicationDatabaseIfRequired];
     
+    [self createRequiredDirectories];
+    
     if (LOGS_ON) NSLog(@"Document Dir: %@", [CommonUtils getDocumentDirPath]);
     
     return YES;
@@ -45,6 +47,22 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+// Create all the directories required through out the app
+- (void)createRequiredDirectories
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    [fileManager createDirectoryAtPath:FORMS_BACKGROUND_LAYOUT_DIR
+           withIntermediateDirectories:NO
+                            attributes:nil
+                                 error:nil];
+    
+    [fileManager createDirectoryAtPath:CERTIFICATES_PDF_DIR
+           withIntermediateDirectories:NO
+                            attributes:nil
+                                 error:nil];
 }
 
 @end

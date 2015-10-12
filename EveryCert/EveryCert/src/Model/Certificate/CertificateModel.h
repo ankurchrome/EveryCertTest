@@ -27,4 +27,10 @@
  */
 - (NSString *)pdfPath;
 
+/**
+ Returns a path where form pdf is saved.
+ @return NSString A path to form pdf
+ */
+- (NSURL *)backgroundPdfPath;
+
 @end

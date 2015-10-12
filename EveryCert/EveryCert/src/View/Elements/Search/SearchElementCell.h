@@ -12,6 +12,4 @@
 
 @interface SearchElementCell : ElementTableViewCell
 
-- (void)initializeWithElementModel:(ElementModel *)elementModel elementTable:(ElementTableView *)elementTableView;
-
 @end

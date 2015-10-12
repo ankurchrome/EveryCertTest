@@ -10,13 +10,10 @@
 #import "LookupSearchViewController.h"
 #import "CertViewController.h"
 #import "LookUpHandler.h"
-#import "ElementTableView.h"
 
 @interface SearchElementCell ()<UISearchBarDelegate, LookupSearchViewControllerDelegate>
 {
     IBOutlet UISearchBar *_searchBar;
-    
-    ElementTableView *_elementTableView;
     
     LookUpHandler *_lookupHandler;
 }
@@ -24,11 +21,10 @@
 
 @implementation SearchElementCell
 
-- (void)initializeWithElementModel:(ElementModel *)elementModel elementTable:(ElementTableView *)elementTableView
+- (void)initializeWithElementModel:(ElementModel *)elementModel
 {
     [super initializeWithElementModel:elementModel];
     
-    _elementTableView = elementTableView;
     _searchBar.placeholder = elementModel.label;
     elementModel.dataValue = EMPTY_STRING;
 }

@@ -11,6 +11,9 @@
 #import "MenuViewController.h"
 #import "FormSectionTableViewCell.h"
 #import "ElementTableView.h"
+#import "DrawingPDF.h"
+#import "CertificatePreviewViewController.h"
+#import "ExistingCertsListViewController.h"
 
 #import "FormModel.h"
 #import "SubElementModel.h"
@@ -37,11 +40,12 @@
     IBOutlet UIButton *_nextSectionButton;
     IBOutlet UILabel  *_sectionTitleLabel;
     
-    ElementModel      *_currentSearchElementModel;
-    ElementModel      *_linkedSearchElementModel;
-    LookUpHandler     *_lookupHandler;
-    DataHandler       *_dataHandler;
-    DataBinaryHandler *_dataBinaryHandler;
+    ElementModel       *_currentSearchElementModel;
+    ElementModel       *_linkedSearchElementModel;
+    LookUpHandler      *_lookupHandler;
+    DataHandler        *_dataHandler;
+    DataBinaryHandler  *_dataBinaryHandler;
+    CertificateHandler *_certHandler;
 
     NSArray   *_formSections;
     NSArray   *_currentSectionElements;
@@ -70,8 +74,9 @@ NSString *const ButtonTitleFinish  = @"Finish";
     newCertificate.date      = [NSDate date];
     newCertificate.companyId = APP_DELEGATE.loggedUserCompanyId;
     
-    CertificateHandler *certHandler = [CertificateHandler new];
-    NSInteger certRowId = [certHandler insertCertificate:newCertificate];
+    _certHandler = _certHandler ? _certHandler : [CertificateHandler new];
+    
+    NSInteger certRowId = [_certHandler insertCertificate:newCertificate];
     
     if (certRowId > 0)
     {
@@ -175,30 +180,33 @@ NSString *const ButtonTitleFinish  = @"Finish";
         _currentSectionRecordIdApp = _currentSearchElementModel.recordIdApp;
         
         //Check that if record existing for linked element
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"elementId = %ld", _currentSearchElementModel.linkedElementId];
-        NSArray *linkedElements = [_formElements filteredArrayUsingPredicate:predicate];
-        
-        if (linkedElements && linkedElements.count > 0)
+        if (_currentSearchElementModel.linkedElementId > 0)
         {
-            _linkedSearchElementModel = [linkedElements firstObject];
-            _currentSearchElementModel.linkedRecordIdApp = _linkedSearchElementModel.recordIdApp;
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"elementId = %ld", _currentSearchElementModel.linkedElementId];
+            NSArray *linkedElements = [_formElements filteredArrayUsingPredicate:predicate];
             
-            if (_linkedSearchElementModel.recordIdApp <= 0)
+            if (linkedElements && linkedElements.count > 0)
             {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:ALERT_TITLE_WARNING message:_currentSearchElementModel.popUpMessage preferredStyle:UIAlertControllerStyleAlert];
+                _linkedSearchElementModel = [linkedElements firstObject];
+                _currentSearchElementModel.linkedRecordIdApp = _linkedSearchElementModel.recordIdApp;
                 
-                UIAlertAction *okAction = [UIAlertAction actionWithTitle:ALERT_ACTION_TITLE_OK style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-                                           {
-                                               [APP_DELEGATE.certificateVC backToPreviousSection];
-                                           }];
-                
-                [alertController addAction:okAction];
-                [self presentViewController:alertController animated:YES completion:nil];
+                if (_linkedSearchElementModel.recordIdApp <= 0)
+                {
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:ALERT_TITLE_WARNING message:_currentSearchElementModel.popUpMessage preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction *okAction = [UIAlertAction actionWithTitle:ALERT_ACTION_TITLE_OK style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                               {
+                                                   [APP_DELEGATE.certificateVC backToPreviousSection];
+                                               }];
+                    
+                    [alertController addAction:okAction];
+                    [self presentViewController:alertController animated:YES completion:nil];
+                }
             }
-        }
-        else
-        {
-            _linkedSearchElementModel = nil;
+            else
+            {
+                _linkedSearchElementModel = nil;
+            }
         }
     }
     else
@@ -207,72 +215,6 @@ NSString *const ButtonTitleFinish  = @"Finish";
         _currentSectionRecordIdApp = 0;
         _currentSearchElementModel = nil;
     }
-}
-
-#pragma mark - LookupRecords(SearchElement) Methods
-
-- (void)setupForSelectedLookupRecord:(NSInteger)recordIdApp
-{
-    _lookupHandler = _lookupHandler ? _lookupHandler : [LookUpHandler new];
-    _dataHandler   = _dataHandler ? _dataHandler : [DataHandler new];
-
-    if (_currentSectionRecordIdApp > 0)
-    {
-        [_dataHandler deleteLinkedDataForRecord:_currentSectionRecordIdApp
-                                    certificate:_certificate.certIdApp];
-    }
-    
-    _currentSectionRecordIdApp = recordIdApp;
-    
-    NSArray *lookupRecordFields = [_lookupHandler getAllFieldsOfRecord:_currentSectionRecordIdApp];
-    
-    for (ElementModel *elementModel in _currentSectionElements)
-    {
-        for (LookUpModel *lookupRecordField in lookupRecordFields)
-        {
-            if (elementModel.fieldNumberExisting == lookupRecordField.fieldNumber)
-            {
-                elementModel.dataValue   = lookupRecordField.dataValue;
-            }
-        }
-    }
-    
-    [_elementTableView reloadData];
-}
-
-- (void)setupForNewLookupRecord
-{
-    _dataHandler = _dataHandler ? _dataHandler : [DataHandler new];
-    
-    if (_currentSectionRecordIdApp > 0)
-    {
-        [_dataHandler deleteLinkedDataForRecord:_currentSectionRecordIdApp
-                                    certificate:_certificate.certIdApp];
-    }
-    
-    _currentSectionRecordIdApp = 0;
-
-    for (ElementModel *elementModel in _currentSectionElements)
-    {
-        elementModel.recordIdApp = 0;
-        elementModel.dataValue   = EMPTY_STRING;
-    }
-    
-    [_elementTableView reloadData];
-}
-
-- (BOOL)createLookupRecord
-{
-    RecordHandler *recordHandler = [RecordHandler new];
-    
-    _currentSectionRecordIdApp = [recordHandler insertRecordForCompanyId:APP_DELEGATE.loggedUserCompanyId];
-    
-    return _currentSectionRecordIdApp > 0 ? YES : NO;
-}
-
-- (void)backToPreviousSection
-{
-    [self showElementsForSectionIndex:--_currentSectionIndex];
 }
 
 - (void)showSectionView
@@ -311,7 +253,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
 - (void)saveAllElements:(NSArray *)elements
 {
     if (![self hasMandatoryElementsFilled]) return;
-        
+    
     //Create a new lookup record if not previously selected
     if (_isLookupSection && _currentSectionRecordIdApp <= 0)
     {
@@ -332,7 +274,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
                 [self saveElementData:elementModel];
             }
                 break;
-
+                
             case ElementTypeSubElement:
             {
                 //Create JSON content for Sub element's content
@@ -385,7 +327,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     
     _dataHandler   = _dataHandler ? _dataHandler : [DataHandler new];
     _lookupHandler = _lookupHandler ? _lookupHandler : [LookUpHandler new];
-
+    
     elementModel.dataValue = elementModel.dataValue ? elementModel.dataValue : EMPTY_STRING;
     
     if (_isLookupSection)
@@ -446,10 +388,10 @@ NSString *const ButtonTitleFinish  = @"Finish";
             return isSaved;
         }
         
-//        if (elementModel.fieldType == ElementTypeSearch)
-//        {
-//            elementModel.dataValue = EMPTY_STRING;
-//        }
+        //        if (elementModel.fieldType == ElementTypeSearch)
+        //        {
+        //            elementModel.dataValue = EMPTY_STRING;
+        //        }
         
         DataModel *dataModel = [DataModel new];
         dataModel.certificateIdApp = _certificate.certIdApp;
@@ -538,7 +480,129 @@ NSString *const ButtonTitleFinish  = @"Finish";
     return result;
 }
 
+#pragma mark - LookupRecords(SearchElement) Methods
+
+- (void)setupForSelectedLookupRecord:(NSInteger)recordIdApp
+{
+    _lookupHandler = _lookupHandler ? _lookupHandler : [LookUpHandler new];
+    _dataHandler   = _dataHandler ? _dataHandler : [DataHandler new];
+
+    if (_currentSectionRecordIdApp > 0)
+    {
+        [_dataHandler deleteLinkedDataForRecord:_currentSectionRecordIdApp
+                                    certificate:_certificate.certIdApp];
+    }
+    
+    _currentSectionRecordIdApp = recordIdApp;
+    
+    NSArray *lookupRecordFields = [_lookupHandler getAllFieldsOfRecord:_currentSectionRecordIdApp];
+    
+    for (ElementModel *elementModel in _currentSectionElements)
+    {
+        for (LookUpModel *lookupRecordField in lookupRecordFields)
+        {
+            if (elementModel.fieldNumberExisting == lookupRecordField.fieldNumber)
+            {
+                elementModel.dataValue   = lookupRecordField.dataValue;
+            }
+        }
+    }
+    
+    [_elementTableView reloadData];
+}
+
+- (void)setupForNewLookupRecord
+{
+    _dataHandler = _dataHandler ? _dataHandler : [DataHandler new];
+    
+    if (_currentSectionRecordIdApp > 0)
+    {
+        [_dataHandler deleteLinkedDataForRecord:_currentSectionRecordIdApp
+                                    certificate:_certificate.certIdApp];
+    }
+    
+    _currentSectionRecordIdApp = 0;
+
+    for (ElementModel *elementModel in _currentSectionElements)
+    {
+        elementModel.recordIdApp = 0;
+        elementModel.dataValue   = EMPTY_STRING;
+    }
+    
+    [_elementTableView reloadData];
+}
+
+- (BOOL)createLookupRecord
+{
+    RecordHandler *recordHandler = [RecordHandler new];
+    
+    _currentSectionRecordIdApp = [recordHandler insertRecordForCompanyId:APP_DELEGATE.loggedUserCompanyId];
+    
+    return _currentSectionRecordIdApp > 0 ? YES : NO;
+}
+
+- (void)backToPreviousSection
+{
+    [self showElementsForSectionIndex:--_currentSectionIndex];
+}
+
 #pragma mark - IBActions & Event Methods
+
+- (IBAction)previewButtonTapped:(id)sender
+{
+    //Issued the certificate
+    if (!_certificate.issuedApp)
+    {
+        _certHandler = _certHandler ? _certHandler : [CertificateHandler new];
+        
+        _certificate.issuedApp = YES;
+        
+        NSDictionary *columnInfo = @{
+                                     CertificateIssuedApp: @(_certificate.issuedApp),
+                                     ModifiedTimestampApp: @([[NSDate date] timeIntervalSince1970]),
+                                     IsDirty: @(true)
+                                     };
+        
+        [_certHandler updateInfo:columnInfo recordIdApp:_certificate.certIdApp];
+    }
+    
+    //Create a certificate pdf by drawing all elements data on pdf
+    DrawingPDF *drawingPdf = [DrawingPDF new];
+    
+    [drawingPdf drawElements:_formElements
+                 onPdfLayout:_certificate.backgroundPdfPath
+                      saveAs:_certificate.pdfPath];
+
+    //pop to home view controller and add CertList and CertPreview view controller manually
+    NSMutableArray *viewControllers = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
+    
+    for (NSInteger i = viewControllers.count; i > 0; i--)
+    {
+        NSInteger index = i - 1;
+        
+        UIViewController *vc = viewControllers[index];
+        
+        if (vc == APP_DELEGATE.homeVC)
+        {
+            break;
+        }
+        else
+        {
+            [viewControllers removeObject:vc];
+        }
+    }
+    
+    ExistingCertsListViewController *existingCertsVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ExistingCertsListVC"];
+
+    [viewControllers addObject:existingCertsVC];
+    
+    CertificatePreviewViewController *certPreviewVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CertificatePreviewVC"];
+    [certPreviewVC initializeWithCertificate:_certificate];
+
+    [viewControllers addObject:certPreviewVC];
+    
+    [self.navigationController setViewControllers:viewControllers animated:YES];
+}
 
 - (IBAction)previousSectionButtonTapped:(id)sender
 {
@@ -572,11 +636,6 @@ NSString *const ButtonTitleFinish  = @"Finish";
     {
         [self.navigationController popToViewController:APP_DELEGATE.homeVC animated:YES];
     }
-}
-
-- (IBAction)previewButtonTapped:(id)sender
-{
-    
 }
 
 - (IBAction)sectionFadedViewTapped:(id)sender

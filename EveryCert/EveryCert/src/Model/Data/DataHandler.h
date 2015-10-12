@@ -34,6 +34,12 @@
  */
 - (DataModel *)dataExistForCertificate:(NSInteger)certIdApp element:(NSInteger)elementIdApp;
 
+/**
+ Deleta all the data which are linked to given record id and associated with given certificate
+ @param  recordIdApp An app id of a record
+ @param  certIdApp A cert id app of a certificate
+ @return void
+ */
 - (void)deleteLinkedDataForRecord:(NSInteger)recordIdApp certificate:(NSInteger)certIdApp;
 
 @end

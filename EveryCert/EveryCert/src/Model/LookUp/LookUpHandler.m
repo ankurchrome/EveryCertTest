@@ -26,6 +26,7 @@
     return self;
 }
 
+// Get the app id of given field of lookup record
 - (NSInteger)getLookupIdAppOfFieldNo:(NSInteger)fieldNumber record:(NSInteger)recordIdApp
 {
     __block NSInteger lookupIdApp = 0;
@@ -50,7 +51,7 @@
 // Insert a LookupModel object information into lookup table.
 - (NSInteger)insertLookupModel:(LookUpModel *)lookupModel
 {
-    __block NSInteger rowId = false;
+    __block NSInteger rowId = 0;
     
     lookupModel.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
     lookupModel.isDirty = true;
@@ -75,6 +76,7 @@
     return rowId;
 }
 
+// Fetch all the lookup records of given type(Customer, Job addresses, appliances etc.) which are linked to given record if any.
 - (NSArray *)getAllLookupRecordsForList:(NSInteger)lookupListId linkedRecordId:(NSInteger)linkedRecordIdApp companyId:(NSInteger)companyId
 {
     FMDatabaseQueue *databaseQueue     = [[FMDBDataSource sharedManager] databaseQueue];
@@ -96,6 +98,7 @@
     return lookupRecordsList;
 }
 
+// Fetch all the fields of a given record
 - (NSArray *)getAllFieldsOfRecord:(NSInteger)recordIdApp
 {
     FMDatabaseQueue *databaseQueue     = [[FMDBDataSource sharedManager] databaseQueue];

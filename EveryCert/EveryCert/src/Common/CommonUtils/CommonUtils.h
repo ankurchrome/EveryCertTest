@@ -54,9 +54,20 @@
  */
 + (BOOL)removeDatabaseFromApplication;
 
+/**
+ Show a MBProgressHud on a view for short time of interval
+ @param  text A string value to be show on hud
+ @param  timeInterval Time interval for which hud will be show
+ @return void
+ */
 + (void)showHUDWithText:(NSString *)text toView:(UIView *)view forTimeInterval:(NSInteger)timeInterval;
 
-//to show the alert message
+/**
+ Show an alert with single button i.e "Ok".
+ @param  title Title text for the alert.
+ @param  msg Message text for the alert.
+ @return void
+ */
 + (void)showAlertWithTitle:(NSString *)title message:(NSString *)msg;
 
 @end

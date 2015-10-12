@@ -11,7 +11,6 @@
 
 @interface SubElementHandler : BaseHandler
 
-
 /**
  Fetch all sub elements of given element
  @param  elementIdApp App id of an element whose elements needs to get

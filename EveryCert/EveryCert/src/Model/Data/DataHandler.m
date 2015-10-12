@@ -94,6 +94,7 @@
     return success;
 }
 
+// Deleta all the data which are linked to given record id and associated with given certificate
 - (void)deleteLinkedDataForRecord:(NSInteger)recordIdApp certificate:(NSInteger)certIdApp
 {
     [self deleteDataForRecord:recordIdApp cert:certIdApp];
@@ -106,6 +107,7 @@
     }
 }
 
+// Delete the data of given record and associated with given certificate
 - (BOOL)deleteDataForRecord:(NSInteger)recordIdApp cert:(NSInteger)certIdApp
 {
     __block BOOL success = false;
@@ -122,6 +124,7 @@
     return success;
 }
 
+// Get the linked record of given record and associated with given certificate
 - (NSInteger)getLinkedRecord:(NSInteger)recordIdApp inCertificate:(NSInteger)certIdApp
 {
     __block NSInteger linkedRecordIdApp = 0;

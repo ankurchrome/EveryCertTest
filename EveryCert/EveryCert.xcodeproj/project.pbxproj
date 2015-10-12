@@ -34,7 +34,6 @@
 		77DBB91F1B6F560600F02932 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DBB91E1B6F560600F02932 /* LoginViewController.m */; };
 		77DBB9221B6F562100F02932 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DBB9211B6F562100F02932 /* MenuViewController.m */; };
 		77DBB9251B6F563500F02932 /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DBB9241B6F563500F02932 /* RegistrationViewController.m */; };
-		77DBB9341B6F596700F02932 /* ExistingCertificateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DBB9331B6F596700F02932 /* ExistingCertificateViewController.m */; };
 		77DBB9371B6F60C300F02932 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DBB9361B6F60C300F02932 /* SettingViewController.m */; };
 		77DC23CB1B6F4A9600624211 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DC23CA1B6F4A9600624211 /* main.m */; };
 		77DC23D61B6F4A9600624211 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77DC23D51B6F4A9600624211 /* Images.xcassets */; };
@@ -158,8 +157,6 @@
 		77DBB9211B6F562100F02932 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		77DBB9231B6F563500F02932 /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
 		77DBB9241B6F563500F02932 /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
-		77DBB9321B6F596700F02932 /* ExistingCertificateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExistingCertificateViewController.h; sourceTree = "<group>"; };
-		77DBB9331B6F596700F02932 /* ExistingCertificateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistingCertificateViewController.m; sourceTree = "<group>"; };
 		77DBB9351B6F60C300F02932 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		77DBB9361B6F60C300F02932 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		77DC23C51B6F4A9600624211 /* EveryCert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveryCert.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -577,8 +574,6 @@
 				C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */,
 				C3F6260B1BB7B86B00B3C92E /* CertificatePreviewViewController.h */,
 				C3F6260C1BB7B86B00B3C92E /* CertificatePreviewViewController.m */,
-				77DBB9321B6F596700F02932 /* ExistingCertificateViewController.h */,
-				77DBB9331B6F596700F02932 /* ExistingCertificateViewController.m */,
 			);
 			path = ExistingCertificate;
 			sourceTree = "<group>";
@@ -1076,7 +1071,6 @@
 				C38E89CC1B9705D500790752 /* LookUpModel.m in Sources */,
 				779A9D851B7C7D0700D86FED /* LookupElementCell.m in Sources */,
 				C3EEB98C1BB2E7040090C4B0 /* README.mdown in Sources */,
-				77DBB9341B6F596700F02932 /* ExistingCertificateViewController.m in Sources */,
 				C3FFB43D1B9B3CF40089A0B2 /* SignatureElementCell.m in Sources */,
 				C3F6260D1BB7B86B00B3C92E /* CertificatePreviewViewController.m in Sources */,
 				C38E89C01B9705D500790752 /* CompanyUserModel.m in Sources */,

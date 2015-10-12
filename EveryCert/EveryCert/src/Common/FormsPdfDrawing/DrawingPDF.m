@@ -8,6 +8,7 @@
 
 #import "DrawingPDF.h"
 #import "ElementModel.h"
+#import "SubElementModel.h"
 
 #define DEFAULT_FONT_SIZE  8
 #define DEFAULT_FONT_NAME  @"ArialNarrow"
@@ -43,56 +44,75 @@
         CGContextDrawPDFPage(ctx, pdfPage);
         CGContextRestoreGState(ctx);
         
-//        for (NSDictionary *elementPdfInfo in elements)
-//        {
-//            NSDictionary *formatInfo = elementPdfInfo[ElementPdfDrawingFormat];
-//            id content = elementPdfInfo[ElementPdfDrawingContent];
-//            
-//            CGFloat originX  = [formatInfo[kElementOriginX] floatValue];
-//            CGFloat originY  = [formatInfo[kElementOriginY] floatValue];
-//            CGFloat width    = [formatInfo[kElementWidth] floatValue];
-//            CGFloat height   = [formatInfo[kElementHeight] floatValue];
-//            CGFloat fontSize = [formatInfo[kElementFontSize] floatValue];
-//            NSString *fontColor = formatInfo[kElementFontColor];
-//            NSString *fontName  = formatInfo[kElementFontName];
-//            
-//            if (fontSize <= 0.0f)
-//            {
-//                fontSize = DEFAULT_FONT_SIZE;
-//            }
-//            
-//            UIColor *elementColor = [CommonUtils colorWithHexString:fontColor];
-//            
-//            if (!elementColor)
-//            {
-//                elementColor = DEFAULT_FONT_COLOR;
-//            }
-//            
-//            UIFont *elementFont = [UIFont fontWithName:fontName size:fontSize];
-//            
-//            if (!elementFont)
-//            {
-//                elementFont = [UIFont fontWithName:DEFAULT_FONT_NAME size:fontSize];
-//            }
-//            
-//            CGRect  elementRect = CGRectMake(originX, originY, width, height);
-//            
-//            if (content)
-//            {
-//                if ([content isKindOfClass:[UIImage class]])
-//                {
-//                    UIImage *image = content;
-//                    [image drawInRect:elementRect];
-//                }
-//                else if ([content isKindOfClass:[NSString class]])
-//                {
-//                    NSDictionary *attrDic = @{NSFontAttributeName: elementFont,
-//                                              NSForegroundColorAttributeName: elementColor};
-//                    
-//                    [content drawInRect:elementRect withAttributes:attrDic];
-//                }
-//            }
-//        }
+        for (ElementModel *elementModel in elements)
+        {
+            if (page != elementModel.pageNumber) continue;
+            
+            NSDictionary *formatInfo = elementModel.printedTextFormat;
+            CGFloat   fontSize  = [formatInfo[kPdfFormatElementFontSize] floatValue];
+            NSString *fontColor = formatInfo[kPdfFormatElementFontColor];
+            NSString *fontName  = formatInfo[kPdfFormatElementFontName];
+            
+            if (fontSize <= 0.0f)
+            {
+                fontSize = DEFAULT_FONT_SIZE;
+            }
+            
+            UIColor *elementColor = [CommonUtils colorWithHexString:fontColor];
+            
+            if (!elementColor)
+            {
+                elementColor = DEFAULT_FONT_COLOR;
+            }
+            
+            UIFont *elementFont = [UIFont fontWithName:fontName size:fontSize];
+            
+            if (!elementFont)
+            {
+                elementFont = [UIFont fontWithName:DEFAULT_FONT_NAME size:fontSize];
+            }
+            
+            CGRect elementRect = CGRectMake(elementModel.originX, elementModel.originY, elementModel.width, elementModel.height);
+            
+            switch (elementModel.fieldType)
+            {
+                case ElementTypeTextField:
+                case ElementTypeTextView:
+                case ElementTypePickListOption:
+                case ElementTypeRadioButton:
+                case ElementTypeLookup:
+                case ElementTypeSearch:
+                {
+                    NSDictionary *attrDic = @{NSFontAttributeName: elementFont,
+                                              NSForegroundColorAttributeName: elementColor};
+                    
+                    [elementModel.dataValue drawInRect:elementRect withAttributes:attrDic];
+                }
+                    break;
+                    
+                case ElementTypeSubElement:
+                {
+                    for (SubElementModel *subElementModel in elementModel.subElements)
+                    {
+                        NSDictionary *attrDic = @{NSFontAttributeName: elementFont,
+                                                  NSForegroundColorAttributeName: elementColor};
+                        
+                        [subElementModel.dataValue drawInRect:elementRect withAttributes:attrDic];
+                    }
+                }
+                    break;
+                    
+                case ElementTypeSignature:
+                {
+                    UIImage *image = [UIImage imageWithData:elementModel.dataBinaryValue];
+                    [image drawInRect:elementRect];
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
     }
     
     UIGraphicsEndPDFContext();

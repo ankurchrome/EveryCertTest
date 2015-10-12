@@ -48,12 +48,26 @@
     FUNCTION_START;
     
     NSString *certPdfName = [NSString stringWithFormat:@"%@-%ld", self.name, (long)self.certIdApp];
-    
-    NSString *pdfPath = [FORMS_DIR stringByAppendingPathComponent:certPdfName];
+    NSString *pdfPath = [CERTIFICATES_PDF_DIR stringByAppendingPathComponent:certPdfName];
     pdfPath = [pdfPath stringByAppendingPathExtension:FILE_TYPE_PDF];
     
     FUNCTION_END;
     return pdfPath;
+}
+
+//Returns a path where form pdf is saved.
+- (NSURL *)backgroundPdfPath;
+{
+    FUNCTION_START;
+    
+    NSString *formPdfName = [NSString stringWithFormat:@"%ld", self.formId];
+    NSString *pdfPath = [FORMS_BACKGROUND_LAYOUT_DIR stringByAppendingPathComponent:formPdfName];
+    pdfPath = [pdfPath stringByAppendingPathExtension:FILE_TYPE_PDF];
+    
+    NSURL *pdfUrl = [NSURL fileURLWithPath:pdfPath];
+    
+    FUNCTION_END;
+    return pdfUrl;
 }
 
 @end

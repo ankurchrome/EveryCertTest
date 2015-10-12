@@ -11,7 +11,6 @@
 @interface SubElementModel : ElementModel
 
 @property (assign, nonatomic) NSInteger subElementId;
-@property (assign, nonatomic) NSInteger elementId;
 
 @property (assign, nonatomic) BOOL isCollapsed;
 

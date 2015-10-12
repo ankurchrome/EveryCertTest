@@ -29,7 +29,9 @@
 //Other Constants
 #define EMPTY_STRING   @""
 
-#define FORMS_DIR [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject] stringByAppendingPathComponent:@"Forms"]
+#define FORMS_BACKGROUND_LAYOUT_DIR [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject] stringByAppendingPathComponent:@"FormsBackgroundLayout"]
+
+#define CERTIFICATES_PDF_DIR [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject] stringByAppendingPathComponent:@"CertificatesPdf"]
 
 #define FILE_TYPE_SQL @"sql"
 #define FILE_TYPE_PDF @"pdf"
@@ -41,10 +43,13 @@
 
 //Alert Messages Constants
 #define ALERT_TITLE_WARNING       @"Warning!"
+#define ALERT_TITLE_ERROR         @"Error"
 #define ALERT_ACTION_TITLE_YES    @"Yes"
 #define ALERT_ACTION_TITLE_NO     @"No"
 #define ALERT_ACTION_TITLE_OK     @"Ok"
 #define ALERT_ACTION_TITLE_CANCEL @"Cancel"
+#define ALERT_MESSAGE_DELETE      @"Are you sure you wish to delete this?"
+#define ALERT_MESSAGE_EMAIL_NOT_CONFIGURED @"No configured email account found, please check your setting."
 
 @interface Constant : NSObject
 
@@ -66,6 +71,10 @@ extern NSString *const ConnectionNotFoundMessage;
 extern NSString *const SyncTimeMessage;
 
 #pragma mark Key & Data Constants
+
+extern NSString *const kPdfFormatElementFontName;
+extern NSString *const kPdfFormatElementFontSize;
+extern NSString *const kPdfFormatElementFontColor;
 
 extern NSString *const kPdfFormatDefaultText;
 
