@@ -10,9 +10,9 @@
 #import "CertificateModel.h"
 #import "FormSectionModel.h"
 #import "ElementTableViewCell.h"
-#import "KeyBoardScrollView.h"
+#import "KeyBoardTableView.h"
 
-@interface ElementTableView : KeyBoardScrollView
+@interface ElementTableView : KeyBoardTableView
 
 @property (nonatomic, strong) NSArray *elementModels;
 

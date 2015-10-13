@@ -19,6 +19,7 @@ NSString *const LookupRecordCellIdentifier = @"LookupRecordCellIdentifier";
     [super setSelected:selected animated:animated];
 }
 
+// Initialize the cell with the given record and fill UI controls from it.
 - (void)initializeWithLookupRecord:(NSDictionary *)lookupRecordInfo
 {
     self.lookupRecordInfo = lookupRecordInfo;

@@ -35,6 +35,7 @@
 {
     _lookupHandler = _lookupHandler ? _lookupHandler : [LookUpHandler new];
 
+    // Show an alert if record has been saved already
     if (self.elementModel.recordIdApp > 0)
     {
         UIAlertController *alertController = nil;
@@ -71,6 +72,7 @@
     return NO;
 }
 
+// Show the lookup records list screen to pick a record
 - (void)showLookupList
 {
     //Get all lookup records for element's lookup list type
@@ -94,6 +96,7 @@
 
 - (void)lookupSearchViewController:(LookupSearchViewController *)lookupSearchViewController didSelectLookupRecord:(NSDictionary *)lookupRecordInfo
 {
+    // Notify the Current CertViewController object for selected record
     if (APP_DELEGATE.certificateVC)
     {
         NSInteger recordIdApp = [lookupRecordInfo[RecordIdApp] integerValue];
@@ -103,6 +106,7 @@
 
 - (void)didSelectNewRecord:(LookupSearchViewController *)lookupSearchViewController
 {
+    // Notify the Current CertViewController object for new record
     if (APP_DELEGATE.certificateVC)
     {
         [APP_DELEGATE.certificateVC setupForNewLookupRecord];

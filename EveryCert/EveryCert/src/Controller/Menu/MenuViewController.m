@@ -42,12 +42,15 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
 
 #pragma mark - IBActions
 
+//Logout the logged in user and pop to SignIn screen
 - (IBAction)onClickLogoutButton:(id)sender
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
+    
     APP_DELEGATE.homeVC = nil;
 }
 
+//Start the sync with server for all data
 - (IBAction)backupDataButtonTapped:(id)sender
 {
     

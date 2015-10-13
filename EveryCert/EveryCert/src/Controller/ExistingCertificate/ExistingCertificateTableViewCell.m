@@ -13,6 +13,7 @@
 
 NSString *const ExistingCertCellReuseIdentifier = @"ExistingCertCellIdentifier";
 
+// Initialize the cell with the given certificate and filled UI controls from the certificate info
 - (void)initializeWithCertificate:(CertificateModel *)certificateModel
 {
     _certificate = certificateModel;

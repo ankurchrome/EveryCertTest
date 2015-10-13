@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KeyBoardScrollView : UIScrollView <UITextFieldDelegate, UITextViewDelegate>
+@interface KeyBoardTableView : UITableView <UITextFieldDelegate, UITextViewDelegate>
 
 //used to set the content size set call in view didload only
 -(void)contentSizeToFit;
+
+// Remove the Keyboard Hide/Show Observer
+- (void)removeObserver;
 
 @end

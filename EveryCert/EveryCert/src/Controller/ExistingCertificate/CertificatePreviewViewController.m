@@ -23,7 +23,7 @@
 
 @implementation CertificatePreviewViewController
 
-// Initialize with given existing certificate
+// Initialize the cell with the given certificate and show its pdf. Also allow the user to edit, delete and share the certificate.
 - (void)initializeWithCertificate:(CertificateModel *)certificate
 {
     _certificate = certificate;
@@ -33,6 +33,7 @@
 {
     [super viewDidLoad];
     
+    //Load the certificate pdf
     NSURL *url = [NSURL fileURLWithPath:[_certificate pdfPath]];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:requestObj];
@@ -44,6 +45,7 @@
 
 #pragma mark - IBActions
 
+// Show the CertViewController to edit the given certificate
 - (IBAction)editButtonTapped:(id)sender
 {
     CertViewController *certificateVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CertificateVC"];
@@ -53,6 +55,7 @@
     [self.navigationController pushViewController:certificateVC animated:YES];
 }
 
+// Delete the selected certificate after the user confirmation
 - (IBAction)deleteButtonTapped:(id)sender
 {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:ALERT_TITLE_WARNING message:ALERT_MESSAGE_DELETE preferredStyle:UIAlertControllerStyleAlert];
@@ -81,6 +84,7 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+// Send the certificate's pdf through email
 - (IBAction)emailButtonTapped:(id)sender
 {
     if (![MFMailComposeViewController canSendMail])

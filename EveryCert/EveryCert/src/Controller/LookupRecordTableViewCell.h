@@ -14,6 +14,11 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 
+/**
+ Initialize the cell with the given record and fill UI controls from it.
+ @param  lookupRecordInfo A NSDictionary object contains info about a lookup record.
+ @return void
+ */
 - (void)initializeWithLookupRecord:(NSDictionary *)lookupRecordInfo;
 
 extern NSString *const LookupRecordCellIdentifier;

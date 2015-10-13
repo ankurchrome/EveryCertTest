@@ -15,6 +15,11 @@
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) CertificateModel *certificate;
 
+/**
+ Initialize the cell with the given certificate and fill UI controls from the certificate info
+ @param  certificateModel CertificateModel object containing info about a certificate.
+ @return void
+ */
 - (void)initializeWithCertificate:(CertificateModel *)certificateModel;
 
 extern NSString *const ExistingCertCellReuseIdentifier;

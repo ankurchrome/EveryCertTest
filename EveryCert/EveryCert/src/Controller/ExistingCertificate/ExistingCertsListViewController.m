@@ -42,6 +42,7 @@
 {
     if ([identifier isEqualToString:@"CertPreviewVC"])
     {
+        // If selected certificate is not issued then show it with CertViewController manually and stop the segue to be triggered
         if ([sender isKindOfClass:[ExistingCertificateTableViewCell class]])
         {
             CertificateModel *certificateModel = ((ExistingCertificateTableViewCell *)sender).certificate;
@@ -69,10 +70,8 @@
         if ([sender isKindOfClass:[ExistingCertificateTableViewCell class]])
         {
             CertificateModel *certificateModel = ((ExistingCertificateTableViewCell *)sender).certificate;
-            
-                CertificatePreviewViewController *certPreviewVC = segue.destinationViewController;
-                
-                [certPreviewVC initializeWithCertificate:certificateModel];
+            CertificatePreviewViewController *certPreviewVC = segue.destinationViewController;
+            [certPreviewVC initializeWithCertificate:certificateModel];
         }
     }
 }
@@ -93,13 +92,6 @@
     [cell initializeWithCertificate:certificateModel];
     
     return cell;
-}
-
-#pragma mark - UITableViewDataSource Methods
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
 }
 
 @end

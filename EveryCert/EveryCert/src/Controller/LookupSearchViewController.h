@@ -24,8 +24,18 @@
 
 @property (nonatomic, strong) id<LookupSearchViewControllerDelegate> delegate;
 
+/**
+ Initialize the LookupSearchViewController object with the given element to show the lookup records list of its type
+ @param  element ElementModel object to show the records list of its type and setup UI accordingly
+ @return void
+ */
 - (void)initializeWithSearchElement:(ElementModel *)element;
 
+/**
+ Reload the lookup records table with given records
+ @param  lookupRecords A list of lookup records
+ @return void
+ */
 - (void)reloadWithLookupRecords:(NSArray *)lookupRecords;
 
 @end

@@ -31,6 +31,7 @@ NSString *const LookupSearchTitle = @"Select a record";
 
 #pragma mark - Initialization Methods
 
+// Initialize the LookupSearchViewController object with the given element to show the lookup records list of its type
 - (void)initializeWithSearchElement:(ElementModel *)element
 {
     _elementModel = element;
@@ -76,6 +77,7 @@ NSString *const LookupSearchTitle = @"Select a record";
     self.title = LookupSearchTitle;
 }
 
+// Reload the lookup records table with given records
 - (void)reloadWithLookupRecords:(NSArray *)lookupRecords
 {
     _tableRecords  = lookupRecords;
@@ -89,6 +91,7 @@ NSString *const LookupSearchTitle = @"Select a record";
 
 #pragma mark - IBActions
 
+// Cancel the lookup controller
 - (IBAction)cancelButtonTapped:(id)sender
 {
     if (_delegate && [_delegate respondsToSelector:@selector(didSelectCancel:)])
@@ -99,6 +102,7 @@ NSString *const LookupSearchTitle = @"Select a record";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+// Notify the delegate object for new record
 - (IBAction)newButtonTapped:(id)sender
 {
     if (_delegate && [_delegate respondsToSelector:@selector(didSelectNewRecord:)])
@@ -158,6 +162,7 @@ NSString *const LookupSearchTitle = @"Select a record";
 {
     LookupRecordTableViewCell *cell = (LookupRecordTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     
+    // Notify the delegate object for selected record
     if (cell.lookupRecordInfo && _delegate && [_delegate respondsToSelector:@selector(lookupSearchViewController:didSelectLookupRecord:)])
     {
         [_delegate lookupSearchViewController:self didSelectLookupRecord:cell.lookupRecordInfo];

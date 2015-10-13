@@ -12,6 +12,8 @@
 
 @interface RegistrationViewController ()
 {
+    IBOutlet UIScrollView *_bgScrollView;
+    IBOutlet UIView *_contentView;
     IBOutlet ElementTableView *_signupElementTableView;
 
     NSArray *_signupElements;
@@ -32,11 +34,19 @@
     ElementHandler *elementHandler = [ElementHandler new];
     _signupElements = [elementHandler getSignUpElements];
     
+    _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
+    [_signupElementTableView removeObserver];
     [_signupElementTableView reloadWithElements:_signupElements];
+}
+
+- (void)viewWillLayoutSubviews
+{
+    _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
 }
 
 #pragma mark - IBActions
 
+//Pop to SignIn view controller
 - (IBAction)signInButtonTapped:(id)sender
 {
     [self.navigationController popToRootViewControllerAnimated:YES];

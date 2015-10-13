@@ -123,6 +123,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
 
 #pragma mark -
 
+//Intially required UI changes will be done here
 - (void)makeUISetup
 {
     self.title = _certificate.name;
@@ -139,27 +140,25 @@ NSString *const ButtonTitleFinish  = @"Finish";
 
 #pragma mark - Functionality Methods
 
+//reload the section screen for the given section index
 - (void)showElementsForSectionIndex:(NSInteger)sectionIndex
 {
     FormSectionModel *formSection = nil;
     NSPredicate *predicate = nil;
 
-    //First Section
+    //Disable the previous section button on first section
     _prevSectionButton.enabled = !(sectionIndex == 0);
     
-    //Last Section
+    //Disable the next section button and change the 'Preview' button title to 'Finish' on last section
     _nextSectionButton.enabled = !(sectionIndex == (_formSections.count-1));
     _previewBarButton.title    = _nextSectionButton.enabled ? ButtonTitlePreview : ButtonTitleFinish;
     
     //Reload element table with selected form section
     if (_formSections && sectionIndex < _formSections.count)
     {
+        //get elements for given section and reload the table with the filtered elements
         formSection = [_formSections objectAtIndex:sectionIndex];
-        
-        _sectionTitleLabel.text = formSection.title;
-        
         predicate = [NSPredicate predicateWithFormat:@"sectionId = %ld", formSection.sectionId];
-        
         _currentSectionElements = [_formElements filteredArrayUsingPredicate:predicate];
         
         NSIndexPath *sectionIndexPath = [NSIndexPath indexPathForRow:sectionIndex inSection:0];
@@ -167,9 +166,11 @@ NSString *const ButtonTitleFinish  = @"Finish";
                                        animated:NO
                                  scrollPosition:UITableViewScrollPositionNone];
         [_elementTableView reloadWithElements:_currentSectionElements];
+        
+        _sectionTitleLabel.text = formSection.title;
     }
 
-    //Check for lookup section
+    //Check that the current section is lookup section
     predicate = [NSPredicate predicateWithFormat:@"fieldType = %ld", ElementTypeSearch];
     NSArray *searchElements = [_currentSectionElements filteredArrayUsingPredicate:predicate];
     
@@ -179,7 +180,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
         _currentSearchElementModel = [searchElements firstObject];
         _currentSectionRecordIdApp = _currentSearchElementModel.recordIdApp;
         
-        //Check that if record existing for linked element
+        //Check that if search element is linked with other element if yes then linked element must be filled first
         if (_currentSearchElementModel.linkedElementId > 0)
         {
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"elementId = %ld", _currentSearchElementModel.linkedElementId];
@@ -192,12 +193,13 @@ NSString *const ButtonTitleFinish  = @"Finish";
                 
                 if (_linkedSearchElementModel.recordIdApp <= 0)
                 {
+                    //linked element hasn't filled yet, back to previous screen
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:ALERT_TITLE_WARNING message:_currentSearchElementModel.popUpMessage preferredStyle:UIAlertControllerStyleAlert];
                     
                     UIAlertAction *okAction = [UIAlertAction actionWithTitle:ALERT_ACTION_TITLE_OK style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-                                               {
-                                                   [APP_DELEGATE.certificateVC backToPreviousSection];
-                                               }];
+                   {
+                       [APP_DELEGATE.certificateVC backToPreviousSection];
+                   }];
                     
                     [alertController addAction:okAction];
                     [self presentViewController:alertController animated:YES completion:nil];
@@ -217,6 +219,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     }
 }
 
+// Show the section list(with animations) to pick a section randomly
 - (void)showSectionView
 {
     [_sectionTableView setFrameX:-_sectionTableView.frameWidth];
@@ -234,6 +237,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
      }];
 }
 
+// Show the section list(with animations)
 - (void)hideSectionView
 {
     [UIView animateWithDuration:SECTION_LIST_SHOW_HIDE_ANIMATION_DURATION
@@ -383,15 +387,11 @@ NSString *const ButtonTitleFinish  = @"Finish";
     }
     else
     {
+        //Allow empty data to insert for search type element only
         if (![CommonUtils isValidString:elementModel.dataValue] && elementModel.fieldType != ElementTypeSearch)
         {
             return isSaved;
         }
-        
-        //        if (elementModel.fieldType == ElementTypeSearch)
-        //        {
-        //            elementModel.dataValue = EMPTY_STRING;
-        //        }
         
         DataModel *dataModel = [DataModel new];
         dataModel.certificateIdApp = _certificate.certIdApp;
@@ -457,13 +457,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     return isSaved;
 }
 
-//Check All Elements Filled for only current Element Model
-- (BOOL)hasAllElementsFilled
-{
-    return YES;
-}
-
-//Check Weather all Mandatore Elements are Totally Filled
+//Check Whether all Mandatory Elements are filled correctly
 - (BOOL)hasMandatoryElementsFilled
 {
     BOOL result = false;
@@ -482,6 +476,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
 
 #pragma mark - LookupRecords(SearchElement) Methods
 
+// Called when a record gets selected from lookup list and do the following steps
 - (void)setupForSelectedLookupRecord:(NSInteger)recordIdApp
 {
     _lookupHandler = _lookupHandler ? _lookupHandler : [LookUpHandler new];
@@ -511,6 +506,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     [_elementTableView reloadData];
 }
 
+// Called when New button tapped from lookup list and then following steps will be occur
 - (void)setupForNewLookupRecord
 {
     _dataHandler = _dataHandler ? _dataHandler : [DataHandler new];
@@ -532,6 +528,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     [_elementTableView reloadData];
 }
 
+// Create a new record in 'record' table
 - (BOOL)createLookupRecord
 {
     RecordHandler *recordHandler = [RecordHandler new];
@@ -541,6 +538,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     return _currentSectionRecordIdApp > 0 ? YES : NO;
 }
 
+// Move to previous section of form
 - (void)backToPreviousSection
 {
     [self showElementsForSectionIndex:--_currentSectionIndex];
@@ -548,6 +546,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
 
 #pragma mark - IBActions & Event Methods
 
+// Approve the certificate and show the pdf preview of the form
 - (IBAction)previewButtonTapped:(id)sender
 {
     //Issued the certificate
@@ -604,6 +603,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     [self.navigationController setViewControllers:viewControllers animated:YES];
 }
 
+// Reload the previous section of current section
 - (IBAction)previousSectionButtonTapped:(id)sender
 {
     [self saveAllElements:_currentSectionElements];
@@ -611,6 +611,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     [self showElementsForSectionIndex:--_currentSectionIndex];
 }
 
+// Reload the next section of current section
 - (IBAction)nextSectionButtonTapped:(id)sender
 {
     [self saveAllElements:_currentSectionElements];
@@ -618,6 +619,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     [self showElementsForSectionIndex:++_currentSectionIndex];
 }
 
+// Show/hide the section list drawer
 - (IBAction)menuButtonTapped:(id)sender
 {
     if(_sectionView.hidden)
@@ -630,6 +632,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     }
 }
 
+// Move to home screen
 - (IBAction)homeButtonTapped:(id)sender
 {
     if (APP_DELEGATE.homeVC)
@@ -638,11 +641,13 @@ NSString *const ButtonTitleFinish  = @"Finish";
     }
 }
 
+// Hide the section list drawer when tapped on background
 - (IBAction)sectionFadedViewTapped:(id)sender
 {
     [self hideSectionView];
 }
 
+// Show the section list drawer when right swipe on table
 - (IBAction)onSwipeElementTable:(id)sender
 {
     [self showSectionView];

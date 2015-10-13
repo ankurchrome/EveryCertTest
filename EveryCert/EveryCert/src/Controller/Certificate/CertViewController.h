@@ -29,10 +29,27 @@
  */
 - (void)initializeWithCertificate:(CertificateModel *)certificate;
 
+/**
+ Called when a record gets selected from lookup list and then following steps will be occur
+ 1. Delete the previously selected record if any.
+ 2. Fill the selected record field values to their corresponding elements
+ @param  recordIdApp It identify the selected lookup record
+ @return void
+ */
 - (void)setupForSelectedLookupRecord:(NSInteger)recordIdApp;
 
+/**
+ Called when New button tapped from lookup list and then following steps will be occur
+ 1. Delete the previously selected record if any.
+ 2. Remove data from all elements
+ @return void
+ */
 - (void)setupForNewLookupRecord;
 
+/**
+ Move to previous section of form
+ @return void
+ */
 - (void)backToPreviousSection;
 
 @end

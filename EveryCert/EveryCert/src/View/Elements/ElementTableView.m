@@ -235,11 +235,6 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
     
     [cell initializeWithElementModel:elementModel];
     
-    if (elementModel.fieldType == ElementTypeSearch && [cell isKindOfClass:[SearchElementCell class]])
-    {
-        [(SearchElementCell *)cell initializeWithElementModel:elementModel elementTable:self];
-    }
-    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;

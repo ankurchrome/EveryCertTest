@@ -64,6 +64,7 @@
 		C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89B81B9705D500790752 /* SubElementHandler.m */; };
 		C38E89D01B9705D500790752 /* SubElementModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89BA1B9705D500790752 /* SubElementModel.m */; };
 		C3AE7E4D1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */; };
+		C3C6EC861BCD199D00973895 /* KeyBoardTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C6EC851BCD199D00973895 /* KeyBoardTableView.m */; };
 		C3DA80B01BB95C6A00384F50 /* LookupSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA80AF1BB95C6A00384F50 /* LookupSearchViewController.m */; };
 		C3DA80B31BB966D400384F50 /* LookupRecordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA80B21BB966D400384F50 /* LookupRecordTableViewCell.m */; };
 		C3E441751BA059180020700F /* FormTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E441741BA059180020700F /* FormTypeTableViewCell.m */; };
@@ -215,6 +216,8 @@
 		C38E89BA1B9705D500790752 /* SubElementModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementModel.m; sourceTree = "<group>"; };
 		C3AE7E4B1BA0C99800E8C126 /* ExistingCertificateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExistingCertificateTableViewCell.h; sourceTree = "<group>"; };
 		C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistingCertificateTableViewCell.m; sourceTree = "<group>"; };
+		C3C6EC841BCD199D00973895 /* KeyBoardTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyBoardTableView.h; sourceTree = "<group>"; };
+		C3C6EC851BCD199D00973895 /* KeyBoardTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyBoardTableView.m; sourceTree = "<group>"; };
 		C3DA80AE1BB95C6A00384F50 /* LookupSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupSearchViewController.h; sourceTree = "<group>"; };
 		C3DA80AF1BB95C6A00384F50 /* LookupSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupSearchViewController.m; sourceTree = "<group>"; };
 		C3DA80B11BB966D400384F50 /* LookupRecordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupRecordTableViewCell.h; sourceTree = "<group>"; };
@@ -923,6 +926,8 @@
 			children = (
 				C3EEB9761BB2E7040090C4B0 /* KeyBoardScrollView.h */,
 				C3EEB9771BB2E7040090C4B0 /* KeyBoardScrollView.m */,
+				C3C6EC841BCD199D00973895 /* KeyBoardTableView.h */,
+				C3C6EC851BCD199D00973895 /* KeyBoardTableView.m */,
 			);
 			path = KeyBoardAvoiding;
 			sourceTree = "<group>";
@@ -1094,6 +1099,7 @@
 				C3DA80B01BB95C6A00384F50 /* LookupSearchViewController.m in Sources */,
 				C38E89CA1B9705D500790752 /* FormSectionModel.m in Sources */,
 				C3EEB9861BB2E7040090C4B0 /* FMDBDataSource.m in Sources */,
+				C3C6EC861BCD199D00973895 /* KeyBoardTableView.m in Sources */,
 				77DBB91F1B6F560600F02932 /* LoginViewController.m in Sources */,
 				77C035BE1B789794009228F1 /* FormsListViewController.m in Sources */,
 				C3EEB9821BB2E7040090C4B0 /* FMDatabaseAdditions.m in Sources */,

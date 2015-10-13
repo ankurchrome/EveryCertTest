@@ -24,6 +24,8 @@
 @implementation FormsListViewController
 
 static NSString *const FormsListCellIdentifier = @"FormTypeCellIdentifier";
+NSString *const FormStatusTitleInstalling = @"Installing";
+NSString *const FormStatusTitleInstalled = @"Installed";
 
 #pragma mark - LifeCycle Methods
 
@@ -47,6 +49,7 @@ static NSString *const FormsListCellIdentifier = @"FormTypeCellIdentifier";
 
 #pragma mark - IBActions
 
+//Move back to home screen
 - (IBAction)onClickHomeBarButton:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -71,7 +74,7 @@ static NSString *const FormsListCellIdentifier = @"FormTypeCellIdentifier";
     
     if (formModel.status)
     {
-        cell.statusLabel.text = @"installed";
+        cell.statusLabel.text = FormStatusTitleInstalled;
     }
     
     return cell;
