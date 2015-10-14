@@ -498,7 +498,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
         {
             if (elementModel.fieldNumberExisting == lookupRecordField.fieldNumber)
             {
-                elementModel.dataValue   = lookupRecordField.dataValue;
+                elementModel.dataValue = lookupRecordField.dataValue;
             }
         }
     }

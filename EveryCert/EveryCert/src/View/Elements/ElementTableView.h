@@ -12,6 +12,8 @@
 #import "ElementTableViewCell.h"
 #import "KeyBoardTableView.h"
 
+#define ELEMENT_CELL_HEIGHT_TEXT_FIELD 80
+
 @interface ElementTableView : KeyBoardTableView
 
 @property (nonatomic, strong) NSArray *elementModels;

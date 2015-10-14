@@ -14,7 +14,8 @@
 {
     IBOutlet UIScrollView *_bgScrollView;
     IBOutlet UIView *_contentView;
-    IBOutlet ElementTableView *_signupElementTableView;
+    IBOutlet ElementTableView   *_signupElementTableView;
+    IBOutlet NSLayoutConstraint *_signupElementTableHeightConstraint;
 
     NSArray *_signupElements;
 }
@@ -30,6 +31,11 @@
  
     self.navigationItem.hidesBackButton = YES;
     self.view.backgroundColor = APP_BG_COLOR;
+
+    _signupElementTableView.clipsToBounds = NO;
+    _signupElementTableView.layer.shadowColor = [[UIColor blackColor] CGColor];
+    _signupElementTableView.layer.shadowOffset = CGSizeMake(0,5);
+    _signupElementTableView.layer.shadowOpacity = 0.5;
     
     ElementHandler *elementHandler = [ElementHandler new];
     _signupElements = [elementHandler getSignUpElements];
@@ -39,7 +45,7 @@
     [_signupElementTableView reloadWithElements:_signupElements];
 }
 
-- (void)viewWillLayoutSubviews
+- (void)viewDidLayoutSubviews
 {
     _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
 }

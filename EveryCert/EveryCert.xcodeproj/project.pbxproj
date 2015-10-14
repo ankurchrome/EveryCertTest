@@ -102,6 +102,7 @@
 		C3FFB43D1B9B3CF40089A0B2 /* SignatureElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FFB43B1B9B3CF40089A0B2 /* SignatureElementCell.m */; };
 		C3FFB4411B9B6FC30089A0B2 /* RadioButtonElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FFB43E1B9B6FC30089A0B2 /* RadioButtonElementCell.m */; };
 		C3FFB4421B9B6FC30089A0B2 /* RadioButtonElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3FFB43F1B9B6FC30089A0B2 /* RadioButtonElementCell.xib */; };
+		EE03492786B694A39B474685 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BDC13634B5A75B79FB745AC /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +116,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4EE41FB74DDDF2865D00F8CF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		5A067339331CE3E7D6EA518F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		6BDC13634B5A75B79FB745AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		779637A61B747CDF0001ADC2 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		779A9D4F1B7C7D0700D86FED /* LookupElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupElementCell.h; sourceTree = "<group>"; };
 		779A9D501B7C7D0700D86FED /* LookupElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupElementCell.m; sourceTree = "<group>"; };
@@ -291,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				779637A71B747CDF0001ADC2 /* libsqlite3.0.dylib in Frameworks */,
+				EE03492786B694A39B474685 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +309,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F693A4D2742AFE786D89141 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6BDC13634B5A75B79FB745AC /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		778522F21B7378BD00EA8455 /* FormsList */ = {
 			isa = PBXGroup;
 			children = (
@@ -596,6 +609,8 @@
 				77DC23C71B6F4A9600624211 /* EveryCert */,
 				77DC23E11B6F4A9600624211 /* EveryCertTests */,
 				77DC23C61B6F4A9600624211 /* Products */,
+				BE227E6E76C9CF34A16E2621 /* Pods */,
+				4F693A4D2742AFE786D89141 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -662,6 +677,15 @@
 				C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		BE227E6E76C9CF34A16E2621 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4EE41FB74DDDF2865D00F8CF /* Pods.debug.xcconfig */,
+				5A067339331CE3E7D6EA518F /* Pods.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		C38E89831B9705D500790752 /* Model */ = {
@@ -951,9 +975,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 77DC23E81B6F4A9600624211 /* Build configuration list for PBXNativeTarget "EveryCert" */;
 			buildPhases = (
+				062CDC8F475796556092572A /* Check Pods Manifest.lock */,
 				77DC23C11B6F4A9500624211 /* Sources */,
 				77DC23C21B6F4A9500624211 /* Frameworks */,
 				77DC23C31B6F4A9500624211 /* Resources */,
+				0CDA7E28DCCBC7A227DF7083 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -993,7 +1019,7 @@
 				TargetAttributes = {
 					77DC23C41B6F4A9500624211 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = UTN2M7M58A;
+						DevelopmentTeam = YYK27J32TT;
 					};
 					77DC23DD1B6F4A9600624211 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -1059,6 +1085,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		062CDC8F475796556092572A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		0CDA7E28DCCBC7A227DF7083 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		77DC23C11B6F4A9500624211 /* Sources */ = {
@@ -1241,6 +1300,7 @@
 		};
 		77DC23E91B6F4A9600624211 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4EE41FB74DDDF2865D00F8CF /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1256,6 +1316,7 @@
 		};
 		77DC23EA1B6F4A9600624211 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A067339331CE3E7D6EA518F /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
