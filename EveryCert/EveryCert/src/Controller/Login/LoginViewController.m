@@ -11,6 +11,8 @@
 #import "ElementTableView.h"
 #import "ElementHandler.h"
 #import "CompanyUserHandler.h"
+#import <AFNetworking/AFHTTPRequestOperationManager.h>
+#import "AFURLConnectionOperation+EveryCertAdditions.h"
 
 @interface LoginViewController ()
 {
@@ -72,6 +74,53 @@ NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
     _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
 }
 
+#pragma mark -
+
+- (void)startLoginWithServer
+{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    NSString *baseUrl = [[ServerUrl stringByAppendingPathComponent:ApiPath] stringByAppendingPathComponent:ApiLogin];
+
+    NSMutableDictionary *loginParams = [NSMutableDictionary new];
+    
+    for (ElementModel *elementModel in _loginElements)
+    {
+        [loginParams setObject:elementModel.dataValue forKey:elementModel.fieldName];
+    }
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer  = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [manager PUT:baseUrl
+       parameters:loginParams
+          success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         [operation validateResponse];
+         
+         if (operation.isResponseValid)
+         {
+             if (operation.metadataError)
+             {
+                 [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED message:operation.popupMessage];
+             }
+             else
+             {
+                 
+             }
+         }
+         
+         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+     }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", operation.responseString);
+         
+         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+     }];
+}
+
 #pragma mark - IBActions
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
@@ -84,8 +133,7 @@ NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
         
         if (!isLoggedIn)
         {
-            //TODO: Server login code will go here
-            [CommonUtils showAlertWithTitle:nil message:@"Server login is required"];
+            [self startLoginWithServer];
             
             return NO;
         }

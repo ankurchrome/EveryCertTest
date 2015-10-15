@@ -14,15 +14,33 @@
 #pragma mark -
 
 #pragma mark API Constants
-NSString *const BaseUrl = @"https://portal.everycert.co.uk/";
-NSString *const UrlApiV1 = @"api/v1/";
-NSString *const UrlTimestamp = @"?timestamp=";
 
-NSString *const MethodDownload = @"download";
-NSString *const MethodDownloadSignature = @"downloadSig";
-NSString *const ConnectionTimeoutMessage = @"Connection time out, Please try again!";
+#ifdef  PRODUCTION_URL
+NSString *const ServerUrl = @"https://portal.everycert.co.uk/";
+#else
+#ifdef PRE_PRODUCTION_URL
+NSString *const ServerUrl = @"https://portal.everycert.co.uk/";
+#else
+NSString *const ServerUrl = @"https://portal.everycert.co.uk/";
+#endif
+#endif
+
+NSString *const ApiPath = @"api/v1/";
+NSString *const ApiUrlParamTimestamp = @"timestamp";
+NSString *const ApiLogin = @"login";
+NSString *const ApiDownload = @"download";
+NSString *const ApiDownloadSignature = @"downloadSig";
+
+NSString *const ApiResponseKeyMetadata = @"metadata";
+NSString *const ApiResponseKeyMetadataError = @"error";
+NSString *const ApiResponseKeyMetadataTimestamp = @"timestamp";
+NSString *const ApiResponseKeyNoOfRecords = @"no_records";
+NSString *const ApiResponseKeyPayload  = @"payload";
+NSString *const ApiResponseKeyPayloadPopupMessage = @"popupmessage";
+
+NSString *const ConnectionTimeoutMessage  = @"Connection time out, Please try again!";
 NSString *const ConnectionNotFoundMessage = @"Please check your internet connection and try again.";
-NSString *const SyncTimeMessage = @"Intial Sync will take up to 60 seconds please wait.";
+NSString *const InitialSyncMessage        = @"Intial Sync will take up to 60 seconds please wait.";
 
 #pragma mark Key & Data Constants
 

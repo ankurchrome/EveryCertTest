@@ -42,7 +42,7 @@
      {
          NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?)", self.tableName, CompanyUserId, CompanyId, UserId, CompanyUserFieldName, CompanyUserData, ModifiedTimestampApp, ModifiedTimeStamp, Archive, IsDirty, Uuid];
          
-         success = [db executeUpdate:query, @(companyUser.companyUserId), @(companyUser.companyId), @(companyUser.userId), companyUser.fieldName, companyUser.data, companyUser.modifiedTimestampApp, companyUser.modifiedTimestamp, @(companyUser.archive), @(companyUser.isDirty), companyUser.uuid];
+         success = [db executeUpdate:query, @(companyUser.companyUserId), @(companyUser.companyId), @(companyUser.userId), companyUser.fieldName, companyUser.data, @(companyUser.modifiedTimestampApp), @(companyUser.modifiedTimestamp), @(companyUser.archive), @(companyUser.isDirty), companyUser.uuid];
      }];
     
     return success;

@@ -8,18 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
+//#define PRODUCTION_URL
+#define PRE_PRODUCTION_URL
+
 //Macros as some Shortcut
 #define APP_DELEGATE   ((AppDelegate *)[[UIApplication sharedApplication] delegate])
-#define ROOT_NAVIGATOR ((RootNavigator *)self.navigationController)
+#define IS_iPHONE      [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone
+#define IS_iPAD        [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad
 
-#define IS_IOS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+#define FORMS_BACKGROUND_LAYOUT_DIR [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject] stringByAppendingPathComponent:@"FormsBackgroundLayout"]
 
-#define iPHONE [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone
-#define iPAD   [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad
+#define CERTIFICATES_PDF_DIR [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject] stringByAppendingPathComponent:@"CertificatesPdf"]
 
-#define LOGS_ON YES
+//Logging constants
 #define FUNCTION_START if(LOGS_ON) NSLog(@"%s method start here",__FUNCTION__)
 #define FUNCTION_END   if(LOGS_ON) NSLog(@"%s method end here",__FUNCTION__)
+#define LOGS_ON YES
 
 //local Database Details
 #define DATABASE_NAME       @"Everycert.sqlite"
@@ -28,20 +32,15 @@
 
 //Other Constants
 #define EMPTY_STRING   @""
-
-#define FORMS_BACKGROUND_LAYOUT_DIR [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject] stringByAppendingPathComponent:@"FormsBackgroundLayout"]
-
-#define CERTIFICATES_PDF_DIR [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject] stringByAppendingPathComponent:@"CertificatesPdf"]
-
 #define FILE_TYPE_SQL @"sql"
 #define FILE_TYPE_PDF @"pdf"
-
 #define APP_BLUE_COLOR [UIColor colorWithRed:21/255.0 green:126/255.0 blue:181/255.0 alpha:1.0]
 #define APP_BG_COLOR   [UIColor colorWithRed:236/255.0 green:236/255.0 blue:236/255.0 alpha:1.0]
 #define CERTIFICATE_DATE_FORMAT @"yyyy-MM-dd HH:mm:ss"
 #define EMAIL_REGEX @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+"
 
 //Alert Messages Constants
+#define ALERT_TITLE_FAILED        @"Failed"
 #define ALERT_TITLE_WARNING       @"Warning!"
 #define ALERT_TITLE_ERROR         @"Error"
 #define ALERT_ACTION_TITLE_YES    @"Yes"
@@ -60,15 +59,22 @@
 
 #pragma mark API Constants
 
-extern NSString *const BaseUrl;
-extern NSString *const UrlApiV1;
-extern NSString *const UrlTimestamp;
+extern NSString *const ServerUrl;
+extern NSString *const ApiPath;
+extern NSString *const ApiUrlParamTimestamp;
+extern NSString *const ApiLogin;
+extern NSString *const ApiDownload;
+extern NSString *const ApiDownloadSignature;
 
-extern NSString *const MethodDownload;
-extern NSString *const MethodDownloadSignature;
+extern NSString *const ApiResponseKeyMetadata;
+extern NSString *const ApiResponseKeyMetadataError;
+extern NSString *const ApiResponseKeyMetadataTimestamp;
+extern NSString *const ApiResponseKeyNoOfRecords;
+extern NSString *const ApiResponseKeyPayload;
+extern NSString *const ApiResponseKeyPayloadPopupMessage;
 extern NSString *const ConnectionTimeoutMessage;
 extern NSString *const ConnectionNotFoundMessage;
-extern NSString *const SyncTimeMessage;
+extern NSString *const InitialSyncMessage;
 
 #pragma mark Key & Data Constants
 

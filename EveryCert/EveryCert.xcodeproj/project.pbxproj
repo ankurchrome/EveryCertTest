@@ -40,6 +40,8 @@
 		77DC23E51B6F4A9600624211 /* EveryCertTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DC23E41B6F4A9600624211 /* EveryCertTests.m */; };
 		77F8E4A91B821F0300C214A4 /* Everycert.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 77F8E4A81B821F0300C214A4 /* Everycert.sqlite */; };
 		77F8E4AC1B82220600C214A4 /* Everycert.sql in Resources */ = {isa = PBXBuildFile; fileRef = 77F8E4AB1B82220600C214A4 /* Everycert.sql */; };
+		C31AA8A51BCF8F5B007FF9B9 /* FMDBDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C31AA8A41BCF8F5B007FF9B9 /* FMDBDataSource.m */; };
+		C327A5EE1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C327A5ED1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.m */; };
 		C34301F81B9832FD007AC6BB /* EverycertWithData.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */; };
 		C38E89BB1B9705D500790752 /* CertificateHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89861B9705D500790752 /* CertificateHandler.m */; };
 		C38E89BC1B9705D500790752 /* CertificateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89881B9705D500790752 /* CertificateModel.m */; };
@@ -163,6 +165,11 @@
 		77DC23E41B6F4A9600624211 /* EveryCertTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EveryCertTests.m; sourceTree = "<group>"; };
 		77F8E4A81B821F0300C214A4 /* Everycert.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Everycert.sqlite; sourceTree = "<group>"; };
 		77F8E4AB1B82220600C214A4 /* Everycert.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Everycert.sql; sourceTree = "<group>"; };
+		C31AA8A31BCF8F5B007FF9B9 /* FMDBDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDBDataSource.h; sourceTree = "<group>"; };
+		C31AA8A41BCF8F5B007FF9B9 /* FMDBDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBDataSource.m; sourceTree = "<group>"; };
+		C327A5EC1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFURLConnectionOperation+EveryCertAdditions.h"; sourceTree = "<group>"; };
+		C327A5ED1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFURLConnectionOperation+EveryCertAdditions.m"; sourceTree = "<group>"; };
+		C327A5F01BCFDB63005CE426 /* AFURLConnectionOperation_EveryCertExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation_EveryCertExtension.h; sourceTree = "<group>"; };
 		C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = EverycertWithData.sqlite; sourceTree = "<group>"; };
 		C38E89851B9705D500790752 /* CertificateHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateHandler.h; sourceTree = "<group>"; };
 		C38E89861B9705D500790752 /* CertificateHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateHandler.m; sourceTree = "<group>"; };
@@ -660,6 +667,25 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C31AA8A21BCF8F5B007FF9B9 /* FmdbDatasource */ = {
+			isa = PBXGroup;
+			children = (
+				C31AA8A31BCF8F5B007FF9B9 /* FMDBDataSource.h */,
+				C31AA8A41BCF8F5B007FF9B9 /* FMDBDataSource.m */,
+			);
+			path = FmdbDatasource;
+			sourceTree = "<group>";
+		};
+		C327A5EB1BCFCE25005CE426 /* AFNetworking+EveryCertAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				C327A5F01BCFDB63005CE426 /* AFURLConnectionOperation_EveryCertExtension.h */,
+				C327A5EC1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.h */,
+				C327A5ED1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.m */,
+			);
+			path = "AFNetworking+EveryCertAdditions";
+			sourceTree = "<group>";
+		};
 		C38E89831B9705D500790752 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -845,6 +871,8 @@
 				C3EEB9601BB2E7040090C4B0 /* Constant */,
 				C3EEB95D1BB2E7040090C4B0 /* CommonUtils */,
 				C3EEB95A1BB2E7040090C4B0 /* Categories */,
+				C31AA8A21BCF8F5B007FF9B9 /* FmdbDatasource */,
+				C327A5EB1BCFCE25005CE426 /* AFNetworking+EveryCertAdditions */,
 				C3EEB9751BB2E7040090C4B0 /* KeyBoardAvoiding */,
 				C3EEB9721BB2E7040090C4B0 /* FormsPdfDrawing */,
 			);
@@ -1090,6 +1118,7 @@
 				77DBB9221B6F562100F02932 /* MenuViewController.m in Sources */,
 				C3EEB99C1BB2EB640090C4B0 /* PickerElementCell.m in Sources */,
 				C38E89C11B9705D500790752 /* DataHandler.m in Sources */,
+				C327A5EE1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.m in Sources */,
 				779A9D971B7C7D0700D86FED /* TextLabelElementCell.m in Sources */,
 				C3EEB9971BB2E8BC0090C4B0 /* SearchElementCell.m in Sources */,
 				C38E89C61B9705D500790752 /* ElementModel.m in Sources */,
@@ -1105,6 +1134,7 @@
 				77DBB9371B6F60C300F02932 /* SettingViewController.m in Sources */,
 				C3EEB94F1BB2E5050090C4B0 /* ElementTableViewCell.m in Sources */,
 				C38E89BD1B9705D500790752 /* BaseHandler.m in Sources */,
+				C31AA8A51BCF8F5B007FF9B9 /* FMDBDataSource.m in Sources */,
 				C3AE7E4D1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m in Sources */,
 				C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */,
 				C3E441781BA06D2F0020700F /* FormSectionTableViewCell.m in Sources */,
