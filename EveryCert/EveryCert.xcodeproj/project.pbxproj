@@ -76,18 +76,8 @@
 		C3EEB97E1BB2E7040090C4B0 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB95C1BB2E7040090C4B0 /* UIView+Extension.m */; };
 		C3EEB97F1BB2E7040090C4B0 /* CommonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB95F1BB2E7040090C4B0 /* CommonUtils.m */; };
 		C3EEB9801BB2E7040090C4B0 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB9621BB2E7040090C4B0 /* Constant.m */; };
-		C3EEB9811BB2E7040090C4B0 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB9661BB2E7040090C4B0 /* FMDatabase.m */; };
-		C3EEB9821BB2E7040090C4B0 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB9681BB2E7040090C4B0 /* FMDatabaseAdditions.m */; };
-		C3EEB9831BB2E7040090C4B0 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB96A1BB2E7040090C4B0 /* FMDatabasePool.m */; };
-		C3EEB9841BB2E7040090C4B0 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB96C1BB2E7040090C4B0 /* FMDatabaseQueue.m */; };
-		C3EEB9851BB2E7040090C4B0 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB96F1BB2E7040090C4B0 /* FMResultSet.m */; };
-		C3EEB9861BB2E7040090C4B0 /* FMDBDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB9711BB2E7040090C4B0 /* FMDBDataSource.m */; };
 		C3EEB9871BB2E7040090C4B0 /* DrawingPDF.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB9741BB2E7040090C4B0 /* DrawingPDF.m */; };
 		C3EEB9881BB2E7040090C4B0 /* KeyBoardScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB9771BB2E7040090C4B0 /* KeyBoardScrollView.m */; };
-		C3EEB9891BB2E7040090C4B0 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C3EEB9791BB2E7040090C4B0 /* LICENSE */; };
-		C3EEB98A1BB2E7040090C4B0 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB97B1BB2E7040090C4B0 /* MBProgressHUD.m */; };
-		C3EEB98B1BB2E7040090C4B0 /* MBProgressHUD.podspec in Resources */ = {isa = PBXBuildFile; fileRef = C3EEB97C1BB2E7040090C4B0 /* MBProgressHUD.podspec */; };
-		C3EEB98C1BB2E7040090C4B0 /* README.mdown in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB97D1BB2E7040090C4B0 /* README.mdown */; };
 		C3EEB9901BB2E8060090C4B0 /* PhotoElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB98E1BB2E8060090C4B0 /* PhotoElementCell.m */; };
 		C3EEB9911BB2E8060090C4B0 /* PhotoElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3EEB98F1BB2E8060090C4B0 /* PhotoElementCell.xib */; };
 		C3EEB9971BB2E8BC0090C4B0 /* SearchElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EEB9961BB2E8BC0090C4B0 /* SearchElementCell.m */; };
@@ -243,28 +233,10 @@
 		C3EEB95F1BB2E7040090C4B0 /* CommonUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonUtils.m; sourceTree = "<group>"; };
 		C3EEB9611BB2E7040090C4B0 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		C3EEB9621BB2E7040090C4B0 /* Constant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
-		C3EEB9651BB2E7040090C4B0 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
-		C3EEB9661BB2E7040090C4B0 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
-		C3EEB9671BB2E7040090C4B0 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
-		C3EEB9681BB2E7040090C4B0 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
-		C3EEB9691BB2E7040090C4B0 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
-		C3EEB96A1BB2E7040090C4B0 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
-		C3EEB96B1BB2E7040090C4B0 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
-		C3EEB96C1BB2E7040090C4B0 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
-		C3EEB96D1BB2E7040090C4B0 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
-		C3EEB96E1BB2E7040090C4B0 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
-		C3EEB96F1BB2E7040090C4B0 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		C3EEB9701BB2E7040090C4B0 /* FMDBDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDBDataSource.h; sourceTree = "<group>"; };
-		C3EEB9711BB2E7040090C4B0 /* FMDBDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBDataSource.m; sourceTree = "<group>"; };
 		C3EEB9731BB2E7040090C4B0 /* DrawingPDF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingPDF.h; sourceTree = "<group>"; };
 		C3EEB9741BB2E7040090C4B0 /* DrawingPDF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingPDF.m; sourceTree = "<group>"; };
 		C3EEB9761BB2E7040090C4B0 /* KeyBoardScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyBoardScrollView.h; sourceTree = "<group>"; };
 		C3EEB9771BB2E7040090C4B0 /* KeyBoardScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyBoardScrollView.m; sourceTree = "<group>"; };
-		C3EEB9791BB2E7040090C4B0 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		C3EEB97A1BB2E7040090C4B0 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		C3EEB97B1BB2E7040090C4B0 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		C3EEB97C1BB2E7040090C4B0 /* MBProgressHUD.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MBProgressHUD.podspec; sourceTree = "<group>"; };
-		C3EEB97D1BB2E7040090C4B0 /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.mdown; sourceTree = "<group>"; };
 		C3EEB98D1BB2E8060090C4B0 /* PhotoElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoElementCell.h; sourceTree = "<group>"; };
 		C3EEB98E1BB2E8060090C4B0 /* PhotoElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoElementCell.m; sourceTree = "<group>"; };
 		C3EEB98F1BB2E8060090C4B0 /* PhotoElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoElementCell.xib; sourceTree = "<group>"; };
@@ -873,9 +845,7 @@
 				C3EEB9601BB2E7040090C4B0 /* Constant */,
 				C3EEB95D1BB2E7040090C4B0 /* CommonUtils */,
 				C3EEB95A1BB2E7040090C4B0 /* Categories */,
-				C3EEB9631BB2E7040090C4B0 /* FMDB */,
 				C3EEB9751BB2E7040090C4B0 /* KeyBoardAvoiding */,
-				C3EEB9781BB2E7040090C4B0 /* MBProgressHUD */,
 				C3EEB9721BB2E7040090C4B0 /* FormsPdfDrawing */,
 			);
 			path = Common;
@@ -908,34 +878,6 @@
 			path = Constant;
 			sourceTree = "<group>";
 		};
-		C3EEB9631BB2E7040090C4B0 /* FMDB */ = {
-			isa = PBXGroup;
-			children = (
-				C3EEB9641BB2E7040090C4B0 /* fmdb */,
-				C3EEB9701BB2E7040090C4B0 /* FMDBDataSource.h */,
-				C3EEB9711BB2E7040090C4B0 /* FMDBDataSource.m */,
-			);
-			path = FMDB;
-			sourceTree = "<group>";
-		};
-		C3EEB9641BB2E7040090C4B0 /* fmdb */ = {
-			isa = PBXGroup;
-			children = (
-				C3EEB9651BB2E7040090C4B0 /* FMDatabase.h */,
-				C3EEB9661BB2E7040090C4B0 /* FMDatabase.m */,
-				C3EEB9671BB2E7040090C4B0 /* FMDatabaseAdditions.h */,
-				C3EEB9681BB2E7040090C4B0 /* FMDatabaseAdditions.m */,
-				C3EEB9691BB2E7040090C4B0 /* FMDatabasePool.h */,
-				C3EEB96A1BB2E7040090C4B0 /* FMDatabasePool.m */,
-				C3EEB96B1BB2E7040090C4B0 /* FMDatabaseQueue.h */,
-				C3EEB96C1BB2E7040090C4B0 /* FMDatabaseQueue.m */,
-				C3EEB96D1BB2E7040090C4B0 /* FMDB.h */,
-				C3EEB96E1BB2E7040090C4B0 /* FMResultSet.h */,
-				C3EEB96F1BB2E7040090C4B0 /* FMResultSet.m */,
-			);
-			path = fmdb;
-			sourceTree = "<group>";
-		};
 		C3EEB9721BB2E7040090C4B0 /* FormsPdfDrawing */ = {
 			isa = PBXGroup;
 			children = (
@@ -954,18 +896,6 @@
 				C3C6EC851BCD199D00973895 /* KeyBoardTableView.m */,
 			);
 			path = KeyBoardAvoiding;
-			sourceTree = "<group>";
-		};
-		C3EEB9781BB2E7040090C4B0 /* MBProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				C3EEB9791BB2E7040090C4B0 /* LICENSE */,
-				C3EEB97A1BB2E7040090C4B0 /* MBProgressHUD.h */,
-				C3EEB97B1BB2E7040090C4B0 /* MBProgressHUD.m */,
-				C3EEB97C1BB2E7040090C4B0 /* MBProgressHUD.podspec */,
-				C3EEB97D1BB2E7040090C4B0 /* README.mdown */,
-			);
-			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1063,13 +993,11 @@
 				77F8E4A91B821F0300C214A4 /* Everycert.sqlite in Resources */,
 				C3FFB43C1B9B3CF40089A0B2 /* SignatureElementCell.xib in Resources */,
 				C3EEB9561BB2E5B80090C4B0 /* LineElementCell.xib in Resources */,
-				C3EEB98B1BB2E7040090C4B0 /* MBProgressHUD.podspec in Resources */,
 				77DBB91B1B6F555C00F02932 /* LaunchScreen.xib in Resources */,
 				C3EEB99E1BB2EB710090C4B0 /* PickerElementCell.xib in Resources */,
 				779A9D961B7C7D0700D86FED /* TextFieldElementCell.xib in Resources */,
 				779A9D981B7C7D0700D86FED /* TextLabelElementCell.xib in Resources */,
 				C3EEB9911BB2E8060090C4B0 /* PhotoElementCell.xib in Resources */,
-				C3EEB9891BB2E7040090C4B0 /* LICENSE in Resources */,
 				779A9D861B7C7D0700D86FED /* LookupElementCell.xib in Resources */,
 				779A9D9C1B7C7D0700D86FED /* TickBoxElementCell.xib in Resources */,
 				77DC23D61B6F4A9600624211 /* Images.xcassets in Resources */,
@@ -1134,7 +1062,6 @@
 				C3EEB94E1BB2E5050090C4B0 /* ElementTableView.m in Sources */,
 				C38E89CC1B9705D500790752 /* LookUpModel.m in Sources */,
 				779A9D851B7C7D0700D86FED /* LookupElementCell.m in Sources */,
-				C3EEB98C1BB2E7040090C4B0 /* README.mdown in Sources */,
 				C3FFB43D1B9B3CF40089A0B2 /* SignatureElementCell.m in Sources */,
 				C3F6260D1BB7B86B00B3C92E /* CertificatePreviewViewController.m in Sources */,
 				C38E89C01B9705D500790752 /* CompanyUserModel.m in Sources */,
@@ -1145,7 +1072,6 @@
 				C3EEB9551BB2E5B80090C4B0 /* LineElementCell.m in Sources */,
 				779A9D991B7C7D0700D86FED /* TextViewElementCell.m in Sources */,
 				779A9D891B7C7D0700D86FED /* PickListViewController.m in Sources */,
-				C3EEB9851BB2E7040090C4B0 /* FMResultSet.m in Sources */,
 				77DBB9251B6F563500F02932 /* RegistrationViewController.m in Sources */,
 				C38E89BF1B9705D500790752 /* CompanyUserHandler.m in Sources */,
 				779A9D8D1B7C7D0700D86FED /* RadioButtonView.m in Sources */,
@@ -1157,11 +1083,9 @@
 				C38E89C91B9705D500790752 /* FormSectionHandler.m in Sources */,
 				C3DA80B01BB95C6A00384F50 /* LookupSearchViewController.m in Sources */,
 				C38E89CA1B9705D500790752 /* FormSectionModel.m in Sources */,
-				C3EEB9861BB2E7040090C4B0 /* FMDBDataSource.m in Sources */,
 				C3C6EC861BCD199D00973895 /* KeyBoardTableView.m in Sources */,
 				77DBB91F1B6F560600F02932 /* LoginViewController.m in Sources */,
 				77C035BE1B789794009228F1 /* FormsListViewController.m in Sources */,
-				C3EEB9821BB2E7040090C4B0 /* FMDatabaseAdditions.m in Sources */,
 				779A9D911B7C7D0700D86FED /* SignatureViewController.m in Sources */,
 				77DBB9221B6F562100F02932 /* MenuViewController.m in Sources */,
 				C3EEB99C1BB2EB640090C4B0 /* PickerElementCell.m in Sources */,
@@ -1175,7 +1099,6 @@
 				779A9D931B7C7D0700D86FED /* SubElementCell.m in Sources */,
 				C3E441751BA059180020700F /* FormTypeTableViewCell.m in Sources */,
 				C38E89BB1B9705D500790752 /* CertificateHandler.m in Sources */,
-				C3EEB9811BB2E7040090C4B0 /* FMDatabase.m in Sources */,
 				C38E89CE1B9705D500790752 /* RecordModel.m in Sources */,
 				C3EEB97E1BB2E7040090C4B0 /* UIView+Extension.m in Sources */,
 				C3F6260A1BB7B41300B3C92E /* ExistingCertsListViewController.m in Sources */,
@@ -1183,15 +1106,12 @@
 				C3EEB94F1BB2E5050090C4B0 /* ElementTableViewCell.m in Sources */,
 				C38E89BD1B9705D500790752 /* BaseHandler.m in Sources */,
 				C3AE7E4D1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m in Sources */,
-				C3EEB9841BB2E7040090C4B0 /* FMDatabaseQueue.m in Sources */,
 				C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */,
-				C3EEB98A1BB2E7040090C4B0 /* MBProgressHUD.m in Sources */,
 				C3E441781BA06D2F0020700F /* FormSectionTableViewCell.m in Sources */,
 				77C035C21B7897E3009228F1 /* CertViewController.m in Sources */,
 				779A9D9B1B7C7D0700D86FED /* TickBoxElementCell.m in Sources */,
 				C3FFB4381B9B36180089A0B2 /* PickListElementCell.m in Sources */,
 				779A9D951B7C7D0700D86FED /* TextFieldElementCell.m in Sources */,
-				C3EEB9831BB2E7040090C4B0 /* FMDatabasePool.m in Sources */,
 				C3EEB97F1BB2E7040090C4B0 /* CommonUtils.m in Sources */,
 				C3FFB4411B9B6FC30089A0B2 /* RadioButtonElementCell.m in Sources */,
 			);
@@ -1303,7 +1223,7 @@
 			baseConfigurationReference = 4EE41FB74DDDF2865D00F8CF /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Software Works for You Ltd (YYK27J32TT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = EveryCert/EveryCert.pch;
 				INFOPLIST_FILE = EveryCert/Info.plist;
@@ -1319,7 +1239,7 @@
 			baseConfigurationReference = 5A067339331CE3E7D6EA518F /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Software Works for You Ltd (YYK27J32TT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Software Works for You Ltd (YYK27J32TT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = EveryCert/EveryCert.pch;

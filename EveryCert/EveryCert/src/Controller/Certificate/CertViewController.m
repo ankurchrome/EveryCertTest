@@ -405,6 +405,8 @@ NSString *const ButtonTitleFinish  = @"Finish";
         
         if (isSaved)
         {
+            if (LOGS_ON) NSLog(@"saved data model: %@", dataModel);
+            
             elementModel.recordIdApp = _currentSectionRecordIdApp;
             elementModel.dataIdApp = dataModel.dataIdApp;
         }

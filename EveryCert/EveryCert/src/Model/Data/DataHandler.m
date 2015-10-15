@@ -29,6 +29,7 @@
 // Insert a DataModel object information into data table.
 - (BOOL)insertDataModel:(DataModel *)dataModel
 {
+    FUNCTION_START;
     __block BOOL success = false;
     
     dataModel.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
@@ -41,7 +42,7 @@
      {
          NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?)", self.tableName, DataId, CertificateIdApp, ElementId, RecordIdApp, DataValue, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
          
-         success = [db executeUpdate:query, @(dataModel.dataId), @(dataModel.certificateIdApp), @(dataModel.elementId), @(dataModel.recordIdApp), dataModel.data, dataModel.modifiedTimestampApp, dataModel.modifiedTimestamp, @(dataModel.archive), dataModel.uuid, @(dataModel.isDirty), @(dataModel.companyId)];
+         success = [db executeUpdate:query, @(dataModel.dataId), @(dataModel.certificateIdApp), @(dataModel.elementId), @(dataModel.recordIdApp), dataModel.data, @(dataModel.modifiedTimestampApp), @(dataModel.modifiedTimestamp), @(dataModel.archive), dataModel.uuid, @(dataModel.isDirty), @(dataModel.companyId)];
          
          if (success)
          {
@@ -49,6 +50,7 @@
          }
      }];
     
+    FUNCTION_END;
     return success;
 }
 

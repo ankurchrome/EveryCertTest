@@ -60,7 +60,7 @@
 {
     FUNCTION_START;
     
-    NSString *formPdfName = [NSString stringWithFormat:@"%ld", self.formId];
+    NSString *formPdfName = [NSString stringWithFormat:@"%ld", (long)self.formId];
     NSString *pdfPath = [FORMS_BACKGROUND_LAYOUT_DIR stringByAppendingPathComponent:formPdfName];
     pdfPath = [pdfPath stringByAppendingPathExtension:FILE_TYPE_PDF];
     
