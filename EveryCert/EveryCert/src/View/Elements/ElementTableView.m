@@ -123,6 +123,58 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
     [self reloadData];
 }
 
+- (BOOL)validateElements
+{
+    BOOL isValid = YES;
+    NSString *alertMessage = nil;
+    
+    for (ElementModel *element in _elementModels)
+    {
+        switch (element.fieldType)
+        {
+            case ElementTypeTextField:
+            case ElementTypeTextView:
+            case ElementTypePickListOption:
+            case ElementTypeRadioButton:
+            case ElementTypeLookup:
+            case ElementTypeSubElement:
+            {
+                NSInteger dataLength = element.dataValue.length;
+                
+                if (dataLength < element.minCharLimit)
+                {
+                    alertMessage = element.popUpMessage;
+
+                    isValid = NO; break;
+                }
+                
+                //TODO: remove hard coded values 'email'. Ask for any tag from server to check element field
+                if ([element.fieldName containsString:@"email"])
+                {
+                    if (![CommonUtils validation:element.dataValue regularExpression:EMAIL_REGEX])
+                    {
+                        alertMessage = element.popUpMessage;
+                        
+                        isValid = NO; break;
+                    }
+                }
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
+        if (!isValid)
+        {
+            [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED message:alertMessage];
+            return isValid;
+        }
+    }
+    
+    return isValid;
+}
+
 #pragma mark - UITableViewDatasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

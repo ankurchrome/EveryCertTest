@@ -19,11 +19,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [CommonUtils copyApplicationDatabaseIfRequired];
-    
     [self createRequiredDirectories];
     
     if (LOGS_ON) NSLog(@"Server url: %@", ServerUrl);
-    
     if (LOGS_ON) NSLog(@"Document Dir: %@", [CommonUtils getDocumentDirPath]);
     
     return YES;

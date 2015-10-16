@@ -72,9 +72,10 @@ extern NSString *const ApiResponseKeyMetadataTimestamp;
 extern NSString *const ApiResponseKeyNoOfRecords;
 extern NSString *const ApiResponseKeyPayload;
 extern NSString *const ApiResponseKeyPayloadPopupMessage;
-extern NSString *const ConnectionTimeoutMessage;
-extern NSString *const ConnectionNotFoundMessage;
-extern NSString *const InitialSyncMessage;
+extern NSString *const AlertMessageTryAgainLater;
+extern NSString *const AlertMessageConnectionTimeout;
+extern NSString *const AlertMessageConnectionNotFound;
+extern NSString *const AlertMessageInitialSync;
 
 #pragma mark Key & Data Constants
 
@@ -219,6 +220,12 @@ extern NSString *const RecordId;
 
 #pragma mark - App Constants
 #pragma mark -
+
+#pragma mark LoginScreen
+extern NSString *const HudTitleSignin;
+extern NSString *const ForgotPasswordAlertTitle;
+extern NSString *const ForgotPasswordEmailPlaceholder;
+extern NSString *const ForgotPasswordResetActionTitle;
 
 extern NSString *const HomeBarButtonTitle;
 

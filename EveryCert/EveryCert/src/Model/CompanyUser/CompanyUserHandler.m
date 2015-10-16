@@ -162,4 +162,34 @@
     }];
 }
 
+- (void)saveCompanyUserFields:(NSArray *)companyUserFields
+{
+    NSString *databasePath = [[CommonUtils getDocumentDirPath] stringByAppendingPathComponent:DATABASE_NAME];
+    FMDatabase *database = [FMDatabase databaseWithPath:databasePath];
+
+    [database open];
+    
+    for (NSDictionary *companyUserFieldInfo in companyUserFields)
+    {
+        NSInteger companyUserId = [[companyUserFieldInfo objectForKey:CompanyUserId] integerValue];
+        
+        if (companyUserId <= 0) continue;
+        
+         NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ?", CompanyUserIdApp, self.tableName, CompanyUserId];
+         
+         FMResultSet *resultSet = [database executeQuery:query, @(companyUserId)];
+         
+         if ([resultSet next])
+         {
+             NSInteger companyUserIdApp = [resultSet intForColumn:CompanyUserIdApp];
+             
+             [self updateInfo:companyUserFieldInfo recordIdApp:companyUserIdApp];
+         }
+         else
+         {
+             [self insertInfo:companyUserFieldInfo];
+         }
+    }
+}
+
 @end

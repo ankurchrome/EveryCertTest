@@ -11,8 +11,9 @@
 #import "ElementTableView.h"
 #import "ElementHandler.h"
 #import "CompanyUserHandler.h"
+#import "MenuViewController.h"
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
-#import "AFURLConnectionOperation+EveryCertAdditions.h"
+#import "AFHTTPRequestOperation+EveryCertAdditions.h"
 
 @interface LoginViewController ()
 {
@@ -25,10 +26,6 @@
 @end
 
 @implementation LoginViewController
-
-NSString *const ForgotPasswordAlertTitle       = @"Forgot password";
-NSString *const ForgotPasswordEmailPlaceholder = @"Email";
-NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
 
 #pragma mark - LifeCycle Methods
 
@@ -67,6 +64,8 @@ NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
     }
     
     [_loginElementTableView reloadWithElements:_loginElements];
+    
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 }
 
 - (void)viewDidLayoutSubviews
@@ -78,7 +77,17 @@ NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
 
 - (void)startLoginWithServer
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    //Check for internet availability for login through server
+    if (![[AFNetworkReachabilityManager sharedManager] isReachable])
+    {
+        [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED
+                                message:AlertMessageConnectionNotFound];
+        return;
+    }
+    
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    hud.labelText = HudTitleSignin;
     
     NSString *baseUrl = [[ServerUrl stringByAppendingPathComponent:ApiPath] stringByAppendingPathComponent:ApiLogin];
 
@@ -97,27 +106,35 @@ NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
        parameters:loginParams
           success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         [operation validateResponse];
          
-         if (operation.isResponseValid)
+         if ([operation validateResponse])
          {
-             if (operation.metadataError)
+             CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
+             
+             NSArray *companyUserFields = operation.payloadInfo;
+             
+             if (companyUserFields && [companyUserFields isKindOfClass:[NSArray class]] && companyUserFields.count > 0)
              {
-                 [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED message:operation.popupMessage];
-             }
-             else
-             {
+                 [companyUserHandler saveCompanyUserFields:companyUserFields];
                  
+                 //make the user logged in
+                 NSDictionary *companyUserField = [companyUserFields firstObject];
+                 NSInteger userId = [[companyUserField objectForKey:UserId] integerValue];
+                 [companyUserHandler saveLoggedUser:userId];
+                 
+                 MenuViewController *menuVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuVC"];
+                 
+                 [self.navigationController pushViewController:menuVC animated:YES];
              }
          }
          
-         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+         [self stopRequestWithTitle:nil Message:nil alert:NO];
      }
           failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"Error: %@", operation.responseString);
          
-         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+         [self stopRequestWithTitle:ALERT_TITLE_FAILED Message:AlertMessageTryAgainLater alert:YES];
      }];
 }
 
@@ -127,6 +144,9 @@ NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
 {
     if ([identifier isEqualToString:@"SignIn"])
     {
+        //If login details is not valid, don't go further
+        if (![_loginElementTableView validateElements]) return NO;
+        
         CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
         
         BOOL isLoggedIn = [companyUserHandler checkLoginWithElements:_loginElements];
@@ -167,5 +187,24 @@ NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
     [alertController addAction:resetPasswordAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }
+
+/**
+ Hide the hud when request fails/completes and show the alert with error message if needed.
+ @param  errorMessage An error message to show with alert.
+ @return showAlert To decide for display an alert or not.
+ */
+- (void)stopRequestWithTitle:(NSString *)title Message:(NSString *)message alert:(BOOL)showAlert
+{
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
+        if (showAlert)
+        {
+            [CommonUtils showAlertWithTitle:title message:message];
+        }
+    });
+}
+
 
 @end

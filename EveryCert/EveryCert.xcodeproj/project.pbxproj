@@ -38,10 +38,8 @@
 		77DC23CB1B6F4A9600624211 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DC23CA1B6F4A9600624211 /* main.m */; };
 		77DC23D61B6F4A9600624211 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77DC23D51B6F4A9600624211 /* Images.xcassets */; };
 		77DC23E51B6F4A9600624211 /* EveryCertTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DC23E41B6F4A9600624211 /* EveryCertTests.m */; };
-		77F8E4A91B821F0300C214A4 /* Everycert.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 77F8E4A81B821F0300C214A4 /* Everycert.sqlite */; };
 		77F8E4AC1B82220600C214A4 /* Everycert.sql in Resources */ = {isa = PBXBuildFile; fileRef = 77F8E4AB1B82220600C214A4 /* Everycert.sql */; };
 		C31AA8A51BCF8F5B007FF9B9 /* FMDBDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C31AA8A41BCF8F5B007FF9B9 /* FMDBDataSource.m */; };
-		C327A5EE1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C327A5ED1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.m */; };
 		C34301F81B9832FD007AC6BB /* EverycertWithData.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */; };
 		C38E89BB1B9705D500790752 /* CertificateHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89861B9705D500790752 /* CertificateHandler.m */; };
 		C38E89BC1B9705D500790752 /* CertificateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89881B9705D500790752 /* CertificateModel.m */; };
@@ -67,6 +65,8 @@
 		C38E89D01B9705D500790752 /* SubElementModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89BA1B9705D500790752 /* SubElementModel.m */; };
 		C3AE7E4D1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */; };
 		C3C6EC861BCD199D00973895 /* KeyBoardTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C6EC851BCD199D00973895 /* KeyBoardTableView.m */; };
+		C3D722681BD0E79100820881 /* Everycert.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C3D722671BD0E79100820881 /* Everycert.sqlite */; };
+		C3D7226C1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D7226B1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.m */; };
 		C3DA80B01BB95C6A00384F50 /* LookupSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA80AF1BB95C6A00384F50 /* LookupSearchViewController.m */; };
 		C3DA80B31BB966D400384F50 /* LookupRecordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA80B21BB966D400384F50 /* LookupRecordTableViewCell.m */; };
 		C3E441751BA059180020700F /* FormTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E441741BA059180020700F /* FormTypeTableViewCell.m */; };
@@ -163,13 +163,9 @@
 		77DC23DE1B6F4A9600624211 /* EveryCertTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EveryCertTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		77DC23E31B6F4A9600624211 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77DC23E41B6F4A9600624211 /* EveryCertTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EveryCertTests.m; sourceTree = "<group>"; };
-		77F8E4A81B821F0300C214A4 /* Everycert.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Everycert.sqlite; sourceTree = "<group>"; };
 		77F8E4AB1B82220600C214A4 /* Everycert.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Everycert.sql; sourceTree = "<group>"; };
 		C31AA8A31BCF8F5B007FF9B9 /* FMDBDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDBDataSource.h; sourceTree = "<group>"; };
 		C31AA8A41BCF8F5B007FF9B9 /* FMDBDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBDataSource.m; sourceTree = "<group>"; };
-		C327A5EC1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFURLConnectionOperation+EveryCertAdditions.h"; sourceTree = "<group>"; };
-		C327A5ED1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFURLConnectionOperation+EveryCertAdditions.m"; sourceTree = "<group>"; };
-		C327A5F01BCFDB63005CE426 /* AFURLConnectionOperation_EveryCertExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation_EveryCertExtension.h; sourceTree = "<group>"; };
 		C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = EverycertWithData.sqlite; sourceTree = "<group>"; };
 		C38E89851B9705D500790752 /* CertificateHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateHandler.h; sourceTree = "<group>"; };
 		C38E89861B9705D500790752 /* CertificateHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateHandler.m; sourceTree = "<group>"; };
@@ -219,6 +215,10 @@
 		C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistingCertificateTableViewCell.m; sourceTree = "<group>"; };
 		C3C6EC841BCD199D00973895 /* KeyBoardTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyBoardTableView.h; sourceTree = "<group>"; };
 		C3C6EC851BCD199D00973895 /* KeyBoardTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyBoardTableView.m; sourceTree = "<group>"; };
+		C3D722671BD0E79100820881 /* Everycert.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Everycert.sqlite; sourceTree = "<group>"; };
+		C3D722691BD10F1A00820881 /* AFHTTPRequestOperation_EveryCertExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation_EveryCertExtension.h; sourceTree = "<group>"; };
+		C3D7226A1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperation+EveryCertAdditions.h"; sourceTree = "<group>"; };
+		C3D7226B1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperation+EveryCertAdditions.m"; sourceTree = "<group>"; };
 		C3DA80AE1BB95C6A00384F50 /* LookupSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupSearchViewController.h; sourceTree = "<group>"; };
 		C3DA80AF1BB95C6A00384F50 /* LookupSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupSearchViewController.m; sourceTree = "<group>"; };
 		C3DA80B11BB966D400384F50 /* LookupRecordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupRecordTableViewCell.h; sourceTree = "<group>"; };
@@ -652,7 +652,7 @@
 			isa = PBXGroup;
 			children = (
 				77F8E4AB1B82220600C214A4 /* Everycert.sql */,
-				77F8E4A81B821F0300C214A4 /* Everycert.sqlite */,
+				C3D722671BD0E79100820881 /* Everycert.sqlite */,
 				C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */,
 			);
 			path = Database;
@@ -679,9 +679,9 @@
 		C327A5EB1BCFCE25005CE426 /* AFNetworking+EveryCertAdditions */ = {
 			isa = PBXGroup;
 			children = (
-				C327A5F01BCFDB63005CE426 /* AFURLConnectionOperation_EveryCertExtension.h */,
-				C327A5EC1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.h */,
-				C327A5ED1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.m */,
+				C3D722691BD10F1A00820881 /* AFHTTPRequestOperation_EveryCertExtension.h */,
+				C3D7226A1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.h */,
+				C3D7226B1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.m */,
 			);
 			path = "AFNetworking+EveryCertAdditions";
 			sourceTree = "<group>";
@@ -1013,12 +1013,12 @@
 				779A9D8A1B7C7D0700D86FED /* PickListViewController.xib in Resources */,
 				C3FFB4421B9B6FC30089A0B2 /* RadioButtonElementCell.xib in Resources */,
 				C3EEB9991BB2E8F90090C4B0 /* SearchElementCell.xib in Resources */,
+				C3D722681BD0E79100820881 /* Everycert.sqlite in Resources */,
 				77DBB91C1B6F555C00F02932 /* Main.storyboard in Resources */,
 				779A9D941B7C7D0700D86FED /* SubElementCell.xib in Resources */,
 				77F8E4AC1B82220600C214A4 /* Everycert.sql in Resources */,
 				779A9D921B7C7D0700D86FED /* SignatureViewController.xib in Resources */,
 				779A9D9A1B7C7D0700D86FED /* TextViewElementCell.xib in Resources */,
-				77F8E4A91B821F0300C214A4 /* Everycert.sqlite in Resources */,
 				C3FFB43C1B9B3CF40089A0B2 /* SignatureElementCell.xib in Resources */,
 				C3EEB9561BB2E5B80090C4B0 /* LineElementCell.xib in Resources */,
 				77DBB91B1B6F555C00F02932 /* LaunchScreen.xib in Resources */,
@@ -1092,6 +1092,7 @@
 				779A9D851B7C7D0700D86FED /* LookupElementCell.m in Sources */,
 				C3FFB43D1B9B3CF40089A0B2 /* SignatureElementCell.m in Sources */,
 				C3F6260D1BB7B86B00B3C92E /* CertificatePreviewViewController.m in Sources */,
+				C3D7226C1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.m in Sources */,
 				C38E89C01B9705D500790752 /* CompanyUserModel.m in Sources */,
 				C38E89C21B9705D500790752 /* DataModel.m in Sources */,
 				C38E89D01B9705D500790752 /* SubElementModel.m in Sources */,
@@ -1118,7 +1119,6 @@
 				77DBB9221B6F562100F02932 /* MenuViewController.m in Sources */,
 				C3EEB99C1BB2EB640090C4B0 /* PickerElementCell.m in Sources */,
 				C38E89C11B9705D500790752 /* DataHandler.m in Sources */,
-				C327A5EE1BCFCEFD005CE426 /* AFURLConnectionOperation+EveryCertAdditions.m in Sources */,
 				779A9D971B7C7D0700D86FED /* TextLabelElementCell.m in Sources */,
 				C3EEB9971BB2E8BC0090C4B0 /* SearchElementCell.m in Sources */,
 				C38E89C61B9705D500790752 /* ElementModel.m in Sources */,

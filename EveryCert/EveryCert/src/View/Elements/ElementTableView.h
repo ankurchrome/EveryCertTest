@@ -32,4 +32,6 @@
  */
 - (void)reloadWithElements:(NSArray *)elementModelArray;
 
+- (BOOL)validateElements;
+
 @end

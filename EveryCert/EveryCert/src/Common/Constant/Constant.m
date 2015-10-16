@@ -38,9 +38,10 @@ NSString *const ApiResponseKeyNoOfRecords = @"no_records";
 NSString *const ApiResponseKeyPayload  = @"payload";
 NSString *const ApiResponseKeyPayloadPopupMessage = @"popupmessage";
 
-NSString *const ConnectionTimeoutMessage  = @"Connection time out, Please try again!";
-NSString *const ConnectionNotFoundMessage = @"Please check your internet connection and try again.";
-NSString *const InitialSyncMessage        = @"Intial Sync will take up to 60 seconds please wait.";
+NSString *const AlertMessageTryAgainLater      = @"Please try again later.";
+NSString *const AlertMessageConnectionTimeout  = @"Connection time out, Please try again!";
+NSString *const AlertMessageConnectionNotFound = @"Please check your internet connection and try again.";
+NSString *const AlertMessageInitialSync        = @"Intial Sync will take up to 60 seconds please wait.";
 
 #pragma mark Key & Data Constants
 
@@ -185,6 +186,13 @@ NSString *const RecordId    = @"record_id";
 
 #pragma mark - App Constants
 #pragma mark -
+
+#pragma mark LoginScreen
+NSString *const HudTitleSignin = @"Signin...";
+NSString *const ForgotPasswordAlertTitle       = @"Forgot password";
+NSString *const ForgotPasswordEmailPlaceholder = @"Email";
+NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
+
 NSString *const HomeBarButtonTitle = @"Home";
 
 NSString *const ElementPdfDrawingFormat  = @"ElementPdfFormat";

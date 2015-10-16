@@ -39,4 +39,11 @@
  */
 - (void)saveLoggedUser:(NSInteger)userId;
 
+/**
+ <#description#>
+ @param  <#type#> <#desc#>
+ @return <#type#> <#retval#>
+ */
+- (void)saveCompanyUserFields:(NSArray *)companyUserFields;
+
 @end

@@ -10,12 +10,4 @@
 
 @interface AFURLConnectionOperation ()
 
-@property (nonatomic, strong) NSDictionary *metadataInfo;
-@property (nonatomic, strong) NSDictionary *payloadInfo;
-@property (nonatomic, assign) BOOL metadataError;
-@property (nonatomic, assign) BOOL isResponseValid;
-@property (nonatomic, assign) NSTimeInterval metadataTimestamp;
-@property (nonatomic, assign) NSInteger numberOfRecords;
-@property (nonatomic, copy)   NSString *popupMessage;
-
 @end

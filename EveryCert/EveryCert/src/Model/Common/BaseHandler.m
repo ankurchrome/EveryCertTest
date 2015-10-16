@@ -87,7 +87,7 @@
     FUNCTION_END;
 }
 
-// Update the table with columns and their data defined in the columnInfo for the given recordIdApp
+// Update into table with columns and their data defined in the columnInfo for the given recordIdApp
 - (BOOL)updateInfo:(NSDictionary *)columnInfo recordIdApp:(NSInteger)recordIdApp
 {
     __block BOOL success = false;
@@ -102,11 +102,18 @@
 
          //Make column string to bind the column data from dictionary
          NSMutableString *columnString = [NSMutableString new];
+         
          for (NSString *key in [updatedColumnInfo allKeys])
          {
+             
              [columnString appendFormat:@"%@ = :%@, ", key, key];
          }
-         [columnString deleteCharactersInRange:NSMakeRange(columnString.length-2, 2)];
+
+         if ([columnString hasSuffix:@", "])
+         {
+             //remove the extra separator from the end
+             [columnString deleteCharactersInRange:NSMakeRange(columnString.length-2, 2)];
+         }
          
          NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE %@ = :%@", self.tableName, columnString, self.appIdField, self.appIdField];
 
@@ -115,6 +122,53 @@
      }];
     
     return success;
+}
+
+// Insert into table with columns and their data defined in the columnInfo and return the app id generated locally
+- (NSInteger)insertInfo:(NSDictionary *)columnInfo
+{
+    __block NSInteger appId = 0;
+    
+    if (!columnInfo || columnInfo.count <= 0) return appId;
+    
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         //Make column string to bind the column data from dictionary
+         NSMutableString *columnString = [NSMutableString new];
+         NSMutableString *valueString  = [NSMutableString new];
+         
+         for (NSString *key in self.tableColumns)
+         {
+             if ([columnInfo objectForKey:key])
+             {
+                 [columnString appendFormat:@"%@, ", key];
+                 [valueString  appendFormat:@":%@, ", key];
+             }
+         }
+         
+         if ([columnString hasSuffix:@", "])
+         {
+            //remove the extra separator from the end
+            [columnString deleteCharactersInRange:NSMakeRange(columnString.length-2, 2)];
+         }
+
+         if ([valueString hasSuffix:@", "])
+         {
+             //remove the extra separator from the end
+             [valueString deleteCharactersInRange:NSMakeRange(valueString.length-2, 2)];
+         }
+
+         NSString *query = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)", self.tableName, columnString, valueString];
+         
+         if ([db executeUpdate:query withParameterDictionary:columnInfo])
+         {
+             appId = [db lastInsertRowId];
+         }
+     }];
+    
+    return appId;
 }
 
 @end

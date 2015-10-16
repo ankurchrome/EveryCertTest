@@ -35,11 +35,19 @@
 - (NSString *)updateQueryForTable:(NSString *)tableName withColumnInfo:(NSDictionary *)columnInfo;
 
 /**
- Update the table with columns and their data defined in the columnInfo for the given recordIdApp
+ Update into table with columns and their data defined in the columnInfo for the given recordIdApp
  @param  columnInfo A NSDictionary object which contains column names with their data to update
  @param  recordIdApp Local id of a record to be update in table
  @return BOOL returns true if record updated successfully otherwise false
  */
 - (BOOL)updateInfo:(NSDictionary *)columnInfo recordIdApp:(NSInteger)recordIdApp;
+
+// Insert into table with columns and their data defined in the columnInfo and return the app id generated locally
+/**
+ Insert into table with columns and their data defined in the columnInfo and return the app id generated locally
+ @param  columnInfo A NSDictionary object which contains column names with their data to insert
+ @return NSInteger returns a last row id inserted by database if record inserted successfully otherwise returns 0
+ */
+- (NSInteger)insertInfo:(NSDictionary *)columnInfo;
 
 @end

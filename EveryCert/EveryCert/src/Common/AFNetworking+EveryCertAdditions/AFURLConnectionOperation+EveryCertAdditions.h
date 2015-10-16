@@ -11,10 +11,4 @@
 
 @interface AFURLConnectionOperation (EveryCertAdditions)
 
-/**
- Validate the response of request operation(AFURLConnectionOperation) against a known common format being used by EveryCert Server
- @return void
- */
-- (void)validateResponse;
-
 @end

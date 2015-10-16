@@ -69,6 +69,8 @@
 {
     FUNCTION_START;
     
+    if (![CommonUtils isValidString:text]) return NO;
+    
     NSPredicate *namePredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
     return [namePredicate evaluateWithObject:text];
 }
@@ -239,7 +241,7 @@
     NSFileManager *fileManager = [[NSFileManager alloc]init];
     NSString *docDirPath   = [CommonUtils getDocumentDirPath];
     NSString *dbFilePath   = [docDirPath stringByAppendingPathComponent:DATABASE_NAME];
-    NSString *dbBundlePath = [[NSBundle mainBundle] pathForResource:@"EverycertWithData"
+    NSString *dbBundlePath = [[NSBundle mainBundle] pathForResource:@"Everycert"
                                                              ofType:@"sqlite"];
     BOOL databaseCopied = false;
     NSError *error = nil;
