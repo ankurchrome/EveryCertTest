@@ -71,6 +71,7 @@ NSString *const PdfFormatCapitalizationPassword = @"password";
 NSString *const PdfFormatCapitalizationEmail = @"email";
 
 NSString *const kPdfFormatKeyboard = @"Keyboard";
+NSString *const kPDFDateFormat     = @"date_format";
 NSString *const PdfFormatKeyboardAlphabetic = @"alpha";
 NSString *const PdfFormatKeyboardAlphaNumeric = @"alphanumeric";
 NSString *const PdfFormatKeyboardNumeric = @"numeric";

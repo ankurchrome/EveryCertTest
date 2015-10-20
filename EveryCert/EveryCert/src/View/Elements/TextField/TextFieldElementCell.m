@@ -7,6 +7,7 @@
 //
 
 #import "TextFieldElementCell.h"
+#import "CertViewController.h"
 
 #define TEXTFIELD_TRAILING_CONSTANT_DEFAULT 5
 
@@ -29,7 +30,7 @@
 - (void)initializeWithElementModel:(ElementModel *)elementModel
 {
     [super initializeWithElementModel:elementModel];
-
+    
     _textLabel.text = elementModel.label;
     _textField.text = elementModel.dataValue;
     _charLimitLabel.text = [@(elementModel.maxCharLimit) stringValue];
@@ -76,10 +77,10 @@
     {
         _textField.keyboardType = UIKeyboardTypeEmailAddress;
     }
-
+    
     //Set textfield Keyboard
     NSString *elementKeyboardType = elementModel.printedTextFormat[kPdfFormatKeyboard];
-
+    
     if ([elementKeyboardType isEqualToString:PdfFormatKeyboardAlphabetic])
     {
         _textField.keyboardType = UIKeyboardTypeAlphabet;
@@ -92,7 +93,7 @@
     {
         _textField.keyboardType = UIKeyboardTypeNumberPad;
     }
-
+    
     [_textLabel sizeToFit];
     [self setRemainingChars];
 }
@@ -114,6 +115,16 @@
 }
 
 #pragma mark - UITextFieldDelegate Methods
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    //** if the Element Model is of type Date then open Date Picker in Input View
+    UIDatePicker *datePicker  = [UIDatePicker new];
+    datePicker.datePickerMode = UIDatePickerModeDate;
+    [datePicker addTarget:self action:@selector(didchangeInDate:) forControlEvents:UIControlEventValueChanged];
+    self.elementModel.printedTextFormat[kPdfFormatKeyboard] ? (textField.inputView = datePicker) : nil;
+    return YES;
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -160,4 +171,19 @@
     self.elementModel.dataValue = _textField.text;
 }
 
+#pragma mark - Private Methods
+
+// This method is used to add the date on the Respective Date Field in the Given Format
+- (void)didchangeInDate:(UIDatePicker *)picker
+{
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    
+    if([CommonUtils isValidObject:self.elementModel.printedTextFormat[kPDFDateFormat]])
+    {
+        dateFormatter.dateFormat = self.elementModel.printedTextFormat[kPDFDateFormat]; // Add Date Format, if Exist
+    }
+    
+    NSString *dateString = [dateFormatter stringFromDate:picker.date];
+    _textField.text      = dateString;
+}
 @end

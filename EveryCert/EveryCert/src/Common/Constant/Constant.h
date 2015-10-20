@@ -105,6 +105,7 @@ extern NSString *const PdfFormatCapitalizationPassword;
 extern NSString *const PdfFormatCapitalizationEmail;
 
 extern NSString *const kPdfFormatKeyboard;
+extern NSString *const kPDFDateFormat;
 extern NSString *const PdfFormatKeyboardAlphabetic;
 extern NSString *const PdfFormatKeyboardAlphaNumeric;
 extern NSString *const PdfFormatKeyboardNumeric;
