@@ -28,6 +28,7 @@ NSString *const ServerUrl = @"https://portal.everycert.co.uk/";
 NSString *const ApiPath = @"api/v1/";
 NSString *const ApiUrlParamTimestamp = @"timestamp";
 NSString *const ApiLogin = @"login";
+NSString *const ApiSignup = @"signup";
 NSString *const ApiDownload = @"download";
 NSString *const ApiDownloadSignature = @"downloadSig";
 

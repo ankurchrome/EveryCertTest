@@ -63,7 +63,7 @@
     [databaseQueue inDatabase:^(FMDatabase *db)
     {
         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ != 1 %@ ORDER BY %@, %@", self.tableName, Archive, permissionCondQuery, FormCategoryId, FormSequenceOrder];
-        
+
         FMResultSet *result = [db executeQuery:query];
 
         while ([result next])

@@ -9,6 +9,10 @@
 #import "RegistrationViewController.h"
 #import "ElementTableView.h"
 #import "ElementHandler.h"
+#import "CompanyUserHandler.h"
+#import "MenuViewController.h"
+#import <AFNetworking/AFHTTPRequestOperationManager.h>
+#import "AFHTTPRequestOperation+EveryCertAdditions.h"
 
 @interface RegistrationViewController ()
 {
@@ -51,6 +55,93 @@
 }
 
 #pragma mark - IBActions
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    BOOL shouldPerformSegue = YES;
+    
+    if ([identifier isEqualToString:@"Registration"])
+    {
+        shouldPerformSegue = NO;
+        
+        //If login details is not valid, don't go further
+        if (![_signupElementTableView validateElements]) return NO;
+        
+        //Check for internet availability for login through server
+        if (![[AFNetworkReachabilityManager sharedManager] isReachable])
+        {
+            [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED
+                                    message:AlertMessageConnectionNotFound];
+            return NO;
+        }
+        
+        __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        hud.labelText = HudTitleSignin;
+        
+        NSString *baseUrl = [[ServerUrl stringByAppendingPathComponent:ApiPath] stringByAppendingPathComponent:ApiSignup];
+        
+        NSMutableArray *signupParams = [NSMutableArray new];
+        
+        for (ElementModel *elementModel in _signupElements)
+        {
+            NSMutableDictionary *elementInfo = [NSMutableDictionary new];
+            
+            [elementInfo setObject:[[NSUUID new] UUIDString] forKey:Uuid];
+            [elementInfo setObject:elementModel.fieldName    forKey:ElementFieldName];
+            [elementInfo setObject:elementModel.dataValue    forKey:CompanyUserData];
+
+            [signupParams addObject:elementInfo];
+        }
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.requestSerializer  = [AFJSONRequestSerializer serializer];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+        
+        [manager PUT:baseUrl
+          parameters:signupParams
+             success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             if ([operation validateResponse])
+             {
+                 CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
+
+                 NSArray *companyUserFields = operation.payloadInfo;
+                 
+                 if (companyUserFields && [companyUserFields isKindOfClass:[NSArray class]] && companyUserFields.count > 0)
+                 {
+                     [companyUserHandler saveCompanyUserFields:companyUserFields];
+                     
+                     //make the user logged in
+                     NSDictionary *companyUserField = [companyUserFields firstObject];
+                     NSInteger userId = [[companyUserField objectForKey:UserId] integerValue];
+                     [companyUserHandler saveLoggedUser:userId];
+                     
+                     MenuViewController *menuVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuVC"];
+                     
+                     [self.navigationController pushViewController:menuVC animated:YES];
+                 }
+             }
+             
+             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+         }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             NSLog(@"Error: %@", operation.responseString);
+             
+             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+             
+             [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED message:AlertMessageTryAgainLater];
+         }];
+    }
+    
+    return shouldPerformSegue;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+}
 
 //Pop to SignIn view controller
 - (IBAction)signInButtonTapped:(id)sender

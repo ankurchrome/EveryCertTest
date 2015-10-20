@@ -63,6 +63,7 @@ extern NSString *const ServerUrl;
 extern NSString *const ApiPath;
 extern NSString *const ApiUrlParamTimestamp;
 extern NSString *const ApiLogin;
+extern NSString *const ApiSignup;
 extern NSString *const ApiDownload;
 extern NSString *const ApiDownloadSignature;
 

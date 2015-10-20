@@ -106,7 +106,6 @@
        parameters:loginParams
           success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         
          if ([operation validateResponse])
          {
              CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
