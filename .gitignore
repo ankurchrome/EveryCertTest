@@ -31,3 +31,5 @@ Thumbs.db
 
 #cocoapods
 pods/
+Podfile.lock
+
