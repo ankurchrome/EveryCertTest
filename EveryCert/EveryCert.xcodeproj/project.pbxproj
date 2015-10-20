@@ -506,10 +506,7 @@
 				77C035BF1B7897C4009228F1 /* Certificate */,
 				77DBB92C1B6F590D00F02932 /* ExistingCertificate */,
 				77DBB92E1B6F590D00F02932 /* Setting */,
-				C3DA80AE1BB95C6A00384F50 /* LookupSearchViewController.h */,
-				C3DA80AF1BB95C6A00384F50 /* LookupSearchViewController.m */,
-				C3DA80B11BB966D400384F50 /* LookupRecordTableViewCell.h */,
-				C3DA80B21BB966D400384F50 /* LookupRecordTableViewCell.m */,
+				77E805AC1BD61C62006A384B /* LookUpSearch */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -656,6 +653,17 @@
 				C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		77E805AC1BD61C62006A384B /* LookUpSearch */ = {
+			isa = PBXGroup;
+			children = (
+				C3DA80AE1BB95C6A00384F50 /* LookupSearchViewController.h */,
+				C3DA80AF1BB95C6A00384F50 /* LookupSearchViewController.m */,
+				C3DA80B11BB966D400384F50 /* LookupRecordTableViewCell.h */,
+				C3DA80B21BB966D400384F50 /* LookupRecordTableViewCell.m */,
+			);
+			name = LookUpSearch;
 			sourceTree = "<group>";
 		};
 		BE227E6E76C9CF34A16E2621 /* Pods */ = {
@@ -938,6 +946,7 @@
 				77DC23C21B6F4A9500624211 /* Frameworks */,
 				77DC23C31B6F4A9500624211 /* Resources */,
 				0CDA7E28DCCBC7A227DF7083 /* Copy Pods Resources */,
+				4D1CE449F683CBBAE87BC4B5 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1071,6 +1080,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4D1CE449F683CBBAE87BC4B5 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

@@ -8,6 +8,8 @@
 
 #import "TextViewElementCell.h"
 
+#define TOTAL_TEXT_VIEW_LINES 4
+
 @implementation TextViewElementCell
 {
     __weak IBOutlet UILabel    *_titleLabel;
@@ -44,6 +46,13 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    // Limit the Total number of Lines in Text View
+    int numLines = textView.contentSize.height / textView.font.lineHeight;
+    if(numLines > TOTAL_TEXT_VIEW_LINES  && [text isEqualToString:@"\n"])
+    {
+        return NO;
+    }
+    
     NSString *updatedString = [textView.text stringByReplacingCharactersInRange:range withString:text];
     
     NSInteger remainingChars = self.elementModel.maxCharLimit;

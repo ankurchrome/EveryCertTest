@@ -54,6 +54,7 @@ NSString *const kPdfFormatDefaultText = @"DefaultText";
 NSString *const kPdfFormatRadioButtons     = @"RadioButtons";
 NSString *const kPdfFormatRadioButtonTitle = @"RadioButtonTitle";
 NSString *const kPdfFormatRadioButtonValue = @"RadioButtonValue";
+NSString *const kPdfRadioButtonColor       = @"RadioButtonColor";
 NSString *const kPdfFormatRadioButtonSelectedIndex = @"RadioButtonSelectedIndex";
 
 NSString *const kPdfFormatAlignment = @"Alignment";

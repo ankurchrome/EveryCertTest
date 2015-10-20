@@ -1331,7 +1331,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FormTypeCellIdentifier" rowHeight="44" id="7ZD-Sg-b1j" customClass="FormTypeTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FormTypeCellIdentifier" id="7ZD-Sg-b1j" customClass="FormTypeTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="568" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7ZD-Sg-b1j" id="DRM-vv-Upq">
@@ -1373,10 +1373,12 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="102-Z9-OdB" secondAttribute="bottom" id="q8k-2q-WMg"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <gestureRecognizers/>
                                         <connections>
                                             <outlet property="downloadImageView" destination="wRc-h6-kKF" id="IKF-uN-mAM"/>
                                             <outlet property="statusLabel" destination="vQo-Sc-xYs" id="Qdm-rf-8Oz"/>
                                             <outlet property="titleLabel" destination="102-Z9-OdB" id="W8C-5i-tGp"/>
+                                            <outletCollection property="gestureRecognizers" destination="Pus-Wo-r1h" appends="YES" id="dBW-Qj-91o"/>
                                             <segue destination="I9P-LX-HXB" kind="show" identifier="ShowCertificate" id="MDj-hG-y3e"/>
                                         </connections>
                                     </tableViewCell>
@@ -1402,6 +1404,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ndu-HE-Gz3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="Pus-Wo-r1h">
+                    <connections>
+                        <action selector="swipeLeftOfTableViewCell:" destination="Tfd-TN-TzW" id="zor-ue-5dF"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="289" y="301"/>
         </scene>

@@ -83,6 +83,13 @@
                 case ElementTypeLookup:
                 case ElementTypeSearch:
                 {
+                    // Radio Button condition change elementColor, if its RadioButtonColor exist
+                    if(elementModel.fieldType == ElementTypeRadioButton)
+                    {
+                        UIColor *changeElementColor = [self changeRadioButtonElementColor: elementModel];
+                        changeElementColor = [UIColor clearColor] ? : (elementColor = changeElementColor);  // if it returns clear color ie. i consider as nill then do nothing else return the perticular of Radio Button if exist
+                    }
+                    
                     NSDictionary *attrDic = @{NSFontAttributeName: elementFont,
                                               NSForegroundColorAttributeName: elementColor};
                     
@@ -118,6 +125,22 @@
     UIGraphicsEndPDFContext();
 
     FUNCTION_END;
+}
+
+// If the Individual Radio Button is having its own Color in the Element Record
+- (UIColor *)changeRadioButtonElementColor:(ElementModel *)elementModel
+{
+    // Radio Button Color for Specific Button on PDF
+    NSArray *radioButtons = [elementModel.printedTextFormat objectForKey:kPdfFormatRadioButtons];
+    
+    for(NSDictionary *radioButtonInfo in radioButtons)
+    {
+        if([elementModel.dataValue isEqualToString:radioButtonInfo[kPdfFormatRadioButtonValue]] && radioButtonInfo[kPdfRadioButtonColor])
+        {
+            return [CommonUtils colorWithHexString:radioButtonInfo[kPdfRadioButtonColor]]; // Returns the Actual Color
+        }
+    }
+    return [UIColor clearColor];    //Work as a nill color that never exist
 }
 
 @end

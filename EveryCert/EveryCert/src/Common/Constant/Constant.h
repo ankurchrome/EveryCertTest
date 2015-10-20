@@ -88,6 +88,7 @@ extern NSString *const kPdfFormatDefaultText;
 extern NSString *const kPdfFormatRadioButtons;
 extern NSString *const kPdfFormatRadioButtonTitle;
 extern NSString *const kPdfFormatRadioButtonValue;
+extern NSString *const kPdfRadioButtonColor;
 extern NSString *const kPdfFormatRadioButtonSelectedIndex;
 
 extern NSString *const kPdfFormatAlignment;

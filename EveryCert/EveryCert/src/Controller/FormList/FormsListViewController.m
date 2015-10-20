@@ -10,6 +10,7 @@
 #import "CertViewController.h"
 #import "FormTypeTableViewCell.h"
 #import "FormHandler.h"
+#import "UIView+Extension.h"
 
 #define FORM_LIST_ROW_HEIGHT 44.0
 
@@ -90,6 +91,18 @@ NSString *const FormStatusTitleInstalled = @"Installed";
         FormModel   *formModel = _allFormsList[indexPath.row];
         CertViewController *certificateVC = [segue destinationViewController];
         [certificateVC initializeWithForm:formModel];
+    }
+}
+
+- (IBAction)swipeLeftOfTableViewCell:(UISwipeGestureRecognizer *)sender
+{
+    if([sender.view isKindOfClass:[FormTypeTableViewCell class]])
+    {
+        FormTypeTableViewCell *cell = (FormTypeTableViewCell*)sender.view;
+        if (LOGS_ON) NSLog(@"%@", cell.contentView);
+        cell.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+        cell.contentView.frame = CGRectMake(cell.contentView.frameX - 50, cell.frameY, cell.frameWidth, cell.frameHeight);
+        if (LOGS_ON) NSLog(@"%@", cell.contentView);
     }
 }
 
