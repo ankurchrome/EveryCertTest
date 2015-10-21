@@ -171,4 +171,197 @@
     return appId;
 }
 
+
+//Get the last updated sync timestamp for the table.
+- (NSTimeInterval)getSyncTimestampOfTableForCompany:(NSInteger)companyId
+{
+    __block NSTimeInterval timeInterval = 0;
+    
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ? AND %@ = ?", SyncTimestampGet, SyncTimestampTable, SyncTimestampTableName, CompanyId];
+         
+         FMResultSet *result = [db executeQuery:query, self.tableName, @(companyId)];
+         
+         if ([result next])
+         {
+             timeInterval = [result doubleForColumn:SyncTimestampGet];
+         }
+     }];
+    
+    return timeInterval;
+}
+
+//Update the sync timestamp for the table after update all GET records.
+- (BOOL)updateTableSyncTimestamp:(NSTimeInterval)timestamp company:(NSInteger)companyId
+{
+    __block BOOL isUpdated = false;
+    
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ? AND %@ = ?", SyncTimestampIdApp, SyncTimestampTable, SyncTimestampTableName, CompanyId];
+         
+         FMResultSet *result = [db executeQuery:query, self.tableName, @(companyId)];
+         
+         NSInteger timestampIdApp = 0;
+         
+         if ([result next])
+         {
+             timestampIdApp = [result intForColumn:SyncTimestampIdApp];
+             
+             query = [NSString stringWithFormat:@"UPDATE %@ SET %@  = ? WHERE %@ = ?", SyncTimestampTable, SyncTimestampGet, SyncTimestampIdApp];
+             
+             isUpdated = [db executeUpdate:query, @(timestamp), @(timestampIdApp)];
+         }
+         else
+         {
+             query = [NSString stringWithFormat:@"INSERT INTO %@(%@, %@, %@) VALUES(?, ?, ?)", SyncTimestampTable, CompanyId, SyncTimestampTableName, SyncTimestampGet];
+             
+             isUpdated = [db executeUpdate:query, @(companyId), self.tableName, @(timestamp)];
+         }
+     }];
+    
+    return isUpdated;
+}
+
+//returns local Record id for given server Id.
+- (NSInteger)getAppId:(NSInteger)serverId
+{
+    FUNCTION_START;
+    
+    __block NSInteger appId = 0;
+    
+    if (serverId <= 0 || ![CommonUtils isValidString:self.appIdField]) return appId;
+    
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ?", self.appIdField, self.tableName, self.serverIdField];
+         
+         FMResultSet *result = [db executeQuery:query, @(serverId)];
+         
+         if ([result next])
+         {
+             appId = [result intForColumn:self.appIdField];
+         }
+     }];
+    
+    return appId;
+}
+
+//returns server id for given app Id.
+- (NSInteger)getServerId:(NSInteger)appId
+{
+    __block NSInteger serverId = 0;
+    
+    if (appId <= 0 || ![CommonUtils isValidString:self.appIdField]) return serverId;
+    
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ?", self.serverIdField, self.tableName, self.appIdField];
+         
+         FMResultSet *result = [db executeQuery:query, @(appId)];
+         
+         if ([result next])
+         {
+             serverId = [result intForColumn:self.appIdField];
+         }
+     }];
+    
+    return serverId;
+}
+
+- (void)syncWithServer
+{
+    //1. get last sync timestamp & get records from server after that timestamp
+    NSTimeInterval timestamp = [self getSyncTimestampOfTableForCompany:APP_DELEGATE.loggedUserCompanyId];
+    
+    [self getRecordsWithTimestamp:timestamp
+                          success:^(ECHttpResponseModel *response)
+    {
+    }
+                            error:^(NSError *error)
+    {
+    }];
+    
+    //2. get all recently created/modified records from local & send to server
+    NSArray *recordList = [self getAllDirtyRecords];
+    
+    for (NSMutableDictionary *recordInfo in recordList)
+    {
+        NSInteger recordId = [[recordInfo valueForKey:self.serverIdField] integerValue];
+        
+        //Check dirty record whether it is newly created or updated
+        if (recordId == 0)
+            isSuccess = [self postRecordWithInfo:recordInfo];
+        else
+        {
+            if (self.isFirstCertificateCall)
+            {
+                continue;
+            }
+            
+            isSuccess = [self putRecordWithInfo:recordInfo recordId:recordId];
+        }
+        
+        //        if (!isSuccess)
+        //            return isSuccess;
+    }
+    
+    [_con beginTransaction];
+    
+    for (NSString *query in self.updateBulkRecords)
+    {
+        [_con executeQuery:query];
+    }
+    
+    [_con commitTransaction];
+    
+    [self.freshBulkRecords removeAllObjects];
+    [self.updateBulkRecords removeAllObjects];
+    
+    isSuccess = true;
+    [_con connectionClose];
+    
+    FUNCTION_END;
+    return isSuccess;
+    
+}
+
+- (void)getRecordsWithTimestamp:(NSTimeInterval)timestamp success:(SuccessCallback)successResponse error:(ErrorCallback)errorResponse
+{
+    ECHttpClient *httpClient = [ECHttpClient sharedHttpClient];
+    
+    NSString *apiCall = [NSString stringWithFormat:@"%@?%@=%lf",self.apiName, ApiUrlParamTimestamp, timestamp];
+    
+    [httpClient GET:apiCall
+         parameters:nil
+            success:^(NSURLSessionDataTask *dataTask, id responseObject)
+     {
+         if (LOGS_ON) NSLog(@"Response: %@", responseObject);
+         
+         ECHttpResponseModel *responseModel = [[ECHttpResponseModel alloc] initWithResponseInfo:responseObject];
+         
+         if (responseModel.error)
+         {
+             errorResponse(responseModel.error);
+         }
+         else
+         {
+             successResponse(responseModel);
+         }
+     }
+            failure:^(NSURLSessionDataTask * dataTask, NSError *error)
+     {
+         errorResponse(error);
+     }];
+}
+
 @end

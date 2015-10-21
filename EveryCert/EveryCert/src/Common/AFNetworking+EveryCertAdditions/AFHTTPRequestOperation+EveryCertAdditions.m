@@ -42,15 +42,6 @@
     return isValid = YES;
 }
 
-// Clear data of all fields(extended in EveryCertExtension)
-- (void)clearResponseData
-{
-    self.metadataInfo = nil;
-    self.payloadInfo = nil;
-    self.metadataTimestamp = 0;
-    self.numberOfRecords = 0;
-}
-
 - (NSDictionary *)metadataInfo
 {
     return [self.responseObject valueForKey:ApiResponseKeyMetadata];

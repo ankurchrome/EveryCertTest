@@ -8,12 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "FMDBDataSource.h"
+#import "ECHttpClient.h"
+#import "ECHttpResponseModel.h"
+
+typedef void(^SuccessCallback)(ECHttpResponseModel *response);
+typedef void(^SuccessCallbackWithObjects)(NSArray *objects);
+typedef void(^ErrorCallback)(NSError *error);
+typedef void(^ProgressBlock)(float progress);
 
 @interface BaseHandler : NSObject
 
 @property(nonatomic, strong) NSString *tableName;
 @property(nonatomic, strong) NSString *appIdField;
 @property(nonatomic, strong) NSString *serverIdField;
+@property(nonatomic, strong) NSString *apiName;
 @property(nonatomic, strong) NSArray  *commonTableColumns;
 @property(nonatomic, strong) NSArray  *tableColumns;
 
@@ -49,5 +57,7 @@
  @return NSInteger returns a last row id inserted by database if record inserted successfully otherwise returns 0
  */
 - (NSInteger)insertInfo:(NSDictionary *)columnInfo;
+
+- (void)syncWithServer;
 
 @end

@@ -59,6 +59,7 @@
 
 #pragma mark API Constants
 
+extern NSString *const EveryCertBaseUrl;
 extern NSString *const ServerUrl;
 extern NSString *const ApiPath;
 extern NSString *const ApiUrlParamTimestamp;
@@ -66,6 +67,7 @@ extern NSString *const ApiLogin;
 extern NSString *const ApiSignup;
 extern NSString *const ApiDownload;
 extern NSString *const ApiDownloadSignature;
+extern NSString *const ApiCompanyUser;
 
 extern NSString *const ApiResponseKeyMetadata;
 extern NSString *const ApiResponseKeyMetadataError;
@@ -73,6 +75,8 @@ extern NSString *const ApiResponseKeyMetadataTimestamp;
 extern NSString *const ApiResponseKeyNoOfRecords;
 extern NSString *const ApiResponseKeyPayload;
 extern NSString *const ApiResponseKeyPayloadPopupMessage;
+
+extern NSString *const ErrorDomainRequestFailed;
 extern NSString *const AlertMessageTryAgainLater;
 extern NSString *const AlertMessageConnectionTimeout;
 extern NSString *const AlertMessageConnectionNotFound;
@@ -121,6 +125,12 @@ extern NSString *const Uuid;
 extern NSString *const IsDirty;
 extern NSString *const CompanyId;
 extern NSString *const UserId;
+
+#pragma mark SyncTimestamp Table
+extern NSString *const SyncTimestampTable;
+extern NSString *const SyncTimestampIdApp;
+extern NSString *const SyncTimestampTableName;
+extern NSString *const SyncTimestampGet;
 
 #pragma mark CompanyUser Table
 extern NSString *const CompanyUserTable;

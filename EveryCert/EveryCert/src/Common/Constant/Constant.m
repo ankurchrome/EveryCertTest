@@ -16,6 +16,16 @@
 #pragma mark API Constants
 
 #ifdef  PRODUCTION_URL
+NSString *const EveryCertBaseUrl = @"https://portal.everycert.co.uk/api/v1";
+#else
+#ifdef PRE_PRODUCTION_URL
+NSString *const EveryCertBaseUrl = @"https://portal.everycert.co.uk/api/v1";
+#else
+NSString *const EveryCertBaseUrl = @"https://portal.everycert.co.uk/api/v1";
+#endif
+#endif
+
+#ifdef  PRODUCTION_URL
 NSString *const ServerUrl = @"https://portal.everycert.co.uk/";
 #else
 #ifdef PRE_PRODUCTION_URL
@@ -31,6 +41,7 @@ NSString *const ApiLogin = @"login";
 NSString *const ApiSignup = @"signup";
 NSString *const ApiDownload = @"download";
 NSString *const ApiDownloadSignature = @"downloadSig";
+NSString *const ApiCompanyUser = @"company_user";
 
 NSString *const ApiResponseKeyMetadata = @"metadata";
 NSString *const ApiResponseKeyMetadataError = @"error";
@@ -39,6 +50,7 @@ NSString *const ApiResponseKeyNoOfRecords = @"no_records";
 NSString *const ApiResponseKeyPayload  = @"payload";
 NSString *const ApiResponseKeyPayloadPopupMessage = @"popupmessage";
 
+NSString *const ErrorDomainRequestFailed       = @"Request Failed";
 NSString *const AlertMessageTryAgainLater      = @"Please try again later.";
 NSString *const AlertMessageConnectionTimeout  = @"Connection time out, Please try again!";
 NSString *const AlertMessageConnectionNotFound = @"Please check your internet connection and try again.";
@@ -87,6 +99,12 @@ NSString *const Uuid      = @"uuid";
 NSString *const IsDirty   = @"is_dirty";
 NSString *const CompanyId = @"company_id";
 NSString *const UserId    = @"user_id";
+
+#pragma mark SyncTimestamp Table
+NSString *const SyncTimestampTable     = @"sync_timestamp";
+NSString *const SyncTimestampIdApp     = @"timestamp_id_app";
+NSString *const SyncTimestampTableName = @"table_name";
+NSString *const SyncTimestampGet       = @"get_timestamp";
 
 #pragma mark CompanyUser Table
 NSString *const CompanyUserTable     = @"company_user";

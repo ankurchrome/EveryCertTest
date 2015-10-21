@@ -21,11 +21,14 @@
         self.tableName     = CompanyUserTable;
         self.appIdField    = CompanyUserIdApp;
         self.serverIdField = CompanyUserId;
+        self.apiName       = ApiCompanyUser;
         self.tableColumns  = @[CompanyUserIdApp, CompanyUserId, CompanyId, UserId, CompanyUserFieldName, CompanyUserData, ModifiedTimestampApp, ModifiedTimeStamp, Archive, IsDirty, Uuid];
     }
     
     return self;
 }
+
+#pragma mark - DatabaseService Methods
 
 // Insert a CompanyUserModel object information into company_user table
 - (BOOL)insertCompanyUser:(CompanyUserModel *)companyUser
@@ -190,6 +193,62 @@
              [self insertInfo:companyUserFieldInfo];
          }
     }
+}
+
+#pragma mark - NetworkService Methods
+
+- (void)loginWithCredentials:(id)loginCredentials onSuccess:(SuccessCallback)successResponse onError:(ErrorCallback)errorResponse
+{
+    ECHttpClient *httpClient = [ECHttpClient sharedHttpClient];
+
+    [httpClient PUT:ApiLogin
+         parameters:loginCredentials
+            success:^(NSURLSessionDataTask *dataTask, id responseObject)
+    {
+        if (LOGS_ON) NSLog(@"Response: %@", responseObject);
+        
+        ECHttpResponseModel *responseModel = [[ECHttpResponseModel alloc] initWithResponseInfo:responseObject];
+
+        if (responseModel.error)
+        {
+            errorResponse(responseModel.error);
+        }
+        else
+        {
+            successResponse(responseModel);
+        }
+    }
+            failure:^(NSURLSessionDataTask * dataTask, NSError *error)
+    {
+        errorResponse(error);
+    }];
+}
+
+- (void)signupWithInfo:(id)signupInfo onSuccess:(SuccessCallback)successResponse onError:(ErrorCallback)errorResponse
+{
+    ECHttpClient *httpClient = [ECHttpClient sharedHttpClient];
+    
+    [httpClient PUT:ApiSignup
+         parameters:signupInfo
+            success:^(NSURLSessionDataTask *dataTask, id responseObject)
+     {
+         if (LOGS_ON) NSLog(@"Response: %@", responseObject);
+         
+         ECHttpResponseModel *responseModel = [[ECHttpResponseModel alloc] initWithResponseInfo:responseObject];
+         
+         if (responseModel.error)
+         {
+             errorResponse(responseModel.error);
+         }
+         else
+         {
+             successResponse(responseModel);
+         }
+     }
+            failure:^(NSURLSessionDataTask * dataTask, NSError *error)
+     {
+         errorResponse(error);
+     }];
 }
 
 @end

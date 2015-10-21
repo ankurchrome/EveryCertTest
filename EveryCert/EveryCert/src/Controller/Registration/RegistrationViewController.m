@@ -75,11 +75,7 @@
             return NO;
         }
         
-        __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        
-        hud.labelText = HudTitleSignin;
-        
-        NSString *baseUrl = [[ServerUrl stringByAppendingPathComponent:ApiPath] stringByAppendingPathComponent:ApiSignup];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
         NSMutableArray *signupParams = [NSMutableArray new];
         
@@ -90,48 +86,39 @@
             [elementInfo setObject:[[NSUUID new] UUIDString] forKey:Uuid];
             [elementInfo setObject:elementModel.fieldName    forKey:ElementFieldName];
             [elementInfo setObject:elementModel.dataValue    forKey:CompanyUserData];
-
+            
             [signupParams addObject:elementInfo];
         }
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        manager.requestSerializer  = [AFJSONRequestSerializer serializer];
-        manager.responseSerializer = [AFJSONResponseSerializer serializer];
-        
-        [manager PUT:baseUrl
-          parameters:signupParams
-             success:^(AFHTTPRequestOperation *operation, id responseObject)
-         {
-             if ([operation validateResponse])
-             {
-                 CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
 
-                 NSArray *companyUserFields = operation.payloadInfo;
-                 
-                 if (companyUserFields && [companyUserFields isKindOfClass:[NSArray class]] && companyUserFields.count > 0)
-                 {
-                     [companyUserHandler saveCompanyUserFields:companyUserFields];
-                     
-                     //make the user logged in
-                     NSDictionary *companyUserField = [companyUserFields firstObject];
-                     NSInteger userId = [[companyUserField objectForKey:UserId] integerValue];
-                     [companyUserHandler saveLoggedUser:userId];
-                     
-                     MenuViewController *menuVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuVC"];
-                     
-                     [self.navigationController pushViewController:menuVC animated:YES];
-                 }
-             }
-             
-             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-         }
-             failure:^(AFHTTPRequestOperation *operation, NSError *error)
+        CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
+        
+        //Start the signup service
+        [companyUserHandler signupWithInfo:signupParams
+                                 onSuccess:^(ECHttpResponseModel *response)
          {
-             NSLog(@"Error: %@", operation.responseString);
-             
              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
              
-             [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED message:AlertMessageTryAgainLater];
+             NSArray *companyUserFields = response.payloadInfo;
+             
+             if (companyUserFields && [companyUserFields isKindOfClass:[NSArray class]] && companyUserFields.count > 0)
+             {
+                 [companyUserHandler saveCompanyUserFields:companyUserFields];
+                 
+                 //make the user logged in
+                 NSDictionary *companyUserField = [companyUserFields firstObject];
+                 NSInteger userId = [[companyUserField objectForKey:UserId] integerValue];
+                 [companyUserHandler saveLoggedUser:userId];
+                 
+                 MenuViewController *menuVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuVC"];
+                 
+                 [self.navigationController pushViewController:menuVC animated:YES];
+             }
+         }
+                                   onError:^(NSError *error)
+         {
+             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+             
+             [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED message:error.localizedDescription];
          }];
     }
     

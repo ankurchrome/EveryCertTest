@@ -9,6 +9,7 @@
 #import "MenuViewController.h"
 #import "FormsListViewController.h"
 #import "SettingViewController.h"
+#import "ECSyncManager.h"
 
 @interface MenuViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -53,7 +54,9 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
 //Start the sync with server for all data
 - (IBAction)backupDataButtonTapped:(id)sender
 {
+    ECSyncManager *syncManager = [ECSyncManager new];
     
+    [syncManager startCompleteSync];
 }
 
 #pragma mark - UITableViewDataSource Methods

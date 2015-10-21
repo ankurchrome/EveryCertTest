@@ -48,6 +48,11 @@
     _loginElementTableView.layer.shadowOffset = CGSizeMake(0,5);
     _loginElementTableView.layer.shadowOpacity = 0.5;
     
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
     //Set user credentials if already logged In
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
@@ -64,8 +69,6 @@
     }
     
     [_loginElementTableView reloadWithElements:_loginElements];
-    
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 }
 
 - (void)viewDidLayoutSubviews
@@ -88,8 +91,6 @@
     __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     hud.labelText = HudTitleSignin;
-    
-    NSString *baseUrl = [[ServerUrl stringByAppendingPathComponent:ApiPath] stringByAppendingPathComponent:ApiLogin];
 
     NSMutableDictionary *loginParams = [NSMutableDictionary new];
     
@@ -98,43 +99,36 @@
         [loginParams setObject:elementModel.dataValue forKey:elementModel.fieldName];
     }
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer  = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
     
-    [manager PUT:baseUrl
-       parameters:loginParams
-          success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         if ([operation validateResponse])
-         {
-             CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
-             
-             NSArray *companyUserFields = operation.payloadInfo;
-             
-             if (companyUserFields && [companyUserFields isKindOfClass:[NSArray class]] && companyUserFields.count > 0)
-             {
-                 [companyUserHandler saveCompanyUserFields:companyUserFields];
-                 
-                 //make the user logged in
-                 NSDictionary *companyUserField = [companyUserFields firstObject];
-                 NSInteger userId = [[companyUserField objectForKey:UserId] integerValue];
-                 [companyUserHandler saveLoggedUser:userId];
-                 
-                 MenuViewController *menuVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuVC"];
-                 
-                 [self.navigationController pushViewController:menuVC animated:YES];
-             }
-         }
-         
-         [self stopRequestWithTitle:nil Message:nil alert:NO];
-     }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         NSLog(@"Error: %@", operation.responseString);
-         
-         [self stopRequestWithTitle:ALERT_TITLE_FAILED Message:AlertMessageTryAgainLater alert:YES];
-     }];
+    //Start the login service
+    [companyUserHandler loginWithCredentials:loginParams
+                                   onSuccess:^(ECHttpResponseModel *response)
+    {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
+        NSArray *companyUserFields = response.payloadInfo;
+        
+        if (companyUserFields && [companyUserFields isKindOfClass:[NSArray class]] && companyUserFields.count > 0)
+        {
+            [companyUserHandler saveCompanyUserFields:companyUserFields];
+            
+            //make the user logged in
+            NSDictionary *companyUserField = [companyUserFields firstObject];
+            NSInteger userId = [[companyUserField objectForKey:UserId] integerValue];
+            [companyUserHandler saveLoggedUser:userId];
+            
+            MenuViewController *menuVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuVC"];
+            
+            [self.navigationController pushViewController:menuVC animated:YES];
+        }
+    }
+                                     onError:^(NSError *error)
+    {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
+        [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED message:error.localizedDescription];
+    }];
 }
 
 #pragma mark - IBActions

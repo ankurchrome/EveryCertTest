@@ -11,6 +11,8 @@
 
 @interface CompanyUserHandler : BaseHandler
 
+#pragma mark - DatabaseService Methods
+
 /**
  Insert a CompanyUserModel object information into company_user table
  @param  companyUser A CompanyUserModel object containing info about the user of a company
@@ -45,5 +47,11 @@
  @return <#type#> <#retval#>
  */
 - (void)saveCompanyUserFields:(NSArray *)companyUserFields;
+
+#pragma mark - NetworkService Methods
+
+- (void)loginWithCredentials:(id)loginCredentials onSuccess:(SuccessCallback)successResponse onError:(ErrorCallback)errorResponse;
+
+- (void)signupWithInfo:(id)signupInfo onSuccess:(SuccessCallback)successResponse onError:(ErrorCallback)errorResponse;
 
 @end
