@@ -529,9 +529,6 @@
                                         <variation key="widthClass=regular" ambiguous="YES">
                                             <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
                                         </variation>
-                                        <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="0.0" y="0.0" width="800" height="800"/>
-                                        </variation>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1318,7 +1315,7 @@
         <!--FormsList-->
         <scene sceneID="GXi-Ao-cMj">
             <objects>
-                <viewController storyboardIdentifier="FormListVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Tfd-TN-TzW" userLabel="FormsList" customClass="FormsListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FormListVC" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Tfd-TN-TzW" userLabel="FormsList" customClass="FormsListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FQz-Yh-Xzx"/>
                         <viewControllerLayoutGuide type="bottom" id="u4A-ql-OxU"/>
@@ -1327,9 +1324,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="W7K-UP-TWG">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="W7K-UP-TWG">
+                                <rect key="frame" x="0.0" y="124" width="600" height="476"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FormTypeCellIdentifier" id="7ZD-Sg-b1j" customClass="FormTypeTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="568" height="44"/>
@@ -1337,12 +1334,6 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7ZD-Sg-b1j" id="DRM-vv-Upq">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="102-Z9-OdB">
-                                                    <rect key="frame" x="8" y="8" width="505" height="27"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DownloadIcon" translatesAutoresizingMaskIntoConstraints="NO" id="wRc-h6-kKF">
                                                     <rect key="frame" x="575" y="14" width="15" height="15"/>
                                                     <constraints>
@@ -1358,6 +1349,12 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.082352941176470587" green="0.49411764705882355" blue="0.70980392156862748" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="102-Z9-OdB">
+                                                    <rect key="frame" x="8" y="8" width="505" height="27"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -1378,7 +1375,6 @@
                                             <outlet property="downloadImageView" destination="wRc-h6-kKF" id="IKF-uN-mAM"/>
                                             <outlet property="statusLabel" destination="vQo-Sc-xYs" id="Qdm-rf-8Oz"/>
                                             <outlet property="titleLabel" destination="102-Z9-OdB" id="W8C-5i-tGp"/>
-                                            <outletCollection property="gestureRecognizers" destination="Pus-Wo-r1h" appends="YES" id="dBW-Qj-91o"/>
                                             <segue destination="I9P-LX-HXB" kind="show" identifier="ShowCertificate" id="MDj-hG-y3e"/>
                                         </connections>
                                     </tableViewCell>
@@ -1388,29 +1384,97 @@
                                     <outlet property="delegate" destination="Tfd-TN-TzW" id="0f4-Xz-tNJ"/>
                                 </connections>
                             </tableView>
+                            <searchBar contentMode="redraw" placeholder="Tap Here to Search for Text" translatesAutoresizingMaskIntoConstraints="NO" id="2AW-ys-vfO">
+                                <rect key="frame" x="0.0" y="104" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Ngo-W7-YVP"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Tfd-TN-TzW" id="KDB-vy-uQ2"/>
+                                </connections>
+                            </searchBar>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="d6E-4h-SaC">
+                                <rect key="frame" x="242" y="69" width="117" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="263" id="5od-eE-mu0"/>
+                                    <constraint firstAttribute="height" constant="28" id="Ff6-mD-GtO"/>
+                                    <constraint firstAttribute="width" constant="587" id="LmO-TR-RbL"/>
+                                    <constraint firstAttribute="width" priority="1" constant="468" id="S8B-0L-3FC"/>
+                                    <constraint firstAttribute="width" constant="453" id="T9m-i3-VRp"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Active"/>
+                                    <segment title="Hidden"/>
+                                </segments>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="5od-eE-mu0"/>
+                                        <exclude reference="LmO-TR-RbL"/>
+                                        <exclude reference="T9m-i3-VRp"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="T9m-i3-VRp"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="5od-eE-mu0"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="LmO-TR-RbL"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="segmentSwitch:" destination="Tfd-TN-TzW" eventType="valueChanged" id="sS5-7F-SPG"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="W7K-UP-TWG" firstAttribute="leading" secondItem="MqS-Jg-PG5" secondAttribute="leading" id="B1P-Xk-Ucj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2AW-ys-vfO" secondAttribute="trailing" constant="-16" id="Fuj-UT-wQB"/>
+                            <constraint firstItem="W7K-UP-TWG" firstAttribute="top" secondItem="FQz-Yh-Xzx" secondAttribute="bottom" constant="60" id="G1W-2h-lcI"/>
                             <constraint firstItem="u4A-ql-OxU" firstAttribute="top" secondItem="W7K-UP-TWG" secondAttribute="bottom" id="GIl-Cw-2rL"/>
+                            <constraint firstItem="d6E-4h-SaC" firstAttribute="top" secondItem="FQz-Yh-Xzx" secondAttribute="bottom" constant="5" id="Vc8-pj-PfX"/>
+                            <constraint firstAttribute="centerX" secondItem="d6E-4h-SaC" secondAttribute="centerX" id="XRW-0O-5bx"/>
+                            <constraint firstItem="2AW-ys-vfO" firstAttribute="leading" secondItem="MqS-Jg-PG5" secondAttribute="leadingMargin" constant="-16" id="m4x-hQ-TKR"/>
+                            <constraint firstItem="2AW-ys-vfO" firstAttribute="top" secondItem="d6E-4h-SaC" secondAttribute="bottom" constant="7" id="ome-15-DQg"/>
                             <constraint firstAttribute="trailing" secondItem="W7K-UP-TWG" secondAttribute="trailing" id="uOx-5p-Sji"/>
-                            <constraint firstItem="W7K-UP-TWG" firstAttribute="top" secondItem="MqS-Jg-PG5" secondAttribute="topMargin" id="xx3-WB-cAc"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="MvR-kp-YIR" appends="YES" id="VWw-le-GGN"/>
+                        </connections>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="EveryCert Forms" id="MAh-g9-Ah9"/>
                     <connections>
+                        <outlet property="_filterCertificateSearchBar" destination="2AW-ys-vfO" id="lls-Vy-Uum"/>
                         <outlet property="_formListTableView" destination="W7K-UP-TWG" id="UqC-yG-hvi"/>
+                        <outlet property="searchDisplayController" destination="aMj-2Y-6aE" id="gjP-mY-zJO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ndu-HE-Gz3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="left" id="Pus-Wo-r1h">
+                <searchDisplayController id="aMj-2Y-6aE">
                     <connections>
-                        <action selector="swipeLeftOfTableViewCell:" destination="Tfd-TN-TzW" id="zor-ue-5dF"/>
+                        <outlet property="delegate" destination="Tfd-TN-TzW" id="ceo-HT-oyW"/>
+                        <outlet property="searchContentsController" destination="Tfd-TN-TzW" id="1kB-Dc-fbk"/>
+                        <outlet property="searchResultsDataSource" destination="Tfd-TN-TzW" id="rZ7-yX-N0g"/>
+                        <outlet property="searchResultsDelegate" destination="Tfd-TN-TzW" id="7kK-Y0-taF"/>
                     </connections>
-                </swipeGestureRecognizer>
+                </searchDisplayController>
+                <tapGestureRecognizer id="MvR-kp-YIR">
+                    <connections>
+                        <action selector="singleTapOnScreen:" destination="Tfd-TN-TzW" id="ISb-zp-0Kb"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="289" y="301"/>
+            <point key="canvasLocation" x="285" y="300"/>
         </scene>
     </scenes>
     <resources>

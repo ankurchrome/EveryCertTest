@@ -25,4 +25,3 @@
 @property (strong, nonatomic) CertViewController *certificateVC;
 
 @end
-

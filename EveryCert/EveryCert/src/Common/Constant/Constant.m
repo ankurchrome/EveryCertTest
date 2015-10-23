@@ -95,6 +95,9 @@ NSString *const CompanyUserIdApp     = @"company_user_id_app";
 NSString *const CompanyUserId        = @"company_user_id";
 NSString *const CompanyUserFieldName = @"field_name";
 NSString *const CompanyUserData      = @"data";
+NSString *const UserFormStatusValue  = @"user_form_status";
+NSString *const kStatus              = @"status";
+NSString *const kFormId              = @"form_id";
 
 NSString *const CompanyUserFieldNameEmail           = @"user_email";
 NSString *const CompanyUserFieldNamePassword        = @"user_password";

@@ -129,11 +129,14 @@ extern NSString *const CompanyUserIdApp;
 extern NSString *const CompanyUserId;
 extern NSString *const CompanyUserFieldName;
 extern NSString *const CompanyUserData;
+extern NSString *const UserFormStatusValue;
 
 extern NSString *const CompanyUserFieldNameEmail;
 extern NSString *const CompanyUserFieldNamePassword;
 extern NSString *const CompanyUserFieldNameFullName;
 extern NSString *const CompanyUserFieldNamePermissionGroup;
+extern NSString *const kStatus;
+extern NSString *const kFormId;
 
 #pragma mark Form Table
 extern NSString *const FormTable;

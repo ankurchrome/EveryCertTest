@@ -40,10 +40,21 @@
 - (void)saveLoggedUser:(NSInteger)userId;
 
 /**
+ Thsi Mehtod is used to save the Company User Field
+ @param  NSArray parameter of Comapny Array Field
+ */
+- (void)saveCompanyUserFields:(NSArray *)companyUserFields;
+
+/**
+ Returns the List of FromId that have Status 1 for Respective Logged UserId and Comapny id
+ @return NSArray returns the list of form id
+ */
+- (NSArray *)getCompanyDetailsDataArrayForUserFormStatus;
+
+/**
  <#description#>
  @param  <#type#> <#desc#>
  @return <#type#> <#retval#>
  */
-- (void)saveCompanyUserFields:(NSArray *)companyUserFields;
-
+- (BOOL)updateUserFormStatusFromJSONData:(NSString *)data;
 @end

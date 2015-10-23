@@ -15,7 +15,7 @@
 - (id)init
 {
     self = [super init];
-
+    
     if (self)
     {
         self.tableName     = CompanyUserTable;
@@ -35,7 +35,7 @@
     companyUser.modifiedTimestampApp = [[NSDate date] timeIntervalSince1970];
     companyUser.isDirty = true;
     companyUser.uuid = [[NSUUID new] UUIDString];
-
+    
     FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
     [databaseQueue inDatabase:^(FMDatabase *db)
@@ -79,20 +79,20 @@
         FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
         
         [databaseQueue inDatabase:^(FMDatabase *db)
-        {
-            NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = '%@' AND %@ = '%@'", self.tableName, CompanyUserFieldName, element.fieldName, CompanyUserData, element.dataValue];
-
-            FMResultSet *result = [db executeQuery:query];
-            
-            if ([result next])
-            {
-                userId = [result intForColumn:UserId];
-            }
-            else
-            {
-                success = false;
-            }
-        }];
+         {
+             NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = '%@' AND %@ = '%@'", self.tableName, CompanyUserFieldName, element.fieldName, CompanyUserData, element.dataValue];
+             
+             FMResultSet *result = [db executeQuery:query];
+             
+             if ([result next])
+             {
+                 userId = [result intForColumn:UserId];
+             }
+             else
+             {
+                 success = false;
+             }
+         }];
         
         if (!success) break;
     }
@@ -111,62 +111,62 @@
     FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
     [databaseQueue inDatabase:^(FMDatabase *db)
-    {
-        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-        
-        NSString *query = [NSString stringWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE %@ = %ld", CompanyId, CompanyUserFieldName, CompanyUserData, self.tableName, UserId, (long)userId];
-        
-        FMResultSet *resultSet = [db executeQuery:query];
-        
-        while ([resultSet next])
-        {
-            NSInteger companyId = [resultSet intForColumn:CompanyId];
-            NSString *fieldName = [resultSet stringForColumn:CompanyUserFieldName];
-            NSString *fieldData = [resultSet stringForColumn:CompanyUserData];
-            
-            APP_DELEGATE.loggedUserId = userId;
-            APP_DELEGATE.loggedUserCompanyId = companyId;
-            
-            [userDefault setInteger:userId    forKey:UserId];
-            [userDefault setInteger:companyId forKey:CompanyId];
-            
-            if (![CommonUtils isValidString:fieldData]) continue;
-                
-            if ([fieldName isEqualToString:CompanyUserFieldNameEmail])
-            {
-                APP_DELEGATE.loggedUserEmail = fieldData;
-                
-                [userDefault setObject:fieldData forKey:LoggedUserEmail];
-            }
-            else if ([fieldName isEqualToString:CompanyUserFieldNamePassword])
-            {
-                APP_DELEGATE.loggedUserPassword = fieldData;
-                
-                [userDefault setObject:fieldData forKey:LoggedUserPassword];
-            }
-            else if ([fieldName isEqualToString:CompanyUserFieldNameFullName])
-            {
-                APP_DELEGATE.loggedUserFullName = fieldData;
-                
-                [userDefault setObject:fieldData forKey:LoggedUserFullName];
-            }
-            else if ([fieldName isEqualToString:CompanyUserFieldNamePermissionGroup])
-            {
-                APP_DELEGATE.loggedUserPermissionGroup = fieldData;
-                
-                [userDefault setObject:fieldData forKey:LoggedUserPermissionGroup];
-            }
-        }
-        
-        [userDefault synchronize];
-    }];
+     {
+         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+         
+         NSString *query = [NSString stringWithFormat:@"SELECT %@, %@, %@ FROM %@ WHERE %@ = %ld", CompanyId, CompanyUserFieldName, CompanyUserData, self.tableName, UserId, (long)userId];
+         
+         FMResultSet *resultSet = [db executeQuery:query];
+         
+         while ([resultSet next])
+         {
+             NSInteger companyId = [resultSet intForColumn:CompanyId];
+             NSString *fieldName = [resultSet stringForColumn:CompanyUserFieldName];
+             NSString *fieldData = [resultSet stringForColumn:CompanyUserData];
+             
+             APP_DELEGATE.loggedUserId = userId;
+             APP_DELEGATE.loggedUserCompanyId = companyId;
+             
+             [userDefault setInteger:userId    forKey:UserId];
+             [userDefault setInteger:companyId forKey:CompanyId];
+             
+             if (![CommonUtils isValidString:fieldData]) continue;
+             
+             if ([fieldName isEqualToString:CompanyUserFieldNameEmail])
+             {
+                 APP_DELEGATE.loggedUserEmail = fieldData;
+                 
+                 [userDefault setObject:fieldData forKey:LoggedUserEmail];
+             }
+             else if ([fieldName isEqualToString:CompanyUserFieldNamePassword])
+             {
+                 APP_DELEGATE.loggedUserPassword = fieldData;
+                 
+                 [userDefault setObject:fieldData forKey:LoggedUserPassword];
+             }
+             else if ([fieldName isEqualToString:CompanyUserFieldNameFullName])
+             {
+                 APP_DELEGATE.loggedUserFullName = fieldData;
+                 
+                 [userDefault setObject:fieldData forKey:LoggedUserFullName];
+             }
+             else if ([fieldName isEqualToString:CompanyUserFieldNamePermissionGroup])
+             {
+                 APP_DELEGATE.loggedUserPermissionGroup = fieldData;
+                 
+                 [userDefault setObject:fieldData forKey:LoggedUserPermissionGroup];
+             }
+         }
+         
+         [userDefault synchronize];
+     }];
 }
 
 - (void)saveCompanyUserFields:(NSArray *)companyUserFields
 {
     NSString *databasePath = [[CommonUtils getDocumentDirPath] stringByAppendingPathComponent:DATABASE_NAME];
     FMDatabase *database = [FMDatabase databaseWithPath:databasePath];
-
+    
     [database open];
     
     for (NSDictionary *companyUserFieldInfo in companyUserFields)
@@ -175,21 +175,70 @@
         
         if (companyUserId <= 0) continue;
         
-         NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ?", CompanyUserIdApp, self.tableName, CompanyUserId];
-         
-         FMResultSet *resultSet = [database executeQuery:query, @(companyUserId)];
-         
-         if ([resultSet next])
-         {
-             NSInteger companyUserIdApp = [resultSet intForColumn:CompanyUserIdApp];
-             
-             [self updateInfo:companyUserFieldInfo recordIdApp:companyUserIdApp];
-         }
-         else
-         {
-             [self insertInfo:companyUserFieldInfo];
-         }
+        NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ?", CompanyUserIdApp, self.tableName, CompanyUserId];
+        
+        FMResultSet *resultSet = [database executeQuery:query, @(companyUserId)];
+        
+        if ([resultSet next])
+        {
+            NSInteger companyUserIdApp = [resultSet intForColumn:CompanyUserIdApp];
+            
+            [self updateInfo:companyUserFieldInfo recordIdApp:companyUserIdApp];
+        }
+        else
+        {
+            [self insertInfo:companyUserFieldInfo];
+        }
     }
+}
+
+- (NSArray *)getCompanyDetailsDataArrayForUserFormStatus
+{
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    __block NSString *dataValue;
+    
+    [databaseQueue inDatabase:^(FMDatabase *db) {
+        
+        NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = %ld AND %@ = %ld AND %@ = '%@'", CompanyUserData, self.tableName, UserId, (long)APP_DELEGATE.loggedUserId, CompanyId, (long)APP_DELEGATE.loggedUserCompanyId, CompanyUserFieldName, UserFormStatusValue];
+        
+        FMResultSet *resultSet = [db executeQuery:query];
+        
+        if([resultSet next])
+        {
+            dataValue = [resultSet stringForColumn:CompanyUserData];
+        }
+    }];
+    
+    // Fetch Array From JSON Data of Comapny User
+    NSArray *dataArrayList = [NSJSONSerialization JSONObjectWithData:[dataValue dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+    
+//    NSArray *filteredRecordsArray       = [dataArrayList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(status == 0)"]];
+//    NSMutableArray *filteredFormIdArray = [[NSMutableArray alloc]initWithArray:[filteredRecordsArray valueForKey:FormId]];
+//    NSNumberFormatter *numberFormatter  = [NSNumberFormatter new];
+//    
+//    // Convert all Array String Object into NSNumber
+//    for(int count = 0 ; count < filteredFormIdArray.count ; count++)
+//    {
+//        if (LOGS_ON) NSLog(@"%@", [filteredFormIdArray class]);
+//        [filteredFormIdArray replaceObjectAtIndex:count withObject:[numberFormatter numberFromString:filteredFormIdArray[count]]];
+//
+//    }
+    return dataArrayList;
+}
+
+- (BOOL)updateUserFormStatusFromJSONData:(NSString *)data
+{
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    __block BOOL success = false;
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ = %@ WHERE %@ = %ld AND %@ = %ld ", self.tableName, CompanyUserData, data, CompanyId, (long)APP_DELEGATE.loggedUserCompanyId, UserId, (long)APP_DELEGATE.loggedUserId];
+         
+         success = [db executeUpdate:query];
+     }];
+    
+    return success;
 }
 
 @end
