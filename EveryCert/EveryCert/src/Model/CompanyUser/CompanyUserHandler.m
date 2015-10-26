@@ -60,9 +60,9 @@
     
     [databaseQueue inDatabase:^(FMDatabase *db)
      {
-         NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ? WHERE %@ = ? ", self.tableName, CompanyUserId, CompanyId, UserId, CompanyUserFieldName, CompanyUserData, ModifiedTimestampApp, ModifiedTimeStamp, Archive, IsDirty, Uuid, CompanyUserIdApp];
+         NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ?, %@ = ? WHERE %@ = ? AND %@ = ?", self.tableName, CompanyUserId, CompanyId, UserId, CompanyUserFieldName, CompanyUserData, ModifiedTimestampApp, ModifiedTimeStamp, Archive, IsDirty, Uuid, CompanyId, UserId];
          
-         success = [db executeUpdate:query, @(companyUser.companyUserId), @(companyUser.companyId), @(companyUser.userId), companyUser.fieldName, companyUser.data, companyUser.modifiedTimestampApp, companyUser.modifiedTimestamp, @(companyUser.archive), @(companyUser.isDirty), companyUser.uuid, @(companyUser.companyUserIdApp)];
+         success = [db executeUpdate:query, @(companyUser.companyUserId), @(companyUser.companyId), @(companyUser.userId), companyUser.fieldName, companyUser.data, companyUser.modifiedTimestampApp, companyUser.modifiedTimestamp, @(companyUser.archive), @(companyUser.isDirty), companyUser.uuid, @(companyUser.companyId), @(companyUser.userId)];
      }];
     
     return success;
@@ -192,53 +192,49 @@
     }
 }
 
-- (NSArray *)getCompanyDetailsDataArrayForUserFormStatus
+//- (NSArray *)getDataForUserFormStatus
+//{
+//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+//    __block NSString *dataValue;
+//    
+//    [databaseQueue inDatabase:^(FMDatabase *db) {
+//        
+//        NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = %ld AND %@ = %ld AND %@ = '%@'", CompanyUserData, self.tableName, UserId, (long)APP_DELEGATE.loggedUserId, CompanyId, (long)APP_DELEGATE.loggedUserCompanyId, CompanyUserFieldName, UserFormStatusValue];
+//        
+//        FMResultSet *resultSet = [db executeQuery:query];
+//        
+//        if([resultSet next])
+//        {
+//            dataValue = [resultSet stringForColumn:CompanyUserData];
+//        }
+//    }];
+//    
+//    // Fetch Array From JSON Data of Comapny User
+//    NSArray *dataArrayList = [NSJSONSerialization JSONObjectWithData:[dataValue dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+//
+//    return dataArrayList;
+//}
+
+// Fetch all the Company User Model from the Company User Table
+- (CompanyUserModel *)getCompanyUserModelForFieldName:(NSString *)fieldName ComapnyId:(NSInteger )companyId UserId:(NSInteger)userId
 {
+    __block CompanyUserModel *companyUserModel = [CompanyUserModel new];
+    
     FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
-    __block NSString *dataValue;
     
     [databaseQueue inDatabase:^(FMDatabase *db) {
+       
+        NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = ? AND %@ = ? AND %@ = ?", self.tableName, CompanyId, UserId, CompanyUserFieldName];
         
-        NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = %ld AND %@ = %ld AND %@ = '%@'", CompanyUserData, self.tableName, UserId, (long)APP_DELEGATE.loggedUserId, CompanyId, (long)APP_DELEGATE.loggedUserCompanyId, CompanyUserFieldName, UserFormStatusValue];
-        
-        FMResultSet *resultSet = [db executeQuery:query];
+        FMResultSet *resultSet = [db executeQuery:query, @(companyId), @(userId), fieldName];
         
         if([resultSet next])
         {
-            dataValue = [resultSet stringForColumn:CompanyUserData];
+            companyUserModel = [[CompanyUserModel new] initWithResultSet:resultSet];
         }
     }];
     
-    // Fetch Array From JSON Data of Comapny User
-    NSArray *dataArrayList = [NSJSONSerialization JSONObjectWithData:[dataValue dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
-    
-//    NSArray *filteredRecordsArray       = [dataArrayList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(status == 0)"]];
-//    NSMutableArray *filteredFormIdArray = [[NSMutableArray alloc]initWithArray:[filteredRecordsArray valueForKey:FormId]];
-//    NSNumberFormatter *numberFormatter  = [NSNumberFormatter new];
-//    
-//    // Convert all Array String Object into NSNumber
-//    for(int count = 0 ; count < filteredFormIdArray.count ; count++)
-//    {
-//        if (LOGS_ON) NSLog(@"%@", [filteredFormIdArray class]);
-//        [filteredFormIdArray replaceObjectAtIndex:count withObject:[numberFormatter numberFromString:filteredFormIdArray[count]]];
-//
-//    }
-    return dataArrayList;
-}
-
-- (BOOL)updateUserFormStatusFromJSONData:(NSString *)data
-{
-    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
-    __block BOOL success = false;
-    
-    [databaseQueue inDatabase:^(FMDatabase *db)
-     {
-         NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ = %@ WHERE %@ = %ld AND %@ = %ld ", self.tableName, CompanyUserData, data, CompanyId, (long)APP_DELEGATE.loggedUserCompanyId, UserId, (long)APP_DELEGATE.loggedUserId];
-         
-         success = [db executeUpdate:query];
-     }];
-    
-    return success;
+    return companyUserModel;
 }
 
 @end
