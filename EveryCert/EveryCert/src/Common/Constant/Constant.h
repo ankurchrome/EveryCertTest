@@ -11,6 +11,8 @@
 //#define PRODUCTION_URL
 #define PRE_PRODUCTION_URL
 
+#define REQUEST_RETRY_COUNT 3
+
 //Macros as some Shortcut
 #define APP_DELEGATE   ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 #define IS_iPHONE      [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone

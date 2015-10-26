@@ -18,6 +18,9 @@
 //Return true if given string is valid string otherwise false
 + (BOOL)isValidString:(NSString *)string;
 
+//Return dictionary object with given keys for the given dictionary
++ (NSMutableDictionary *)getInfoWithKeys:(NSArray *)keys fromDictionary:(NSDictionary *)dic;
+
 //return true if text is valid with given REGEX otherwise false.
 + (BOOL)validation:(NSString *)text regularExpression:(NSString *)regex;
 

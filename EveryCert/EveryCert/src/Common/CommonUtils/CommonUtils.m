@@ -64,6 +64,27 @@
     FUNCTION_END;
 }
 
+//Return dictionary object with given keys for the given dictionary
++ (NSMutableDictionary *)getInfoWithKeys:(NSArray *)keys fromDictionary:(NSDictionary *)dic
+{
+    FUNCTION_START;
+    
+    NSMutableDictionary *info = [NSMutableDictionary new];
+    
+    for (NSString *key in keys)
+    {
+        id value = [dic valueForKey:key];
+        
+        if (!value)
+            continue;
+        
+        [info setObject:value forKey:key];
+    }
+    
+    FUNCTION_END;
+    return info;
+}
+
 //return true if text is valid with given REGEX otherwise false.
 + (BOOL)validation:(NSString *)text regularExpression:(NSString *)regex
 {

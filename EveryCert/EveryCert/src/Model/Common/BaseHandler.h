@@ -25,22 +25,17 @@ typedef void(^ProgressBlock)(float progress);
 @property(nonatomic, strong) NSArray  *commonTableColumns;
 @property(nonatomic, strong) NSArray  *tableColumns;
 
-/**
- This method will create query dynamically through the table name and given columns with their values and append the condition string if any
- @param  tableName Table name string for which query is being made
- @param  columnInfo A NSDictionary object which contains column names with their data to update
- @param  conditionString A condtion string which will be append in query with WHERE clause
- @return NSString Returns a query string if it is made successfully otherwise nil
- */
-- (NSString *)updateQueryForTable:(NSString *)tableName withColumnInfo:(NSDictionary *)columnInfo havingConditionStatement: (NSString *)conditionString;
+
+- (NSString *)insertQueryForInfo:(NSDictionary *)recordInfo;
+
+- (NSString *)updateQueryForInfo:(NSDictionary *)recordInfo;
 
 /**
- This method will create query dynamically through the table name and given columns with their values
- @param  tableName Table name string for which query is being made
- @param  columnInfo A NSDictionary object which contains column names with their data to update
- @return NSString Returns a query string if it is made successfully otherwise nil
+ Insert into table with columns and their data defined in the columnInfo and return the app id generated locally
+ @param  columnInfo A NSDictionary object which contains column names with their data to insert
+ @return NSInteger returns a last row id inserted by database if record inserted successfully otherwise returns 0
  */
-- (NSString *)updateQueryForTable:(NSString *)tableName withColumnInfo:(NSDictionary *)columnInfo;
+- (NSInteger)insertInfo:(NSDictionary *)columnInfo;
 
 /**
  Update into table with columns and their data defined in the columnInfo for the given recordIdApp
@@ -50,14 +45,27 @@ typedef void(^ProgressBlock)(float progress);
  */
 - (BOOL)updateInfo:(NSDictionary *)columnInfo recordIdApp:(NSInteger)recordIdApp;
 
-// Insert into table with columns and their data defined in the columnInfo and return the app id generated locally
-/**
- Insert into table with columns and their data defined in the columnInfo and return the app id generated locally
- @param  columnInfo A NSDictionary object which contains column names with their data to insert
- @return NSInteger returns a last row id inserted by database if record inserted successfully otherwise returns 0
- */
-- (NSInteger)insertInfo:(NSDictionary *)columnInfo;
+// Returns local Record id for given server Id.
+- (NSInteger)getAppId:(NSInteger)serverId;
 
-- (void)syncWithServer;
+// Returns server id for given app Id.
+- (NSInteger)getServerId:(NSInteger)appId;
+
+// Get the last updated sync timestamp for the table.
+- (NSTimeInterval)getSyncTimestampOfTableForCompany:(NSInteger)companyId;
+
+// Update the sync timestamp for the table after update all GET records.
+- (BOOL)updateTableSyncTimestamp:(NSTimeInterval)timestamp company:(NSInteger)companyId;
+
+- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info;
+
+// Return the list of all Created/Modified customers through app, the sync process send them to server.
+- (NSArray *)getAllDirtyRecords;
+
+#pragma mark - NetworkService Methods
+
+- (void)getRecordsWithTimestamp:(NSTimeInterval)timestamp retryCount:(NSInteger)retryCount success:(SuccessCallback)successResponse error:(ErrorCallback)errorResponse;
+
+- (void)putRecords:(NSArray *)records retryCount:(NSInteger)retryCount success:(SuccessCallback)successResponse error:(ErrorCallback)errorResponse;
 
 @end
