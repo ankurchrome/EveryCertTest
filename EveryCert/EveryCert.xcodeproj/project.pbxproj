@@ -26,6 +26,7 @@
 		779A9D9A1B7C7D0700D86FED /* TextViewElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D7E1B7C7D0700D86FED /* TextViewElementCell.xib */; };
 		779A9D9B1B7C7D0700D86FED /* TickBoxElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D811B7C7D0700D86FED /* TickBoxElementCell.m */; };
 		779A9D9C1B7C7D0700D86FED /* TickBoxElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D821B7C7D0700D86FED /* TickBoxElementCell.xib */; };
+		779BD7D21BDF881200D090CB /* NewEverycertDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 779BD7D11BDF881200D090CB /* NewEverycertDB.sqlite */; };
 		77C035BE1B789794009228F1 /* FormsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C035BD1B789794009228F1 /* FormsListViewController.m */; };
 		77C035C21B7897E3009228F1 /* CertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C035C11B7897E3009228F1 /* CertViewController.m */; };
 		77DBB9181B6F553900F02932 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DBB9151B6F553900F02932 /* AppDelegate.m */; };
@@ -140,6 +141,7 @@
 		779A9D801B7C7D0700D86FED /* TickBoxElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickBoxElementCell.h; sourceTree = "<group>"; };
 		779A9D811B7C7D0700D86FED /* TickBoxElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickBoxElementCell.m; sourceTree = "<group>"; };
 		779A9D821B7C7D0700D86FED /* TickBoxElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TickBoxElementCell.xib; sourceTree = "<group>"; };
+		779BD7D11BDF881200D090CB /* NewEverycertDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = NewEverycertDB.sqlite; sourceTree = "<group>"; };
 		77C035BC1B789794009228F1 /* FormsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FormsListViewController.h; path = EveryCert/src/Controller/FormList/FormsListViewController.h; sourceTree = SOURCE_ROOT; };
 		77C035BD1B789794009228F1 /* FormsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormsListViewController.m; path = EveryCert/src/Controller/FormList/FormsListViewController.m; sourceTree = SOURCE_ROOT; };
 		77C035C01B7897E3009228F1 /* CertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertViewController.h; sourceTree = "<group>"; };
@@ -648,6 +650,7 @@
 		77DC23F81B6F4DA400624211 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				779BD7D11BDF881200D090CB /* NewEverycertDB.sqlite */,
 				77F8E4AB1B82220600C214A4 /* Everycert.sql */,
 				C3D722671BD0E79100820881 /* Everycert.sqlite */,
 				C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */,
@@ -1022,6 +1025,7 @@
 				779A9D8A1B7C7D0700D86FED /* PickListViewController.xib in Resources */,
 				C3FFB4421B9B6FC30089A0B2 /* RadioButtonElementCell.xib in Resources */,
 				C3EEB9991BB2E8F90090C4B0 /* SearchElementCell.xib in Resources */,
+				779BD7D21BDF881200D090CB /* NewEverycertDB.sqlite in Resources */,
 				C3D722681BD0E79100820881 /* Everycert.sqlite in Resources */,
 				77DBB91C1B6F555C00F02932 /* Main.storyboard in Resources */,
 				779A9D941B7C7D0700D86FED /* SubElementCell.xib in Resources */,

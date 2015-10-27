@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
-@property (strong, nonatomic) IBOutlet UIImageView *downloadImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *installLabelHeightContraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *previewButtonlWidthConstraint;
 
 @end
