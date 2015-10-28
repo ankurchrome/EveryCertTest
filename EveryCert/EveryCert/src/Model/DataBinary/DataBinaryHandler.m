@@ -20,6 +20,7 @@
         self.tableName     = DataBinaryTable;
         self.appIdField    = DataBinaryIdApp;
         self.serverIdField = DataBinaryId;
+        self.apiName       = ApiDataBinary;
         self.tableColumns  = @[DataBinaryIdApp, DataBinaryId, CertificateIdApp, ElementId, DataBinaryValue, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
     }
     

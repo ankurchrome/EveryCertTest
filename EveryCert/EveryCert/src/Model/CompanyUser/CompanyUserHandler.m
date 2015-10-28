@@ -251,4 +251,31 @@
      }];
 }
 
+- (void)logoutUserSuccess:(SuccessCallback)successResponse onError:(ErrorCallback)errorResponse
+{
+    ECHttpClient *httpClient = [ECHttpClient sharedHttpClient];
+    
+    [httpClient GET:ApiLogout
+         parameters:nil
+            success:^(NSURLSessionDataTask *dataTask, id responseObject)
+     {
+         if (LOGS_ON) NSLog(@"Response: %@", responseObject);
+         
+         ECHttpResponseModel *responseModel = [[ECHttpResponseModel alloc] initWithResponseInfo:responseObject];
+         
+         if (responseModel.error)
+         {
+             errorResponse(responseModel.error);
+         }
+         else
+         {
+             successResponse(responseModel);
+         }
+     }
+            failure:^(NSURLSessionDataTask * dataTask, NSError *error)
+     {
+         errorResponse(error);
+     }];
+}
+
 @end

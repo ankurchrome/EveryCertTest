@@ -67,9 +67,20 @@ extern NSString *const ApiPath;
 extern NSString *const ApiUrlParamTimestamp;
 extern NSString *const ApiLogin;
 extern NSString *const ApiSignup;
+extern NSString *const ApiLogout;
 extern NSString *const ApiDownload;
 extern NSString *const ApiDownloadSignature;
+
 extern NSString *const ApiCompanyUser;
+extern NSString *const ApiForm;
+extern NSString *const ApiFormSection;
+extern NSString *const ApiElement;
+extern NSString *const ApiSubElement;
+extern NSString *const ApiCertificate;
+extern NSString *const ApiRecord;
+extern NSString *const ApiLookup;
+extern NSString *const ApiData;
+extern NSString *const ApiDataBinary;
 
 extern NSString *const ApiResponseKeyMetadata;
 extern NSString *const ApiResponseKeyMetadataError;

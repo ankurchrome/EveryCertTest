@@ -20,6 +20,7 @@
         self.tableName     = DataTable;
         self.appIdField    = DataIdApp;
         self.serverIdField = DataId;
+        self.apiName       = ApiData;
         self.tableColumns  = @[DataIdApp, DataId, FormId, CertificateIdApp, ElementId, RecordIdApp, DataValue, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
     }
     

@@ -54,4 +54,6 @@
 
 - (void)signupWithInfo:(id)signupInfo onSuccess:(SuccessCallback)successResponse onError:(ErrorCallback)errorResponse;
 
+- (void)logoutUserSuccess:(SuccessCallback)successResponse onError:(ErrorCallback)errorResponse;
+
 @end

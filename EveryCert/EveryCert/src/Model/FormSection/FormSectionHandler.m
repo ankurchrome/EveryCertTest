@@ -18,11 +18,20 @@
     if (self)
     {
         self.tableName     = FormSectionTable;
+        self.appIdField    = FormSectionId;
         self.serverIdField = FormSectionId;
+        self.apiName       = ApiFormSection;
         self.tableColumns  = @[FormSectionId, FormId, FormSectionLabel, FormSectionSequenceOrder, FormSectionHeader, FormSectionFooter, FormSectionTitle, ModifiedTimeStamp, Archive];
+
+        self.noLocalRecord = true;
     }
     
     return self;
+}
+
+- (NSString *)getApiCallWithTimestamp:(NSTimeInterval)timestamp
+{
+    return [NSString stringWithFormat:@"%@/%ld",self.apiName, self.formId];
 }
 
 // Return a list of all the sections of specified form

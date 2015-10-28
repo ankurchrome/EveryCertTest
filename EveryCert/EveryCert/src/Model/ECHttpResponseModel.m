@@ -42,13 +42,12 @@
         {
             _popupMessage = [_payloadInfo objectForKey:ApiResponseKeyPayloadPopupMessage];
             
-            if ([CommonUtils isValidString:_popupMessage])
-            {
-                NSDictionary *errorInfo = @{
-                                            NSLocalizedDescriptionKey: _popupMessage
-                                            };
-                _error = [NSError errorWithDomain:ErrorDomainRequestFailed code:0 userInfo:errorInfo];
-            }
+            _popupMessage = _popupMessage ? _popupMessage : @"Response not valid";
+            
+            NSDictionary *errorInfo = @{
+                                        NSLocalizedDescriptionKey: _popupMessage
+                                        };
+            _error = [NSError errorWithDomain:ErrorDomainRequestFailed code:0 userInfo:errorInfo];
         }
     }
     

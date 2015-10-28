@@ -18,11 +18,20 @@
     if (self)
     {
         self.tableName     = SubElementTable;
+        self.appIdField    = SubElementId;
         self.serverIdField = SubElementId;
+        self.apiName       = ApiSubElement;
         self.tableColumns  = @[SubElementId, ElementId, ElementFieldType, ElementFieldName, ElementSequenceOrder, ElementLabel, ElementOriginX, ElementOriginY, ElementHeight, ElementWidth, ElementPageNumber, ElementMinCharLimit, ElementMaxCharLimit, ElementPrintedTextFormat, ElementPopUpMessage, ElementLookUpListIdNew, ElementFieldNumberNew, ElementLookUpListIdExisting, ElementFieldNumberExisting, ModifiedTimeStamp, Archive];
+        
+        self.noLocalRecord = true;
     }
     
     return self;
+}
+
+- (NSString *)getApiCallWithTimestamp:(NSTimeInterval)timestamp
+{
+    return [NSString stringWithFormat:@"%@/%ld",self.apiName, self.formId];
 }
 
 // Fetch all sub elements of given element

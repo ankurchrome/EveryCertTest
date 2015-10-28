@@ -23,11 +23,20 @@
     if (self)
     {
         self.tableName     = ElementTable;
+        self.appIdField    = ElementId;
         self.serverIdField = ElementId;
+        self.apiName       = ApiElement;
         self.tableColumns  = @[ElementId, FormSectionId, FormId, ElementFieldType, ElementFieldName, ElementSequenceOrder, ElementLabel, ElementOriginX, ElementOriginY, ElementHeight, ElementWidth, ElementPageNumber, ElementMinCharLimit, ElementMaxCharLimit, ElementPrintedTextFormat, ElementLinkedElementId, ElementPopUpMessage, ElementLookUpListIdNew, ElementFieldNumberNew, ElementLookUpListIdExisting, ElementFieldNumberExisting, ModifiedTimeStamp, Archive];
+        
+        self.noLocalRecord = true;
     }
     
     return self;
+}
+
+- (NSString *)getApiCallWithTimestamp:(NSTimeInterval)timestamp
+{
+    return [NSString stringWithFormat:@"%@/%ld",self.apiName, self.formId];
 }
 
 // Fetch all elements of given form with their stored data(if any) of given cert

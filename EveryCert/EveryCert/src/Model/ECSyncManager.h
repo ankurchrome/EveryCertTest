@@ -16,4 +16,6 @@
  */
 - (void)startCompleteSync;
 
+- (void)downloadForm:(NSInteger)formId;
+
 @end

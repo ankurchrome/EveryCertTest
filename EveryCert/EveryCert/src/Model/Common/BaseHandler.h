@@ -24,6 +24,7 @@ typedef void(^ProgressBlock)(float progress);
 @property(nonatomic, strong) NSString *apiName;
 @property(nonatomic, strong) NSArray  *commonTableColumns;
 @property(nonatomic, strong) NSArray  *tableColumns;
+@property(nonatomic, assign) BOOL noLocalRecord;
 
 
 - (NSString *)insertQueryForInfo:(NSDictionary *)recordInfo;
@@ -61,6 +62,9 @@ typedef void(^ProgressBlock)(float progress);
 
 // Return the list of all Created/Modified customers through app, the sync process send them to server.
 - (NSArray *)getAllDirtyRecords;
+
+- (void)saveGetRecords:(NSArray *)records;
+- (void)savePutRecords:(NSArray *)records;
 
 #pragma mark - NetworkService Methods
 

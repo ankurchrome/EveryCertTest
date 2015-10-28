@@ -20,6 +20,7 @@
         self.tableName     = RecordTable;
         self.appIdField    = RecordIdApp;
         self.serverIdField = RecordId;
+        self.apiName       = ApiRecord;
         self.tableColumns  = @[RecordIdApp, RecordId, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
     }
     
@@ -54,6 +55,20 @@
      }];
     
     return rowId;
+}
+
+#pragma mark - Overrided Methods
+
+- (NSTimeInterval)getSyncTimestampOfTableForCompany:(NSInteger)companyId
+{
+    NSTimeInterval timestamp = [super getSyncTimestampOfTableForCompany:companyId];
+    
+    if (timestamp <= 0.0)
+    {
+        timestamp = 10;
+    }
+    
+    return timestamp;
 }
 
 @end

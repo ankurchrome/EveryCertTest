@@ -18,8 +18,12 @@
     if (self)
     {
         self.tableName     = FormTable;
+        self.appIdField    = FormId;
         self.serverIdField = FormId;
+        self.apiName       = ApiForm;
         self.tableColumns  = @[FormId, FormCategoryId, FormName, FormTitle, FormBackgroundLayout, FormStatus, FormCompanyFormat, FormSequenceOrder, FormPermissionGroup, ModifiedTimestampApp, ModifiedTimeStamp, Archive];
+        
+        self.noLocalRecord = true;
     }
     
     return self;

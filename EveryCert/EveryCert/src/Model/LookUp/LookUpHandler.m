@@ -20,6 +20,7 @@
         self.tableName     = LookUpTable;
         self.appIdField    = LookUpIdApp;
         self.serverIdField = LookUpId;
+        self.apiName       = ApiLookup;
         self.tableColumns  = @[LookUpIdApp, LookUpId, LookUpListId, RecordIdApp, LookUpLinkedRecordIdApp, LookUpFieldNumber, LookUpOption, LookUpDataValue, LookUpSequenceOrder, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
     }
     
@@ -119,6 +120,20 @@
      }];
     
     return lookupRecordsList;
+}
+
+#pragma mark - Overrided Methods
+
+- (NSTimeInterval)getSyncTimestampOfTableForCompany:(NSInteger)companyId
+{
+    NSTimeInterval timestamp = [super getSyncTimestampOfTableForCompany:companyId];
+    
+    if (timestamp <= 0.0)
+    {
+        timestamp = 10;
+    }
+    
+    return timestamp;
 }
 
 @end

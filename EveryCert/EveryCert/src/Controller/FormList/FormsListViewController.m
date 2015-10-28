@@ -10,6 +10,7 @@
 #import "CertViewController.h"
 #import "FormTypeTableViewCell.h"
 #import "FormHandler.h"
+#import "ECSyncManager.h"
 
 #define FORM_LIST_ROW_HEIGHT 44.0
 
@@ -55,6 +56,36 @@ NSString *const FormStatusTitleInstalled = @"Installed";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if ([identifier isEqualToString:@"ShowCertificate"])
+    {
+        NSIndexPath *indexPath = [_formListTableView indexPathForSelectedRow];
+        FormModel   *formModel = _allFormsList[indexPath.row];
+        
+        if (!formModel.status)
+        {
+            ECSyncManager *syncManager = [ECSyncManager new];
+            [syncManager downloadForm:formModel.formId];
+            
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ShowCertificate"])
+    {
+        NSIndexPath *indexPath = [_formListTableView indexPathForSelectedRow];
+        FormModel   *formModel = _allFormsList[indexPath.row];
+        CertViewController *certificateVC = [segue destinationViewController];
+        [certificateVC initializeWithForm:formModel];
+    }
+}
+
 #pragma mark - UITableViewDataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -78,19 +109,6 @@ NSString *const FormStatusTitleInstalled = @"Installed";
     }
     
     return cell;
-}
-
-#pragma mark TableView Delegate
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"ShowCertificate"])
-    {
-        NSIndexPath *indexPath = [_formListTableView indexPathForSelectedRow];
-        FormModel   *formModel = _allFormsList[indexPath.row];
-        CertViewController *certificateVC = [segue destinationViewController];
-        [certificateVC initializeWithForm:formModel];
-    }
 }
 
 @end

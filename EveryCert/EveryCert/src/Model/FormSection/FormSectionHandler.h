@@ -11,6 +11,8 @@
 
 @interface FormSectionHandler : BaseHandler
 
+@property(nonatomic, assign) NSInteger formId;
+
 /**
  Returns a list of all the sections of specified form
  @param  formIdApp A form id app being used in table 'section'

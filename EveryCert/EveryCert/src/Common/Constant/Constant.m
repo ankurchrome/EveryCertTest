@@ -39,9 +39,20 @@ NSString *const ApiPath = @"api/v1/";
 NSString *const ApiUrlParamTimestamp = @"timestamp";
 NSString *const ApiLogin = @"login";
 NSString *const ApiSignup = @"signup";
+NSString *const ApiLogout = @"logout";
 NSString *const ApiDownload = @"download";
 NSString *const ApiDownloadSignature = @"downloadSig";
+
 NSString *const ApiCompanyUser = @"company_user";
+NSString *const ApiForm        = @"form";
+NSString *const ApiFormSection = @"section";
+NSString *const ApiElement     = @"element";
+NSString *const ApiSubElement  = @"sub_element";
+NSString *const ApiCertificate = @"certificate";
+NSString *const ApiRecord      = @"record";
+NSString *const ApiLookup      = @"lookup";
+NSString *const ApiData        = @"data";
+NSString *const ApiDataBinary  = @"data_binary";
 
 NSString *const ApiResponseKeyMetadata = @"metadata";
 NSString *const ApiResponseKeyMetadataError = @"error";

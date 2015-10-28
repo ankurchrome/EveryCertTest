@@ -20,6 +20,7 @@
         self.tableName     = CertificateTable;
         self.appIdField    = CertificateIdApp;
         self.serverIdField = CertificateId;
+        self.apiName       = ApiCertificate;
         self.tableColumns  = @[CertificateIdApp, CertificateId, FormId, CertificateName, CertificateIssuedApp, CertificateDate, CertificatePdf, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
     }
     

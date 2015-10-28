@@ -268,6 +268,11 @@
     return isUpdated;
 }
 
+- (NSString *)getApiCallWithTimestamp:(NSTimeInterval)timestamp
+{
+    return [NSString stringWithFormat:@"%@?%@=%lf",self.apiName, ApiUrlParamTimestamp, timestamp];
+}
+
 - (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info
 {
     NSMutableDictionary *newRecordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:info];
@@ -305,6 +310,143 @@
     return dirtyRecords;
 }
 
+- (void)saveGetRecords:(NSArray *)records
+{
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback)
+     {
+         for (NSDictionary *responseInfo in records)
+         {
+             //No need to check modified data in local for tables which could not be modified through the app
+             if (self.noLocalRecord)
+             {
+                 NSDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:responseInfo];
+                 NSInteger serverId = [[recordInfo objectForKey:self.serverIdField] integerValue];
+                 
+                 NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = ?", self.tableName, self.serverIdField];
+                 
+                 FMResultSet *result = [db executeQuery:query, @(serverId)];
+                 
+                 if ([result next])
+                 {
+                     query = [self updateQueryForInfo:recordInfo];
+                 }
+                 else
+                 {
+                     query = [self insertQueryForInfo:recordInfo];
+                 }
+                 
+                 if (![db executeUpdate:query withParameterDictionary:recordInfo])
+                 {
+                     if (LOGS_ON) NSLog(@"Insert/Update Failed(GET - %@): %@", self.tableName, recordInfo);
+                 }
+                 
+                 continue;
+             }
+             
+             NSInteger serverId = [[responseInfo objectForKey:self.serverIdField] integerValue];
+             
+             NSInteger appId = 0;
+             
+             if (serverId > 0 || [CommonUtils isValidString:self.appIdField])
+             {
+                 NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ?", self.appIdField, self.tableName, self.serverIdField];
+                 
+                 FMResultSet *result = [db executeQuery:query, @(serverId)];
+                 
+                 if ([result next])
+                 {
+                     appId = [result intForColumn:self.appIdField];
+                 }
+             }
+             
+             if (appId <= 0)
+             {
+                 //Get info from response for fields which are available in the table
+                 NSDictionary *recordInfo = [self populateInfoForNewRecord:responseInfo];
+                 
+                 NSString *query = [self insertQueryForInfo:recordInfo];
+                 
+                 if (![db executeUpdate:query withParameterDictionary:recordInfo])
+                 {
+                     if (LOGS_ON) NSLog(@"Insert Failed(GET - %@): %@", self.tableName, recordInfo);
+                 }
+             }
+             else
+             {
+                 //Get all fields of table from record info
+                 NSMutableDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:responseInfo];
+                 [recordInfo setObject:@(appId) forKey:self.appIdField];
+                 
+                 NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = ?", self.tableName, self.appIdField];
+                 
+                 FMResultSet *result = [db executeQuery:query, @(appId)];
+                 
+                 if (![result next]) continue;
+                 
+                 NSDictionary *appRecordInfo = [result resultDictionary];
+                 BOOL isDirty = [[appRecordInfo objectForKey:IsDirty] boolValue];
+                 
+                 if (isDirty)
+                 {
+                     NSInteger timestampServer = [[recordInfo valueForKey:ModifiedTimeStamp] doubleValue];
+                     NSInteger timestampApp    = [[appRecordInfo valueForKey:ModifiedTimestampApp] doubleValue];
+                     
+                     //compare the local & server timestamp most recent will win.
+                     if (timestampServer > timestampApp)
+                     {
+                         if (LOGS_ON) NSLog(@"Server data is most recent so it will be update into local");
+                         
+                         [recordInfo setObject:@(false) forKey:IsDirty];
+                         
+                         NSString *query = [self updateQueryForInfo:recordInfo];
+                         
+                         if (![db executeUpdate:query withParameterDictionary:recordInfo])
+                         {
+                             if (LOGS_ON) NSLog(@"Update Failed(GET - %@): %@", self.tableName, recordInfo);
+                         }
+                     }
+                 }
+                 else
+                 {
+                     NSString *query = [self updateQueryForInfo:recordInfo];
+                     
+                     if (![db executeUpdate:query withParameterDictionary:recordInfo])
+                     {
+                         if (LOGS_ON) NSLog(@"Update Failed(GET - %@): %@", self.tableName, recordInfo);
+                     }
+                 }
+             }
+         }
+     }];
+}
+
+- (void)savePutRecords:(NSArray *)records
+{
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback)
+     {
+         for (NSDictionary *responseInfo in records)
+         {
+             NSDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:responseInfo];
+             
+             NSInteger appId = [[recordInfo objectForKey:self.appIdField] integerValue];
+             
+             if (appId > 0)
+             {
+                 NSString *query = [self updateQueryForInfo:recordInfo];
+                 
+                 if (![db executeUpdate:query withParameterDictionary:recordInfo])
+                 {
+                     if (LOGS_ON) NSLog(@"Update Failed(PUT - %@): %@", self.tableName, recordInfo);
+                 }
+             }
+         }
+     }];
+}
+
 #pragma mark - NetworkService Methods
 
 - (void)getRecordsWithTimestamp:(NSTimeInterval)timestamp retryCount:(NSInteger)retryCount success:(SuccessCallback)successResponse error:(ErrorCallback)errorResponse
@@ -321,7 +463,9 @@
     
     ECHttpClient *httpClient = [ECHttpClient sharedHttpClient];
     
-    NSString *apiCall = [NSString stringWithFormat:@"%@?%@=%lf",self.apiName, ApiUrlParamTimestamp, timestamp];
+    NSString *apiCall = [self getApiCallWithTimestamp:timestamp];
+    
+    if (LOGS_ON) NSLog(@"Request: GET %@", apiCall);
     
     [httpClient GET:apiCall
          parameters:nil
@@ -359,6 +503,8 @@
     };
 
     ECHttpClient *httpClient = [ECHttpClient sharedHttpClient];
+    
+    if (LOGS_ON) NSLog(@"Request: PUT %@", self.apiName);
     
     [httpClient PUT:self.apiName
          parameters:records

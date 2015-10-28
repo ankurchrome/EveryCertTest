@@ -11,6 +11,8 @@
 
 @interface ElementHandler : BaseHandler
 
+@property(nonatomic, assign) NSInteger formId;
+
 /**
  Fetch all elements of given form with their stored data(if any) of given cert
  @param formId Form id to identify the form type in element table
