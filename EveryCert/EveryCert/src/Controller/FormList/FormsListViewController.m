@@ -26,7 +26,7 @@
     NSMutableArray *_hiddenFormModelList;
     NSMutableArray *_filteredArray;
     NSMutableArray *_copyFilteredArray;
-
+    BOOL _checkFirstTime;
     
     CompanyUserHandler *_companyUserHandler;
     __weak IBOutlet UISearchBar *_filterCertificateSearchBar;
@@ -54,9 +54,9 @@ NSString *const FormStatusShow = @"UnHide";
     [super viewDidLoad];
     
     self.view.backgroundColor = APP_BG_COLOR;
-    
     _formListTableView.estimatedRowHeight = FORM_LIST_ROW_HEIGHT;
     _formListTableView.rowHeight = UITableViewAutomaticDimension;
+    _checkFirstTime = YES;
     
     FormHandler *formHandler = [FormHandler new];
     _allFormsModelList = [[NSMutableArray alloc]initWithArray:
@@ -66,11 +66,6 @@ NSString *const FormStatusShow = @"UnHide";
     _companyUserHandler = [CompanyUserHandler new];
     
     [self reloadFormListTableView];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [_formListTableView reloadData];
 }
 
 #pragma mark -  Private Methods
@@ -198,10 +193,12 @@ NSString *const FormStatusShow = @"UnHide";
     cell.titleLabel.text = formModel.title;
     cell.statusLabel.hidden = !formModel.status;        //hide status label if form is saved
     
+    __unused BOOL checkUpdate = cell.needsUpdateConstraints;
+    
     if (formModel.status)
     {
         cell.statusLabel.text = FormStatusTitleInstalled;
-        //cell.installLabelHeightContraint.constant = 23.0;
+        cell.installLabelHeightContraint.constant = 23.0;
     }
     else
     {
@@ -213,16 +210,34 @@ NSString *const FormStatusShow = @"UnHide";
     {
         cell.backgroundColor = [UIColor colorWithRed: 58/255.0f green: 130/255.0f blue: 177/255.0f alpha: 1.0f];
         cell.titleLabel.textColor = [UIColor whiteColor];
-        cell.installLabelHeightContraint.constant = 0.0;
+        cell.installLabelHeightContraint.constant   = 0.0;
         cell.previewButtonlWidthConstraint.constant = 0.0;
     }
     else
     {
         cell.backgroundColor      = [UIColor whiteColor];
         cell.titleLabel.textColor = [UIColor darkGrayColor];
-        //cell.previewButtonlWidthConstraint.constant = 65.0;
+        cell.previewButtonlWidthConstraint.constant = 65;
     }
+    
     return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    [self tableViewWillFinishLoading:tableView];
+    return nil;
+}
+
+// This methosd is just for updating Self Sizing Properly between cell
+//TODO: Remove It http://www.appcoda.com/self-sizing-cells/ for know about the Bug
+- (void)tableViewWillFinishLoading:(UITableView *)tableView
+{
+    if(_checkFirstTime)
+    {
+        [tableView reloadData];
+        _checkFirstTime = NO;
+    }
 }
 
 // Work when button clcik after cell is swiped
@@ -292,7 +307,6 @@ NSString *const FormStatusShow = @"UnHide";
             }
         }
     }
-    
     
     [self insertUpdateIntoCompanyUserTable];
     [self reloadFormListTableView];

@@ -15,4 +15,5 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *installLabelHeightContraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *previewButtonlWidthConstraint;
 
+
 @end

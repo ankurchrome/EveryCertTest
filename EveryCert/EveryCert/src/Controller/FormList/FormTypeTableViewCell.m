@@ -17,4 +17,15 @@
     [super setSelected:selected animated:animated];
 }
 
+#pragma mark - IBOutlet
+
+// When user click on Preview Button to previe it Form
+- (IBAction)onClickPreviewButton:(id)sender
+{
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController *formPreviewNC = [storyBoard instantiateViewControllerWithIdentifier:@"FormPreviewNC"];
+    formPreviewNC.modalPresentationStyle = UIModalPresentationFormSheet;
+    [APP_DELEGATE.window.rootViewController presentViewController:formPreviewNC animated:YES completion:nil];
+}
+
 @end

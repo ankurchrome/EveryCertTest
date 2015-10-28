@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		775C73891BE0A73E004CE738 /* FormPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775C73881BE0A73E004CE738 /* FormPreviewViewController.m */; };
 		779637A71B747CDF0001ADC2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 779637A61B747CDF0001ADC2 /* libsqlite3.0.dylib */; };
 		779A9D851B7C7D0700D86FED /* LookupElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D501B7C7D0700D86FED /* LookupElementCell.m */; };
 		779A9D861B7C7D0700D86FED /* LookupElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D511B7C7D0700D86FED /* LookupElementCell.xib */; };
@@ -112,6 +113,8 @@
 		4EE41FB74DDDF2865D00F8CF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5A067339331CE3E7D6EA518F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6BDC13634B5A75B79FB745AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		775C73871BE0A73E004CE738 /* FormPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FormPreviewViewController.h; path = FormPreview/FormPreviewViewController.h; sourceTree = "<group>"; };
+		775C73881BE0A73E004CE738 /* FormPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormPreviewViewController.m; path = FormPreview/FormPreviewViewController.m; sourceTree = "<group>"; };
 		779637A61B747CDF0001ADC2 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		779A9D4F1B7C7D0700D86FED /* LookupElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupElementCell.h; sourceTree = "<group>"; };
 		779A9D501B7C7D0700D86FED /* LookupElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupElementCell.m; sourceTree = "<group>"; };
@@ -296,6 +299,15 @@
 				6BDC13634B5A75B79FB745AC /* libPods.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		775C73861BE0A6A7004CE738 /* FormPreview */ = {
+			isa = PBXGroup;
+			children = (
+				775C73871BE0A73E004CE738 /* FormPreviewViewController.h */,
+				775C73881BE0A73E004CE738 /* FormPreviewViewController.m */,
+			);
+			name = FormPreview;
 			sourceTree = "<group>";
 		};
 		778522F21B7378BD00EA8455 /* FormsList */ = {
@@ -509,6 +521,7 @@
 				77DBB92C1B6F590D00F02932 /* ExistingCertificate */,
 				77DBB92E1B6F590D00F02932 /* Setting */,
 				77E805AC1BD61C62006A384B /* LookUpSearch */,
+				775C73861BE0A6A7004CE738 /* FormPreview */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1132,6 +1145,7 @@
 				77DBB9251B6F563500F02932 /* RegistrationViewController.m in Sources */,
 				C38E89BF1B9705D500790752 /* CompanyUserHandler.m in Sources */,
 				779A9D8D1B7C7D0700D86FED /* RadioButtonView.m in Sources */,
+				775C73891BE0A73E004CE738 /* FormPreviewViewController.m in Sources */,
 				C38E89BE1B9705D500790752 /* BaseModel.m in Sources */,
 				C3EEB9801BB2E7040090C4B0 /* Constant.m in Sources */,
 				C38E89C41B9705D500790752 /* DataBinaryModel.m in Sources */,
