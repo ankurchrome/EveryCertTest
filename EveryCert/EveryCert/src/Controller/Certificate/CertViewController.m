@@ -34,6 +34,7 @@
     IBOutlet ElementTableView *_elementTableView;
     IBOutlet UITableView      *_sectionTableView;
     IBOutlet UIView   *_sectionView;
+    
     IBOutlet UIView   *_sectionFadedView;
     IBOutlet UIButton *_menuButton;
     IBOutlet UIButton *_prevSectionButton;
@@ -46,8 +47,9 @@
     DataHandler        *_dataHandler;
     DataBinaryHandler  *_dataBinaryHandler;
     CertificateHandler *_certHandler;
-
+    
     NSArray   *_formSections;
+    NSMutableArray *_sectionImageStatusArray;
     NSArray   *_currentSectionElements;
     NSInteger  _currentSectionIndex;
     NSInteger  _currentSectionRecordIdApp;
@@ -61,6 +63,13 @@
 NSString *const FormSectionCellReuseIdentifier = @"FormSectionCellIdentifier";
 NSString *const ButtonTitlePreview = @"Preview";
 NSString *const ButtonTitleFinish  = @"Finish";
+
+enum Section_Image_Status
+{
+    FullyFilled = 0,
+    PartiallyFilled = 1,
+    Empty = 2
+};
 
 #pragma mark - Initialization Methods
 
@@ -104,7 +113,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     
     //Load form's sections and their elements
     ElementHandler *elementHandler = [ElementHandler new];
-
+    
     if (_isExistingCertificate)
     {
         _formElements = [elementHandler getAllElementsOfForm:_certificate.formId withDataOfCertificate:_certificate.certIdApp];
@@ -116,9 +125,39 @@ NSString *const ButtonTitleFinish  = @"Finish";
     
     FormSectionHandler *sectionHandler = [FormSectionHandler new];
     _formSections = [sectionHandler getAllSectionsOfForm:_certificate.formId];
-
+    
     //Initially show first section's elements
     [self showElementsForSectionIndex:0];
+    _sectionImageStatusArray = [NSMutableArray new];
+    
+    for(FormSectionModel *formSectionModel in _formSections)
+    {
+        NSPredicate *elementsPredicate = [NSPredicate predicateWithFormat:@"sectionId = %ld", formSectionModel.sectionId];
+        NSArray *elementArray = [_formElements filteredArrayUsingPredicate:elementsPredicate];
+        
+        // Take only those field having dataValue Field Non-Empty from all selected section elements
+        NSString *emptyValue = @"";
+        NSPredicate *nonEmptyElementsPedicate = [NSPredicate predicateWithFormat: @"(self.dataValue != %@) AND (self.dataValue != nil)", emptyValue];
+        NSArray *nonEmptyElementsArray        = [elementArray filteredArrayUsingPredicate:nonEmptyElementsPedicate];
+        
+        // Except  Look Up and Line Module
+        NSPredicate *allValidElementPredicate = [NSPredicate predicateWithFormat:@"(self.fieldType != 0) AND (self.fieldType != 9)"];
+        NSArray *allValidElementsArray        = [elementArray filteredArrayUsingPredicate:allValidElementPredicate];
+        
+        // For all Fully Filled Elements Data in the Selected Section
+        if(nonEmptyElementsArray.count == allValidElementsArray.count)
+        {
+            [_sectionImageStatusArray addObject:@(FullyFilled)];
+        }
+        else if(nonEmptyElementsArray.count > 1)
+        {
+            [_sectionImageStatusArray addObject:@(PartiallyFilled)];
+        }
+        else
+        {
+            [_sectionImageStatusArray addObject:@(Empty)];
+        }
+    }
 }
 
 #pragma mark -
@@ -128,12 +167,12 @@ NSString *const ButtonTitleFinish  = @"Finish";
 {
     self.title = _certificate.name;
     self.view.backgroundColor = APP_BG_COLOR;
-
+    
     _elementTableView.superview.clipsToBounds = NO;
     _elementTableView.superview.layer.shadowColor = [[UIColor blackColor] CGColor];
     _elementTableView.superview.layer.shadowOffset = CGSizeMake(0,5);
     _elementTableView.superview.layer.shadowOpacity = 0.5;
-
+    
     _sectionTableView.backgroundColor = APP_BG_COLOR;
     _sectionTableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0);
 }
@@ -145,7 +184,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
 {
     FormSectionModel *formSection = nil;
     NSPredicate *predicate = nil;
-
+    
     //Disable the previous section button on first section
     _prevSectionButton.enabled = !(sectionIndex == 0);
     
@@ -169,7 +208,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
         
         _sectionTitleLabel.text = formSection.title;
     }
-
+    
     //Check that the current section is lookup section
     predicate = [NSPredicate predicateWithFormat:@"fieldType = %ld", ElementTypeSearch];
     NSArray *searchElements = [_currentSectionElements filteredArrayUsingPredicate:predicate];
@@ -197,9 +236,9 @@ NSString *const ButtonTitleFinish  = @"Finish";
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:ALERT_TITLE_WARNING message:_currentSearchElementModel.popUpMessage preferredStyle:UIAlertControllerStyleAlert];
                     
                     UIAlertAction *okAction = [UIAlertAction actionWithTitle:ALERT_ACTION_TITLE_OK style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-                   {
-                       [APP_DELEGATE.certificateVC backToPreviousSection];
-                   }];
+                                               {
+                                                   [APP_DELEGATE.certificateVC backToPreviousSection];
+                                               }];
                     
                     [alertController addAction:okAction];
                     [self presentViewController:alertController animated:YES completion:nil];
@@ -256,6 +295,43 @@ NSString *const ButtonTitleFinish  = @"Finish";
 //Save the data for all given elements
 - (void)saveAllElements:(NSArray *)elements
 {
+    //** Change the Status ImageView according to the DataValue in it, ie. Circle with tick for fully filled Element and only circle for particlly filled
+    
+    // Take only those field having dataValue Field Non-Empty from all selected section elements
+    NSString *emptyValue = @"";
+    NSPredicate *nonEmptyElementsPedicate = [NSPredicate predicateWithFormat: @"(self.dataValue != %@) AND (self.dataValue != nil)", emptyValue];
+    NSArray *nonEmptyElementsArray        = [elements filteredArrayUsingPredicate:nonEmptyElementsPedicate];
+    
+    // Except  Look Up and Line Module
+    NSPredicate *allValidElementPredicate = [NSPredicate predicateWithFormat:@"(self.fieldType != 0) AND (self.fieldType != 9)"];
+    NSArray *allValidElementsArray        = [elements filteredArrayUsingPredicate:allValidElementPredicate];
+    
+    
+    NSIndexPath *indexPath = _sectionTableView.indexPathForSelectedRow;
+    __unused NSInteger indexPathValue = indexPath.row;
+    FormSectionTableViewCell *cell = (FormSectionTableViewCell*)[_sectionTableView cellForRowAtIndexPath:indexPath];
+    cell.statusImageView.hidden = NO;
+    
+    // For all Fully Filled Elements Data in the Selected Section
+    if(nonEmptyElementsArray.count == allValidElementsArray.count)
+    {
+        cell.statusImageView.image = [UIImage imageNamed:@"TickMarkIcon.png"];
+        [_sectionImageStatusArray replaceObjectAtIndex:indexPathValue withObject:@(FullyFilled)];
+        
+    }
+    // For Partially Filled Elements Data in the Selected Section
+    else if(nonEmptyElementsArray.count > 1)
+    {
+        if (LOGS_ON) NSLog(@"Partially Filled");
+        cell.statusImageView.image = [UIImage imageNamed:@"RadioButtonCheckedIcon.png"];
+        [_sectionImageStatusArray replaceObjectAtIndex:indexPathValue withObject:@(PartiallyFilled)];
+    }
+    else
+    {
+        cell.statusImageView.hidden = YES;
+        [_sectionImageStatusArray replaceObjectAtIndex:indexPathValue withObject:@(Empty)];
+    }
+    
     if (![self hasMandatoryElementsFilled]) return;
     
     //Create a new lookup record if not previously selected
@@ -483,7 +559,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
 {
     _lookupHandler = _lookupHandler ? _lookupHandler : [LookUpHandler new];
     _dataHandler   = _dataHandler ? _dataHandler : [DataHandler new];
-
+    
     if (_currentSectionRecordIdApp > 0)
     {
         [_dataHandler deleteLinkedDataForRecord:_currentSectionRecordIdApp
@@ -520,7 +596,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     }
     
     _currentSectionRecordIdApp = 0;
-
+    
     for (ElementModel *elementModel in _currentSectionElements)
     {
         elementModel.recordIdApp = 0;
@@ -573,7 +649,7 @@ NSString *const ButtonTitleFinish  = @"Finish";
     [drawingPdf drawElements:_formElements
                  onPdfLayout:_certificate.backgroundPdfPath
                       saveAs:_certificate.pdfPath];
-
+    
     //pop to home view controller and add CertList and CertPreview view controller manually
     NSMutableArray *viewControllers = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
     
@@ -594,12 +670,12 @@ NSString *const ButtonTitleFinish  = @"Finish";
     }
     
     ExistingCertsListViewController *existingCertsVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ExistingCertsListVC"];
-
+    
     [viewControllers addObject:existingCertsVC];
     
     CertificatePreviewViewController *certPreviewVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CertificatePreviewVC"];
     [certPreviewVC initializeWithCertificate:_certificate];
-
+    
     [viewControllers addObject:certPreviewVC];
     
     [self.navigationController setViewControllers:viewControllers animated:YES];
@@ -667,9 +743,29 @@ NSString *const ButtonTitleFinish  = @"Finish";
     FormSectionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:FormSectionCellReuseIdentifier forIndexPath:indexPath];
     
     FormSectionModel *formSection = _formSections[indexPath.row];
-    
     cell.titleLabel.text = formSection.title;
     
+    NSInteger imageStatus = [_sectionImageStatusArray[indexPath.row] integerValue];
+    
+    switch (imageStatus) {
+        case FullyFilled:
+        {
+            cell.statusImageView.hidden = NO;
+            cell.statusImageView.image = [UIImage imageNamed:@"TickMarkIcon.png"];
+        }
+            break;
+        case PartiallyFilled:
+        {
+            cell.statusImageView.hidden = NO;
+            cell.statusImageView.image = [UIImage imageNamed:@"RadioButtonCheckedIcon.png"];
+        }
+            break;
+        case Empty:
+        {
+            cell.statusImageView.hidden = YES;
+        }
+            break;
+    }
     return cell;
 }
 

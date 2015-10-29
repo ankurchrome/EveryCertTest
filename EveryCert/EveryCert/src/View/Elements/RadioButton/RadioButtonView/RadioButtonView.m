@@ -92,10 +92,10 @@
     for (UIButton *radioButton in _radioButtons)
     {
         radioButton.selected = NO;
-        [radioButton setTitleColor:[UIColor blackColor]
-                          forState:UIControlStateNormal];    // Change Selected Button's Tilte Color to Black
     }
     
+    [sender setTitleColor:[UIColor blackColor]
+                 forState:UIControlStateNormal];            // Change Selected Button's Tilte Color to Black
     sender.selected = YES;
     _selectedButtonIndex = sender.tag;
     _selectedButton = sender;
