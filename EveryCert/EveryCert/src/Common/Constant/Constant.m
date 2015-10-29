@@ -103,8 +103,9 @@ NSString *const kPdfFormatNumberOfLines = @"number_lines";
 #pragma mark - Table Constants
 #pragma mark -
 #pragma mark Common Columns
-NSString *const ModifiedTimestampApp = @"modified_timestamp_app";
-NSString *const ModifiedTimeStamp    = @"modified_timeStamp";
+NSString *const ModifiedTimestampApp    = @"modified_timestamp_app";
+NSString *const ModifiedTimeStamp       = @"modified_timeStamp";
+NSString *const ModifiedTimeStampServer = @"modified";
 NSString *const Archive   = @"archive";
 NSString *const Uuid      = @"uuid";
 NSString *const IsDirty   = @"is_dirty";
@@ -181,6 +182,7 @@ NSString *const CertificateTable     = @"certificate";
 NSString *const CertificateIdApp     = @"cert_id_app";
 NSString *const CertificateId        = @"cert_id";
 NSString *const CertificateName      = @"name";
+NSString *const CertificateIssued    = @"issued";
 NSString *const CertificateIssuedApp = @"issued_app";
 NSString *const CertificateDate      = @"date";
 NSString *const CertificatePdf       = @"pdf";

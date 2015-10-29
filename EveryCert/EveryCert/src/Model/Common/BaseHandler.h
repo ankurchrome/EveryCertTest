@@ -26,6 +26,8 @@ typedef void(^ProgressBlock)(float progress);
 @property(nonatomic, strong) NSArray  *tableColumns;
 @property(nonatomic, assign) BOOL noLocalRecord;
 
+@property(nonatomic, strong) BaseHandler *nextSyncHandler;
+
 
 - (NSString *)insertQueryForInfo:(NSDictionary *)recordInfo;
 
@@ -52,6 +54,9 @@ typedef void(^ProgressBlock)(float progress);
 // Returns server id for given app Id.
 - (NSInteger)getServerId:(NSInteger)appId;
 
+// Returns record info from active table for given app id
+- (NSDictionary *)getRecordInfoWithAppId:(NSInteger)appId;
+
 // Get the last updated sync timestamp for the table.
 - (NSTimeInterval)getSyncTimestampOfTableForCompany:(NSInteger)companyId;
 
@@ -66,7 +71,15 @@ typedef void(^ProgressBlock)(float progress);
 - (void)saveGetRecords:(NSArray *)records;
 - (void)savePutRecords:(NSArray *)records;
 
+- (NSString *)getApiCallWithTimestamp:(NSTimeInterval)timestamp;
+
+#pragma mark - updated
+
+- (void)syncWithServer;
+
 #pragma mark - NetworkService Methods
+
+- (void)getRecordsWithApiCall:(NSString *)apiCall retryCount:(NSInteger)retryCount success:(SuccessCallback)successResponse error:(ErrorCallback)errorResponse;
 
 - (void)getRecordsWithTimestamp:(NSTimeInterval)timestamp retryCount:(NSInteger)retryCount success:(SuccessCallback)successResponse error:(ErrorCallback)errorResponse;
 

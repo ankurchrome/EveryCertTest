@@ -57,6 +57,8 @@
 
 - (NSString *)updateQueryForInfo:(NSDictionary *)recordInfo
 {
+    if (!recordInfo) return nil;
+    
     NSMutableDictionary *updatedColumnInfo = [[NSMutableDictionary alloc] initWithDictionary:recordInfo];
     
     //Make column string to bind the column data from dictionary
@@ -212,6 +214,27 @@
     return serverId;
 }
 
+- (NSDictionary *)getRecordInfoWithAppId:(NSInteger)appId
+{
+    __block NSDictionary *recordInfo = nil;
+    
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = ?", self.tableName, self.appIdField];
+         
+         FMResultSet *result = [db executeQuery:query, @(appId)];
+         
+         if ([result next])
+         {
+             recordInfo = [result resultDictionary];
+         }
+     }];
+    
+    return recordInfo;
+}
+
 //Get the last updated sync timestamp for the table.
 - (NSTimeInterval)getSyncTimestampOfTableForCompany:(NSInteger)companyId
 {
@@ -277,10 +300,16 @@
 {
     NSMutableDictionary *newRecordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:info];
     
-    // Initialise modified timestamp app with modified timestamp server for new records
-    if ([info valueForKey:ModifiedTimeStamp])
+    if ([self.tableName isEqualToString:CertificateTable] && [info valueForKey:CertificateIssued])
     {
-        [newRecordInfo setValue:[info valueForKey:ModifiedTimeStamp] forKey:ModifiedTimestampApp];
+        [newRecordInfo setObject:[info valueForKey:CertificateIssued] forKey:CertificateIssuedApp];
+    }
+    
+    // Initialise modified timestamp app with modified timestamp server for new records
+    if ([info valueForKey:ModifiedTimeStampServer])
+    {
+        [newRecordInfo setObject:[info valueForKey:ModifiedTimeStampServer] forKey:ModifiedTimeStamp];
+        [newRecordInfo setObject:[info valueForKey:ModifiedTimeStampServer] forKey:ModifiedTimestampApp];
     }
     
     return newRecordInfo;
@@ -318,10 +347,14 @@
      {
          for (NSDictionary *responseInfo in records)
          {
+             NSInteger timestampServer = [[responseInfo valueForKey:ModifiedTimeStampServer] doubleValue];
+
              //No need to check modified data in local for tables which could not be modified through the app
              if (self.noLocalRecord)
              {
-                 NSDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:responseInfo];
+                 NSMutableDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:responseInfo];
+                 [recordInfo setObject:@(timestampServer) forKey:ModifiedTimeStamp];
+
                  NSInteger serverId = [[recordInfo objectForKey:self.serverIdField] integerValue];
                  
                  NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = ?", self.tableName, self.serverIdField];
@@ -378,6 +411,12 @@
                  //Get all fields of table from record info
                  NSMutableDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:responseInfo];
                  [recordInfo setObject:@(appId) forKey:self.appIdField];
+                 [recordInfo setObject:@(timestampServer) forKey:ModifiedTimeStamp];
+                 
+                 if ([self.tableName isEqualToString:CertificateTable] && [responseInfo valueForKey:CertificateIssued])
+                 {
+                     [recordInfo setObject:[recordInfo valueForKey:CertificateIssued] forKey:CertificateIssuedApp];
+                 }
                  
                  NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = ?", self.tableName, self.appIdField];
                  
@@ -447,7 +486,53 @@
      }];
 }
 
+#pragma mark - updated
+
+- (void)syncWithServer
+{
+
+}
+
 #pragma mark - NetworkService Methods
+
+- (void)getRecordsWithApiCall:(NSString *)apiCall retryCount:(NSInteger)retryCount success:(SuccessCallback)successResponse error:(ErrorCallback)errorResponse
+{
+    if (retryCount <= 0)
+    {
+        NSDictionary *errorInfo = @{
+                                    NSLocalizedDescriptionKey: @"Request Timeout"
+                                    };
+        NSError *error = [NSError errorWithDomain:ErrorDomainRequestFailed code:0 userInfo:errorInfo];
+        
+        errorResponse(error);
+    };
+    
+    ECHttpClient *httpClient = [ECHttpClient sharedHttpClient];
+    
+    if (LOGS_ON) NSLog(@"Request: GET %@", apiCall);
+    
+    [httpClient GET:apiCall
+         parameters:nil
+            success:^(NSURLSessionDataTask *dataTask, id responseObject)
+     {
+         if (LOGS_ON) NSLog(@"Response: %@", responseObject);
+         
+         ECHttpResponseModel *responseModel = [[ECHttpResponseModel alloc] initWithResponseInfo:responseObject];
+         
+         if (responseModel.error)
+         {
+             errorResponse(responseModel.error);
+         }
+         else
+         {
+             successResponse(responseModel);
+         }
+     }
+            failure:^(NSURLSessionDataTask * dataTask, NSError *error)
+     {
+         [self getRecordsWithApiCall:apiCall retryCount:retryCount - 1 success:successResponse error:errorResponse];
+     }];
+}
 
 - (void)getRecordsWithTimestamp:(NSTimeInterval)timestamp retryCount:(NSInteger)retryCount success:(SuccessCallback)successResponse error:(ErrorCallback)errorResponse
 {

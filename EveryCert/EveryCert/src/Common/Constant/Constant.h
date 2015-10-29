@@ -133,6 +133,7 @@ extern NSString *const kPdfFormatNumberOfLines;
 #pragma mark Common Columns
 extern NSString *const ModifiedTimestampApp;
 extern NSString *const ModifiedTimeStamp;
+extern NSString *const ModifiedTimeStampServer;
 extern NSString *const Archive;
 extern NSString *const Uuid;
 extern NSString *const IsDirty;
@@ -209,6 +210,7 @@ extern NSString *const CertificateTable;
 extern NSString *const CertificateIdApp;
 extern NSString *const CertificateId;
 extern NSString *const CertificateName;
+extern NSString *const CertificateIssued;
 extern NSString *const CertificateIssuedApp;
 extern NSString *const CertificateDate;
 extern NSString *const CertificatePdf;

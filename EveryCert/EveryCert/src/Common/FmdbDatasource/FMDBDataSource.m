@@ -10,7 +10,6 @@
 
 @implementation FMDBDataSource
 
-
 // Returns a singleton FMDBDataSource object and initialized with Database connection
 + (id)sharedManager
 {
