@@ -134,7 +134,17 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    NSString *const UserEmail    = @"user_email";
+    NSString *const UserPassword = @"user_password";
+    
     self.elementModel.dataValue = textField.text;
+    
+    // Trimming White Space from Leading and Trailing of Text Field in case of LoginFields Element
+    if( [self.elementModel.fieldName isEqualToString: UserEmail] ||
+        [self.elementModel.fieldName isEqualToString: UserPassword] )
+    {
+        self.elementModel.dataValue = [textField.text stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

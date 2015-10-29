@@ -11,12 +11,14 @@
 #import "CertViewController.h"
 #import "CertificateModel.h"
 #import "CertificateHandler.h"
+#import "MenuViewController.h"
+#import "ElementModel.h"
 
 @interface CertificatePreviewViewController ()<UIWebViewDelegate, MFMailComposeViewControllerDelegate>
 {
     __weak IBOutlet UIWebView   *_webView;
     MFMailComposeViewController  *_mailComposeVC;
-
+    
     CertificateModel *_certificate;
 }
 @end
@@ -45,6 +47,15 @@
 
 #pragma mark - IBActions
 
+// Pop the View Controller to the MenuVC
+- (IBAction)onClickHomeButton:(id)sender
+{
+    if (APP_DELEGATE.homeVC)
+    {
+        [self.navigationController popToViewController:APP_DELEGATE.homeVC animated:YES];
+    }
+}
+
 // Show the CertViewController to edit the given certificate
 - (IBAction)editButtonTapped:(id)sender
 {
@@ -61,19 +72,19 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:ALERT_TITLE_WARNING message:ALERT_MESSAGE_DELETE preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:ALERT_ACTION_TITLE_YES style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-    {
-        CertificateHandler *certHandler = [CertificateHandler new];
-        
-        NSDictionary *columnInfo = @{
-                                     Archive: @(true),
-                                     ModifiedTimestampApp: @([[NSDate date] timeIntervalSince1970]),
-                                     IsDirty: @(true)
-                                     };
-        
-        [certHandler updateInfo:columnInfo recordIdApp:_certificate.certIdApp];
-        
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
+                                {
+                                    CertificateHandler *certHandler = [CertificateHandler new];
+                                    
+                                    NSDictionary *columnInfo = @{
+                                                                 Archive: @(true),
+                                                                 ModifiedTimestampApp: @([[NSDate date] timeIntervalSince1970]),
+                                                                 IsDirty: @(true)
+                                                                 };
+                                    
+                                    [certHandler updateInfo:columnInfo recordIdApp:_certificate.certIdApp];
+                                    
+                                    [self.navigationController popViewControllerAnimated:YES];
+                                }];
     
     UIAlertAction *noAction = [UIAlertAction actionWithTitle:ALERT_ACTION_TITLE_NO style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
     }];
@@ -87,6 +98,7 @@
 // Send the certificate's pdf through email
 - (IBAction)emailButtonTapped:(id)sender
 {
+    //** If CurrrentDevice is not able to send Email then Show Alert
     if (![MFMailComposeViewController canSendMail])
     {
         [CommonUtils showAlertWithTitle:ALERT_TITLE_ERROR
@@ -94,11 +106,41 @@
         return;
     }
     
-    NSString *subject = nil;
+    //** Extract the Subject String from Customer Address and Certificate Name Combination
+    NSString *const customerAddressLine1 = @"customer_address_line_1";
+    NSString *const customerAddressLine2 = @"customer_address_line_2";
+    NSString *const customerAddressLine3 = @"customer_address_line_3";
+    NSString *const customerAddressLine4 = @"customer_address_line_4";
+    
+    NSArray *fieldNameArray = @[
+                                customerAddressLine1,
+                                customerAddressLine2,
+                                customerAddressLine3,
+                                customerAddressLine4
+                                ];
+    
+    NSMutableString *subjectString = [NSMutableString new];
+    
+    for(NSString *fieldName in fieldNameArray)
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.fieldName CONTAINS %@", fieldName];
+        ElementModel *filteredModel = [[APP_DELEGATE.certificateVC.formElements filteredArrayUsingPredicate:predicate] firstObject];
+        
+        
+        if([CommonUtils isValidString:filteredModel.fieldName])
+        {
+            [subjectString appendString: filteredModel.dataValue];
+            [subjectString appendString: @" "];
+        }
+    }
+    [subjectString appendString: _certificate.name];
+    
     NSData *certPdfData = [NSData dataWithContentsOfFile:[_certificate pdfPath]];
     
     _mailComposeVC = [MFMailComposeViewController new];
-    [_mailComposeVC setSubject:subject];
+    [_mailComposeVC setSubject:subjectString];
+    
+    [_mailComposeVC setToRecipients:@[APP_DELEGATE.loggedUserEmail]];
     _mailComposeVC.mailComposeDelegate = self;
     
     [_mailComposeVC addAttachmentData:certPdfData

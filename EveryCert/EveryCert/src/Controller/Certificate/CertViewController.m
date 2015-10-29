@@ -190,7 +190,11 @@ enum Section_Image_Status
     
     //Disable the next section button and change the 'Preview' button title to 'Finish' on last section
     _nextSectionButton.enabled = !(sectionIndex == (_formSections.count-1));
-    _previewBarButton.title    = _nextSectionButton.enabled ? ButtonTitlePreview : ButtonTitleFinish;
+    _previewBarButton.title    = _nextSectionButton.enabled ? ButtonTitlePreview : EMPTY_STRING;
+    if([_previewBarButton.title isEqualToString:EMPTY_STRING]) // Do this to dont see fluctuation in chaning the PreviewButtton Tittle
+    {
+        _previewBarButton.title = ButtonTitleFinish;
+    }
     
     //Reload element table with selected form section
     if (_formSections && sectionIndex < _formSections.count)
