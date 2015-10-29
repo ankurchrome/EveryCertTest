@@ -7,10 +7,12 @@
 //
 
 #import "TickBoxElementCell.h"
+#import "CertViewController.h"
 
 @implementation TickBoxElementCell
 {
     __weak IBOutlet UILabel *_textLabel;
+    __weak IBOutlet UIButton *_tickBoxButton;
 }
 
 - (void)awakeFromNib {
@@ -23,13 +25,48 @@
 - (void)initializeWithElementModel:(ElementModel *)elementModel
 {
     [super initializeWithElementModel:elementModel];
-    
+    _tickBoxButton.selected = NO;
     _textLabel.text = elementModel.label;
 }
 
 - (IBAction)onClickTickBoxButton:(UIButton *)tickBoxButton
 {
-    tickBoxButton.selected = !tickBoxButton.selected;
+    NSArray *copyFieldArray = self.elementModel.printedTextFormat[kTickBox];
+    
+    NSArray *currentSectionElements = APP_DELEGATE.certificateVC.currentSectionElements;
+    NSMutableDictionary *mutableDict = [NSMutableDictionary new];
+    
+    for(NSDictionary *dictionary in copyFieldArray)
+    {
+        NSString *key = [[dictionary allKeys] firstObject];
+        ElementModel *elementModel = [[APP_DELEGATE.certificateVC.formElements filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.fieldName CONTAINS %@",dictionary[key]]] firstObject];
+        
+        
+        [mutableDict setObject:elementModel.dataValue forKey:key];
+    }
+    
+    for(ElementModel *elementModel in currentSectionElements)
+    {
+        if([CommonUtils isValidObject: mutableDict[elementModel.fieldName]])
+        {
+            elementModel.dataValue = mutableDict[elementModel.fieldName];
+        }
+    }
+    
+    [APP_DELEGATE.certificateVC.elementTableView reloadData];
+    
+    //Add arrowImageView with arrow sign
+    if(!tickBoxButton.selected)
+    {
+        tickBoxButton.selected      = YES;
+        self.elementModel.dataValue = @"YES";
+    }
+    
+    else
+    {
+        tickBoxButton.selected      = NO;
+        self.elementModel.dataValue = @"NO";
+    }
 }
 
 @end

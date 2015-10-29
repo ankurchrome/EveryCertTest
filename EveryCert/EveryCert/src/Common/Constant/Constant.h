@@ -110,7 +110,10 @@ extern NSString *const PdfFormatKeyboardAlphabetic;
 extern NSString *const PdfFormatKeyboardAlphaNumeric;
 extern NSString *const PdfFormatKeyboardNumeric;
 
+extern NSString *const kPdfFormatDecimal;
+
 extern NSString *const kPdfFormatNumberOfLines;
+extern NSString *const kTickBox;
 
 #pragma mark - Table Constants
 #pragma mark -

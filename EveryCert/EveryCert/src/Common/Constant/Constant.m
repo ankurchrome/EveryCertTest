@@ -75,8 +75,9 @@ NSString *const kPDFDateFormat     = @"date_format";
 NSString *const PdfFormatKeyboardAlphabetic = @"alpha";
 NSString *const PdfFormatKeyboardAlphaNumeric = @"alphanumeric";
 NSString *const PdfFormatKeyboardNumeric = @"numeric";
-
 NSString *const kPdfFormatNumberOfLines = @"number_lines";
+extern NSString *const kTickBox = @"tick_box";
+NSString *const kPdfFormatDecimal = @"Decimal";
 
 #pragma mark - Table Constants
 #pragma mark -

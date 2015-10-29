@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,57 +12,49 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="v0L-nH-jCa" id="XRT-wh-xad">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hM-mR-qbY">
-                        <rect key="frame" x="5" y="11" width="514" height="21"/>
-                        <fontDescription key="fontDescription" type="italicSystem" pointSize="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hM-mR-qbY">
+                        <rect key="frame" x="10" y="8" width="514" height="27"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iqd-kG-CQR">
-                        <rect key="frame" x="521" y="7" width="34" height="30"/>
+                        <rect key="frame" x="531" y="11" width="22" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="34" id="6E0-EH-R3J"/>
-                            <constraint firstAttribute="height" constant="30" id="qBt-P9-YPC"/>
+                            <constraint firstAttribute="width" constant="22" id="9oW-dX-ENg"/>
+                            <constraint firstAttribute="height" constant="21" id="oGQ-YO-XfT"/>
                         </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <state key="normal" backgroundImage="checkBox.png">
+                        <state key="normal" backgroundImage="UncheckedBoxIcon">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
-                        <state key="selected" backgroundImage="checkBoxChecked.png">
+                        <state key="selected" backgroundImage="CheckedBoxIcon">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
                             <action selector="onClickTickBoxButton:" destination="v0L-nH-jCa" eventType="touchUpInside" id="otL-Ae-uI8"/>
                         </connections>
                     </button>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QjZ-OR-SsF" userLabel="Separator">
-                        <rect key="frame" x="0.0" y="42" width="568" height="1"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="qqT-iN-VDp"/>
-                        </constraints>
-                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="centerY" secondItem="iqd-kG-CQR" secondAttribute="centerY" id="A7m-dS-jAu"/>
-                    <constraint firstItem="1hM-mR-qbY" firstAttribute="leading" secondItem="XRT-wh-xad" secondAttribute="leadingMargin" constant="-3" id="I1o-hX-1VT"/>
-                    <constraint firstAttribute="bottom" secondItem="QjZ-OR-SsF" secondAttribute="bottom" id="LUe-x9-8S1"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="iqd-kG-CQR" secondAttribute="trailing" constant="5" id="Lxb-CW-ujK"/>
-                    <constraint firstItem="iqd-kG-CQR" firstAttribute="leading" secondItem="1hM-mR-qbY" secondAttribute="trailing" constant="2" id="W34-GF-1d9"/>
-                    <constraint firstAttribute="trailing" secondItem="QjZ-OR-SsF" secondAttribute="trailing" id="f4R-eI-p9S"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="1hM-mR-qbY" secondAttribute="bottom" constant="3" id="kM2-SE-ABo"/>
-                    <constraint firstItem="QjZ-OR-SsF" firstAttribute="leading" secondItem="XRT-wh-xad" secondAttribute="leading" id="ojd-eg-MA9"/>
-                    <constraint firstItem="1hM-mR-qbY" firstAttribute="top" secondItem="XRT-wh-xad" secondAttribute="topMargin" constant="3" id="tQj-wo-hKa"/>
+                    <constraint firstAttribute="centerY" secondItem="iqd-kG-CQR" secondAttribute="centerY" id="98R-d9-7R0"/>
+                    <constraint firstAttribute="centerY" secondItem="1hM-mR-qbY" secondAttribute="centerY" id="B4B-ap-8wH"/>
+                    <constraint firstAttribute="trailing" secondItem="iqd-kG-CQR" secondAttribute="trailing" constant="15" id="DrS-M4-opF"/>
+                    <constraint firstItem="iqd-kG-CQR" firstAttribute="leading" secondItem="1hM-mR-qbY" secondAttribute="trailing" constant="7" id="o2E-le-n48"/>
+                    <constraint firstItem="1hM-mR-qbY" firstAttribute="top" secondItem="XRT-wh-xad" secondAttribute="top" constant="8" id="wG1-Mn-wIs"/>
+                    <constraint firstItem="1hM-mR-qbY" firstAttribute="leading" secondItem="XRT-wh-xad" secondAttribute="leading" constant="10" id="xjI-I4-VAF"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="_textLabel" destination="1hM-mR-qbY" id="W5l-fK-a3a"/>
+                <outlet property="_tickBoxButton" destination="iqd-kG-CQR" id="Bc8-Te-DGs"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="checkBox.png" width="33" height="33"/>
-        <image name="checkBoxChecked.png" width="33" height="33"/>
+        <image name="CheckedBoxIcon" width="33" height="33"/>
+        <image name="UncheckedBoxIcon" width="33" height="33"/>
     </resources>
 </document>

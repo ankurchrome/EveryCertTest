@@ -94,6 +94,22 @@
         _textField.keyboardType = UIKeyboardTypeNumberPad;
     }
     
+    //Set textfield Decimal Values
+    NSString *elementNumericType = elementModel.printedTextFormat[kPdfFormatDecimal];
+    
+    if ([elementKeyboardType isEqualToString:PdfFormatKeyboardNumeric] &&
+         [CommonUtils isValidString: elementNumericType])
+    {
+        NSInteger roundUpNumber = [elementNumericType integerValue];
+        
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        [numberFormatter setRoundingMode: NSNumberFormatterRoundUp];
+        [numberFormatter setMaximumFractionDigits:roundUpNumber];
+        [numberFormatter setMinimumFractionDigits:roundUpNumber];
+        _textField.text = [numberFormatter stringFromNumber:[NSNumber numberWithFloat: [_textField.text floatValue]]];
+    }
+    
     [_textLabel sizeToFit];
     [self setRemainingChars];
 }

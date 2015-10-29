@@ -10,7 +10,6 @@
 #import "UIView+Extension.h"
 #import "MenuViewController.h"
 #import "FormSectionTableViewCell.h"
-#import "ElementTableView.h"
 #import "DrawingPDF.h"
 #import "CertificatePreviewViewController.h"
 #import "ExistingCertsListViewController.h"
@@ -31,7 +30,7 @@
 @interface CertViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     IBOutlet UIBarButtonItem  *_previewBarButton;
-    IBOutlet ElementTableView *_elementTableView;
+
     IBOutlet UITableView      *_sectionTableView;
     IBOutlet UIView   *_sectionView;
     
@@ -50,7 +49,6 @@
     
     NSArray   *_formSections;
     NSMutableArray *_sectionImageStatusArray;
-    NSArray   *_currentSectionElements;
     NSInteger  _currentSectionIndex;
     NSInteger  _currentSectionRecordIdApp;
     BOOL       _isExistingCertificate;

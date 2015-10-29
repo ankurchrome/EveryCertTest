@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ElementTableView.h"
 
 @class FormModel, CertificateModel;
 
@@ -14,6 +15,9 @@
 
 @property (nonatomic, strong) CertificateModel  *certificate;
 @property (nonatomic, strong) NSArray *formElements;
+@property (nonatomic, strong) NSArray *currentSectionElements;
+@property (weak, nonatomic) IBOutlet ElementTableView *elementTableView;
+
 
 /**
  Initialize CertificateViewController by creating a new certificate of given form type
