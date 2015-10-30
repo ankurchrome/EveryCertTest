@@ -17,7 +17,7 @@
 @interface CertificatePreviewViewController ()<UIWebViewDelegate, MFMailComposeViewControllerDelegate>
 {
     __weak IBOutlet UIWebView   *_webView;
-    MFMailComposeViewController  *_mailComposeVC;
+    MFMailComposeViewController *_mailComposeVC;
     
     CertificateModel *_certificate;
 }
@@ -143,9 +143,10 @@
     [_mailComposeVC setToRecipients:@[APP_DELEGATE.loggedUserEmail]];
     _mailComposeVC.mailComposeDelegate = self;
     
+    NSString *pdfFileName = [self generatePdfFileName];
     [_mailComposeVC addAttachmentData:certPdfData
                              mimeType:@"application/pdf"
-                             fileName:[_certificate pdfPath]];
+                             fileName: pdfFileName];
     
     _mailComposeVC.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:_mailComposeVC animated:YES completion:nil];
@@ -196,6 +197,83 @@
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - private method
+
+// This method get the PDF File Name and return to the MFMailComposer method to send it
+- (NSString *)generatePdfFileName
+{
+    NSMutableString *pdfFileName = [NSMutableString new];
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    
+    //** Extract the Certificate Date
+    dateFormatter.dateFormat = @"YY/MM/dd";
+    if([CommonUtils isValidString: [dateFormatter stringFromDate:_certificate.date]])
+    {
+        [pdfFileName appendFormat:@"%@ -", [dateFormatter stringFromDate:_certificate.date]];
+    }
+    
+    //** Extract the Certificate Name
+    if([CommonUtils isValidString: _certificate.name])
+    {
+        [pdfFileName appendFormat:@" %@ -", _certificate.name];
+    }
+    
+    //** Extract the Customer Name
+    ElementModel *elementModel;
+    elementModel = [[APP_DELEGATE.certificateVC.formElements filteredArrayUsingPredicate:
+                     [NSPredicate predicateWithFormat:@"self.fieldName CONTAINS %@", @"customer_name"]] firstObject];
+    if([CommonUtils isValidString:elementModel.dataValue])
+    {
+        [pdfFileName appendFormat:@" %@ -", elementModel.dataValue];
+    }
+    
+    //** Extract the Job Address
+    NSString *const jobAddressLine1 = @"job_address_line_1";
+    NSString *const jobAddressLine2 = @"job_address_line_2";
+    NSString *const jobAddressLine3 = @"job_address_line_3";
+    NSString *const jobAddressLine4 = @"job_address_line_4";
+    
+    NSArray *fieldNameArray = @[
+                                jobAddressLine1,
+                                jobAddressLine2,
+                                jobAddressLine3,
+                                jobAddressLine4
+                                ];
+    
+    NSMutableString *jobAddress = [NSMutableString new];
+    
+    for(NSString *fieldName in fieldNameArray)
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.fieldName CONTAINS %@", fieldName];
+        ElementModel *filteredModel = [[APP_DELEGATE.certificateVC.formElements filteredArrayUsingPredicate:predicate] firstObject];
+        
+        if([CommonUtils isValidString:filteredModel.fieldName])
+        {
+            [jobAddress appendString: filteredModel.dataValue];
+            [jobAddress appendString: @" "];
+        }
+    }
+    
+    if([CommonUtils isValidString:jobAddress])
+    {
+        [pdfFileName appendFormat:@" %@-", jobAddress];
+    }
+    
+    
+    //** Extract the Certificate Number
+    elementModel = [[APP_DELEGATE.certificateVC.formElements filteredArrayUsingPredicate:
+                     [NSPredicate predicateWithFormat:@"self.fieldName CONTAINS %@", @"certificate_number"]] firstObject];
+    if([CommonUtils isValidString:elementModel.dataValue])
+    {
+        [pdfFileName appendFormat:@" %@", elementModel.dataValue];
+    }
+    
+    //** Add Extension to the File Name
+    [pdfFileName appendString:@".pdf"];
+    
+    return pdfFileName;
 }
 
 @end

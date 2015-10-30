@@ -25,7 +25,12 @@
 - (void)initializeWithElementModel:(ElementModel *)elementModel
 {
     [super initializeWithElementModel:elementModel];
-    if([self.elementModel.dataValue isEqualToString: @"NO"])
+    
+    if ([self.elementModel.dataValue isEqualToString:@"YES"])
+    {
+        _tickBoxButton.selected = YES;
+    }
+    else
     {
         _tickBoxButton.selected = NO;
     }
@@ -36,13 +41,12 @@
 - (IBAction)onClickTickBoxButton:(UIButton *)tickBoxButton
 {
     //Add arrowImageView with arrow sign
-    if(!tickBoxButton.selected)
+    if (!tickBoxButton.selected)
     {
         [self fillWithData];
         tickBoxButton.selected      = YES;
         self.elementModel.dataValue = @"YES";
     }
-    
     else
     {
         tickBoxButton.selected      = NO;
@@ -54,6 +58,7 @@
              elementModel.dataValue = EMPTY_STRING;
         }
     }
+    
     [APP_DELEGATE.certificateVC.elementTableView reloadData];   // Reload Element Table View
 }
 

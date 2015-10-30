@@ -559,7 +559,7 @@ enum Section_Image_Status
 // Manage Check/Uncheck CheckBox Element
 - (void)manageCheckBoxElement
 {
-    if (!_currentSectionRecordIdApp)
+    if (_currentSectionRecordIdApp <= 0)
     {
         //When RecordId App not Exist
         [_elementTableView reloadWithElements:_currentSectionElements];
@@ -568,13 +568,12 @@ enum Section_Image_Status
     {
         //When RecordidApp Exists
         
-//        ElementModel *elementModel = [[_currentSectionElements filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.fieldType = 10"]] firstObject];
-//        
-//        if([CommonUtils isValidObject:elementModel])
-//        {
-//            elementModel.dataValue = @"NO";
-//        }
-//        [_elementTableView reloadWithElements:_currentSectionElements];
+        ElementModel *elementModel = [[_currentSectionElements filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.fieldType = 10"]] firstObject];
+        
+        if([CommonUtils isValidObject:elementModel])
+        {
+            elementModel.dataValue = @"NO";
+        }
         
         [_elementTableView reloadWithElements:[_currentSectionElements filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.fieldType != 10"]]];
     }

@@ -118,7 +118,6 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
 //Reload all Elements of the Element TableView
 - (void)reloadWithElements:(NSArray *)elementModelArray
 {
-    
     _elementModels = elementModelArray;
     
     [self reloadData];
