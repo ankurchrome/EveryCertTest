@@ -517,11 +517,11 @@
 				77DBB9121B6F553900F02932 /* Registration */,
 				77DBB9111B6F553900F02932 /* Menu */,
 				778522F21B7378BD00EA8455 /* FormsList */,
+				775C73861BE0A6A7004CE738 /* FormPreview */,
 				77C035BF1B7897C4009228F1 /* Certificate */,
 				77DBB92C1B6F590D00F02932 /* ExistingCertificate */,
 				77DBB92E1B6F590D00F02932 /* Setting */,
 				77E805AC1BD61C62006A384B /* LookUpSearch */,
-				775C73861BE0A6A7004CE738 /* FormPreview */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

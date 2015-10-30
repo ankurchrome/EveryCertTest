@@ -25,11 +25,40 @@
 - (void)initializeWithElementModel:(ElementModel *)elementModel
 {
     [super initializeWithElementModel:elementModel];
-    _tickBoxButton.selected = NO;
+    if([self.elementModel.dataValue isEqualToString: @"NO"])
+    {
+        _tickBoxButton.selected = NO;
+    }
+    
     _textLabel.text = elementModel.label;
 }
 
 - (IBAction)onClickTickBoxButton:(UIButton *)tickBoxButton
+{
+    //Add arrowImageView with arrow sign
+    if(!tickBoxButton.selected)
+    {
+        [self fillWithData];
+        tickBoxButton.selected      = YES;
+        self.elementModel.dataValue = @"YES";
+    }
+    
+    else
+    {
+        tickBoxButton.selected      = NO;
+        self.elementModel.dataValue = @"NO";
+        
+        // Empty all Current Section's Element Data on UnMark of TickBox
+        for(ElementModel *elementModel in APP_DELEGATE.certificateVC.currentSectionElements)
+        {
+             elementModel.dataValue = EMPTY_STRING;
+        }
+    }
+    [APP_DELEGATE.certificateVC.elementTableView reloadData];   // Reload Element Table View
+}
+
+// Fill all those Current Section's Elements data that hving entry in PrintedTextFormat of Tick Box
+- (void)fillWithData
 {
     NSArray *copyFieldArray = self.elementModel.printedTextFormat[kTickBox];
     
@@ -51,21 +80,6 @@
         {
             elementModel.dataValue = mutableDict[elementModel.fieldName];
         }
-    }
-    
-    [APP_DELEGATE.certificateVC.elementTableView reloadData];
-    
-    //Add arrowImageView with arrow sign
-    if(!tickBoxButton.selected)
-    {
-        tickBoxButton.selected      = YES;
-        self.elementModel.dataValue = @"YES";
-    }
-    
-    else
-    {
-        tickBoxButton.selected      = NO;
-        self.elementModel.dataValue = @"NO";
     }
 }
 

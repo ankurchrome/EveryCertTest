@@ -74,6 +74,17 @@
             
             CGRect elementRect = CGRectMake(elementModel.originX, elementModel.originY, elementModel.width, elementModel.height);
             
+            if(elementModel.printedTextFormat[@"pdf_format"])
+            {
+                for(NSDictionary *otherElementModelDict in elementModel.printedTextFormat[@"pdf_format"])
+                {
+                    if([otherElementModelDict[ElementPageNumber] integerValue] == elementModel.pageNumber)
+                    {
+                        [self printElementinOtherLocationForElementDict:otherElementModelDict withElementData:elementModel.dataValue];
+                    }
+                }
+            }
+            
             switch (elementModel.fieldType)
             {
                 case ElementTypeTextField:
@@ -94,6 +105,7 @@
                                               NSForegroundColorAttributeName: elementColor};
                     
                     [elementModel.dataValue drawInRect:elementRect withAttributes:attrDic];
+                
                 }
                     break;
                     
@@ -141,6 +153,40 @@
         }
     }
     return [UIColor clearColor];    //Work as a nill color that never exist
+}
+
+// This method Prints the Data value in mutiple Location on PDF according to the pdfFormat
+- (void)printElementinOtherLocationForElementDict:(NSDictionary *)otherElementDict withElementData:(NSString *)elementDataValue
+{
+    CGFloat   fontSize  = [otherElementDict[kPdfFormatElementFontSize] floatValue];
+    NSString *fontColor = otherElementDict[kPdfFormatElementFontColor];
+    NSString *fontName  = otherElementDict[kPdfFormatElementFontName];
+    
+    if (fontSize <= 0.0f)
+    {
+        fontSize = DEFAULT_FONT_SIZE;
+    }
+    
+    UIColor *elementColor = [CommonUtils colorWithHexString:fontColor];
+    
+    if (!elementColor)
+    {
+        elementColor = DEFAULT_FONT_COLOR;
+    }
+    
+    UIFont *elementFont = [UIFont fontWithName:fontName size:fontSize];
+    
+    if (!elementFont)
+    {
+        elementFont = [UIFont fontWithName:DEFAULT_FONT_NAME size:fontSize];
+    }
+
+    CGRect elementRect = CGRectMake([otherElementDict[@"ElementOriginX"]floatValue], [otherElementDict[@"ElementOriginY"] floatValue], [otherElementDict[@"ElementWidth"] floatValue], [otherElementDict[@"ElementHeight"] floatValue]);
+    
+    NSDictionary *attrDic = @{NSFontAttributeName: elementFont,
+                              NSForegroundColorAttributeName: fontColor};
+    
+    [elementDataValue drawInRect:elementRect withAttributes:attrDic];
 }
 
 @end

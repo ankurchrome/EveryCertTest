@@ -206,7 +206,7 @@ enum Section_Image_Status
         [_sectionTableView selectRowAtIndexPath:sectionIndexPath
                                        animated:NO
                                  scrollPosition:UITableViewScrollPositionNone];
-        [_elementTableView reloadWithElements:_currentSectionElements];
+        //[_elementTableView reloadWithElements:_currentSectionElements];
         
         _sectionTitleLabel.text = formSection.title;
     }
@@ -258,6 +258,8 @@ enum Section_Image_Status
         _currentSectionRecordIdApp = 0;
         _currentSearchElementModel = nil;
     }
+    
+    [self manageCheckBoxElement];
 }
 
 // Show the section list(with animations) to pick a section randomly
@@ -554,6 +556,30 @@ enum Section_Image_Status
     return result;
 }
 
+// Manage Check/Uncheck CheckBox Element
+- (void)manageCheckBoxElement
+{
+    if (!_currentSectionRecordIdApp)
+    {
+        //When RecordId App not Exist
+        [_elementTableView reloadWithElements:_currentSectionElements];
+    }
+    else
+    {
+        //When RecordidApp Exists
+        
+//        ElementModel *elementModel = [[_currentSectionElements filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.fieldType = 10"]] firstObject];
+//        
+//        if([CommonUtils isValidObject:elementModel])
+//        {
+//            elementModel.dataValue = @"NO";
+//        }
+//        [_elementTableView reloadWithElements:_currentSectionElements];
+        
+        [_elementTableView reloadWithElements:[_currentSectionElements filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.fieldType != 10"]]];
+    }
+}
+
 #pragma mark - LookupRecords(SearchElement) Methods
 
 // Called when a record gets selected from lookup list and do the following steps
@@ -583,7 +609,8 @@ enum Section_Image_Status
         }
     }
     
-    [_elementTableView reloadData];
+    //[_elementTableView reloadData];
+    [self manageCheckBoxElement];
 }
 
 // Called when New button tapped from lookup list and then following steps will be occur
@@ -605,7 +632,8 @@ enum Section_Image_Status
         elementModel.dataValue   = EMPTY_STRING;
     }
     
-    [_elementTableView reloadData];
+    //[_elementTableView reloadData];
+    [self manageCheckBoxElement];
 }
 
 // Create a new record in 'record' table
@@ -614,7 +642,7 @@ enum Section_Image_Status
     RecordHandler *recordHandler = [RecordHandler new];
     
     _currentSectionRecordIdApp = [recordHandler insertRecordForCompanyId:APP_DELEGATE.loggedUserCompanyId];
-    
+
     return _currentSectionRecordIdApp > 0 ? YES : NO;
 }
 

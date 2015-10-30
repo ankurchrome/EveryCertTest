@@ -94,10 +94,10 @@
         _textField.keyboardType = UIKeyboardTypeNumberPad;
     }
     
-    //Set textfield Decimal Values
+    //Set TextField Decimal Values
     NSString *elementNumericType = elementModel.printedTextFormat[kPdfFormatDecimal];
     
-    if ([elementKeyboardType isEqualToString:PdfFormatKeyboardNumeric] &&
+    if([elementKeyboardType isEqualToString:PdfFormatKeyboardNumeric] &&
          [CommonUtils isValidString: elementNumericType])
     {
         NSInteger roundUpNumber = [elementNumericType integerValue];
@@ -108,6 +108,25 @@
         [numberFormatter setMaximumFractionDigits:roundUpNumber];
         [numberFormatter setMinimumFractionDigits:roundUpNumber];
         _textField.text = [numberFormatter stringFromNumber:[NSNumber numberWithFloat: [_textField.text floatValue]]];
+    }
+    
+    //Set TextField Alignment
+    NSString *elementAllignmentType = elementModel.printedTextFormat[kPdfFormatAlignment];
+    
+    if([CommonUtils isValidString: elementAllignmentType])
+    {
+        if([elementAllignmentType isEqualToString:PdfFormatAlignLeft])
+        {
+            _textField.textAlignment = NSTextAlignmentLeft;
+        }
+        else if ([elementAllignmentType isEqualToString:PdfFormatAlignRight])
+        {
+            _textField.textAlignment = NSTextAlignmentRight;
+        }
+        else if ([elementAllignmentType isEqualToString:PdfFormatAlignCenter])
+        {
+            _textField.textAlignment = NSTextAlignmentCenter;
+        }
     }
     
     [_textLabel sizeToFit];

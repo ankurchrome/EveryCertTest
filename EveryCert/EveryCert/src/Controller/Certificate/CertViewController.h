@@ -18,7 +18,6 @@
 @property (nonatomic, strong) NSArray *currentSectionElements;
 @property (weak, nonatomic) IBOutlet ElementTableView *elementTableView;
 
-
 /**
  Initialize CertificateViewController by creating a new certificate of given form type
  @param  form A FormModel object will be used to create a new certificate
