@@ -206,7 +206,6 @@ enum Section_Image_Status
         [_sectionTableView selectRowAtIndexPath:sectionIndexPath
                                        animated:NO
                                  scrollPosition:UITableViewScrollPositionNone];
-        //[_elementTableView reloadWithElements:_currentSectionElements];
         
         _sectionTitleLabel.text = formSection.title;
     }

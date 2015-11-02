@@ -38,6 +38,8 @@
     ElementHandler *elementHandler = [ElementHandler new];
     _loginElements = [elementHandler getLoginElements];
 
+    _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
+    
     //remove keybaord observer from table view as background scroll view has already
     [_loginElementTableView removeObserver];
     
@@ -68,7 +70,7 @@
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 }
 
-- (void)viewDidLayoutSubviews
+- (void)viewWillLayoutSubviews
 {
     _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
 }

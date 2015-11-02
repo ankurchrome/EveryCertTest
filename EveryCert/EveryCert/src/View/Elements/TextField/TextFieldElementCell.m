@@ -94,6 +94,7 @@
         _textField.keyboardType = UIKeyboardTypeNumberPad;
     }
     
+    //TODO: Check this code may be place in Text field end editing method
     //Set TextField Decimal Values
     NSString *elementNumericType = elementModel.printedTextFormat[kPdfFormatDecimal];
     
