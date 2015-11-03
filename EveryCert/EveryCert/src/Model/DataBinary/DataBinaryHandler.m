@@ -7,6 +7,8 @@
 //
 
 #import "DataBinaryHandler.h"
+#import "CertificateHandler.h"
+#import "RecordHandler.h"
 
 @implementation DataBinaryHandler
 
@@ -90,6 +92,34 @@
      }];
     
     return success;
+}
+
+#pragma mark - ServerSync Methods
+
+- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info
+{
+    NSMutableDictionary *newRecordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:info];
+    
+    //Save cert id app
+    CertificateHandler *certificateHandler = [CertificateHandler new];
+    NSInteger certificateId = [info[CertificateId] integerValue];
+    NSInteger certificateIdApp = certificateId > 0 ? [certificateHandler getAppId:certificateId] : 0;
+    
+    if (certificateIdApp <= 0)
+    {
+        if (LOGS_ON) NSLog(@"Certificate not found: %ld", certificateId); return nil;
+    }
+    
+    [newRecordInfo setObject:@(certificateIdApp).stringValue forKey:CertificateIdApp];
+    
+    // Initialise modified timestamp app with modified timestamp server for new records
+    if ([info valueForKey:ModifiedTimeStampServer])
+    {
+        [newRecordInfo setObject:[info valueForKey:ModifiedTimeStampServer] forKey:ModifiedTimeStamp];
+        [newRecordInfo setObject:[info valueForKey:ModifiedTimeStampServer] forKey:ModifiedTimestampApp];
+    }
+    
+    return newRecordInfo;
 }
 
 @end

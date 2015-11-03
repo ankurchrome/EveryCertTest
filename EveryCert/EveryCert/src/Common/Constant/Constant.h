@@ -12,6 +12,8 @@
 #define PRE_PRODUCTION_URL
 
 #define REQUEST_RETRY_COUNT 3
+#define INITIAL_TIMESTAMP_LOOKUP 10.0
+#define INITIAL_TIMESTAMP_RECORD 10.0
 
 //Macros as some Shortcut
 #define APP_DELEGATE   ((AppDelegate *)[[UIApplication sharedApplication] delegate])
@@ -226,12 +228,14 @@ extern NSString *const DataBinaryTable;
 extern NSString *const DataBinaryIdApp;
 extern NSString *const DataBinaryId;
 extern NSString *const DataBinaryValue;
+extern NSString *const DataBinaryFileName;
 
 #pragma mark LookUp Table
 extern NSString *const LookUpTable;
 extern NSString *const LookUpIdApp;
 extern NSString *const LookUpId;
 extern NSString *const LookUpListId;
+extern NSString *const LookUpLinkedRecordId;
 extern NSString *const LookUpLinkedRecordIdApp;
 extern NSString *const LookUpFieldNumber;
 extern NSString *const LookUpOption;

@@ -29,11 +29,6 @@
     return self;
 }
 
-- (NSString *)getApiCallWithTimestamp:(NSTimeInterval)timestamp
-{
-    return [NSString stringWithFormat:@"%@/%ld",self.apiName, self.formId];
-}
-
 // Fetch all sub elements of given element
 - (NSArray *)getAllSubElementsOfElement:(NSInteger)elementIdApp
 {
@@ -88,6 +83,38 @@
      }];
     
     return subElementModelList;
+}
+
+#pragma mark - ServerSync Methods
+
+- (NSString *)getApiCallWithFormId:(NSInteger)formId
+{
+    return [NSString stringWithFormat:@"%@/%ld",self.apiName, formId];
+}
+
+- (void)syncWithServer
+{
+    //1. get last sync timestamp & get records from server after that timestamp
+    NSTimeInterval timestamp = [self getSyncTimestampOfTableForCompany:APP_DELEGATE.loggedUserCompanyId];
+    
+    NSString *apiCall = [self getApiCallWithFormId:self.formId];
+    
+    [self getRecordsWithApiCall:apiCall
+                     retryCount:REQUEST_RETRY_COUNT
+                        success:^(ECHttpResponseModel *response)
+     {
+         [self saveGetRecordsForServerOnlyTable:response.payloadInfo];
+         
+         [self updateTableSyncTimestamp:timestamp company:APP_DELEGATE.loggedUserCompanyId];
+         
+         [self startNextSyncOperation];
+     }
+                          error:^(NSError *error)
+     {
+         [self finishSyncWithError:error];
+         
+         if (LOGS_ON) NSLog(@"Sync Failed(GET - %@): %@", self.tableName, error.localizedDescription);
+     }];
 }
 
 @end

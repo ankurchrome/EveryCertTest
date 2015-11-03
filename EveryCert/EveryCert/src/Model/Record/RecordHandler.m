@@ -65,7 +65,7 @@
     
     if (timestamp <= 0.0)
     {
-        timestamp = 10;
+        timestamp = INITIAL_TIMESTAMP_RECORD;
     }
     
     return timestamp;

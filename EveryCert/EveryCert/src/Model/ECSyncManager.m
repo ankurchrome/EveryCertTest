@@ -30,6 +30,10 @@
 // Start syncing all the database tables with server.
 - (void)startCompleteSync
 {
+    [MBProgressHUD showHUDAddedTo:APP_DELEGATE.window animated:YES];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncFinished:) name:SyncFinishedNotification object:nil];
+    
     CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
     FormHandler        *formHandler        = [FormHandler new];
     ElementHandler     *elementHandler     = [ElementHandler new];
@@ -39,27 +43,31 @@
     DataHandler        *dataHandler        = [DataHandler new];
     DataBinaryHandler  *dataBinaryHandler  = [DataBinaryHandler new];
 
-    _activeOperationIndex = 0;
+    companyUserHandler.nextSyncHandler  = formHandler;
+    formHandler.nextSyncHandler         = elementHandler;
+//    elementHandler.nextSyncHandler      = recordHandler;
+//    recordHandler.nextSyncHandler       = lookupHandler;
+//    lookupHandler.nextSyncHandler       = certHandler;
+//    certHandler.nextSyncHandler         = dataHandler;
+//    dataHandler.nextSyncHandler         = dataBinaryHandler;
+    
     elementHandler.formId = 0;
 
-    _syncOperationsList = @[companyUserHandler, formHandler, elementHandler, recordHandler, lookupHandler, certHandler, dataHandler, dataBinaryHandler];
-    
     NSDictionary *loginCredential = @{
-                                        @"user_email": APP_DELEGATE.loggedUserEmail,
-                                        @"user_password": APP_DELEGATE.loggedUserPassword
+                                        CompanyUserFieldNameEmail: APP_DELEGATE.loggedUserEmail,
+                                        CompanyUserFieldNamePassword: APP_DELEGATE.loggedUserPassword
                                       };
     
     [companyUserHandler loginWithCredentials:loginCredential
                                    onSuccess:^(ECHttpResponseModel *response)
     {
-        if (_syncOperationsList && _syncOperationsList.count > _activeOperationIndex)
-        {
-            [self startSyncWithOperation:_syncOperationsList[_activeOperationIndex]];
-        }
+        [companyUserHandler syncWithServer];
     }
                                      onError:^(NSError *error)
     {
         if (LOGS_ON) NSLog(@"Login Failed");
+        
+        [self syncFinished:nil];
     }];
 }
 
@@ -94,7 +102,13 @@
      {
          if (LOGS_ON) NSLog(@"Login Failed");
      }];
+}
 
+- (void)syncFinished:(id)object
+{
+    [MBProgressHUD hideHUDForView:APP_DELEGATE.window animated:YES];
+    
+    if (LOGS_ON) NSLog(@"Sync Finished response: %@", object);
 }
 
 - (void)startSyncWithOperation:(BaseHandler *)operation

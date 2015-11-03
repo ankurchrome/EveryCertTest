@@ -198,12 +198,14 @@ NSString *const DataBinaryTable = @"data_binary";
 NSString *const DataBinaryIdApp = @"data_binary_id_app";
 NSString *const DataBinaryId    = @"data_binary_id";
 NSString *const DataBinaryValue = @"data_binary";
+NSString *const DataBinaryFileName = @"file_name";
 
 #pragma mark LookUp Table
 NSString *const LookUpTable         = @"lookup";
 NSString *const LookUpIdApp         = @"lookup_id_app";
 NSString *const LookUpId            = @"lookup_id";
 NSString *const LookUpListId        = @"lookup_list_id";
+NSString *const LookUpLinkedRecordId    = @"linked_record_id";
 NSString *const LookUpLinkedRecordIdApp = @"linked_record_id_app";
 NSString *const LookUpFieldNumber   = @"field_no";
 NSString *const LookUpOption        = @"option";

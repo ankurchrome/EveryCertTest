@@ -28,6 +28,7 @@ typedef void(^ProgressBlock)(float progress);
 
 @property(nonatomic, strong) BaseHandler *nextSyncHandler;
 
+#pragma mark - Common Methods
 
 - (NSString *)insertQueryForInfo:(NSDictionary *)recordInfo;
 
@@ -57,25 +58,25 @@ typedef void(^ProgressBlock)(float progress);
 // Returns record info from active table for given app id
 - (NSDictionary *)getRecordInfoWithAppId:(NSInteger)appId;
 
-// Get the last updated sync timestamp for the table.
+#pragma mark - ServerSync Methods
+
+#pragma mark Info
 - (NSTimeInterval)getSyncTimestampOfTableForCompany:(NSInteger)companyId;
-
-// Update the sync timestamp for the table after update all GET records.
 - (BOOL)updateTableSyncTimestamp:(NSTimeInterval)timestamp company:(NSInteger)companyId;
-
-- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info;
-
-// Return the list of all Created/Modified customers through app, the sync process send them to server.
+- (NSString *)getApiCallWithTimestamp:(NSTimeInterval)timestamp;
 - (NSArray *)getAllDirtyRecords;
 
-- (void)saveGetRecords:(NSArray *)records;
-- (void)savePutRecords:(NSArray *)records;
-
-- (NSString *)getApiCallWithTimestamp:(NSTimeInterval)timestamp;
-
-#pragma mark - updated
-
+#pragma mark Sync
 - (void)syncWithServer;
+
+#pragma mark Response
+- (void)saveGetRecords:(NSArray *)records;
+- (void)saveGetRecordsForServerOnlyTable:(NSArray *)records;
+- (void)savePutRecords:(NSArray *)records;
+- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info;
+- (NSMutableDictionary *)populateInfoForExistingRecord:(NSDictionary *)info appId:(NSInteger)appId;
+- (void)startNextSyncOperation;
+- (void)finishSyncWithError:(NSError *)error;
 
 #pragma mark - NetworkService Methods
 
@@ -86,3 +87,6 @@ typedef void(^ProgressBlock)(float progress);
 - (void)putRecords:(NSArray *)records retryCount:(NSInteger)retryCount success:(SuccessCallback)successResponse error:(ErrorCallback)errorResponse;
 
 @end
+
+extern NSString *const SyncFinishedNotification;
+

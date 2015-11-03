@@ -7,6 +7,7 @@
 //
 
 #import "LookUpHandler.h"
+#import "RecordHandler.h"
 
 @implementation LookUpHandler
 
@@ -122,7 +123,7 @@
     return lookupRecordsList;
 }
 
-#pragma mark - Overrided Methods
+#pragma mark - ServerSync Methods
 
 - (NSTimeInterval)getSyncTimestampOfTableForCompany:(NSInteger)companyId
 {
@@ -130,10 +131,42 @@
     
     if (timestamp <= 0.0)
     {
-        timestamp = 10;
+        timestamp = INITIAL_TIMESTAMP_LOOKUP;
     }
     
     return timestamp;
+}
+
+- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info
+{
+    NSInteger recordId = [info[RecordId] integerValue];
+    NSInteger linkedRecordId = [info[LookUpLinkedRecordId] integerValue];
+    
+    NSMutableDictionary *newRecordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:info];
+    
+    RecordHandler *recordHandler = [RecordHandler new];
+    
+    NSInteger recordIdApp = recordId > 0 ? [recordHandler getAppId:recordId] : 0;
+    
+    if (recordIdApp <= 0)
+    {
+        if (LOGS_ON) NSLog(@"Record not found: %ld", recordId); return nil;
+    }
+
+    [newRecordInfo setObject:@(recordIdApp).stringValue forKey:RecordIdApp];
+    
+    NSInteger linkedRecordIdApp = linkedRecordId > 0 ? [recordHandler getAppId:linkedRecordId] : 0;
+    
+    [newRecordInfo setObject:@(linkedRecordIdApp).stringValue forKey:LookUpLinkedRecordIdApp];
+    
+    // Initialise modified timestamp app with modified timestamp server for new records
+    if ([info valueForKey:ModifiedTimeStampServer])
+    {
+        [newRecordInfo setObject:[info valueForKey:ModifiedTimeStampServer] forKey:ModifiedTimeStamp];
+        [newRecordInfo setObject:[info valueForKey:ModifiedTimeStampServer] forKey:ModifiedTimestampApp];
+    }
+    
+    return newRecordInfo;
 }
 
 @end
