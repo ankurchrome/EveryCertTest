@@ -286,7 +286,17 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
     }
     
     [cell initializeWithElementModel:elementModel];
+
+    if(indexPath.row == _elementModels.count -1)
+    {
+        cell.seperatorView.hidden = YES;
+    }
+    else
+    {
+        cell.seperatorView.hidden = NO;
+    }
     
+//    cell.separatorInset
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;

@@ -83,6 +83,7 @@
                 <outlet property="_textField" destination="VUC-5W-F8g" id="HKw-uy-Hu4"/>
                 <outlet property="_textLabel" destination="skm-JR-UKi" id="TMc-F6-ElN"/>
                 <outlet property="_titleLabelLeadingConstraint" destination="N3R-S2-bes" id="IBZ-OW-4Mr"/>
+                <outlet property="seperatorView" destination="ppQ-aO-57W" id="JpY-nd-IM7"/>
             </connections>
             <point key="canvasLocation" x="444" y="-29"/>
         </tableViewCell>

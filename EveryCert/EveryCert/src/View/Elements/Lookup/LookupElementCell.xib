@@ -54,6 +54,7 @@
                 <outlet property="_textField" destination="6bY-po-FUD" id="4Jf-Ny-T2I"/>
                 <outlet property="_textLabel" destination="DKf-7D-3s5" id="QAq-Zr-Ugo"/>
                 <outlet property="_titleLabel" destination="DKf-7D-3s5" id="UEZ-gX-4BP"/>
+                <outlet property="seperatorView" destination="JM6-eh-Zzj" id="qEN-aV-bIr"/>
             </connections>
             <point key="canvasLocation" x="444" y="-29"/>
         </tableViewCell>

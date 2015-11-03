@@ -89,6 +89,7 @@
                 <outlet property="_signatureButton" destination="cZ6-i8-0Wz" id="325-Lk-cqF"/>
                 <outlet property="_signatureView" destination="cRn-kg-BXJ" id="MyC-6C-be7"/>
                 <outlet property="_titleLabel" destination="MIp-Lv-8W2" id="j0x-6H-CIB"/>
+                <outlet property="seperatorView" destination="7aP-eG-B8V" id="dEV-pH-FIP"/>
             </connections>
             <point key="canvasLocation" x="254" y="324"/>
         </tableViewCell>

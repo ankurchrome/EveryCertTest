@@ -13,6 +13,7 @@
 @interface ElementTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) ElementModel *elementModel;
+@property (strong, nonatomic) IBOutlet UIView *seperatorView;
 
 /**
  Initialize Element Cell with info containing in ElementModel object

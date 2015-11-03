@@ -49,6 +49,7 @@
                 <outlet property="_radioButtonView" destination="wJM-sv-chY" id="YCE-1I-vYz"/>
                 <outlet property="_titleLabel" destination="9Ds-3y-w2b" id="UUS-vc-AVF"/>
                 <outlet property="_viewHeigthConstraint" destination="noQ-yq-5gw" id="IgA-3p-ACp"/>
+                <outlet property="seperatorView" destination="yBB-HF-K9G" id="OCJ-eJ-2az"/>
             </connections>
         </tableViewCell>
     </objects>

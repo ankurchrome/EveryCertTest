@@ -8,6 +8,7 @@
 
 #import "ExistingCertificateTableViewCell.h"
 #import "CertificateModel.h"
+#import "DataHandler.h"
 
 @implementation ExistingCertificateTableViewCell
 
@@ -18,11 +19,29 @@ NSString *const ExistingCertCellReuseIdentifier = @"ExistingCertCellIdentifier";
 {
     _certificate = certificateModel;
     
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    dateFormatter.dateFormat = @"dd-MM-yyyy hh:mm:ss";
+    NSMutableString *nameLabelString = [NSMutableString new];
+    NSDateFormatter *dateFormatter   = [NSDateFormatter new];
+    dateFormatter.dateFormat = @"dd/MM/yy hh:mm";
     
-    _nameLabel.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:certificateModel.dateTimestamp]];
+    DataHandler *dataHandler = [DataHandler new];
+    NSString *customerName = [dataHandler getDataFromCertModel: certificateModel FieldName:@"customer_name"];
     
+    [nameLabelString appendFormat:@"%@ ",customerName];
+
+    
+    // Extract the Certificate Creation Date
+    if([CommonUtils isValidString:[dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:certificateModel.dateTimestamp]]])
+    {
+        [nameLabelString appendFormat:@"%@ ",[dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:certificateModel.dateTimestamp]]];
+    }
+    
+    // Extract the Certificate Name
+    if([CommonUtils isValidString: certificateModel.name])
+    {
+        [nameLabelString appendFormat:@"%@ ",certificateModel.name];
+    }
+    
+    _nameLabel.text = nameLabelString;
     _nameLabel.textColor = certificateModel.issuedApp ? [UIColor blackColor] : [UIColor redColor];
 }
 

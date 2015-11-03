@@ -45,10 +45,14 @@
     
     _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
 
-    _loginElementTableView.clipsToBounds = NO;
-    _loginElementTableView.layer.shadowColor = [[UIColor blackColor] CGColor];
-    _loginElementTableView.layer.shadowOffset = CGSizeMake(0,5);
-    _loginElementTableView.layer.shadowOpacity = 0.5;
+    _loginElementTableView.superview.clipsToBounds = NO;
+    _loginElementTableView.superview.layer.masksToBounds = NO;
+    _loginElementTableView.superview.layer.shadowColor = [[UIColor blackColor] CGColor];
+    _loginElementTableView.superview.layer.shadowOffset = CGSizeMake(0,5);
+    _loginElementTableView.superview.layer.shadowOpacity = 0.5;
+
+    _loginElementTableView.layer.masksToBounds = YES;
+    _loginElementTableView.layer.cornerRadius = 10.0f;
     
     //Set user credentials if already logged In
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];

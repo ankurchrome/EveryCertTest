@@ -30,7 +30,7 @@
 @interface CertViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     IBOutlet UIBarButtonItem  *_previewBarButton;
-
+    
     IBOutlet UITableView      *_sectionTableView;
     IBOutlet UIView   *_sectionView;
     
@@ -182,7 +182,7 @@ enum Section_Image_Status
 {
     FormSectionModel *formSection = nil;
     NSPredicate *predicate = nil;
-    
+   
     //Disable the previous section button on first section
     _prevSectionButton.enabled = !(sectionIndex == 0);
     
@@ -398,6 +398,7 @@ enum Section_Image_Status
             default:
                 break;
         }
+        elementModel.recordIdApp = _currentSectionRecordIdApp;
     }
 }
 
@@ -605,9 +606,9 @@ enum Section_Image_Status
                 elementModel.dataValue = lookupRecordField.dataValue;
             }
         }
+        elementModel.recordIdApp = recordIdApp;
     }
     
-    //[_elementTableView reloadData];
     [self manageCheckBoxElement];
 }
 
@@ -640,7 +641,7 @@ enum Section_Image_Status
     RecordHandler *recordHandler = [RecordHandler new];
     
     _currentSectionRecordIdApp = [recordHandler insertRecordForCompanyId:APP_DELEGATE.loggedUserCompanyId];
-
+    
     return _currentSectionRecordIdApp > 0 ? YES : NO;
 }
 
@@ -728,6 +729,8 @@ enum Section_Image_Status
 // Show/hide the section list drawer
 - (IBAction)menuButtonTapped:(id)sender
 {
+    [self.view endEditing:YES];
+    
     if(_sectionView.hidden)
     {
         [self showSectionView];

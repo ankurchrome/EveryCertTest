@@ -8,6 +8,7 @@
 
 #import "BaseHandler.h"
 #import "DataModel.h"
+#import "CertificateModel.h"
 
 @interface DataHandler : BaseHandler
 
@@ -41,5 +42,8 @@
  @return void
  */
 - (void)deleteLinkedDataForRecord:(NSInteger)recordIdApp certificate:(NSInteger)certIdApp;
+
+// Fetch Data from cert_id_app , field_name, form_id in DataTable
+- (NSString *)getDataFromCertModel:(CertificateModel *)certModel FieldName:(NSString *)fieldName;
 
 @end

@@ -13,7 +13,7 @@
 #import "UIView+Extension.h"
 #import "CompanyUserHandler.h"
 
-#define FORM_LIST_ROW_HEIGHT 44.0
+#define FORM_LIST_ROW_HEIGHT 20.0
 
 @interface FormsListViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -208,16 +208,21 @@ NSString *const FormStatusShow = @"UnHide";
     // when cell is Header then change its title color and background color
     if(formModel.sequenceOrder == 0)
     {
-        cell.backgroundColor = [UIColor colorWithRed: 58/255.0f green: 130/255.0f blue: 177/255.0f alpha: 1.0f];
+        cell.backgroundColor = APP_BLUE_COLOR;
         cell.titleLabel.textColor = [UIColor whiteColor];
         cell.installLabelHeightContraint.constant   = 0.0;
         cell.previewButtonlWidthConstraint.constant = 0.0;
+        
+        UIFont *font = [UIFont boldSystemFontOfSize:16];
+        cell.titleLabel.font = font;
     }
     else
     {
         cell.backgroundColor      = [UIColor whiteColor];
         cell.titleLabel.textColor = [UIColor darkGrayColor];
         cell.previewButtonlWidthConstraint.constant = 65;
+        UIFont *font = [UIFont systemFontOfSize:15];
+        cell.titleLabel.font = font;
     }
     
     return cell;

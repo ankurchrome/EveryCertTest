@@ -41,10 +41,6 @@
     [_webView loadRequest:requestObj];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
 #pragma mark - IBActions
 
 // Pop the View Controller to the MenuVC
@@ -223,7 +219,7 @@
     //** Extract the Customer Name
     ElementModel *elementModel;
     elementModel = [[APP_DELEGATE.certificateVC.formElements filteredArrayUsingPredicate:
-                     [NSPredicate predicateWithFormat:@"self.fieldName CONTAINS %@", @"customer_name"]] firstObject];
+                     [NSPredicate predicateWithFormat:@"self.fieldName MATCHES %@", @"customer_name"]] firstObject];
     if([CommonUtils isValidString:elementModel.dataValue])
     {
         [pdfFileName appendFormat:@" %@ -", elementModel.dataValue];
@@ -249,7 +245,7 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.fieldName CONTAINS %@", fieldName];
         ElementModel *filteredModel = [[APP_DELEGATE.certificateVC.formElements filteredArrayUsingPredicate:predicate] firstObject];
         
-        if([CommonUtils isValidString:filteredModel.fieldName])
+        if([CommonUtils isValidString:filteredModel.dataValue])
         {
             [jobAddress appendString: filteredModel.dataValue];
             [jobAddress appendString: @" "];
@@ -267,8 +263,11 @@
                      [NSPredicate predicateWithFormat:@"self.fieldName CONTAINS %@", @"certificate_number"]] firstObject];
     if([CommonUtils isValidString:elementModel.dataValue])
     {
-        [pdfFileName appendFormat:@" %@", elementModel.dataValue];
+        [pdfFileName appendFormat:@" %@-", elementModel.dataValue];
     }
+    
+    // Delete Last character '-' from PdfFile Name
+    [pdfFileName deleteCharactersInRange:NSMakeRange([pdfFileName length]-1, 1)];
     
     //** Add Extension to the File Name
     [pdfFileName appendString:@".pdf"];

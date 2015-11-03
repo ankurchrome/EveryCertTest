@@ -18,6 +18,7 @@
     IBOutlet UIBarButtonItem *_newBarButton;
     IBOutlet UISearchBar     *_searchBar;
     IBOutlet UITableView     *_lookupTableView;
+    __weak IBOutlet UIView   *_emptyRecordBackgroundView;
     
     ElementModel *_elementModel;
     NSArray *_lookupRecords;
@@ -136,6 +137,15 @@ NSString *const LookupSearchTitle = @"Select a record";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger noOfRows = _tableRecords ? _tableRecords.count : 0;
+    
+    if(noOfRows <= 0)
+    {
+        _emptyRecordBackgroundView.hidden = NO;
+    }
+    else
+    {
+        _emptyRecordBackgroundView.hidden = YES;
+    }
     
     return noOfRows;
 }

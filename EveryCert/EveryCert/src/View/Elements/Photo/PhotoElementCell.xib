@@ -95,6 +95,7 @@
                 <outlet property="_imageView" destination="y99-7Q-R2i" id="7Lk-yM-Tvg"/>
                 <outlet property="_photoAddButton" destination="mDo-0v-nEl" id="shh-Iq-1Sj"/>
                 <outlet property="_removeButton" destination="xwE-CX-IBS" id="9KX-qG-QcN"/>
+                <outlet property="seperatorView" destination="UPu-a0-4ij" id="kLB-I9-qm6"/>
             </connections>
             <point key="canvasLocation" x="355.5" y="319"/>
         </tableViewCell>
