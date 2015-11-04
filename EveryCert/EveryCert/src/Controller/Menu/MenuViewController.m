@@ -17,6 +17,8 @@
     IBOutlet UILabel *_lastSyncLabel;
     
     NSArray *_menuOptionList;
+    
+    ECSyncManager *_syncManager;
 }
 @end
 
@@ -39,6 +41,8 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
     _menuOptionList = @[MenuCellIdentifierNewCertificate,
                         MenuCellIdentifierExistingCertificate,
                         MenuCellIdentifierSetting];
+    
+    _syncManager = [ECSyncManager new];
 }
 
 #pragma mark - IBActions
@@ -54,9 +58,7 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
 //Start the sync with server for all data
 - (IBAction)backupDataButtonTapped:(id)sender
 {
-    ECSyncManager *syncManager = [ECSyncManager new];
-    
-    [syncManager startCompleteSync];
+    [_syncManager startCompleteSync];
 }
 
 #pragma mark - UITableViewDataSource Methods

@@ -30,7 +30,8 @@
 // Start syncing all the database tables with server.
 - (void)startCompleteSync
 {
-    [MBProgressHUD showHUDAddedTo:APP_DELEGATE.window animated:YES];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:APP_DELEGATE.window animated:YES];
+    hud.labelText = HudTitleLoading;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncFinished:) name:SyncFinishedNotification object:nil];
     
@@ -45,11 +46,11 @@
 
     companyUserHandler.nextSyncHandler  = formHandler;
     formHandler.nextSyncHandler         = elementHandler;
-//    elementHandler.nextSyncHandler      = recordHandler;
-//    recordHandler.nextSyncHandler       = lookupHandler;
-//    lookupHandler.nextSyncHandler       = certHandler;
-//    certHandler.nextSyncHandler         = dataHandler;
-//    dataHandler.nextSyncHandler         = dataBinaryHandler;
+    elementHandler.nextSyncHandler      = recordHandler;
+    recordHandler.nextSyncHandler       = lookupHandler;
+    lookupHandler.nextSyncHandler       = certHandler;
+    certHandler.nextSyncHandler         = dataHandler;
+    dataHandler.nextSyncHandler         = dataBinaryHandler;
     
     elementHandler.formId = 0;
 
@@ -93,10 +94,6 @@
     [companyUserHandler loginWithCredentials:loginCredential
                                    onSuccess:^(ECHttpResponseModel *response)
      {
-         if (_syncOperationsList && _syncOperationsList.count > _activeOperationIndex)
-         {
-             [self startSyncWithOperation:_syncOperationsList[_activeOperationIndex]];
-         }
      }
                                      onError:^(NSError *error)
      {
@@ -106,84 +103,26 @@
 
 - (void)syncFinished:(id)object
 {
+    if (LOGS_ON) NSLog(@"Sync Finished response. Error: %@", object);
+    
     [MBProgressHUD hideHUDForView:APP_DELEGATE.window animated:YES];
     
-    if (LOGS_ON) NSLog(@"Sync Finished response: %@", object);
-}
-
-- (void)startSyncWithOperation:(BaseHandler *)operation
-{
-    //1. get last sync timestamp & get records from server after that timestamp
-    NSTimeInterval timestamp = [operation getSyncTimestampOfTableForCompany:APP_DELEGATE.loggedUserCompanyId];
+    CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
     
-    [operation getRecordsWithTimestamp:timestamp
-                            retryCount:REQUEST_RETRY_COUNT
-                               success:^(ECHttpResponseModel *response)
-     {
-         [operation saveGetRecords:response.payloadInfo];
-         
-         [operation updateTableSyncTimestamp:timestamp company:APP_DELEGATE.loggedUserCompanyId];
-
-         if (operation.noLocalRecord)
-         {
-             [self startNextSyncOperation];
-             
-             return;
-         }
-         
-         //2. get all recently created/modified records from local and send them to server
-         NSArray *dirtyRecords = [operation getAllDirtyRecords];
-         
-         if (LOGS_ON) NSLog(@"Dirty Records(%@): %@", operation.tableName, dirtyRecords);
-         
-         if (dirtyRecords && dirtyRecords.count > 0)
-         {
-             [operation putRecords:dirtyRecords
-                        retryCount:REQUEST_RETRY_COUNT
-                           success:^(ECHttpResponseModel *response)
-              {
-                  [operation savePutRecords:response.payloadInfo];
-                  
-                  [self startNextSyncOperation];
-              }
-                             error:^(NSError *error)
-              {
-                  if (LOGS_ON) NSLog(@"Sync Failed(PUT - %@): %@", operation.tableName, error.localizedDescription);
-                  return;
-              }];
-         }
-         else
-         {
-             [self startNextSyncOperation];
-         }
-     }
-                                 error:^(NSError *error)
-     {
-         if (LOGS_ON) NSLog(@"Sync Failed(GET - %@): %@", operation.tableName, error.localizedDescription);
-         return;
-     }];
-}
-
-- (void)startNextSyncOperation
-{
-    _activeOperationIndex++; // Start sync for next operation
-    
-    if (_syncOperationsList && _syncOperationsList.count > _activeOperationIndex)
+    [companyUserHandler logoutUserSuccess:^(ECHttpResponseModel *response)
     {
-        [self startSyncWithOperation:_syncOperationsList[_activeOperationIndex]];
+        [MBProgressHUD hideHUDForView:APP_DELEGATE.window animated:YES];
     }
-    else
+                                  onError:^(NSError *error)
     {
-        CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
+        [MBProgressHUD hideHUDForView:APP_DELEGATE.window animated:YES];
+    }];
+    
+    if (!object)
+    {
+        DataBinaryHandler *dataBinaryHandler = [DataBinaryHandler new];
         
-        [companyUserHandler logoutUserSuccess:^(ECHttpResponseModel *response)
-        {
-            if (LOGS_ON) NSLog(@"Logout Success");
-        }
-                                      onError:^(NSError *error)
-        {
-            if (LOGS_ON) NSLog(@"Logout failed");
-        }];
+        [dataBinaryHandler downloadAllDataBinary];
     }
 }
 

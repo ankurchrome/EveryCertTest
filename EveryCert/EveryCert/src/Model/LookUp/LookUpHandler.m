@@ -145,7 +145,7 @@
     NSMutableDictionary *newRecordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:info];
     
     RecordHandler *recordHandler = [RecordHandler new];
-    
+    recordHandler.db = self.db;
     NSInteger recordIdApp = recordId > 0 ? [recordHandler getAppId:recordId] : 0;
     
     if (recordIdApp <= 0)

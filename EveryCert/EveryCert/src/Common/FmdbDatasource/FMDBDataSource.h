@@ -17,6 +17,9 @@
  */
 + (id)sharedManager;
 
+// Returns a singleton FMDatabase object
++ (id)sharedDatabase;
+
 @property (nonatomic, strong) FMDatabaseQueue *databaseQueue;
 
 @end

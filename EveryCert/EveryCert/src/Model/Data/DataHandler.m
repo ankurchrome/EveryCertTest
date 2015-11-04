@@ -159,6 +159,7 @@
 
     //Save cert id app
     CertificateHandler *certificateHandler = [CertificateHandler new];
+    certificateHandler.db = self.db;
     NSInteger certificateId = [info[CertificateId] integerValue];
     NSInteger certificateIdApp = certificateId > 0 ? [certificateHandler getAppId:certificateId] : 0;
     
@@ -171,6 +172,7 @@
     
     //Save record id app
     RecordHandler *recordHandler = [RecordHandler new];
+    recordHandler.db = self.db;
     NSInteger recordId = [info[RecordId] integerValue];
     NSInteger recordIdApp = recordId > 0 ? [recordHandler getAppId:recordId] : 0;
     [newRecordInfo setObject:@(recordIdApp).stringValue forKey:RecordIdApp];

@@ -74,6 +74,27 @@
     return dataBinaryModel;
 }
 
+- (NSArray *)allDataBinaryInfoToBeDownload
+{
+    __block NSMutableArray *dataBinaryInfoList = [NSMutableArray new];
+    
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = '' AND %@.length > 0", self.tableName, DataBinaryValue, DataBinaryFileName];
+         
+         FMResultSet *result = [db executeQuery:query];
+         
+         if ([result next])
+         {
+             [dataBinaryInfoList addObject:[result resultDictionary]];
+         }
+     }];
+    
+    return dataBinaryInfoList;
+}
+
 // Update a DataBinaryModel object information into data_binary table.
 - (BOOL)updateDataBinaryModel:(DataBinaryModel *)dataBinaryModel
 {
@@ -102,6 +123,7 @@
     
     //Save cert id app
     CertificateHandler *certificateHandler = [CertificateHandler new];
+    certificateHandler.db = self.db;
     NSInteger certificateId = [info[CertificateId] integerValue];
     NSInteger certificateIdApp = certificateId > 0 ? [certificateHandler getAppId:certificateId] : 0;
     
@@ -119,7 +141,37 @@
         [newRecordInfo setObject:[info valueForKey:ModifiedTimeStampServer] forKey:ModifiedTimestampApp];
     }
     
+    [newRecordInfo setObject:EMPTY_STRING forKey:DataBinaryValue];
+    
     return newRecordInfo;
+}
+
+- (void)downloadAllDataBinary
+{
+    NSArray *dataBinaryInfoList = [self allDataBinaryInfoToBeDownload];
+    
+    NSOperationQueue *operationQueue = [NSOperationQueue new];
+    operationQueue.maxConcurrentOperationCount = 5;
+    
+    for (NSDictionary *dataBinaryInfo in dataBinaryInfoList)
+    {
+        NSURL *binaryUrl = [[NSURL alloc] initWithString:dataBinaryInfo[DataBinaryFileName]];
+        NSURLRequest *binaryUrlRequest = [[NSURLRequest alloc] initWithURL:binaryUrl];
+        
+        AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:binaryUrlRequest];
+        requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
+        
+        [requestOperation setCompletionBlockWithSuccess: ^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             if (LOGS_ON) NSLog(@"Data binary id: %@ Image: %@", dataBinaryInfo[DataBinaryIdApp], responseObject);
+         }
+                                                failure:
+         ^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+         }];
+        
+        [operationQueue addOperation:requestOperation];
+    }
 }
 
 @end

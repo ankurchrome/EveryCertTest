@@ -10,7 +10,7 @@
 
 @implementation BaseHandler
 
-NSString *const SyncFinishedNotification = @"SyncFinishedNotification";
+NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
 
 // Initialized the BaseHandler object with the FMDatabase object and linked it to sqlite database stored in Document dir.
 - (id)init
@@ -91,10 +91,16 @@ NSString *const SyncFinishedNotification = @"SyncFinishedNotification";
     
     if (!columnInfo || columnInfo.count <= 0) return appId;
     
-    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    self.db = self.db ? :[FMDBDataSource sharedDatabase];
     
-    [databaseQueue inDatabase:^(FMDatabase *db)
-     {
+    [self.db closeOpenResultSets];
+    
+    if (![self.db open]) return appId;
+    
+//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+//    
+//    [databaseQueue inDatabase:^(FMDatabase *db)
+//     {
          //Make column string to bind the column data from dictionary
          NSMutableString *columnString = [NSMutableString new];
          NSMutableString *valueString  = [NSMutableString new];
@@ -122,11 +128,11 @@ NSString *const SyncFinishedNotification = @"SyncFinishedNotification";
          
          NSString *query = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)", self.tableName, columnString, valueString];
          
-         if ([db executeUpdate:query withParameterDictionary:columnInfo])
+         if ([self.db executeUpdate:query withParameterDictionary:columnInfo])
          {
-             appId = [db lastInsertRowId];
+             appId = [self.db lastInsertRowId];
          }
-     }];
+//     }];
     
     return appId;
 }
@@ -137,11 +143,17 @@ NSString *const SyncFinishedNotification = @"SyncFinishedNotification";
     __block BOOL success = false;
     
     if (!columnInfo || columnInfo.count <= 0 || recordIdApp <=0) return success;
-        
-    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
-    [databaseQueue inDatabase:^(FMDatabase *db)
-     {
+    self.db = self.db ? :[FMDBDataSource sharedDatabase];
+    
+    [self.db closeOpenResultSets];
+    
+    if (![self.db open]) return success;
+    
+//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+//    
+//    [databaseQueue inDatabase:^(FMDatabase *db)
+//     {
          NSMutableDictionary *updatedColumnInfo = [[NSMutableDictionary alloc] initWithDictionary:columnInfo];
 
          //Make column string to bind the column data from dictionary
@@ -162,8 +174,8 @@ NSString *const SyncFinishedNotification = @"SyncFinishedNotification";
          NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE %@ = :%@", self.tableName, columnString, self.appIdField, self.appIdField];
 
          [updatedColumnInfo setObject:@(recordIdApp) forKey:self.appIdField];
-         success = [db executeUpdate:query withParameterDictionary:updatedColumnInfo];
-     }];
+         success = [self.db executeUpdate:query withParameterDictionary:updatedColumnInfo];
+//     }];
     
     return success;
 }
@@ -177,19 +189,25 @@ NSString *const SyncFinishedNotification = @"SyncFinishedNotification";
     
     if (serverId <= 0 || ![CommonUtils isValidString:self.appIdField]) return appId;
     
-    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    self.db = self.db ? :[FMDBDataSource sharedDatabase];
     
-    [databaseQueue inDatabase:^(FMDatabase *db)
-     {
+    [self.db closeOpenResultSets];
+    
+    if (![self.db open]) return appId;
+    
+//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+//    
+//    [databaseQueue inDatabase:^(FMDatabase *db)
+//     {
          NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ?", self.appIdField, self.tableName, self.serverIdField];
          
-         FMResultSet *result = [db executeQuery:query, @(serverId)];
+         FMResultSet *result = [self.db executeQuery:query, @(serverId)];
          
          if ([result next])
          {
              appId = [result intForColumn:self.appIdField];
          }
-     }];
+//     }];
     
     return appId;
 }
@@ -201,19 +219,25 @@ NSString *const SyncFinishedNotification = @"SyncFinishedNotification";
     
     if (appId <= 0 || ![CommonUtils isValidString:self.appIdField]) return serverId;
     
-    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    self.db = self.db ? :[FMDBDataSource sharedDatabase];
     
-    [databaseQueue inDatabase:^(FMDatabase *db)
-     {
+    [self.db closeOpenResultSets];
+    
+    if (![self.db open]) return appId;
+    
+//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+//    
+//    [databaseQueue inDatabase:^(FMDatabase *db)
+//     {
          NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ?", self.serverIdField, self.tableName, self.appIdField];
          
-         FMResultSet *result = [db executeQuery:query, @(appId)];
+         FMResultSet *result = [self.db executeQuery:query, @(appId)];
          
          if ([result next])
          {
              serverId = [result intForColumn:self.appIdField];
          }
-     }];
+//     }];
     
     return serverId;
 }
@@ -222,19 +246,25 @@ NSString *const SyncFinishedNotification = @"SyncFinishedNotification";
 {
     __block NSDictionary *recordInfo = nil;
     
-    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    self.db = self.db ? :[FMDBDataSource sharedDatabase];
     
-    [databaseQueue inDatabase:^(FMDatabase *db)
-     {
+    [self.db closeOpenResultSets];
+    
+    if (![self.db open]) return recordInfo;
+    
+//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+//    
+//    [databaseQueue inDatabase:^(FMDatabase *db)
+//     {
          NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = ?", self.tableName, self.appIdField];
          
-         FMResultSet *result = [db executeQuery:query, @(appId)];
+         FMResultSet *result = [self.db executeQuery:query, @(appId)];
          
          if ([result next])
          {
              recordInfo = [result resultDictionary];
          }
-     }];
+//     }];
     
     return recordInfo;
 }
@@ -343,7 +373,7 @@ NSString *const SyncFinishedNotification = @"SyncFinishedNotification";
      {
          [self saveGetRecords:response.payloadInfo];
          
-         [self updateTableSyncTimestamp:timestamp company:APP_DELEGATE.loggedUserCompanyId];
+         [self updateTableSyncTimestamp:response.metadataTimestamp company:APP_DELEGATE.loggedUserCompanyId];
          
          //2. get all recently created/modified records from local and send them to server
          NSArray *dirtyRecords = [self getAllDirtyRecords];
@@ -383,6 +413,13 @@ NSString *const SyncFinishedNotification = @"SyncFinishedNotification";
 
 - (void)saveGetRecords:(NSArray *)records
 {
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback)
+     {
+         self.db = db;
+         [self.db closeOpenResultSets];
+    
     for (NSDictionary *responseInfo in records)
     {
         BOOL success = false;
@@ -414,40 +451,56 @@ NSString *const SyncFinishedNotification = @"SyncFinishedNotification";
             if (LOGS_ON) NSLog(@"Update Failed(GET - %@): %@", self.tableName, responseInfo);
         }
     }
+     }];
 }
 
 - (void)saveGetRecordsForServerOnlyTable:(NSArray *)records
 {
-    for (NSDictionary *responseInfo in records)
-    {
-        BOOL success = false;
-        
-        NSInteger timestampServer = [[responseInfo valueForKey:ModifiedTimeStampServer] doubleValue];
-        NSMutableDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:responseInfo];
-        [recordInfo setObject:@(timestampServer) forKey:ModifiedTimeStamp];
-        
-        NSInteger serverId = [[recordInfo objectForKey:self.serverIdField] integerValue];
-        
-        //In ServeryOnly tables there is no app id (server id is being treated as app id)
-        
-        if ([self getRecordInfoWithAppId:serverId])//self.appIdField & self.serverIdField will contain same column
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback)
+     {
+         self.db = db;
+         [self.db closeOpenResultSets];
+         
+        for (NSDictionary *responseInfo in records)
         {
-            success = [self updateInfo:recordInfo recordIdApp:serverId];
+            BOOL success = false;
+            
+            NSInteger timestampServer = [[responseInfo valueForKey:ModifiedTimeStampServer] doubleValue];
+            NSMutableDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:responseInfo];
+            [recordInfo setObject:@(timestampServer) forKey:ModifiedTimeStamp];
+            
+            NSInteger serverId = [[recordInfo objectForKey:self.serverIdField] integerValue];
+            
+            //In ServeryOnly tables there is no app id (server id is being treated as app id)
+            
+            if ([self getRecordInfoWithAppId:serverId])//self.appIdField & self.serverIdField will contain same column
+            {
+                success = [self updateInfo:recordInfo recordIdApp:serverId];
+            }
+            else
+            {
+                success = [self insertInfo:recordInfo];
+            }
+            
+            if (!success)
+            {
+                if (LOGS_ON) NSLog(@"Update Failed(GET - %@): %@", self.tableName, responseInfo);
+            }
         }
-        else
-        {
-            success = [self insertInfo:recordInfo];
-        }
-        
-        if (!success)
-        {
-            if (LOGS_ON) NSLog(@"Update Failed(GET - %@): %@", self.tableName, responseInfo);
-        }
-    }
+     }];
 }
 
 - (void)savePutRecords:(NSArray *)records
 {
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback)
+     {
+         self.db = db;
+         [self.db closeOpenResultSets];
+
      for (NSDictionary *responseInfo in records)
      {
          NSDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:responseInfo];
@@ -462,6 +515,7 @@ NSString *const SyncFinishedNotification = @"SyncFinishedNotification";
              }
          }
      }
+     }];
 }
 
 - (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info
@@ -531,12 +585,7 @@ NSString *const SyncFinishedNotification = @"SyncFinishedNotification";
 
 - (void)finishSyncWithError:(NSError *)error
 {
-    error = [[NSError alloc] initWithDomain:@"Test" code:10 userInfo:@{@"message": @"sync finished"}];
-    
-    dispatch_async(dispatch_get_main_queue(), ^
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:SyncFinishedNotification object:error];
-    });
+    [[NSNotificationCenter defaultCenter] postNotificationName:SyncFinishedNotification object:error];
 }
 
 #pragma mark - NetworkService Methods

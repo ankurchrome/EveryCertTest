@@ -34,4 +34,19 @@
     return self;
 }
 
+// Returns a singleton FMDatabase object
++ (id)sharedDatabase
+{
+    static FMDatabase *sharedDatabase = nil;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^
+    {
+        NSString *databasePath = [[CommonUtils getDocumentDirPath] stringByAppendingPathComponent:DATABASE_NAME];
+        sharedDatabase = [FMDatabase databaseWithPath:databasePath];
+    });
+    
+    return sharedDatabase;
+}
+
 @end

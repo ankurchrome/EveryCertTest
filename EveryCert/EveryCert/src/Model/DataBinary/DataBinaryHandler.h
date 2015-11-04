@@ -26,6 +26,8 @@
  */
 - (DataBinaryModel *)dataExistForCertificate:(NSInteger)certIdApp element:(NSInteger)elementIdApp;
 
+- (NSArray *)allDataBinaryInfoToBeDownload;
+
 /**
  Update a DataBinaryModel object information into data_binary table.
  @param  dataBinaryModel A DataBinaryModel model containing data of signatio
@@ -33,5 +35,8 @@
  */
 - (BOOL)updateDataBinaryModel:(DataBinaryModel *)dataBinaryModel;
 
+#pragma mark - ServerSync Methods
+
+- (void)downloadAllDataBinary;
 
 @end

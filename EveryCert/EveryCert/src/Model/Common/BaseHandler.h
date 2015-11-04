@@ -10,6 +10,7 @@
 #import "FMDBDataSource.h"
 #import "ECHttpClient.h"
 #import "ECHttpResponseModel.h"
+#import "AFHTTPRequestOperation.h"
 
 typedef void(^SuccessCallback)(ECHttpResponseModel *response);
 typedef void(^SuccessCallbackWithObjects)(NSArray *objects);
@@ -25,6 +26,8 @@ typedef void(^ProgressBlock)(float progress);
 @property(nonatomic, strong) NSArray  *commonTableColumns;
 @property(nonatomic, strong) NSArray  *tableColumns;
 @property(nonatomic, assign) BOOL noLocalRecord;
+
+@property(nonatomic, strong) FMDatabase *db;
 
 @property(nonatomic, strong) BaseHandler *nextSyncHandler;
 

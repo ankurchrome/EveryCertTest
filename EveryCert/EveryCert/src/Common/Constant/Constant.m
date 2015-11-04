@@ -223,6 +223,7 @@ NSString *const RecordId    = @"record_id";
 
 #pragma mark LoginScreen
 NSString *const HudTitleSignin = @"Signin...";
+NSString *const HudTitleLoading = @"Loading...";
 NSString *const ForgotPasswordAlertTitle       = @"Forgot password";
 NSString *const ForgotPasswordEmailPlaceholder = @"Email";
 NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
