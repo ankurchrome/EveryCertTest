@@ -30,10 +30,9 @@
 @interface CertViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     IBOutlet UIBarButtonItem  *_previewBarButton;
-    
     IBOutlet UITableView      *_sectionTableView;
-    IBOutlet UIView   *_sectionView;
     
+    IBOutlet UIView    *_sectionView;
     IBOutlet UIView   *_sectionFadedView;
     IBOutlet UIButton *_menuButton;
     IBOutlet UIButton *_prevSectionButton;
@@ -49,6 +48,7 @@
     
     NSArray   *_formSections;
     NSMutableArray *_sectionImageStatusArray;
+    NSInteger  _previousIndexPath;
     NSInteger  _currentSectionIndex;
     NSInteger  _currentSectionRecordIdApp;
     BOOL       _isExistingCertificate;
@@ -163,7 +163,17 @@ enum Section_Image_Status
 //Intially required UI changes will be done here
 - (void)makeUISetup
 {
-    self.title = _certificate.name;
+    //** Add MultiLine Labee on Title View of Navigation Item
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2, 200)];
+    [label setBackgroundColor:[UIColor clearColor]];
+    [label setTextColor:[UIColor whiteColor]];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setNumberOfLines:0];
+    [label setText:_certificate.name];
+    UIFont *font = [UIFont boldSystemFontOfSize:18];
+    label.font   = font;
+    self.navigationItem.titleView = label;
+
     self.view.backgroundColor = APP_BG_COLOR;
     
     _elementTableView.superview.clipsToBounds = NO;
@@ -182,7 +192,7 @@ enum Section_Image_Status
 {
     FormSectionModel *formSection = nil;
     NSPredicate *predicate = nil;
-   
+    
     //Disable the previous section button on first section
     _prevSectionButton.enabled = !(sectionIndex == 0);
     
@@ -234,14 +244,18 @@ enum Section_Image_Status
                 if (_linkedSearchElementModel.recordIdApp <= 0)
                 {
                     //linked element hasn't filled yet, back to previous screen
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:ALERT_TITLE_WARNING message:_currentSearchElementModel.popUpMessage preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:ALERT_TITLE_WARNING
+                                                                                             message:_currentSearchElementModel.popUpMessage
+                                                                                    preferredStyle:UIAlertControllerStyleAlert];
                     
-                    UIAlertAction *okAction = [UIAlertAction actionWithTitle:ALERT_ACTION_TITLE_OK style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                    UIAlertAction *okAction = [UIAlertAction actionWithTitle:ALERT_ACTION_TITLE_OK
+                                                                       style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
                                                {
-                                                   [APP_DELEGATE.certificateVC backToPreviousSection];
+                                                    [APP_DELEGATE.certificateVC backToPreviousSection];
                                                }];
                     
                     [alertController addAction:okAction];
+                  
                     [self presentViewController:alertController animated:YES completion:nil];
                 }
             }
@@ -258,7 +272,24 @@ enum Section_Image_Status
         _currentSearchElementModel = nil;
     }
     
-    [self manageCheckBoxElement];
+    //** Reload Table with Left and Right Direction Animation when Section is Switched
+    CATransition *animation = [CATransition animation];
+    [animation setType:kCATransitionPush];
+    if(_previousIndexPath > sectionIndex)
+    {
+        [animation setSubtype:kCATransitionFromLeft];
+    }
+    else
+    {
+        [animation setSubtype:kCATransitionFromRight];
+    }
+    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    [animation setFillMode:kCAFillModeBoth];
+    [animation setDuration:.3];
+    [[_elementTableView layer] addAnimation:animation forKey:@"UITableViewReloadDataAnimationKey"];
+    
+    [self manageCheckBoxElement];   // Manage the Tick Box Check Or uncheck State with Reload Table
+    _previousIndexPath = sectionIndex;
 }
 
 // Show the section list(with animations) to pick a section randomly
@@ -577,6 +608,24 @@ enum Section_Image_Status
         
         [_elementTableView reloadWithElements:[_currentSectionElements filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.fieldType != 10"]]];
     }
+    
+    [_elementTableView setContentOffset:CGPointZero animated:NO];
+}
+
+// Delete DataValue from ElementModel thos who are having linked with Record id
+- (void)deleteDataFromElementModel:(ElementModel *)elementModel
+{
+    NSArray *sectionElementsList = [_formElements filteredArrayUsingPredicate: [NSPredicate predicateWithFormat: @"self.sectionId = %d", elementModel.sectionId]];
+    for(ElementModel *sectionElementsModel in sectionElementsList)
+    {
+        sectionElementsModel.dataValue = EMPTY_STRING;
+    }
+    
+    ElementModel *linkedElementModel = [[_formElements filteredArrayUsingPredicate:[NSPredicate predicateWithFormat: @"self.linkedElementId = %d", elementModel.elementId]] firstObject];
+    if([CommonUtils isValidObject:linkedElementModel])
+    {
+        [self deleteDataFromElementModel:linkedElementModel];
+    }
 }
 
 #pragma mark - LookupRecords(SearchElement) Methods
@@ -589,6 +638,10 @@ enum Section_Image_Status
     
     if (_currentSectionRecordIdApp > 0)
     {
+        // Delete Data from Element Model
+        [self deleteDataFromElementModel: _currentSearchElementModel];
+        
+        // Delete Data form Database
         [_dataHandler deleteLinkedDataForRecord:_currentSectionRecordIdApp
                                     certificate:_certificate.certIdApp];
     }
@@ -599,6 +652,9 @@ enum Section_Image_Status
     
     for (ElementModel *elementModel in _currentSectionElements)
     {
+        // Empty all datavalue and then write only those that have entry in LookUp
+        elementModel.dataValue = EMPTY_STRING;
+        
         for (LookUpModel *lookupRecordField in lookupRecordFields)
         {
             if (elementModel.fieldNumberExisting == lookupRecordField.fieldNumber)
@@ -656,6 +712,9 @@ enum Section_Image_Status
 // Approve the certificate and show the pdf preview of the form
 - (IBAction)previewButtonTapped:(id)sender
 {
+    // Save all Current section Elements Data
+    [self saveAllElements:_currentSectionElements];
+    
     //Issued the certificate
     if (!_certificate.issuedApp)
     {

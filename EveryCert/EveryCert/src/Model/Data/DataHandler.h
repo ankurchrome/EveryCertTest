@@ -46,4 +46,7 @@
 // Fetch Data from cert_id_app , field_name, form_id in DataTable
 - (NSString *)getDataFromCertModel:(CertificateModel *)certModel FieldName:(NSString *)fieldName;
 
+// Get the linked record of given record and associated with given certificate
+- (NSInteger)getLinkedRecord:(NSInteger)recordIdApp inCertificate:(NSInteger)certIdApp;
+
 @end

@@ -35,6 +35,12 @@
     _existingCertsList = [_certHandler getAllExistingCertificatesOfCompany:APP_DELEGATE.loggedUserCompanyId];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    _existingCertsList = [_certHandler getAllExistingCertificatesOfCompany:APP_DELEGATE.loggedUserCompanyId];
+    [_existingCertsTableView reloadData];
+}
+
 #pragma mark- IBActions
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender

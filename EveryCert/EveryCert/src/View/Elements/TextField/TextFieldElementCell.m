@@ -13,7 +13,6 @@
 
 @implementation TextFieldElementCell
 {
-    __weak IBOutlet UITextField *_textField;
     __weak IBOutlet UILabel     *_charLimitLabel;
     __weak IBOutlet UILabel     *_textLabel;
     __weak IBOutlet UIButton    *_defaultButton;

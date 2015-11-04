@@ -48,17 +48,25 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQJ-aL-Zep">
-                                        <rect key="frame" x="16" y="98" width="568" height="340"/>
+                                        <rect key="frame" x="16" y="95" width="568" height="347"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign into EveryCert" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="258-Dl-n9w">
                                                 <rect key="frame" x="169" y="21" width="231" height="30"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="231" id="OIp-pn-2He"/>
-                                                    <constraint firstAttribute="height" constant="30" id="q1N-hc-N33"/>
+                                                    <constraint firstAttribute="width" constant="231" id="OIp-pn-2He">
+                                                        <variation key="heightClass=regular-widthClass=regular" constant="300"/>
+                                                    </constraint>
+                                                    <constraint firstAttribute="height" constant="50" id="q1N-hc-N33"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="OIp-pn-2He"/>
+                                                        <exclude reference="q1N-hc-N33"/>
+                                                    </mask>
+                                                </variation>
                                                 <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                                     <rect key="frame" x="189" y="8" width="231" height="30"/>
                                                 </variation>
@@ -66,7 +74,11 @@
                                                     <rect key="frame" x="58" y="0.0" width="292" height="30"/>
                                                 </variation>
                                                 <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                    <mask key="constraints">
+                                                        <include reference="OIp-pn-2He"/>
+                                                        <include reference="q1N-hc-N33"/>
+                                                    </mask>
                                                 </variation>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jha-05-Edt">
@@ -99,10 +111,10 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfP-pe-QDC">
-                                                <rect key="frame" x="214" y="250" width="140" height="40"/>
+                                                <rect key="frame" x="214" y="250" width="140" height="34"/>
                                                 <color key="backgroundColor" red="0.08235294118" green="0.4941176471" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="dTb-3h-P2T"/>
+                                                    <constraint firstAttribute="height" constant="60" id="dTb-3h-P2T"/>
                                                     <constraint firstAttribute="width" constant="140" id="i8w-0K-fz7">
                                                         <variation key="heightClass=regular-widthClass=regular" constant="250"/>
                                                     </constraint>
@@ -116,6 +128,11 @@
                                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value=".3"/>
                                                 </userDefinedRuntimeAttributes>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="dTb-3h-P2T"/>
+                                                    </mask>
+                                                </variation>
                                                 <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                                     <rect key="frame" x="254" y="200" width="100" height="40"/>
                                                 </variation>
@@ -123,22 +140,32 @@
                                                     <rect key="frame" x="154" y="194" width="100" height="40"/>
                                                 </variation>
                                                 <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
+                                                    <mask key="constraints">
+                                                        <include reference="dTb-3h-P2T"/>
+                                                    </mask>
                                                 </variation>
                                                 <connections>
                                                     <segue destination="TOB-l1-a5C" kind="show" identifier="SignIn" id="vWB-aE-9cR"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ScD-Cy-0fo">
-                                                <rect key="frame" x="184" y="303" width="200" height="19"/>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ScD-Cy-0fo">
+                                                <rect key="frame" x="184" y="297" width="200" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="3BZ-XK-eur"/>
-                                                    <constraint firstAttribute="height" constant="19" id="yxS-vj-7cK"/>
+                                                    <constraint firstAttribute="height" constant="19" id="yxS-vj-7cK">
+                                                        <variation key="heightClass=regular-widthClass=regular" constant="39"/>
+                                                    </constraint>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                 <state key="normal" title="Forgot password?">
                                                     <color key="titleColor" red="0.08235294118" green="0.4941176471" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="yxS-vj-7cK"/>
+                                                    </mask>
+                                                </variation>
                                                 <variation key="heightClass=compact" misplaced="YES">
                                                     <rect key="frame" x="232" y="250" width="144" height="30"/>
                                                 </variation>
@@ -147,6 +174,9 @@
                                                 </variation>
                                                 <variation key="heightClass=regular-widthClass=regular">
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="19"/>
+                                                    <mask key="constraints">
+                                                        <include reference="yxS-vj-7cK"/>
+                                                    </mask>
                                                 </variation>
                                                 <connections>
                                                     <action selector="forgetPasswordButtonTapped:" destination="RXU-YZ-2CA" eventType="touchUpInside" id="LFh-sN-9ek"/>
@@ -167,7 +197,9 @@
                                             <constraint firstAttribute="centerX" secondItem="258-Dl-n9w" secondAttribute="centerX" id="IrU-gi-6Sw"/>
                                             <constraint firstItem="258-Dl-n9w" firstAttribute="top" secondItem="YQJ-aL-Zep" secondAttribute="top" priority="250" constant="21" id="Uok-km-hme"/>
                                             <constraint firstAttribute="centerX" secondItem="mfP-pe-QDC" secondAttribute="centerX" id="VqB-7j-BIB"/>
-                                            <constraint firstAttribute="bottom" secondItem="ScD-Cy-0fo" secondAttribute="bottom" priority="250" constant="18" id="hyt-st-e2N"/>
+                                            <constraint firstAttribute="bottom" secondItem="ScD-Cy-0fo" secondAttribute="bottom" priority="250" constant="18" id="hyt-st-e2N">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="-2"/>
+                                            </constraint>
                                             <constraint firstAttribute="trailing" secondItem="Jha-05-Edt" secondAttribute="trailing" id="kCK-Yu-bWZ"/>
                                             <constraint firstItem="mfP-pe-QDC" firstAttribute="top" secondItem="Jha-05-Edt" secondAttribute="bottom" priority="250" constant="25" id="qAH-Fj-fQ2"/>
                                         </constraints>
@@ -270,7 +302,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o6R-37-mrH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1147" y="301"/>
+            <point key="canvasLocation" x="-1147.5" y="300.75"/>
         </scene>
         <!--Registration View Controller-->
         <scene sceneID="Lbt-Mz-Oac">
@@ -1434,7 +1466,7 @@
                                             <constraint firstAttribute="height" constant="21" id="mXo-fG-6x9"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -1632,7 +1664,6 @@
                                                 <constraint firstItem="102-Z9-OdB" firstAttribute="leading" secondItem="DRM-vv-Upq" secondAttribute="leadingMargin" id="ptk-4w-73v"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="1" green="0.85194603449999995" blue="0.74566027999999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outlet property="installLabelHeightContraint" destination="1Yq-Rq-feU" id="gZ6-Ru-WmZ"/>

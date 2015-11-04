@@ -10,4 +10,6 @@
 
 @interface TextFieldElementCell : ElementTableViewCell<UITextFieldDelegate>
 
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+
 @end

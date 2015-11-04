@@ -14,7 +14,6 @@
 {
     __weak IBOutlet UILabel    *_titleLabel;
     __weak IBOutlet UILabel    *_charLimitLabel;
-    __weak IBOutlet UITextView *_textView;
 }
 
 - (void)awakeFromNib {

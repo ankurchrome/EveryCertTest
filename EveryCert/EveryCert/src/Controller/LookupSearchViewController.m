@@ -65,11 +65,6 @@ NSString *const LookupSearchTitle = @"Select a record";
     [_lookupTableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 #pragma mark - Functionality Methods
 
 - (void)setupWithElement
