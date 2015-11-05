@@ -10,6 +10,8 @@
 #import "FormsListViewController.h"
 #import "SettingViewController.h"
 #import "ECSyncManager.h"
+#import "AFNetworking.h"
+#import "DataBinaryHandler.h"
 
 @interface MenuViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -49,7 +51,23 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
 {
     if (self.isInitialLogin)
     {
-        [_syncManager startCompleteSync];
+        //Check for internet availability for login through server
+        if (![[AFNetworkReachabilityManager sharedManager] isReachable])
+        {
+            [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED
+                                    message:AlertMessageConnectionNotFound];
+            return;
+        }
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText = HudTitleLoading;
+        
+        [_syncManager startCompleteSyncWithCompletion:^
+        {
+            DataBinaryHandler *dataBinaryHandler = [DataBinaryHandler new];
+            [dataBinaryHandler downloadAllDataBinary];
+        }];
+        
         self.isInitialLogin = NO;
     }
 }
@@ -67,7 +85,22 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
 //Start the sync with server for all data
 - (IBAction)backupDataButtonTapped:(id)sender
 {
-    [_syncManager startCompleteSync];
+    //Check for internet availability for login through server
+    if (![[AFNetworkReachabilityManager sharedManager] isReachable])
+    {
+        [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED
+                                message:AlertMessageConnectionNotFound];
+        return;
+    }
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = HudTitleLoading;
+    
+    [_syncManager backupDataWithCompletion:^
+     {
+         DataBinaryHandler *dataBinaryHandler = [DataBinaryHandler new];
+         [dataBinaryHandler downloadAllDataBinary];
+     }];
 }
 
 #pragma mark - UITableViewDataSource Methods

@@ -62,17 +62,18 @@
     //Set user credentials if already logged In
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
+    //TODO: remove hard coded credentials
     for (ElementModel *element in _loginElements)
     {
         if ([element.fieldName isEqualToString:CompanyUserFieldNameEmail])
         {
             element.dataValue = [userDefaults objectForKey:LoggedUserEmail];
-            element.dataValue = @"demo@swfy.co.uk";
+//            element.dataValue = @"demo@swfy.co.uk";
         }
         else if ([element.fieldName isEqualToString:CompanyUserFieldNamePassword])
         {
             element.dataValue = [userDefaults objectForKey:LoggedUserPassword];
-            element.dataValue = @"password12";
+//            element.dataValue = @"password12";
         }
     }
     

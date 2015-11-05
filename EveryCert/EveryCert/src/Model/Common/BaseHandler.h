@@ -13,9 +13,8 @@
 #import "AFHTTPRequestOperation.h"
 
 typedef void(^SuccessCallback)(ECHttpResponseModel *response);
-typedef void(^SuccessCallbackWithObjects)(NSArray *objects);
+typedef void(^DownloadImageCallback)(UIImage *image, NSError *error);
 typedef void(^ErrorCallback)(NSError *error);
-typedef void(^ProgressBlock)(float progress);
 
 @interface BaseHandler : NSObject
 
@@ -88,6 +87,8 @@ typedef void(^ProgressBlock)(float progress);
 - (void)getRecordsWithTimestamp:(NSTimeInterval)timestamp retryCount:(NSInteger)retryCount success:(SuccessCallback)successResponse error:(ErrorCallback)errorResponse;
 
 - (void)putRecords:(NSArray *)records retryCount:(NSInteger)retryCount success:(SuccessCallback)successResponse error:(ErrorCallback)errorResponse;
+
+- (void)downloadFileWithUrl:(NSString *)urlString destinationUrl:(NSURL *)destinationUrl retryCount:(NSInteger)retryCount completion:(ErrorCallback)completion;
 
 @end
 

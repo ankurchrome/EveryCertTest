@@ -22,16 +22,17 @@
 {
     NSArray *_syncOperationsList;
     NSInteger _activeOperationIndex;
+    
+    CompletionSync _completionSyncBlock;
 }
 @end
 
 @implementation ECSyncManager
 
 // Start syncing all the database tables with server.
-- (void)startCompleteSync
+- (void)startCompleteSyncWithCompletion:(CompletionSync)completion
 {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:APP_DELEGATE.window animated:YES];
-    hud.labelText = HudTitleLoading;
+    _completionSyncBlock = completion;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncFinished:) name:SyncFinishedNotification object:nil];
     
@@ -72,11 +73,10 @@
     }];
 }
 
-- (void)backupData
+- (void)backupDataWithCompletion:(CompletionSync)completion
 {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:APP_DELEGATE.window animated:YES];
-    hud.labelText = HudTitleLoading;
-    
+    _completionSyncBlock = completion;
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncFinished:) name:SyncFinishedNotification object:nil];
     
     CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
@@ -112,28 +112,31 @@
      }];
 }
 
-- (void)downloadForm:(NSInteger)formId
+- (void)downloadForm:(NSInteger)formId completion:(CompletionSync)completion;
 {
+    _completionSyncBlock = completion;
+    
     CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
     FormSectionHandler *formSectionHandler = [FormSectionHandler new];
     ElementHandler     *elementHandler     = [ElementHandler new];
     SubElementHandler  *subElementHandler  = [SubElementHandler new];
     
-    _activeOperationIndex     = 0;
     formSectionHandler.formId = formId;
     elementHandler.formId     = formId;
     subElementHandler.formId  = formId;
     
-    _syncOperationsList = @[formSectionHandler, elementHandler, subElementHandler];
+    formSectionHandler.nextSyncHandler = elementHandler;
+    elementHandler.nextSyncHandler = subElementHandler;
     
     NSDictionary *loginCredential = @{
-                                      @"user_email": APP_DELEGATE.loggedUserEmail,
-                                      @"user_password": APP_DELEGATE.loggedUserPassword
+                                      CompanyUserFieldNameEmail: APP_DELEGATE.loggedUserEmail,
+                                      CompanyUserFieldNamePassword: APP_DELEGATE.loggedUserPassword
                                       };
     
     [companyUserHandler loginWithCredentials:loginCredential
                                    onSuccess:^(ECHttpResponseModel *response)
      {
+         [formSectionHandler syncWithServer];
      }
                                      onError:^(NSError *error)
      {
@@ -145,25 +148,22 @@
 {
     if (LOGS_ON) NSLog(@"Sync Finished response. Error: %@", notification);
     
-    [MBProgressHUD hideHUDForView:APP_DELEGATE.window animated:YES];
-    
     CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
     
     [companyUserHandler logoutUserSuccess:^(ECHttpResponseModel *response)
     {
-        [MBProgressHUD hideHUDForView:APP_DELEGATE.window animated:YES];
+        if (_completionSyncBlock)
+        {
+            _completionSyncBlock();
+        }
     }
                                   onError:^(NSError *error)
     {
-        [MBProgressHUD hideHUDForView:APP_DELEGATE.window animated:YES];
+        if (_completionSyncBlock)
+        {
+            _completionSyncBlock();
+        }
     }];
-    
-    if (!notification.object)
-    {
-        DataBinaryHandler *dataBinaryHandler = [DataBinaryHandler new];
-        
-        [dataBinaryHandler downloadAllDataBinary];
-    }
 }
 
 @end

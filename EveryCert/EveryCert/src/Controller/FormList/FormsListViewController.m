@@ -12,6 +12,7 @@
 #import "FormHandler.h"
 #import "UIView+Extension.h"
 #import "CompanyUserHandler.h"
+#import "ECSyncManager.h"
 
 #define FORM_LIST_ROW_HEIGHT 20.0
 
@@ -36,6 +37,8 @@
         ActiveForms = 0,
         HiddenForms = 1
     };
+    
+    ECSyncManager *_syncManager;
 }
 @end
 
@@ -64,6 +67,7 @@ NSString *const FormStatusShow = @"UnHide";
     
     _filteredArray      = [NSMutableArray new];
     _companyUserHandler = [CompanyUserHandler new];
+    _syncManager = [ECSyncManager new];
     
     [self reloadFormListTableView];
 }
@@ -191,9 +195,9 @@ NSString *const FormStatusShow = @"UnHide";
     FormModel *formModel = _filteredArray[indexPath.row];
     
     cell.titleLabel.text = formModel.title;
-    cell.statusLabel.hidden = !formModel.status;        //hide status label if form is saved
+    cell.statusLabel.hidden = !formModel.status; //hide status label if form is saved
     
-    __unused BOOL checkUpdate = cell.needsUpdateConstraints;
+    BOOL checkUpdate = cell.needsUpdateConstraints;
     
     if (formModel.status)
     {
@@ -340,12 +344,78 @@ NSString *const FormStatusShow = @"UnHide";
 
 #pragma mark - TableView Delegate
 
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if ([identifier isEqualToString:@"ShowCertificate"])
+    {
+        NSIndexPath *indexPath = [_formListTableView indexPathForSelectedRow];
+        FormModel   *formModel = _filteredArray[indexPath.row];
+        
+        //Download the form from server if it is not already installed in the app
+        if (!formModel.status)
+        {
+            //Check for internet availability for login through server
+            if (![[AFNetworkReachabilityManager sharedManager] isReachable])
+            {
+                [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED
+                                        message:AlertMessageConnectionNotFound];
+                return NO;
+            }
+            
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.labelText = HudTitleFormDownloading;
+            
+            
+            NSString *formPdfPath = [FORMS_BACKGROUND_LAYOUT_DIR stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.pdf", formModel.formId]];
+            NSURL *destinationUrl = [NSURL URLWithString:formPdfPath];
+            
+            FormHandler *formHandler = [FormHandler new];
+            
+            [formHandler downloadFileWithUrl:formModel.backgroundLayout
+                              destinationUrl:destinationUrl
+                                  retryCount:REQUEST_RETRY_COUNT
+                                  completion:^(NSError *error)
+             {
+                 
+             }];
+
+            
+//            [_syncManager downloadForm:formModel.formId completion:^
+//            {
+//                formModel.status = true;
+//                [_formListTableView reloadData];
+//             
+//                //Update form status to true in data as installed form
+//                FormHandler *formHandler = [FormHandler new];
+//                NSDictionary *info = @{ FormStatus : @(true) };
+//                [formHandler updateInfo:info recordIdApp:formModel.formId];
+//                
+//                NSString *formPdfPath = [FORMS_BACKGROUND_LAYOUT_DIR stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld %@.pdf", formModel.formId, formModel.name]];
+//                NSURL *destinationUrl = [NSURL URLWithString:formPdfPath];
+//                
+//                [formHandler downloadFileWithUrl:formModel.backgroundLayout
+//                                  destinationUrl:destinationUrl
+//                                      retryCount:REQUEST_RETRY_COUNT
+//                                      completion:^(NSError *error)
+//                {
+//                    
+//                }];
+//            }];
+            
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"ShowCertificate"])
     {
         NSIndexPath *indexPath = [_formListTableView indexPathForSelectedRow];
         FormModel   *formModel = _filteredArray[indexPath.row];
+        
         CertViewController *certificateVC = [segue destinationViewController];
         [certificateVC initializeWithForm:formModel];
     }

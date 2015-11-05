@@ -262,6 +262,7 @@ extern NSString *const RecordId;
 #pragma mark LoginScreen
 extern NSString *const HudTitleSignin;
 extern NSString *const HudTitleLoading;
+extern NSString *const HudTitleFormDownloading;
 extern NSString *const ForgotPasswordAlertTitle;
 extern NSString *const ForgotPasswordEmailPlaceholder;
 extern NSString *const ForgotPasswordResetActionTitle;

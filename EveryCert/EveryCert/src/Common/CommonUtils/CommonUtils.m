@@ -262,7 +262,7 @@
     NSFileManager *fileManager = [[NSFileManager alloc]init];
     NSString *docDirPath   = [CommonUtils getDocumentDirPath];
     NSString *dbFilePath   = [docDirPath stringByAppendingPathComponent:DATABASE_NAME];
-    NSString *dbBundlePath = [[NSBundle mainBundle] pathForResource:@"NewEverycertDB"
+    NSString *dbBundlePath = [[NSBundle mainBundle] pathForResource:@"Everycert"
                                                              ofType:@"sqlite"];
     BOOL databaseCopied = false;
     NSError *error = nil;

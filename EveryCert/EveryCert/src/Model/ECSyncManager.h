@@ -8,14 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^CompletionSync)();
+
 @interface ECSyncManager : NSObject
 
 /**
  Start syncing all the database tables with server.
  @return void
  */
-- (void)startCompleteSync;
+- (void)startCompleteSyncWithCompletion:(CompletionSync)completion;
 
-- (void)downloadForm:(NSInteger)formId;
+- (void)backupDataWithCompletion:(CompletionSync)completion;
+
+- (void)downloadForm:(NSInteger)formId completion:(CompletionSync)completion;;
 
 @end

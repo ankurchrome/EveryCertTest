@@ -65,6 +65,9 @@
 		C38E89CE1B9705D500790752 /* RecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89B51B9705D500790752 /* RecordModel.m */; };
 		C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89B81B9705D500790752 /* SubElementHandler.m */; };
 		C38E89D01B9705D500790752 /* SubElementModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89BA1B9705D500790752 /* SubElementModel.m */; };
+		C39F5EDC1BEB62B60010F252 /* ECHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C39F5ED71BEB62B60010F252 /* ECHttpClient.m */; };
+		C39F5EDD1BEB62B60010F252 /* ECHttpResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C39F5ED91BEB62B60010F252 /* ECHttpResponseModel.m */; };
+		C39F5EDE1BEB62B60010F252 /* ECSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C39F5EDB1BEB62B60010F252 /* ECSyncManager.m */; };
 		C3AE7E4D1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */; };
 		C3C6EC861BCD199D00973895 /* KeyBoardTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C6EC851BCD199D00973895 /* KeyBoardTableView.m */; };
 		C3D722681BD0E79100820881 /* Everycert.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C3D722671BD0E79100820881 /* Everycert.sqlite */; };
@@ -216,6 +219,12 @@
 		C38E89B81B9705D500790752 /* SubElementHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementHandler.m; sourceTree = "<group>"; };
 		C38E89B91B9705D500790752 /* SubElementModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubElementModel.h; sourceTree = "<group>"; };
 		C38E89BA1B9705D500790752 /* SubElementModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementModel.m; sourceTree = "<group>"; };
+		C39F5ED61BEB62B60010F252 /* ECHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECHttpClient.h; sourceTree = "<group>"; };
+		C39F5ED71BEB62B60010F252 /* ECHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECHttpClient.m; sourceTree = "<group>"; };
+		C39F5ED81BEB62B60010F252 /* ECHTTPResponseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECHTTPResponseModel.h; sourceTree = "<group>"; };
+		C39F5ED91BEB62B60010F252 /* ECHttpResponseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECHttpResponseModel.m; sourceTree = "<group>"; };
+		C39F5EDA1BEB62B60010F252 /* ECSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECSyncManager.h; sourceTree = "<group>"; };
+		C39F5EDB1BEB62B60010F252 /* ECSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECSyncManager.m; sourceTree = "<group>"; };
 		C3AE7E4B1BA0C99800E8C126 /* ExistingCertificateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExistingCertificateTableViewCell.h; sourceTree = "<group>"; };
 		C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistingCertificateTableViewCell.m; sourceTree = "<group>"; };
 		C3C6EC841BCD199D00973895 /* KeyBoardTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyBoardTableView.h; sourceTree = "<group>"; };
@@ -713,6 +722,12 @@
 		C38E89831B9705D500790752 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C39F5ED61BEB62B60010F252 /* ECHttpClient.h */,
+				C39F5ED71BEB62B60010F252 /* ECHttpClient.m */,
+				C39F5ED81BEB62B60010F252 /* ECHTTPResponseModel.h */,
+				C39F5ED91BEB62B60010F252 /* ECHttpResponseModel.m */,
+				C39F5EDA1BEB62B60010F252 /* ECSyncManager.h */,
+				C39F5EDB1BEB62B60010F252 /* ECSyncManager.m */,
 				C38E89891B9705D500790752 /* Common */,
 				C38E898E1B9705D500790752 /* CompanyUser */,
 				C38E89A21B9705D500790752 /* Form */,
@@ -1121,6 +1136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C39F5EDC1BEB62B60010F252 /* ECHttpClient.m in Sources */,
 				77DBB9181B6F553900F02932 /* AppDelegate.m in Sources */,
 				C3EEB9901BB2E8060090C4B0 /* PhotoElementCell.m in Sources */,
 				C38E89C71B9705D500790752 /* FormHandler.m in Sources */,
@@ -1128,6 +1144,7 @@
 				C38E89CD1B9705D500790752 /* RecordHandler.m in Sources */,
 				C3EEB9881BB2E7040090C4B0 /* KeyBoardScrollView.m in Sources */,
 				C38E89C51B9705D500790752 /* ElementHandler.m in Sources */,
+				C39F5EDD1BEB62B60010F252 /* ECHttpResponseModel.m in Sources */,
 				C3EEB94E1BB2E5050090C4B0 /* ElementTableView.m in Sources */,
 				C38E89CC1B9705D500790752 /* LookUpModel.m in Sources */,
 				779A9D851B7C7D0700D86FED /* LookupElementCell.m in Sources */,
@@ -1177,6 +1194,7 @@
 				C3EEB94F1BB2E5050090C4B0 /* ElementTableViewCell.m in Sources */,
 				C38E89BD1B9705D500790752 /* BaseHandler.m in Sources */,
 				C31AA8A51BCF8F5B007FF9B9 /* FMDBDataSource.m in Sources */,
+				C39F5EDE1BEB62B60010F252 /* ECSyncManager.m in Sources */,
 				C3AE7E4D1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m in Sources */,
 				C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */,
 				C3E441781BA06D2F0020700F /* FormSectionTableViewCell.m in Sources */,

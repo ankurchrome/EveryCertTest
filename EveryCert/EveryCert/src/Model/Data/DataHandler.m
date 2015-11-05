@@ -185,6 +185,7 @@
     }
     
     return newRecordInfo;
+}
 
 - (NSString *)getDataFromCertModel:(CertificateModel *)certModel FieldName:(NSString *)fieldName
 {
