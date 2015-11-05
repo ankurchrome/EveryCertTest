@@ -96,7 +96,7 @@
      {
          [self saveGetRecordsForServerOnlyTable:response.payloadInfo];
          
-         [self updateTableSyncTimestamp:timestamp company:APP_DELEGATE.loggedUserCompanyId];
+         [self updateTableSyncTimestamp:response.metadataTimestamp company:APP_DELEGATE.loggedUserCompanyId];
          
          [self startNextSyncOperation];
      }

@@ -66,9 +66,9 @@
 		C398664F1BD776BD00DF2F93 /* ECHttpResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C398664E1BD776BD00DF2F93 /* ECHttpResponseModel.m */; };
 		C39866521BD7773100DF2F93 /* ECHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C39866511BD7773100DF2F93 /* ECHttpClient.m */; };
 		C39866551BD7BA4800DF2F93 /* ECSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C39866541BD7BA4800DF2F93 /* ECSyncManager.m */; };
+		C39F5ED51BEB2F1D0010F252 /* Everycert.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C39F5ED41BEB2F1D0010F252 /* Everycert.sqlite */; };
 		C3AE7E4D1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */; };
 		C3C6EC861BCD199D00973895 /* KeyBoardTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C6EC851BCD199D00973895 /* KeyBoardTableView.m */; };
-		C3D722681BD0E79100820881 /* Everycert.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C3D722671BD0E79100820881 /* Everycert.sqlite */; };
 		C3D7226C1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D7226B1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.m */; };
 		C3DA80B01BB95C6A00384F50 /* LookupSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA80AF1BB95C6A00384F50 /* LookupSearchViewController.m */; };
 		C3DA80B31BB966D400384F50 /* LookupRecordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA80B21BB966D400384F50 /* LookupRecordTableViewCell.m */; };
@@ -220,11 +220,11 @@
 		C39866511BD7773100DF2F93 /* ECHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECHttpClient.m; sourceTree = "<group>"; };
 		C39866531BD7BA4800DF2F93 /* ECSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECSyncManager.h; sourceTree = "<group>"; };
 		C39866541BD7BA4800DF2F93 /* ECSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECSyncManager.m; sourceTree = "<group>"; };
+		C39F5ED41BEB2F1D0010F252 /* Everycert.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Everycert.sqlite; sourceTree = "<group>"; };
 		C3AE7E4B1BA0C99800E8C126 /* ExistingCertificateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExistingCertificateTableViewCell.h; sourceTree = "<group>"; };
 		C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistingCertificateTableViewCell.m; sourceTree = "<group>"; };
 		C3C6EC841BCD199D00973895 /* KeyBoardTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyBoardTableView.h; sourceTree = "<group>"; };
 		C3C6EC851BCD199D00973895 /* KeyBoardTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyBoardTableView.m; sourceTree = "<group>"; };
-		C3D722671BD0E79100820881 /* Everycert.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Everycert.sqlite; sourceTree = "<group>"; };
 		C3D722691BD10F1A00820881 /* AFHTTPRequestOperation_EveryCertExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation_EveryCertExtension.h; sourceTree = "<group>"; };
 		C3D7226A1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperation+EveryCertAdditions.h"; sourceTree = "<group>"; };
 		C3D7226B1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperation+EveryCertAdditions.m"; sourceTree = "<group>"; };
@@ -661,7 +661,7 @@
 			isa = PBXGroup;
 			children = (
 				77F8E4AB1B82220600C214A4 /* Everycert.sql */,
-				C3D722671BD0E79100820881 /* Everycert.sqlite */,
+				C39F5ED41BEB2F1D0010F252 /* Everycert.sqlite */,
 				C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */,
 			);
 			path = Database;
@@ -1028,7 +1028,7 @@
 				779A9D8A1B7C7D0700D86FED /* PickListViewController.xib in Resources */,
 				C3FFB4421B9B6FC30089A0B2 /* RadioButtonElementCell.xib in Resources */,
 				C3EEB9991BB2E8F90090C4B0 /* SearchElementCell.xib in Resources */,
-				C3D722681BD0E79100820881 /* Everycert.sqlite in Resources */,
+				C39F5ED51BEB2F1D0010F252 /* Everycert.sqlite in Resources */,
 				77DBB91C1B6F555C00F02932 /* Main.storyboard in Resources */,
 				779A9D941B7C7D0700D86FED /* SubElementCell.xib in Resources */,
 				77F8E4AC1B82220600C214A4 /* Everycert.sql in Resources */,

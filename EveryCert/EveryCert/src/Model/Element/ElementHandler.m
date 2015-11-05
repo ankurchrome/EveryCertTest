@@ -225,9 +225,6 @@
 
 - (void)syncWithServer
 {
-    //1. get last sync timestamp & get records from server after that timestamp
-    NSTimeInterval timestamp = [self getSyncTimestampOfTableForCompany:APP_DELEGATE.loggedUserCompanyId];
-    
     NSString *apiCall = [self getApiCallWithFormId:self.formId];
     
     [self getRecordsWithApiCall:apiCall
@@ -236,7 +233,7 @@
      {
          [self saveGetRecordsForServerOnlyTable:response.payloadInfo];
          
-         [self updateTableSyncTimestamp:timestamp company:APP_DELEGATE.loggedUserCompanyId];
+         [self updateTableSyncTimestamp:response.metadataTimestamp company:APP_DELEGATE.loggedUserCompanyId];
          
          [self startNextSyncOperation];
      }

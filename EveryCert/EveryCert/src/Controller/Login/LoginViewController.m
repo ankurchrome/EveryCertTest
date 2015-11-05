@@ -121,6 +121,7 @@
             [companyUserHandler saveLoggedUser:userId];
             
             MenuViewController *menuVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuVC"];
+            menuVC.isInitialLogin = YES;
             
             [self.navigationController pushViewController:menuVC animated:YES];
         }
@@ -143,7 +144,6 @@
         if (![_loginElementTableView validateElements]) return NO;
         
         CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
-        
         BOOL isLoggedIn = [companyUserHandler checkLoginWithElements:_loginElements];
         
         if (!isLoggedIn)

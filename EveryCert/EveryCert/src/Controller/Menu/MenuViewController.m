@@ -45,6 +45,15 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
     _syncManager = [ECSyncManager new];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (self.isInitialLogin)
+    {
+        [_syncManager startCompleteSync];
+        self.isInitialLogin = NO;
+    }
+}
+
 #pragma mark - IBActions
 
 //Logout the logged in user and pop to SignIn screen
@@ -71,9 +80,7 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cellIdentifier = _menuOptionList[indexPath.row];
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
 
     if(!cell)
     {

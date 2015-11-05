@@ -10,4 +10,6 @@
 
 @interface MenuViewController : UIViewController
 
+@property (nonatomic, assign) BOOL isInitialLogin;
+
 @end

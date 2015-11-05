@@ -23,7 +23,7 @@
         self.appIdField    = DataBinaryIdApp;
         self.serverIdField = DataBinaryId;
         self.apiName       = ApiDataBinary;
-        self.tableColumns  = @[DataBinaryIdApp, DataBinaryId, CertificateIdApp, ElementId, DataBinaryValue, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
+        self.tableColumns  = @[DataBinaryIdApp, DataBinaryId, CertificateIdApp, ElementId, DataBinaryValue, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId, DataBinaryFileName];
     }
     
     return self;
@@ -82,11 +82,11 @@
     
     [databaseQueue inDatabase:^(FMDatabase *db)
      {
-         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = '' AND %@.length > 0", self.tableName, DataBinaryValue, DataBinaryFileName];
+         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = '' AND length(%@) > 0", self.tableName, DataBinaryValue, DataBinaryFileName];
          
          FMResultSet *result = [db executeQuery:query];
          
-         if ([result next])
+         while ([result next])
          {
              [dataBinaryInfoList addObject:[result resultDictionary]];
          }
@@ -151,7 +151,7 @@
     NSArray *dataBinaryInfoList = [self allDataBinaryInfoToBeDownload];
     
     NSOperationQueue *operationQueue = [NSOperationQueue new];
-    operationQueue.maxConcurrentOperationCount = 5;
+    operationQueue.maxConcurrentOperationCount = 10;
     
     for (NSDictionary *dataBinaryInfo in dataBinaryInfoList)
     {
@@ -164,6 +164,25 @@
         [requestOperation setCompletionBlockWithSuccess: ^(AFHTTPRequestOperation *operation, id responseObject)
          {
              if (LOGS_ON) NSLog(@"Data binary id: %@ Image: %@", dataBinaryInfo[DataBinaryIdApp], responseObject);
+             
+             FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+             
+             [databaseQueue inDatabase:^(FMDatabase *db)
+             {
+                 self.db = db;
+                 [self.db closeOpenResultSets];
+                 
+                 NSInteger recordIdApp = [dataBinaryInfo[DataBinaryIdApp] integerValue];
+                 
+                 if (responseObject && [responseObject isKindOfClass:[UIImage class]])
+                 {
+                     NSData *imageData = UIImagePNGRepresentation(responseObject);
+                     
+                     NSDictionary *info = @{ DataBinaryValue: imageData };
+                     
+                     [self updateInfo:info recordIdApp:recordIdApp];
+                 }
+             }];
          }
                                                 failure:
          ^(AFHTTPRequestOperation *operation, NSError *error)

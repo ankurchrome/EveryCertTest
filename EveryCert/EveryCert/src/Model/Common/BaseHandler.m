@@ -304,6 +304,8 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
     
     [databaseQueue inDatabase:^(FMDatabase *db)
      {
+         [db closeOpenResultSets];
+         
          NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ? AND %@ = ?", SyncTimestampIdApp, SyncTimestampTable, SyncTimestampTableName, CompanyId];
          
          FMResultSet *result = [db executeQuery:query, self.tableName, @(companyId)];

@@ -72,6 +72,46 @@
     }];
 }
 
+- (void)backupData
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:APP_DELEGATE.window animated:YES];
+    hud.labelText = HudTitleLoading;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncFinished:) name:SyncFinishedNotification object:nil];
+    
+    CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
+    FormHandler        *formHandler        = [FormHandler new];
+    RecordHandler      *recordHandler      = [RecordHandler new];
+    LookUpHandler      *lookupHandler      = [LookUpHandler new];
+    CertificateHandler *certHandler        = [CertificateHandler new];
+    DataHandler        *dataHandler        = [DataHandler new];
+    DataBinaryHandler  *dataBinaryHandler  = [DataBinaryHandler new];
+    
+    companyUserHandler.nextSyncHandler  = formHandler;
+    formHandler.nextSyncHandler         = recordHandler;
+    recordHandler.nextSyncHandler       = lookupHandler;
+    lookupHandler.nextSyncHandler       = certHandler;
+    certHandler.nextSyncHandler         = dataHandler;
+    dataHandler.nextSyncHandler         = dataBinaryHandler;
+    
+    NSDictionary *loginCredential = @{
+                                      CompanyUserFieldNameEmail: APP_DELEGATE.loggedUserEmail,
+                                      CompanyUserFieldNamePassword: APP_DELEGATE.loggedUserPassword
+                                      };
+    
+    [companyUserHandler loginWithCredentials:loginCredential
+                                   onSuccess:^(ECHttpResponseModel *response)
+     {
+         [companyUserHandler syncWithServer];
+     }
+                                     onError:^(NSError *error)
+     {
+         if (LOGS_ON) NSLog(@"Login Failed");
+         
+         [self syncFinished:nil];
+     }];
+}
+
 - (void)downloadForm:(NSInteger)formId
 {
     CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
@@ -101,9 +141,9 @@
      }];
 }
 
-- (void)syncFinished:(id)object
+- (void)syncFinished:(NSNotification *)notification
 {
-    if (LOGS_ON) NSLog(@"Sync Finished response. Error: %@", object);
+    if (LOGS_ON) NSLog(@"Sync Finished response. Error: %@", notification);
     
     [MBProgressHUD hideHUDForView:APP_DELEGATE.window animated:YES];
     
@@ -118,7 +158,7 @@
         [MBProgressHUD hideHUDForView:APP_DELEGATE.window animated:YES];
     }];
     
-    if (!object)
+    if (!notification.object)
     {
         DataBinaryHandler *dataBinaryHandler = [DataBinaryHandler new];
         
