@@ -78,6 +78,7 @@ NSString *const kPdfFormatDefaultText = @"DefaultText";
 NSString *const kPdfFormatRadioButtons     = @"RadioButtons";
 NSString *const kPdfFormatRadioButtonTitle = @"RadioButtonTitle";
 NSString *const kPdfFormatRadioButtonValue = @"RadioButtonValue";
+NSString *const kPdfRadioButtonColor       = @"RadioButtonColor";
 NSString *const kPdfFormatRadioButtonSelectedIndex = @"RadioButtonSelectedIndex";
 
 NSString *const kPdfFormatAlignment = @"Alignment";
@@ -94,11 +95,13 @@ NSString *const PdfFormatCapitalizationPassword = @"password";
 NSString *const PdfFormatCapitalizationEmail = @"email";
 
 NSString *const kPdfFormatKeyboard = @"Keyboard";
+NSString *const kPDFDateFormat     = @"date_format";
 NSString *const PdfFormatKeyboardAlphabetic = @"alpha";
 NSString *const PdfFormatKeyboardAlphaNumeric = @"alphanumeric";
 NSString *const PdfFormatKeyboardNumeric = @"numeric";
-
 NSString *const kPdfFormatNumberOfLines = @"number_lines";
+NSString *const kTickBox = @"tick_box";
+NSString *const kPdfFormatDecimal = @"Decimal";
 
 #pragma mark - Table Constants
 #pragma mark -
@@ -124,6 +127,9 @@ NSString *const CompanyUserIdApp     = @"company_user_id_app";
 NSString *const CompanyUserId        = @"company_user_id";
 NSString *const CompanyUserFieldName = @"field_name";
 NSString *const CompanyUserData      = @"data";
+NSString *const UserFormStatusValue  = @"user_form_status";
+NSString *const kStatus              = @"status";
+NSString *const kFormId              = @"form_id";
 
 NSString *const CompanyUserFieldNameEmail           = @"user_email";
 NSString *const CompanyUserFieldNamePassword        = @"user_password";
@@ -225,7 +231,7 @@ NSString *const RecordId    = @"record_id";
 NSString *const HudTitleSignin = @"Signin...";
 NSString *const HudTitleLoading = @"Loading...";
 NSString *const ForgotPasswordAlertTitle       = @"Forgot password";
-NSString *const ForgotPasswordEmailPlaceholder = @"Email";
+NSString *const ForgotPasswordEmailPlaceholder = @"Please Enter Your Email Address Here";
 NSString *const ForgotPasswordResetActionTitle = @"Reset your password";
 
 NSString *const HomeBarButtonTitle = @"Home";

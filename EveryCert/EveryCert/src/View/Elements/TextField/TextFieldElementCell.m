@@ -7,12 +7,12 @@
 //
 
 #import "TextFieldElementCell.h"
+#import "CertViewController.h"
 
 #define TEXTFIELD_TRAILING_CONSTANT_DEFAULT 5
 
 @implementation TextFieldElementCell
 {
-    __weak IBOutlet UITextField *_textField;
     __weak IBOutlet UILabel     *_charLimitLabel;
     __weak IBOutlet UILabel     *_textLabel;
     __weak IBOutlet UIButton    *_defaultButton;
@@ -29,7 +29,7 @@
 - (void)initializeWithElementModel:(ElementModel *)elementModel
 {
     [super initializeWithElementModel:elementModel];
-
+    
     _textLabel.text = elementModel.label;
     _textField.text = elementModel.dataValue;
     _charLimitLabel.text = [@(elementModel.maxCharLimit) stringValue];
@@ -76,10 +76,10 @@
     {
         _textField.keyboardType = UIKeyboardTypeEmailAddress;
     }
-
+    
     //Set textfield Keyboard
     NSString *elementKeyboardType = elementModel.printedTextFormat[kPdfFormatKeyboard];
-
+    
     if ([elementKeyboardType isEqualToString:PdfFormatKeyboardAlphabetic])
     {
         _textField.keyboardType = UIKeyboardTypeAlphabet;
@@ -92,7 +92,43 @@
     {
         _textField.keyboardType = UIKeyboardTypeNumberPad;
     }
-
+    
+    //TODO: Check this code may be place in Text field end editing method
+    //Set TextField Decimal Values
+    NSString *elementNumericType = elementModel.printedTextFormat[kPdfFormatDecimal];
+    
+    if([elementKeyboardType isEqualToString:PdfFormatKeyboardNumeric] &&
+         [CommonUtils isValidString: elementNumericType])
+    {
+        NSInteger roundUpNumber = [elementNumericType integerValue];
+        
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        [numberFormatter setRoundingMode: NSNumberFormatterRoundUp];
+        [numberFormatter setMaximumFractionDigits:roundUpNumber];
+        [numberFormatter setMinimumFractionDigits:roundUpNumber];
+        _textField.text = [numberFormatter stringFromNumber:[NSNumber numberWithFloat: [_textField.text floatValue]]];
+    }
+    
+    //Set TextField Alignment
+    NSString *elementAllignmentType = elementModel.printedTextFormat[kPdfFormatAlignment];
+    
+    if([CommonUtils isValidString: elementAllignmentType])
+    {
+        if([elementAllignmentType isEqualToString:PdfFormatAlignLeft])
+        {
+            _textField.textAlignment = NSTextAlignmentLeft;
+        }
+        else if ([elementAllignmentType isEqualToString:PdfFormatAlignRight])
+        {
+            _textField.textAlignment = NSTextAlignmentRight;
+        }
+        else if ([elementAllignmentType isEqualToString:PdfFormatAlignCenter])
+        {
+            _textField.textAlignment = NSTextAlignmentCenter;
+        }
+    }
+    
     [_textLabel sizeToFit];
     [self setRemainingChars];
 }
@@ -115,6 +151,16 @@
 
 #pragma mark - UITextFieldDelegate Methods
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    //** if the Element Model is of type Date then open Date Picker in Input View
+    UIDatePicker *datePicker  = [UIDatePicker new];
+    datePicker.datePickerMode = UIDatePickerModeDate;
+    [datePicker addTarget:self action:@selector(didchangeInDate:) forControlEvents:UIControlEventValueChanged];
+    self.elementModel.printedTextFormat[kPdfFormatKeyboard] ? (textField.inputView = datePicker) : nil;
+    return YES;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self endEditing:YES];
@@ -123,7 +169,17 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    NSString *const UserEmail    = @"user_email";
+    NSString *const UserPassword = @"user_password";
+    
     self.elementModel.dataValue = textField.text;
+    
+    // Trimming White Space from Leading and Trailing of Text Field in case of LoginFields Element
+    if( [self.elementModel.fieldName isEqualToString: UserEmail] ||
+        [self.elementModel.fieldName isEqualToString: UserPassword] )
+    {
+        self.elementModel.dataValue = [textField.text stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -160,4 +216,19 @@
     self.elementModel.dataValue = _textField.text;
 }
 
+#pragma mark - Private Methods
+
+// This method is used to add the date on the Respective Date Field in the Given Format
+- (void)didchangeInDate:(UIDatePicker *)picker
+{
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    
+    if([CommonUtils isValidObject:self.elementModel.printedTextFormat[kPDFDateFormat]])
+    {
+        dateFormatter.dateFormat = self.elementModel.printedTextFormat[kPDFDateFormat]; // Add Date Format, if Exist
+    }
+    
+    NSString *dateString = [dateFormatter stringFromDate:picker.date];
+    _textField.text      = dateString;
+}
 @end

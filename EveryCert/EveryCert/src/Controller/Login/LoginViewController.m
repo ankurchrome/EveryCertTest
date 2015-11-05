@@ -38,15 +38,21 @@
     ElementHandler *elementHandler = [ElementHandler new];
     _loginElements = [elementHandler getLoginElements];
 
+    _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
+    
     //remove keybaord observer from table view as background scroll view has already
     [_loginElementTableView removeObserver];
     
     _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
 
-    _loginElementTableView.clipsToBounds = NO;
-    _loginElementTableView.layer.shadowColor = [[UIColor blackColor] CGColor];
-    _loginElementTableView.layer.shadowOffset = CGSizeMake(0,5);
-    _loginElementTableView.layer.shadowOpacity = 0.5;
+    _loginElementTableView.superview.clipsToBounds = NO;
+    _loginElementTableView.superview.layer.masksToBounds = NO;
+    _loginElementTableView.superview.layer.shadowColor = [[UIColor blackColor] CGColor];
+    _loginElementTableView.superview.layer.shadowOffset = CGSizeMake(0,5);
+    _loginElementTableView.superview.layer.shadowOpacity = 0.5;
+
+    _loginElementTableView.layer.masksToBounds = YES;
+    _loginElementTableView.layer.cornerRadius = 10.0f;
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 }
@@ -73,7 +79,7 @@
     [_loginElementTableView reloadWithElements:_loginElements];
 }
 
-- (void)viewDidLayoutSubviews
+- (void)viewWillLayoutSubviews
 {
     _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
 }

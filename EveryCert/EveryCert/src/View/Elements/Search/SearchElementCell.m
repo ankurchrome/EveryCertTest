@@ -33,6 +33,9 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
+    // if Keyboard is Showing then Resign the KeyBoard First
+    [self.superview endEditing:YES];
+    
     _lookupHandler = _lookupHandler ? _lookupHandler : [LookUpHandler new];
 
     // Show an alert if record has been saved already

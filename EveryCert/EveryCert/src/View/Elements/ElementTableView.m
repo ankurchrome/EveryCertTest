@@ -11,6 +11,8 @@
 #import "DataHandler.h"
 #import "DataBinaryHandler.h"
 #import "SearchElementCell.h"
+#import "TextFieldElementCell.h"
+#import "TextViewElementCell.h"
 
 @interface ElementTableView ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -286,7 +288,17 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
     }
     
     [cell initializeWithElementModel:elementModel];
+
+    if(indexPath.row == _elementModels.count -1)
+    {
+        cell.seperatorView.hidden = YES;
+    }
+    else
+    {
+        cell.seperatorView.hidden = NO;
+    }
     
+//    cell.separatorInset
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
@@ -310,6 +322,24 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
     
     switch (elementModel.fieldType)
     {
+        case ElementTypeTextField:
+        {
+            // Select Cell will Automatically click on its TextField
+            TextFieldElementCell *cell = (TextFieldElementCell *)[tableView cellForRowAtIndexPath:indexPath];
+            [cell.textField becomeFirstResponder];
+            
+            break;
+        }
+        
+        case ElementTypeTextView:
+        {
+            // Select Cell will Automatically click on its TextView
+            TextViewElementCell *cell = (TextViewElementCell *)[tableView cellForRowAtIndexPath:indexPath];
+            [cell.textView becomeFirstResponder];
+                
+            break;
+        }
+            
         case ElementTypeSubElement:
         {
             SubElementModel *subElement = (SubElementModel *)elementModel;
@@ -322,6 +352,7 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
             {
                 [self hideSubElementsOfElement:subElement];
             }
+            break;
         }
     }
 }

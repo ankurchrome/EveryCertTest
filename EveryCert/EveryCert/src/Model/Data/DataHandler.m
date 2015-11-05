@@ -185,6 +185,27 @@
     }
     
     return newRecordInfo;
+
+- (NSString *)getDataFromCertModel:(CertificateModel *)certModel FieldName:(NSString *)fieldName
+{
+    __block NSString *data = [NSString new];
+    
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         //SELECT data FROM data where cert_id_app = 82 and element_id = (select element_id from element where field_name = 'customer_name' and form_id = '1007')
+         NSString *query = [NSString stringWithFormat: @"SELECT %@ FROM %@ where %@ = ? and %@ = (select %@ from %@ where %@ = ? and %@ = ?)", DataValue, DataTable, CertificateIdApp, ElementId, ElementId, ElementTable, ElementFieldName, FormId];
+         
+         FMResultSet *result = [db executeQuery:query, @(certModel.certIdApp), fieldName, @(certModel.formId)];
+         
+         if ([result next])
+         {
+             data = [result stringForColumn: DataValue];
+         }
+     }];
+    
+    return data;
 }
 
 @end

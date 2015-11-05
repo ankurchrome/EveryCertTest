@@ -62,8 +62,11 @@
     }
     
     _radioButtonView.delegate = self;
-
-    [_radioButtonView selectButtonWithTitle:elementModel.dataValue];
+    
+    // Filter only selected RadioButton Dictionary and find its Title to compare it with Button Title
+    NSDictionary *selectedRadioButton = [[_radioButtons filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(RadioButtonValue == %@)", elementModel.dataValue]] firstObject];
+    
+    [_radioButtonView selectButtonWithTitle:selectedRadioButton[@"RadioButtonTitle"]];
 }
 
 #pragma mark - RadioButtonViewDelegate Methods

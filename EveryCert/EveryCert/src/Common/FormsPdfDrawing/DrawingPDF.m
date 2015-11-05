@@ -74,6 +74,17 @@
             
             CGRect elementRect = CGRectMake(elementModel.originX, elementModel.originY, elementModel.width, elementModel.height);
             
+            if(elementModel.printedTextFormat[@"pdf_format"])
+            {
+                for(NSDictionary *otherElementModelDict in elementModel.printedTextFormat[@"pdf_format"])
+                {
+                    if([otherElementModelDict[ElementPageNumber] integerValue] == elementModel.pageNumber)
+                    {
+                        [self printElementinOtherLocationForElementDict:otherElementModelDict withElementData:elementModel.dataValue];
+                    }
+                }
+            }
+            
             switch (elementModel.fieldType)
             {
                 case ElementTypeTextField:
@@ -83,10 +94,18 @@
                 case ElementTypeLookup:
                 case ElementTypeSearch:
                 {
+                    // Radio Button condition change elementColor, if its RadioButtonColor exist
+                    if(elementModel.fieldType == ElementTypeRadioButton)
+                    {
+                        UIColor *changeElementColor = [self changeRadioButtonElementColor: elementModel];
+                        changeElementColor = [UIColor clearColor] ? : (elementColor = changeElementColor);  // if it returns clear color ie. i consider as nill then do nothing else return the perticular of Radio Button if exist
+                    }
+                    
                     NSDictionary *attrDic = @{NSFontAttributeName: elementFont,
                                               NSForegroundColorAttributeName: elementColor};
                     
                     [elementModel.dataValue drawInRect:elementRect withAttributes:attrDic];
+                
                 }
                     break;
                     
@@ -118,6 +137,56 @@
     UIGraphicsEndPDFContext();
 
     FUNCTION_END;
+}
+
+// If the Individual Radio Button is having its own Color in the Element Record
+- (UIColor *)changeRadioButtonElementColor:(ElementModel *)elementModel
+{
+    // Radio Button Color for Specific Button on PDF
+    NSArray *radioButtons = [elementModel.printedTextFormat objectForKey:kPdfFormatRadioButtons];
+    
+    for(NSDictionary *radioButtonInfo in radioButtons)
+    {
+        if([elementModel.dataValue isEqualToString:radioButtonInfo[kPdfFormatRadioButtonValue]] && radioButtonInfo[kPdfRadioButtonColor])
+        {
+            return [CommonUtils colorWithHexString:radioButtonInfo[kPdfRadioButtonColor]]; // Returns the Actual Color
+        }
+    }
+    return [UIColor clearColor];    //Work as a nill color that never exist
+}
+
+// This method Prints the Data value in mutiple Location on PDF according to the pdfFormat
+- (void)printElementinOtherLocationForElementDict:(NSDictionary *)otherElementDict withElementData:(NSString *)elementDataValue
+{
+    CGFloat   fontSize  = [otherElementDict[kPdfFormatElementFontSize] floatValue];
+    NSString *fontColor = otherElementDict[kPdfFormatElementFontColor];
+    NSString *fontName  = otherElementDict[kPdfFormatElementFontName];
+    
+    if (fontSize <= 0.0f)
+    {
+        fontSize = DEFAULT_FONT_SIZE;
+    }
+    
+    UIColor *elementColor = [CommonUtils colorWithHexString:fontColor];
+    
+    if (!elementColor)
+    {
+        elementColor = DEFAULT_FONT_COLOR;
+    }
+    
+    UIFont *elementFont = [UIFont fontWithName:fontName size:fontSize];
+    
+    if (!elementFont)
+    {
+        elementFont = [UIFont fontWithName:DEFAULT_FONT_NAME size:fontSize];
+    }
+
+    CGRect elementRect = CGRectMake([otherElementDict[@"ElementOriginX"]floatValue], [otherElementDict[@"ElementOriginY"] floatValue], [otherElementDict[@"ElementWidth"] floatValue], [otherElementDict[@"ElementHeight"] floatValue]);
+    
+    NSDictionary *attrDic = @{NSFontAttributeName: elementFont,
+                              NSForegroundColorAttributeName: fontColor};
+    
+    [elementDataValue drawInRect:elementRect withAttributes:attrDic];
 }
 
 @end

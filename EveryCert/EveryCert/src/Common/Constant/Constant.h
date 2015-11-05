@@ -108,6 +108,7 @@ extern NSString *const kPdfFormatDefaultText;
 extern NSString *const kPdfFormatRadioButtons;
 extern NSString *const kPdfFormatRadioButtonTitle;
 extern NSString *const kPdfFormatRadioButtonValue;
+extern NSString *const kPdfRadioButtonColor;
 extern NSString *const kPdfFormatRadioButtonSelectedIndex;
 
 extern NSString *const kPdfFormatAlignment;
@@ -124,11 +125,15 @@ extern NSString *const PdfFormatCapitalizationPassword;
 extern NSString *const PdfFormatCapitalizationEmail;
 
 extern NSString *const kPdfFormatKeyboard;
+extern NSString *const kPDFDateFormat;
 extern NSString *const PdfFormatKeyboardAlphabetic;
 extern NSString *const PdfFormatKeyboardAlphaNumeric;
 extern NSString *const PdfFormatKeyboardNumeric;
 
+extern NSString *const kPdfFormatDecimal;
+
 extern NSString *const kPdfFormatNumberOfLines;
+extern NSString *const kTickBox;
 
 #pragma mark - Table Constants
 #pragma mark -
@@ -154,11 +159,14 @@ extern NSString *const CompanyUserIdApp;
 extern NSString *const CompanyUserId;
 extern NSString *const CompanyUserFieldName;
 extern NSString *const CompanyUserData;
+extern NSString *const UserFormStatusValue;
 
 extern NSString *const CompanyUserFieldNameEmail;
 extern NSString *const CompanyUserFieldNamePassword;
 extern NSString *const CompanyUserFieldNameFullName;
 extern NSString *const CompanyUserFieldNamePermissionGroup;
+extern NSString *const kStatus;
+extern NSString *const kFormId;
 
 #pragma mark Form Table
 extern NSString *const FormTable;

@@ -28,12 +28,17 @@
 {
     [super viewDidLoad];
     
+    _existingCertsTableView.estimatedRowHeight = 44.0;
+    _existingCertsTableView.rowHeight = UITableViewAutomaticDimension;
+    
     _certHandler = [CertificateHandler new];
     _existingCertsList = [_certHandler getAllExistingCertificatesOfCompany:APP_DELEGATE.loggedUserCompanyId];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+- (void)viewWillAppear:(BOOL)animated
+{
+    _existingCertsList = [_certHandler getAllExistingCertificatesOfCompany:APP_DELEGATE.loggedUserCompanyId];
+    [_existingCertsTableView reloadData];
 }
 
 #pragma mark- IBActions

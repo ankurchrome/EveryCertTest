@@ -14,7 +14,7 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DKf-7D-3s5" userLabel="TitleLabel">
                         <rect key="frame" x="10" y="10" width="548" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tap Here To Enter Answer" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6bY-po-FUD" userLabel="TextField">
@@ -54,6 +54,7 @@
                 <outlet property="_textField" destination="6bY-po-FUD" id="4Jf-Ny-T2I"/>
                 <outlet property="_textLabel" destination="DKf-7D-3s5" id="QAq-Zr-Ugo"/>
                 <outlet property="_titleLabel" destination="DKf-7D-3s5" id="UEZ-gX-4BP"/>
+                <outlet property="seperatorView" destination="JM6-eh-Zzj" id="qEN-aV-bIr"/>
             </connections>
             <point key="canvasLocation" x="444" y="-29"/>
         </tableViewCell>

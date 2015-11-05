@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		775C73891BE0A73E004CE738 /* FormPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775C73881BE0A73E004CE738 /* FormPreviewViewController.m */; };
 		779637A71B747CDF0001ADC2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 779637A61B747CDF0001ADC2 /* libsqlite3.0.dylib */; };
 		779A9D851B7C7D0700D86FED /* LookupElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D501B7C7D0700D86FED /* LookupElementCell.m */; };
 		779A9D861B7C7D0700D86FED /* LookupElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D511B7C7D0700D86FED /* LookupElementCell.xib */; };
@@ -26,6 +27,7 @@
 		779A9D9A1B7C7D0700D86FED /* TextViewElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D7E1B7C7D0700D86FED /* TextViewElementCell.xib */; };
 		779A9D9B1B7C7D0700D86FED /* TickBoxElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D811B7C7D0700D86FED /* TickBoxElementCell.m */; };
 		779A9D9C1B7C7D0700D86FED /* TickBoxElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D821B7C7D0700D86FED /* TickBoxElementCell.xib */; };
+		779BD7D21BDF881200D090CB /* NewEverycertDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 779BD7D11BDF881200D090CB /* NewEverycertDB.sqlite */; };
 		77C035BE1B789794009228F1 /* FormsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C035BD1B789794009228F1 /* FormsListViewController.m */; };
 		77C035C21B7897E3009228F1 /* CertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C035C11B7897E3009228F1 /* CertViewController.m */; };
 		77DBB9181B6F553900F02932 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DBB9151B6F553900F02932 /* AppDelegate.m */; };
@@ -63,12 +65,9 @@
 		C38E89CE1B9705D500790752 /* RecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89B51B9705D500790752 /* RecordModel.m */; };
 		C38E89CF1B9705D500790752 /* SubElementHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89B81B9705D500790752 /* SubElementHandler.m */; };
 		C38E89D01B9705D500790752 /* SubElementModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C38E89BA1B9705D500790752 /* SubElementModel.m */; };
-		C398664F1BD776BD00DF2F93 /* ECHttpResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C398664E1BD776BD00DF2F93 /* ECHttpResponseModel.m */; };
-		C39866521BD7773100DF2F93 /* ECHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C39866511BD7773100DF2F93 /* ECHttpClient.m */; };
-		C39866551BD7BA4800DF2F93 /* ECSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C39866541BD7BA4800DF2F93 /* ECSyncManager.m */; };
-		C39F5ED51BEB2F1D0010F252 /* Everycert.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C39F5ED41BEB2F1D0010F252 /* Everycert.sqlite */; };
 		C3AE7E4D1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */; };
 		C3C6EC861BCD199D00973895 /* KeyBoardTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C6EC851BCD199D00973895 /* KeyBoardTableView.m */; };
+		C3D722681BD0E79100820881 /* Everycert.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = C3D722671BD0E79100820881 /* Everycert.sqlite */; };
 		C3D7226C1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D7226B1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.m */; };
 		C3DA80B01BB95C6A00384F50 /* LookupSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA80AF1BB95C6A00384F50 /* LookupSearchViewController.m */; };
 		C3DA80B31BB966D400384F50 /* LookupRecordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA80B21BB966D400384F50 /* LookupRecordTableViewCell.m */; };
@@ -114,6 +113,8 @@
 		4EE41FB74DDDF2865D00F8CF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5A067339331CE3E7D6EA518F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6BDC13634B5A75B79FB745AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		775C73871BE0A73E004CE738 /* FormPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FormPreviewViewController.h; path = FormPreview/FormPreviewViewController.h; sourceTree = "<group>"; };
+		775C73881BE0A73E004CE738 /* FormPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormPreviewViewController.m; path = FormPreview/FormPreviewViewController.m; sourceTree = "<group>"; };
 		779637A61B747CDF0001ADC2 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		779A9D4F1B7C7D0700D86FED /* LookupElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupElementCell.h; sourceTree = "<group>"; };
 		779A9D501B7C7D0700D86FED /* LookupElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupElementCell.m; sourceTree = "<group>"; };
@@ -143,6 +144,7 @@
 		779A9D801B7C7D0700D86FED /* TickBoxElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickBoxElementCell.h; sourceTree = "<group>"; };
 		779A9D811B7C7D0700D86FED /* TickBoxElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickBoxElementCell.m; sourceTree = "<group>"; };
 		779A9D821B7C7D0700D86FED /* TickBoxElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TickBoxElementCell.xib; sourceTree = "<group>"; };
+		779BD7D11BDF881200D090CB /* NewEverycertDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = NewEverycertDB.sqlite; sourceTree = "<group>"; };
 		77C035BC1B789794009228F1 /* FormsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FormsListViewController.h; path = EveryCert/src/Controller/FormList/FormsListViewController.h; sourceTree = SOURCE_ROOT; };
 		77C035BD1B789794009228F1 /* FormsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormsListViewController.m; path = EveryCert/src/Controller/FormList/FormsListViewController.m; sourceTree = SOURCE_ROOT; };
 		77C035C01B7897E3009228F1 /* CertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertViewController.h; sourceTree = "<group>"; };
@@ -214,17 +216,11 @@
 		C38E89B81B9705D500790752 /* SubElementHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementHandler.m; sourceTree = "<group>"; };
 		C38E89B91B9705D500790752 /* SubElementModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubElementModel.h; sourceTree = "<group>"; };
 		C38E89BA1B9705D500790752 /* SubElementModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementModel.m; sourceTree = "<group>"; };
-		C398664D1BD776BD00DF2F93 /* ECHttpResponseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECHttpResponseModel.h; sourceTree = "<group>"; };
-		C398664E1BD776BD00DF2F93 /* ECHttpResponseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECHttpResponseModel.m; sourceTree = "<group>"; };
-		C39866501BD7773100DF2F93 /* ECHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECHttpClient.h; sourceTree = "<group>"; };
-		C39866511BD7773100DF2F93 /* ECHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECHttpClient.m; sourceTree = "<group>"; };
-		C39866531BD7BA4800DF2F93 /* ECSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECSyncManager.h; sourceTree = "<group>"; };
-		C39866541BD7BA4800DF2F93 /* ECSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECSyncManager.m; sourceTree = "<group>"; };
-		C39F5ED41BEB2F1D0010F252 /* Everycert.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Everycert.sqlite; sourceTree = "<group>"; };
 		C3AE7E4B1BA0C99800E8C126 /* ExistingCertificateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExistingCertificateTableViewCell.h; sourceTree = "<group>"; };
 		C3AE7E4C1BA0C99800E8C126 /* ExistingCertificateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistingCertificateTableViewCell.m; sourceTree = "<group>"; };
 		C3C6EC841BCD199D00973895 /* KeyBoardTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyBoardTableView.h; sourceTree = "<group>"; };
 		C3C6EC851BCD199D00973895 /* KeyBoardTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyBoardTableView.m; sourceTree = "<group>"; };
+		C3D722671BD0E79100820881 /* Everycert.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Everycert.sqlite; sourceTree = "<group>"; };
 		C3D722691BD10F1A00820881 /* AFHTTPRequestOperation_EveryCertExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation_EveryCertExtension.h; sourceTree = "<group>"; };
 		C3D7226A1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperation+EveryCertAdditions.h"; sourceTree = "<group>"; };
 		C3D7226B1BD10F3D00820881 /* AFHTTPRequestOperation+EveryCertAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperation+EveryCertAdditions.m"; sourceTree = "<group>"; };
@@ -303,6 +299,15 @@
 				6BDC13634B5A75B79FB745AC /* libPods.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		775C73861BE0A6A7004CE738 /* FormPreview */ = {
+			isa = PBXGroup;
+			children = (
+				775C73871BE0A73E004CE738 /* FormPreviewViewController.h */,
+				775C73881BE0A73E004CE738 /* FormPreviewViewController.m */,
+			);
+			name = FormPreview;
 			sourceTree = "<group>";
 		};
 		778522F21B7378BD00EA8455 /* FormsList */ = {
@@ -512,13 +517,11 @@
 				77DBB9121B6F553900F02932 /* Registration */,
 				77DBB9111B6F553900F02932 /* Menu */,
 				778522F21B7378BD00EA8455 /* FormsList */,
+				775C73861BE0A6A7004CE738 /* FormPreview */,
 				77C035BF1B7897C4009228F1 /* Certificate */,
 				77DBB92C1B6F590D00F02932 /* ExistingCertificate */,
 				77DBB92E1B6F590D00F02932 /* Setting */,
-				C3DA80AE1BB95C6A00384F50 /* LookupSearchViewController.h */,
-				C3DA80AF1BB95C6A00384F50 /* LookupSearchViewController.m */,
-				C3DA80B11BB966D400384F50 /* LookupRecordTableViewCell.h */,
-				C3DA80B21BB966D400384F50 /* LookupRecordTableViewCell.m */,
+				77E805AC1BD61C62006A384B /* LookUpSearch */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -660,11 +663,23 @@
 		77DC23F81B6F4DA400624211 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				779BD7D11BDF881200D090CB /* NewEverycertDB.sqlite */,
 				77F8E4AB1B82220600C214A4 /* Everycert.sql */,
-				C39F5ED41BEB2F1D0010F252 /* Everycert.sqlite */,
+				C3D722671BD0E79100820881 /* Everycert.sqlite */,
 				C34301F71B9832FD007AC6BB /* EverycertWithData.sqlite */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		77E805AC1BD61C62006A384B /* LookUpSearch */ = {
+			isa = PBXGroup;
+			children = (
+				C3DA80AE1BB95C6A00384F50 /* LookupSearchViewController.h */,
+				C3DA80AF1BB95C6A00384F50 /* LookupSearchViewController.m */,
+				C3DA80B11BB966D400384F50 /* LookupRecordTableViewCell.h */,
+				C3DA80B21BB966D400384F50 /* LookupRecordTableViewCell.m */,
+			);
+			name = LookUpSearch;
 			sourceTree = "<group>";
 		};
 		BE227E6E76C9CF34A16E2621 /* Pods */ = {
@@ -698,23 +713,17 @@
 		C38E89831B9705D500790752 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C39866501BD7773100DF2F93 /* ECHttpClient.h */,
-				C39866511BD7773100DF2F93 /* ECHttpClient.m */,
-				C398664D1BD776BD00DF2F93 /* ECHttpResponseModel.h */,
-				C398664E1BD776BD00DF2F93 /* ECHttpResponseModel.m */,
-				C39866531BD7BA4800DF2F93 /* ECSyncManager.h */,
-				C39866541BD7BA4800DF2F93 /* ECSyncManager.m */,
 				C38E89891B9705D500790752 /* Common */,
 				C38E898E1B9705D500790752 /* CompanyUser */,
 				C38E89A21B9705D500790752 /* Form */,
 				C38E89A71B9705D500790752 /* FormSection */,
 				C38E899D1B9705D500790752 /* Element */,
 				C38E89B61B9705D500790752 /* SubElement */,
-				C38E89B11B9705D500790752 /* Record */,
-				C38E89AC1B9705D500790752 /* LookUp */,
 				C38E89841B9705D500790752 /* Certificate */,
 				C38E89931B9705D500790752 /* Data */,
 				C38E89981B9705D500790752 /* DataBinary */,
+				C38E89AC1B9705D500790752 /* LookUp */,
+				C38E89B11B9705D500790752 /* Record */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -953,6 +962,7 @@
 				77DC23C21B6F4A9500624211 /* Frameworks */,
 				77DC23C31B6F4A9500624211 /* Resources */,
 				0CDA7E28DCCBC7A227DF7083 /* Copy Pods Resources */,
+				4D1CE449F683CBBAE87BC4B5 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1028,7 +1038,8 @@
 				779A9D8A1B7C7D0700D86FED /* PickListViewController.xib in Resources */,
 				C3FFB4421B9B6FC30089A0B2 /* RadioButtonElementCell.xib in Resources */,
 				C3EEB9991BB2E8F90090C4B0 /* SearchElementCell.xib in Resources */,
-				C39F5ED51BEB2F1D0010F252 /* Everycert.sqlite in Resources */,
+				779BD7D21BDF881200D090CB /* NewEverycertDB.sqlite in Resources */,
+				C3D722681BD0E79100820881 /* Everycert.sqlite in Resources */,
 				77DBB91C1B6F555C00F02932 /* Main.storyboard in Resources */,
 				779A9D941B7C7D0700D86FED /* SubElementCell.xib in Resources */,
 				77F8E4AC1B82220600C214A4 /* Everycert.sql in Resources */,
@@ -1088,6 +1099,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		4D1CE449F683CBBAE87BC4B5 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1119,8 +1145,8 @@
 				77DBB9251B6F563500F02932 /* RegistrationViewController.m in Sources */,
 				C38E89BF1B9705D500790752 /* CompanyUserHandler.m in Sources */,
 				779A9D8D1B7C7D0700D86FED /* RadioButtonView.m in Sources */,
+				775C73891BE0A73E004CE738 /* FormPreviewViewController.m in Sources */,
 				C38E89BE1B9705D500790752 /* BaseModel.m in Sources */,
-				C39866521BD7773100DF2F93 /* ECHttpClient.m in Sources */,
 				C3EEB9801BB2E7040090C4B0 /* Constant.m in Sources */,
 				C38E89C41B9705D500790752 /* DataBinaryModel.m in Sources */,
 				C3EEB9871BB2E7040090C4B0 /* DrawingPDF.m in Sources */,
@@ -1139,8 +1165,6 @@
 				C3EEB9971BB2E8BC0090C4B0 /* SearchElementCell.m in Sources */,
 				C38E89C61B9705D500790752 /* ElementModel.m in Sources */,
 				C38E89C31B9705D500790752 /* DataBinaryHandler.m in Sources */,
-				C398664F1BD776BD00DF2F93 /* ECHttpResponseModel.m in Sources */,
-				C39866551BD7BA4800DF2F93 /* ECSyncManager.m in Sources */,
 				C3DA80B31BB966D400384F50 /* LookupRecordTableViewCell.m in Sources */,
 				C38E89BC1B9705D500790752 /* CertificateModel.m in Sources */,
 				779A9D931B7C7D0700D86FED /* SubElementCell.m in Sources */,

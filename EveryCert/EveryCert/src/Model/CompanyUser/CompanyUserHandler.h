@@ -42,9 +42,8 @@
 - (void)saveLoggedUser:(NSInteger)userId;
 
 /**
- <#description#>
- @param  <#type#> <#desc#>
- @return <#type#> <#retval#>
+ Thsi Mehtod is used to save the Company User Field
+ @param  NSArray parameter of Comapny Array Field
  */
 - (void)saveCompanyUserFields:(NSArray *)companyUserFields;
 
@@ -55,5 +54,20 @@
 - (void)signupWithInfo:(id)signupInfo onSuccess:(SuccessCallback)successResponse onError:(ErrorCallback)errorResponse;
 
 - (void)logoutUserSuccess:(SuccessCallback)successResponse onError:(ErrorCallback)errorResponse;
+
+///**
+// Returns the List of FromId that have Status 1 for Respective Logged UserId and Comapny id
+// @return NSArray returns the list of form id
+// */
+//- (NSArray *)getDataForUserFormStatus;
+
+/**
+ Fetch all Record from the Company User Table with respect to the Company User Model
+ @param  NSString  Fetch all Record Corresponding to the Field Name
+ @param  NSInteger Fetch all Record Corresponding to the Logged User Comapany Id
+ @param  NSInteger Fetch all Record Corresponding to the Logged User Id
+ @return CompanyUserModel Returns CompanyUserModel Model
+ */
+- (CompanyUserModel *)getCompanyUserModelForFieldName:(NSString *)fieldName ComapnyId:(NSInteger )companyId UserId:(NSInteger)userId;
 
 @end

@@ -10,4 +10,7 @@
 
 @interface TextViewElementCell : ElementTableViewCell<UITextViewDelegate>
 
+
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+
 @end

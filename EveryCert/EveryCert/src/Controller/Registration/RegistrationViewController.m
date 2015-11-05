@@ -49,10 +49,10 @@
     [_signupElementTableView reloadWithElements:_signupElements];
 }
 
-- (void)viewDidLayoutSubviews
-{
-    _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
-}
+//- (void)viewDidLayoutSubviews
+//{
+//    _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
+//}
 
 #pragma mark - IBActions
 
