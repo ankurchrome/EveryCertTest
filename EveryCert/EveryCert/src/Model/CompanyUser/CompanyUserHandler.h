@@ -45,12 +45,6 @@
  */
 - (void)saveCompanyUserFields:(NSArray *)companyUserFields;
 
-///**
-// Returns the List of FromId that have Status 1 for Respective Logged UserId and Comapny id
-// @return NSArray returns the list of form id
-// */
-//- (NSArray *)getDataForUserFormStatus;
-
 /**
  Fetch all Record from the Company User Table with respect to the Company User Model
  @param  NSString  Fetch all Record Corresponding to the Field Name

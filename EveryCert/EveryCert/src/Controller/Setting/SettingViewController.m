@@ -2,7 +2,7 @@
 //  SettingViewController.m
 //  EveryCert
 //
-//  Created by Mayur Sardana on 03/08/15.
+//  Created by Ankur Pachauri on 03/08/15.
 //  Copyright (c) 2015 ChromeInfo Technologies. All rights reserved.
 //
 
@@ -34,6 +34,15 @@
 
     ElementHandler *elementHandler = [ElementHandler new];
     _settingElements = [elementHandler getSettingElementsOfCompany:APP_DELEGATE.loggedUserCompanyId];
+    
+    _settingElementTableView.superview.clipsToBounds = NO;
+    _settingElementTableView.superview.layer.masksToBounds = NO;
+    _settingElementTableView.superview.layer.shadowColor = [[UIColor blackColor] CGColor];
+    _settingElementTableView.superview.layer.shadowOffset = CGSizeMake(0,5);
+    _settingElementTableView.superview.layer.shadowOpacity = 0.5;
+    
+    _settingElementTableView.layer.masksToBounds = YES;
+    _settingElementTableView.layer.cornerRadius = 10.0f;
     
     [_settingElementTableView reloadWithElements:_settingElements];
 }

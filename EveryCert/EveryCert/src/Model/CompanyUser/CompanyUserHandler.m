@@ -192,29 +192,6 @@
     }
 }
 
-//- (NSArray *)getDataForUserFormStatus
-//{
-//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
-//    __block NSString *dataValue;
-//    
-//    [databaseQueue inDatabase:^(FMDatabase *db) {
-//        
-//        NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = %ld AND %@ = %ld AND %@ = '%@'", CompanyUserData, self.tableName, UserId, (long)APP_DELEGATE.loggedUserId, CompanyId, (long)APP_DELEGATE.loggedUserCompanyId, CompanyUserFieldName, UserFormStatusValue];
-//        
-//        FMResultSet *resultSet = [db executeQuery:query];
-//        
-//        if([resultSet next])
-//        {
-//            dataValue = [resultSet stringForColumn:CompanyUserData];
-//        }
-//    }];
-//    
-//    // Fetch Array From JSON Data of Comapny User
-//    NSArray *dataArrayList = [NSJSONSerialization JSONObjectWithData:[dataValue dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
-//
-//    return dataArrayList;
-//}
-
 // Fetch all the Company User Model from the Company User Table
 - (CompanyUserModel *)getCompanyUserModelForFieldName:(NSString *)fieldName ComapnyId:(NSInteger )companyId UserId:(NSInteger)userId
 {
