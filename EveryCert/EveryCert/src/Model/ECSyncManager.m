@@ -116,6 +116,8 @@
 {
     _completionSyncBlock = completion;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncFinished:) name:SyncFinishedNotification object:nil];
+    
     CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
     FormSectionHandler *formSectionHandler = [FormSectionHandler new];
     ElementHandler     *elementHandler     = [ElementHandler new];
@@ -154,14 +156,14 @@
     {
         if (_completionSyncBlock)
         {
-            _completionSyncBlock();
+            _completionSyncBlock(YES, nil);
         }
     }
                                   onError:^(NSError *error)
     {
         if (_completionSyncBlock)
         {
-            _completionSyncBlock();
+            _completionSyncBlock(YES, nil);
         }
     }];
 }

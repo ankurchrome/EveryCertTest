@@ -469,9 +469,7 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
         {
             BOOL success = false;
             
-            NSInteger timestampServer = [[responseInfo valueForKey:ModifiedTimeStampServer] doubleValue];
-            NSMutableDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:responseInfo];
-            [recordInfo setObject:@(timestampServer) forKey:ModifiedTimeStamp];
+            NSDictionary *recordInfo = [self populateInfoForServerOnlyExistingRecord:responseInfo];
             
             NSInteger serverId = [[recordInfo objectForKey:self.serverIdField] integerValue];
             
@@ -568,6 +566,20 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
             
             recordInfo = nil;
         }
+    }
+    
+    return recordInfo;
+}
+
+- (NSMutableDictionary *)populateInfoForServerOnlyExistingRecord:(NSDictionary *)info
+{
+    //Get all fields of table from record info
+    NSMutableDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:info];
+    
+    // initialize modified timestamp explicitly because fields names are different
+    if ([info valueForKey:ModifiedTimeStampServer])
+    {
+        [recordInfo setObject:[info valueForKey:ModifiedTimeStampServer] forKey:ModifiedTimeStamp];
     }
     
     return recordInfo;
@@ -713,53 +725,79 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
 
 - (void)downloadFileWithUrl:(NSString *)urlString destinationUrl:(NSURL *)destinationUrl retryCount:(NSInteger)retryCount completion:(ErrorCallback)completion
 {
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response)
-      {
-          return destinationUrl;
-          
-      } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error)
-      {
-          NSLog(@"%@", filePath);
-      }];
-    
-    
-//    if (retryCount <= 0)
+//    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+//    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+//    
+//    NSURL *URL = [NSURL URLWithString:urlString];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+//    
+//    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response)
 //    {
-//        NSDictionary *errorInfo = @{ NSLocalizedDescriptionKey: @"Request Timeout" };
-//        NSError *error = [NSError errorWithDomain:ErrorDomainRequestFailed code:0 userInfo:errorInfo];
+////        NSURL *documentsDirectoryPath = [NSURL fileURLWithPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]];
+////        return [documentsDirectoryPath URLByAppendingPathComponent:@"testing1.pdf"];
 //        
-//        completion(error);
-//    };
-//    
-//    NSURL *url = [[NSURL alloc] initWithString:urlString];
-//    NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:url];
-//    
-//    AFURLSessionManager *urlSessionManager = [AFURLSessionManager new];
-//    urlSessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    
-//    [urlSessionManager downloadTaskWithRequest:urlRequest
-//                               progress:nil
-//                            destination:^NSURL *(NSURL *targetPath, NSURLResponse *response)
-//    {
 //        return destinationUrl;
 //    }
-//                      completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error)
+//                                                            completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error)
 //    {
-//        if (LOGS_ON) NSLog(@"File Path: %@", filePath);
-//        
-//        if (error)
-//        {
-//            [self downloadFileWithUrl:urlString
-//                       destinationUrl:destinationUrl
-//                           retryCount:retryCount - 1
-//                           completion:completion];
-//        }
+//        NSLog(@"File downloaded to: %@", filePath);
 //    }];
+//    
+//    [downloadTask resume];
+    
+    
+    
+//    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+//    
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//    
+//    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response)
+//    {
+//          return destinationUrl;
+//    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error)
+//      {
+//          NSLog(@"%@", filePath);
+//      }];
+//    
+//    [downloadTask resume];
+    
+    if (retryCount <= 0)
+    {
+        NSDictionary *errorInfo = @{ NSLocalizedDescriptionKey: @"Request Timeout" };
+        NSError *error = [NSError errorWithDomain:ErrorDomainRequestFailed code:0 userInfo:errorInfo];
+        
+        completion(error);
+    };
+    
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:url];
+    
+    AFURLSessionManager *urlSessionManager = [AFURLSessionManager new];
+    urlSessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSURLSessionDownloadTask *downloadTask = [urlSessionManager downloadTaskWithRequest:urlRequest progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response)
+    {
+        return destinationUrl;
+    }
+        completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error)
+    {
+        if (LOGS_ON) NSLog(@"File Path: %@", filePath);
+        
+        if (error)
+        {
+            [self downloadFileWithUrl:urlString
+                       destinationUrl:destinationUrl
+                           retryCount:retryCount - 1
+                           completion:completion];
+        }
+        else
+        {
+            completion(error);
+        }
+    }];
+    
+    [downloadTask resume];
 }
 
 @end

@@ -59,14 +59,16 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
             return;
         }
         
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:APP_DELEGATE.window animated:YES];
         hud.labelText = HudTitleLoading;
         
-        [_syncManager startCompleteSyncWithCompletion:^
-        {
-            DataBinaryHandler *dataBinaryHandler = [DataBinaryHandler new];
-            [dataBinaryHandler downloadAllDataBinary];
-        }];
+        [_syncManager startCompleteSyncWithCompletion:^(BOOL success, NSError *error)
+         {
+             [MBProgressHUD hideHUDForView:APP_DELEGATE.window animated:YES];
+             
+             DataBinaryHandler *dataBinaryHandler = [DataBinaryHandler new];
+             [dataBinaryHandler downloadAllDataBinary];
+         }];
         
         self.isInitialLogin = NO;
     }
@@ -93,11 +95,13 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
         return;
     }
     
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:APP_DELEGATE.window animated:YES];
     hud.labelText = HudTitleLoading;
     
-    [_syncManager backupDataWithCompletion:^
+    [_syncManager backupDataWithCompletion:^(BOOL success, NSError *error)
      {
+         [MBProgressHUD hideHUDForView:APP_DELEGATE.window animated:YES];
+         
          DataBinaryHandler *dataBinaryHandler = [DataBinaryHandler new];
          [dataBinaryHandler downloadAllDataBinary];
      }];
@@ -114,7 +118,7 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
 {
     NSString *cellIdentifier = _menuOptionList[indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-
+    
     if(!cell)
     {
         cell = [UITableViewCell new];

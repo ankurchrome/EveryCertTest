@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^CompletionSync)();
+typedef void(^CompletionSync)(BOOL success, NSError *error);
 
 @interface ECSyncManager : NSObject
 

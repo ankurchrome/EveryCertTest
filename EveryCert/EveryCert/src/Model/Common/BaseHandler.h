@@ -77,6 +77,7 @@ typedef void(^ErrorCallback)(NSError *error);
 - (void)savePutRecords:(NSArray *)records;
 - (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info;
 - (NSMutableDictionary *)populateInfoForExistingRecord:(NSDictionary *)info appId:(NSInteger)appId;
+- (NSMutableDictionary *)populateInfoForServerOnlyExistingRecord:(NSDictionary *)info;
 - (void)startNextSyncOperation;
 - (void)finishSyncWithError:(NSError *)error;
 

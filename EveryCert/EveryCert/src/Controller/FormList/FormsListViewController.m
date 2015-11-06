@@ -181,6 +181,70 @@ NSString *const FormStatusShow = @"UnHide";
     }
 }
 
+- (void)downloadForm:(FormModel *)formModel
+{
+    //Check for internet availability for login through server
+    if (![[AFNetworkReachabilityManager sharedManager] isReachable])
+    {
+        [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED
+                                message:AlertMessageConnectionNotFound];
+        return;
+    }
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:APP_DELEGATE.window animated:YES];
+    hud.detailsLabelText = HudTitleFormDownloading;
+    
+    NSString *formPdfPath = [FORMS_BACKGROUND_LAYOUT_DIR stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld %@.pdf", formModel.formId, formModel.name]];
+    NSURL *destinationUrl = [NSURL fileURLWithPath:formPdfPath];
+    
+    FormHandler *formHandler = [FormHandler new];
+    
+    [formHandler downloadFileWithUrl:formModel.backgroundLayout
+                      destinationUrl:destinationUrl
+                          retryCount:REQUEST_RETRY_COUNT
+                          completion:^(NSError *error)
+     {
+         if (error)
+         {
+             [MBProgressHUD hideAllHUDsForView:APP_DELEGATE.window animated:YES];
+             
+             [CommonUtils showAlertWithTitle:ALERT_TITLE_ERROR message:error.localizedDescription];
+         }
+         else
+         {
+             [_syncManager downloadForm:formModel.formId completion:^(BOOL success, NSError *error)
+              {
+                  dispatch_async(dispatch_get_main_queue(), ^
+                  {
+                     [MBProgressHUD hideAllHUDsForView:APP_DELEGATE.window animated:YES];
+                     
+                     if (success)
+                     {
+                         formModel.status = true;
+                         
+                         //Update form status to true in data as installed form
+                         FormHandler *formHandler = [FormHandler new];
+                         NSDictionary *info = @{ FormStatus : @(true) };
+                         [formHandler updateInfo:info recordIdApp:formModel.formId];
+                         
+                         [_formListTableView reloadData];
+                         
+                         CertViewController *certificateVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CertificateVC"];
+                         
+                         [certificateVC initializeWithForm:formModel];
+                         
+                         [self.navigationController pushViewController:certificateVC animated:YES];
+                     }
+                     else
+                     {
+                         [CommonUtils showAlertWithTitle:ALERT_TITLE_ERROR message:error.localizedDescription];
+                     }
+                  });
+              }];
+         }
+     }];
+}
+
 #pragma mark - UITableViewDataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -196,8 +260,6 @@ NSString *const FormStatusShow = @"UnHide";
     
     cell.titleLabel.text = formModel.title;
     cell.statusLabel.hidden = !formModel.status; //hide status label if form is saved
-    
-    BOOL checkUpdate = cell.needsUpdateConstraints;
     
     if (formModel.status)
     {
@@ -349,58 +411,12 @@ NSString *const FormStatusShow = @"UnHide";
     if ([identifier isEqualToString:@"ShowCertificate"])
     {
         NSIndexPath *indexPath = [_formListTableView indexPathForSelectedRow];
-        FormModel   *formModel = _filteredArray[indexPath.row];
+        FormModel *formModel = _filteredArray[indexPath.row];
         
         //Download the form from server if it is not already installed in the app
         if (!formModel.status)
         {
-            //Check for internet availability for login through server
-            if (![[AFNetworkReachabilityManager sharedManager] isReachable])
-            {
-                [CommonUtils showAlertWithTitle:ALERT_TITLE_FAILED
-                                        message:AlertMessageConnectionNotFound];
-                return NO;
-            }
-            
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.labelText = HudTitleFormDownloading;
-            
-            
-            NSString *formPdfPath = [FORMS_BACKGROUND_LAYOUT_DIR stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.pdf", formModel.formId]];
-            NSURL *destinationUrl = [NSURL URLWithString:formPdfPath];
-            
-            FormHandler *formHandler = [FormHandler new];
-            
-            [formHandler downloadFileWithUrl:formModel.backgroundLayout
-                              destinationUrl:destinationUrl
-                                  retryCount:REQUEST_RETRY_COUNT
-                                  completion:^(NSError *error)
-             {
-                 
-             }];
-
-            
-//            [_syncManager downloadForm:formModel.formId completion:^
-//            {
-//                formModel.status = true;
-//                [_formListTableView reloadData];
-//             
-//                //Update form status to true in data as installed form
-//                FormHandler *formHandler = [FormHandler new];
-//                NSDictionary *info = @{ FormStatus : @(true) };
-//                [formHandler updateInfo:info recordIdApp:formModel.formId];
-//                
-//                NSString *formPdfPath = [FORMS_BACKGROUND_LAYOUT_DIR stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld %@.pdf", formModel.formId, formModel.name]];
-//                NSURL *destinationUrl = [NSURL URLWithString:formPdfPath];
-//                
-//                [formHandler downloadFileWithUrl:formModel.backgroundLayout
-//                                  destinationUrl:destinationUrl
-//                                      retryCount:REQUEST_RETRY_COUNT
-//                                      completion:^(NSError *error)
-//                {
-//                    
-//                }];
-//            }];
+            [self downloadForm:formModel];
             
             return NO;
         }

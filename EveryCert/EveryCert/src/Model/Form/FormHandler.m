@@ -108,4 +108,13 @@
      }];
 }
 
+- (NSMutableDictionary *)populateInfoForServerOnlyExistingRecord:(NSDictionary *)info
+{
+    NSMutableDictionary *recordInfo = [super populateInfoForServerOnlyExistingRecord:info];
+    
+    [recordInfo setObject:@(false) forKey:FormStatus];
+    
+    return recordInfo;
+}
+
 @end

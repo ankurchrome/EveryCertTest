@@ -44,9 +44,9 @@
 #define EMAIL_REGEX @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+"
 
 //Alert Messages Constants
-#define ALERT_TITLE_FAILED        @"Failed"
+#define ALERT_TITLE_FAILED        @"Failed!"
 #define ALERT_TITLE_WARNING       @"Warning!"
-#define ALERT_TITLE_ERROR         @"Error"
+#define ALERT_TITLE_ERROR         @"Error!"
 #define ALERT_ACTION_TITLE_YES    @"Yes"
 #define ALERT_ACTION_TITLE_NO     @"No"
 #define ALERT_ACTION_TITLE_OK     @"Ok"
