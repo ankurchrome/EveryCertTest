@@ -45,6 +45,7 @@
     
     _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
 
+    //** Shadow with Corner Radius on Login Table View
     _loginElementTableView.superview.clipsToBounds = NO;
     _loginElementTableView.superview.layer.masksToBounds = NO;
     _loginElementTableView.superview.layer.shadowColor = [[UIColor blackColor] CGColor];

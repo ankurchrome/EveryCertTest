@@ -32,10 +32,15 @@
     self.navigationItem.hidesBackButton = YES;
     self.view.backgroundColor = APP_BG_COLOR;
 
-    _signupElementTableView.clipsToBounds = NO;
-    _signupElementTableView.layer.shadowColor = [[UIColor blackColor] CGColor];
-    _signupElementTableView.layer.shadowOffset = CGSizeMake(0,5);
-    _signupElementTableView.layer.shadowOpacity = 0.5;
+    //** Shadow with Corner Radius on Login Table View
+    _signupElementTableView.superview.clipsToBounds = NO;
+    _signupElementTableView.superview.layer.masksToBounds = NO;
+    _signupElementTableView.superview.layer.shadowColor = [[UIColor blackColor] CGColor];
+    _signupElementTableView.superview.layer.shadowOffset = CGSizeMake(0,5);
+    _signupElementTableView.superview.layer.shadowOpacity = 0.5;
+    
+    _signupElementTableView.layer.masksToBounds = YES;
+    _signupElementTableView.layer.cornerRadius = 10.0f;
     
     ElementHandler *elementHandler = [ElementHandler new];
     _signupElements = [elementHandler getSignUpElements];
@@ -44,11 +49,6 @@
     [_signupElementTableView removeObserver];
     [_signupElementTableView reloadWithElements:_signupElements];
 }
-
-//- (void)viewDidLayoutSubviews
-//{
-//    _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
-//}
 
 #pragma mark - IBActions
 

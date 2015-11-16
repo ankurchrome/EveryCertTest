@@ -113,6 +113,8 @@
     //Set TextField Alignment
     NSString *elementAllignmentType = elementModel.printedTextFormat[kPdfFormatAlignment];
     
+    _textField.textAlignment = NSTextAlignmentLeft;
+    
     if([CommonUtils isValidString: elementAllignmentType])
     {
         if([elementAllignmentType isEqualToString:PdfFormatAlignLeft])

@@ -31,6 +31,17 @@
     _existingCertsTableView.estimatedRowHeight = 44.0;
     _existingCertsTableView.rowHeight = UITableViewAutomaticDimension;
     
+    //** Shadow with Corner Radius on Login Table View
+    _existingCertsTableView.superview.clipsToBounds = NO;
+    _existingCertsTableView.superview.layer.masksToBounds = NO;
+    _existingCertsTableView.superview.layer.shadowColor = [[UIColor blackColor] CGColor];
+    _existingCertsTableView.superview.layer.shadowOffset = CGSizeMake(0,5);
+    _existingCertsTableView.superview.layer.shadowOpacity = 0.5;
+    
+    _existingCertsTableView.layer.masksToBounds = YES;
+    _existingCertsTableView.layer.cornerRadius = 10.0f;
+
+    
     _certHandler = [CertificateHandler new];
     _existingCertsList = [_certHandler getAllExistingCertificatesOfCompany:APP_DELEGATE.loggedUserCompanyId];
 }

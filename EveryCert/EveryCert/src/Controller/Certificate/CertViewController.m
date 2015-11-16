@@ -435,11 +435,12 @@ enum Section_Image_Status
             }
                 break;
                 
+            case ElementTypePhoto:
             case ElementTypeSignature:
             {
                 [self saveElementDataBinary:elementModel];
-            }
                 break;
+            }
                 
             default:
                 break;

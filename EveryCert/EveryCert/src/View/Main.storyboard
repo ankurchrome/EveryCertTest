@@ -111,9 +111,10 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfP-pe-QDC">
-                                                <rect key="frame" x="215" y="243" width="140" height="34"/>
+                                                <rect key="frame" x="215" y="243" width="140" height="40"/>
                                                 <color key="backgroundColor" red="0.08235294118" green="0.4941176471" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="VBm-MY-ut0"/>
                                                     <constraint firstAttribute="height" constant="60" id="dTb-3h-P2T"/>
                                                     <constraint firstAttribute="width" constant="140" id="i8w-0K-fz7">
                                                         <variation key="heightClass=regular-widthClass=regular" constant="250"/>
@@ -150,7 +151,7 @@
                                                 </connections>
                                             </button>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ScD-Cy-0fo">
-                                                <rect key="frame" x="184" y="290" width="200" height="32"/>
+                                                <rect key="frame" x="184" y="297" width="200" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="3BZ-XK-eur"/>
                                                     <constraint firstAttribute="height" constant="19" id="yxS-vj-7cK">
@@ -184,7 +185,7 @@
                                             </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="ScD-Cy-0fo" firstAttribute="top" secondItem="mfP-pe-QDC" secondAttribute="bottom" priority="500" constant="13" id="4Fx-Ti-Eh5">
+                                            <constraint firstItem="ScD-Cy-0fo" firstAttribute="top" secondItem="mfP-pe-QDC" secondAttribute="bottom" priority="500" constant="14" id="4Fx-Ti-Eh5">
                                                 <variation key="heightClass=regular-widthClass=regular" constant="20"/>
                                             </constraint>
                                             <constraint firstAttribute="centerX" secondItem="ScD-Cy-0fo" secondAttribute="centerX" id="5Hn-h7-Ab0"/>
@@ -197,7 +198,7 @@
                                             <constraint firstAttribute="centerX" secondItem="258-Dl-n9w" secondAttribute="centerX" constant="-2" id="IrU-gi-6Sw"/>
                                             <constraint firstItem="258-Dl-n9w" firstAttribute="top" secondItem="YQJ-aL-Zep" secondAttribute="top" priority="250" constant="20" id="Uok-km-hme"/>
                                             <constraint firstAttribute="centerX" secondItem="mfP-pe-QDC" secondAttribute="centerX" constant="-1" id="VqB-7j-BIB"/>
-                                            <constraint firstAttribute="bottom" secondItem="ScD-Cy-0fo" secondAttribute="bottom" priority="250" constant="19" id="hyt-st-e2N">
+                                            <constraint firstAttribute="bottom" secondItem="ScD-Cy-0fo" secondAttribute="bottom" priority="250" constant="12" id="hyt-st-e2N">
                                                 <variation key="heightClass=regular-widthClass=regular" constant="-2"/>
                                             </constraint>
                                             <constraint firstAttribute="trailing" secondItem="Jha-05-Edt" secondAttribute="trailing" id="kCK-Yu-bWZ"/>
@@ -338,19 +339,29 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 </variation>
                                             </label>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="itE-05-OSV" customClass="ElementTableView">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9qL-A1-nmp">
                                                 <rect key="frame" x="16" y="70" width="568" height="240"/>
+                                                <subviews>
+                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="itE-05-OSV" customClass="ElementTableView">
+                                                        <rect key="frame" x="0.0" y="0.0" width="568" height="240"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <variation key="heightClass=regular" ambiguous="YES">
+                                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                                        </variation>
+                                                        <variation key="widthClass=regular" ambiguous="YES">
+                                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                                        </variation>
+                                                    </tableView>
+                                                </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="240" id="Cqq-nm-TCa"/>
+                                                    <constraint firstAttribute="trailing" secondItem="itE-05-OSV" secondAttribute="trailing" id="6cc-kI-LWZ"/>
+                                                    <constraint firstItem="itE-05-OSV" firstAttribute="leading" secondItem="9qL-A1-nmp" secondAttribute="leading" id="ORg-gj-Y6k"/>
+                                                    <constraint firstAttribute="bottom" secondItem="itE-05-OSV" secondAttribute="bottom" id="Sjd-0W-SkL"/>
+                                                    <constraint firstAttribute="height" constant="240" id="eUL-0V-UZY"/>
+                                                    <constraint firstItem="itE-05-OSV" firstAttribute="top" secondItem="9qL-A1-nmp" secondAttribute="top" id="pRj-Um-90r"/>
                                                 </constraints>
-                                                <variation key="heightClass=regular" ambiguous="YES">
-                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                                                </variation>
-                                                <variation key="widthClass=regular" ambiguous="YES">
-                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                                                </variation>
-                                            </tableView>
+                                            </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By Creating an account you are agreeing to our terms of service and Privacy Policy" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" enabled="NO" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kmh-Nd-Ara">
                                                 <rect key="frame" x="30" y="320" width="540" height="41"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -396,35 +407,29 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="itE-05-OSV" secondAttribute="trailing" constant="16" id="5UK-dk-mgO">
-                                                <variation key="widthClass=compact" constant="10"/>
-                                            </constraint>
+                                            <constraint firstItem="9qL-A1-nmp" firstAttribute="leading" secondItem="Zgn-QI-bUk" secondAttribute="leading" constant="16" id="0dY-c3-KDr"/>
+                                            <constraint firstItem="kmh-Nd-Ara" firstAttribute="top" secondItem="9qL-A1-nmp" secondAttribute="bottom" constant="10" id="8XA-6W-65y"/>
                                             <constraint firstItem="TAv-wB-NSg" firstAttribute="top" secondItem="Zgn-QI-bUk" secondAttribute="top" constant="10" id="9g0-4l-WUR">
                                                 <variation key="heightClass=compact" constant="8"/>
                                             </constraint>
-                                            <constraint firstItem="itE-05-OSV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="TAv-wB-NSg" secondAttribute="bottom" constant="10" id="FTZ-SL-qq1"/>
+                                            <constraint firstAttribute="trailing" secondItem="9qL-A1-nmp" secondAttribute="trailing" constant="16" id="CKZ-vs-VY7"/>
                                             <constraint firstItem="K8k-bi-9aO" firstAttribute="top" secondItem="kmh-Nd-Ara" secondAttribute="bottom" constant="19" id="Fd6-ZM-ONj"/>
                                             <constraint firstAttribute="centerX" secondItem="TAv-wB-NSg" secondAttribute="centerX" id="IhY-EN-dK1">
                                                 <variation key="heightClass=compact" constant="-4.5"/>
-                                            </constraint>
-                                            <constraint firstItem="itE-05-OSV" firstAttribute="leading" secondItem="Zgn-QI-bUk" secondAttribute="leading" constant="16" id="MVX-5S-7SF">
-                                                <variation key="widthClass=compact" constant="10"/>
-                                            </constraint>
-                                            <constraint firstItem="itE-05-OSV" firstAttribute="top" secondItem="TAv-wB-NSg" secondAttribute="bottom" priority="500" constant="30" id="P5Y-1D-HSI">
-                                                <variation key="heightClass=compact" constant="15"/>
                                             </constraint>
                                             <constraint firstAttribute="trailing" secondItem="kmh-Nd-Ara" secondAttribute="trailing" constant="30" id="QOH-gq-QKi">
                                                 <variation key="heightClass=compact" constant="22"/>
                                                 <variation key="widthClass=compact" constant="15"/>
                                             </constraint>
-                                            <constraint firstItem="kmh-Nd-Ara" firstAttribute="top" secondItem="itE-05-OSV" secondAttribute="bottom" constant="10" id="Qum-hf-NSU"/>
                                             <constraint firstAttribute="bottom" secondItem="K8k-bi-9aO" secondAttribute="bottom" constant="10" id="Wmi-6Y-Ou1">
                                                 <variation key="heightClass=compact" constant="6"/>
                                             </constraint>
+                                            <constraint firstItem="9qL-A1-nmp" firstAttribute="top" secondItem="TAv-wB-NSg" secondAttribute="bottom" priority="500" constant="30" id="Zt9-M5-w9c"/>
                                             <constraint firstItem="kmh-Nd-Ara" firstAttribute="leading" secondItem="Zgn-QI-bUk" secondAttribute="leading" constant="30" id="h9E-bJ-e89">
                                                 <variation key="heightClass=compact" constant="22"/>
                                                 <variation key="widthClass=compact" constant="15"/>
                                             </constraint>
+                                            <constraint firstItem="9qL-A1-nmp" firstAttribute="top" relation="greaterThanOrEqual" secondItem="TAv-wB-NSg" secondAttribute="bottom" constant="10" id="pja-aP-Ar2"/>
                                             <constraint firstAttribute="centerX" secondItem="K8k-bi-9aO" secondAttribute="centerX" id="vEU-Qd-Cpe"/>
                                         </constraints>
                                         <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
@@ -542,7 +547,6 @@
                     <connections>
                         <outlet property="_bgScrollView" destination="xOH-ud-hqv" id="jcT-cd-UXV"/>
                         <outlet property="_contentView" destination="Zgn-QI-bUk" id="qyW-HG-dtb"/>
-                        <outlet property="_signupElementTableHeightConstraint" destination="Cqq-nm-TCa" id="6vT-cB-8Oy"/>
                         <outlet property="_signupElementTableView" destination="itE-05-OSV" id="g85-98-FEl"/>
                     </connections>
                 </viewController>

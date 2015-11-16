@@ -35,6 +35,16 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
     self.view.backgroundColor = APP_BG_COLOR;
     APP_DELEGATE.homeVC = self;
     
+    //** Shadow with Corner Radius on Login Table View
+    _menuTableView.superview.clipsToBounds = NO;
+    _menuTableView.superview.layer.masksToBounds = NO;
+    _menuTableView.superview.layer.shadowColor = [[UIColor blackColor] CGColor];
+    _menuTableView.superview.layer.shadowOffset = CGSizeMake(0,5);
+    _menuTableView.superview.layer.shadowOpacity = 0.5;
+    
+    _menuTableView.layer.masksToBounds = YES;
+    _menuTableView.layer.cornerRadius = 10.0f;
+    
     _menuOptionList = @[MenuCellIdentifierNewCertificate,
                         MenuCellIdentifierExistingCertificate,
                         MenuCellIdentifierSetting];
