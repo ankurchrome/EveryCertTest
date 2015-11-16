@@ -57,4 +57,11 @@ NSString *const PickListMakeDidChangedNofication = @"PickListMakeDidChanged";
     self.elementModel.dataValue = [_selectedOptions componentsJoinedByString:@"; "];
 }
 
+#pragma mark - IBActions
+
+- (IBAction)onClickAddNewApplianceButton:(id)sender
+{
+    
+}
+
 @end

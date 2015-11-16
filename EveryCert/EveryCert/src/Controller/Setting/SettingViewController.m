@@ -41,9 +41,6 @@
     _settingElementTableView.superview.layer.shadowOffset = CGSizeMake(0,5);
     _settingElementTableView.superview.layer.shadowOpacity = 0.5;
     
-    _settingElementTableView.layer.masksToBounds = YES;
-    _settingElementTableView.layer.cornerRadius = 10.0f;
-    
     [_settingElementTableView reloadWithElements:_settingElements];
 }
 
