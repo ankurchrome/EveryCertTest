@@ -2,7 +2,7 @@
 //  LoginViewController.m
 //  EveryCert
 //
-//  Created by Mayur Sardana on 03/08/15.
+//  Created by Ankur Pachauri on 03/08/15.
 //  Copyright (c) 2015 ChromeInfo Technologies. All rights reserved.
 //
 
@@ -45,6 +45,7 @@
     
     _bgScrollView.contentSize = CGSizeMake(_bgScrollView.frameWidth, CGRectGetMaxY(_contentView.frame));
 
+    //** Shadow with Corner Radius on Login Table View
     _loginElementTableView.superview.clipsToBounds = NO;
     _loginElementTableView.superview.layer.masksToBounds = NO;
     _loginElementTableView.superview.layer.shadowColor = [[UIColor blackColor] CGColor];

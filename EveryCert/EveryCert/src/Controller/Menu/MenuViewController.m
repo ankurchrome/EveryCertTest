@@ -2,7 +2,7 @@
 //  MenuViewController.m
 //  EveryCert
 //
-//  Created by Mayur Sardana on 03/08/15.
+//  Created by Ankur Pachauri on 03/08/15.
 //  Copyright (c) 2015 ChromeInfo Technologies. All rights reserved.
 //
 
@@ -39,6 +39,16 @@ NSString *const MenuCellIdentifierSetting             = @"MenuCellIdentifierSett
     self.navigationItem.hidesBackButton = YES;
     self.view.backgroundColor = APP_BG_COLOR;
     APP_DELEGATE.homeVC = self;
+    
+    //** Shadow with Corner Radius on Login Table View
+    _menuTableView.superview.clipsToBounds = NO;
+    _menuTableView.superview.layer.masksToBounds = NO;
+    _menuTableView.superview.layer.shadowColor = [[UIColor blackColor] CGColor];
+    _menuTableView.superview.layer.shadowOffset = CGSizeMake(0,5);
+    _menuTableView.superview.layer.shadowOpacity = 0.5;
+    
+    _menuTableView.layer.masksToBounds = YES;
+    _menuTableView.layer.cornerRadius = 10.0f;
     
     _menuOptionList = @[MenuCellIdentifierNewCertificate,
                         MenuCellIdentifierExistingCertificate,

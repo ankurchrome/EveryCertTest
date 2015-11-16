@@ -59,8 +59,8 @@
                             <action selector="onClickRemoveButton:" destination="E8h-aY-L5g" eventType="touchUpInside" id="YeI-L2-2ao"/>
                         </connections>
                     </button>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UPu-a0-4ij" userLabel="Separator">
-                        <rect key="frame" x="0.0" y="290" width="568" height="1"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UPu-a0-4ij" userLabel="Separator">
+                        <rect key="frame" x="10" y="290" width="439" height="1"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="Lwa-Tm-e1c"/>
@@ -77,7 +77,7 @@
                     <constraint firstAttribute="centerX" secondItem="mDo-0v-nEl" secondAttribute="centerX" id="Ihd-vx-9lP"/>
                     <constraint firstAttribute="bottom" secondItem="UPu-a0-4ij" secondAttribute="bottom" id="JaP-uH-rV6"/>
                     <constraint firstAttribute="trailingMargin" secondItem="is6-ix-9vP" secondAttribute="trailing" constant="-4" id="O3H-Fe-L6D"/>
-                    <constraint firstAttribute="trailing" secondItem="UPu-a0-4ij" secondAttribute="trailing" constant="119" id="OkP-7e-MNQ"/>
+                    <constraint firstAttribute="trailing" secondItem="UPu-a0-4ij" secondAttribute="trailing" id="OkP-7e-MNQ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="xwE-CX-IBS" secondAttribute="bottom" constant="-5" id="QV0-VO-WgW"/>
                     <constraint firstItem="mDo-0v-nEl" firstAttribute="leading" secondItem="Uz3-7U-oW2" secondAttribute="leadingMargin" priority="500" constant="147" id="Vig-sH-S7w"/>
                     <constraint firstItem="is6-ix-9vP" firstAttribute="top" secondItem="Uz3-7U-oW2" secondAttribute="topMargin" constant="1" id="Yk8-00-m7h"/>

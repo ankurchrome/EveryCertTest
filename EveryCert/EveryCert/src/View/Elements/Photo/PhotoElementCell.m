@@ -2,7 +2,7 @@
 //  PhotoElementCell.m
 //  EveryCert
 //
-//  Created by Mayur Sardana on 09/09/15.
+//  Created by Ankur Pachauri on 09/09/15.
 //  Copyright (c) 2015 ChromeInfo Technologies. All rights reserved.
 //
 
@@ -12,9 +12,8 @@
 {
     __weak IBOutlet UIButton *_photoAddButton;
     __weak IBOutlet UIButton *_removeButton;
-    
-    UIImagePickerController *_imagePickerController;
     __weak IBOutlet UIImageView *_imageView;
+    UIImagePickerController *_imagePickerController;
 }
 
 - (void)initializeWithElementModel:(ElementModel *)elementModel
@@ -23,10 +22,23 @@
 
     _imagePickerController.allowsEditing = YES;
     _imagePickerController = [[UIImagePickerController alloc]init];
+    self.elementModel = elementModel;
+    _imageView.image = nil;
     
-    if (!_imageView.image)
+    if(self.elementModel.dataBinaryValue == nil)
     {
-        _imageView.image = nil;
+        _photoAddButton.hidden = NO;
+        _removeButton.hidden = YES;
+    }
+    else
+    {
+        _photoAddButton.hidden = YES;
+        _removeButton.hidden = NO;
+    }
+    
+    if (self.elementModel.dataBinaryValue)
+    {
+        _imageView.image = [UIImage imageWithData: self.elementModel.dataBinaryValue];
     }
 }
 
@@ -38,6 +50,7 @@
     _imageView.image = nil;
     _removeButton.hidden   = YES;
     _photoAddButton.hidden = NO;
+    self.elementModel.dataBinaryValue = nil;
 }
 
 // When user wish to addPhoto by Clicking this Button
@@ -127,8 +140,10 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = info[UIImagePickerControllerOriginalImage];
+    self.elementModel.dataBinaryValue = UIImagePNGRepresentation(image);
     _imageView.image = image;
-    if(_imageView.image == nil)
+    
+    if(self.elementModel.dataBinaryValue == nil)
     {
         _photoAddButton.hidden = NO;
         _removeButton.hidden = YES;

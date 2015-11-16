@@ -2,7 +2,7 @@
 //  CertificateViewController.m
 //  EveryCert
 //
-//  Created by Mayur Sardana on 10/08/15.
+//  Created by Ankur Pachauri on 10/08/15.
 //  Copyright (c) 2015 ChromeInfo Technologies. All rights reserved.
 //
 
@@ -121,6 +121,18 @@ enum Section_Image_Status
         _formElements = [elementHandler getAllElementsOfForm:_certificate.formId];
     }
     
+    //** ElementTable CornerRadius
+    
+    _elementTableView.superview.clipsToBounds = NO;
+    _elementTableView.superview.layer.masksToBounds = NO;
+    _elementTableView.superview.layer.shadowColor = [[UIColor blackColor] CGColor];
+    _elementTableView.superview.layer.shadowOffset = CGSizeMake(0,5);
+    _elementTableView.superview.layer.shadowOpacity = 0.5;
+    
+    _elementTableView.layer.masksToBounds = YES;
+    _elementTableView.layer.cornerRadius = 10.0f;
+    
+    
     FormSectionHandler *sectionHandler = [FormSectionHandler new];
     _formSections = [sectionHandler getAllSectionsOfForm:_certificate.formId];
     
@@ -221,6 +233,9 @@ enum Section_Image_Status
     }
     
     //Check that the current section is lookup section
+    
+    _linkedSearchElementModel = nil;
+    
     predicate = [NSPredicate predicateWithFormat:@"fieldType = %ld", ElementTypeSearch];
     NSArray *searchElements = [_currentSectionElements filteredArrayUsingPredicate:predicate];
     
@@ -420,11 +435,12 @@ enum Section_Image_Status
             }
                 break;
                 
+            case ElementTypePhoto:
             case ElementTypeSignature:
             {
                 [self saveElementDataBinary:elementModel];
-            }
                 break;
+            }
                 
             default:
                 break;
@@ -619,6 +635,7 @@ enum Section_Image_Status
     for(ElementModel *sectionElementsModel in sectionElementsList)
     {
         sectionElementsModel.dataValue = EMPTY_STRING;
+        sectionElementsModel.recordIdApp = 0;
     }
     
     ElementModel *linkedElementModel = [[_formElements filteredArrayUsingPredicate:[NSPredicate predicateWithFormat: @"self.linkedElementId = %d", elementModel.elementId]] firstObject];
@@ -652,9 +669,6 @@ enum Section_Image_Status
     
     for (ElementModel *elementModel in _currentSectionElements)
     {
-        // Empty all datavalue and then write only those that have entry in LookUp
-        elementModel.dataValue = EMPTY_STRING;
-        
         for (LookUpModel *lookupRecordField in lookupRecordFields)
         {
             if (elementModel.fieldNumberExisting == lookupRecordField.fieldNumber)
@@ -662,7 +676,7 @@ enum Section_Image_Status
                 elementModel.dataValue = lookupRecordField.dataValue;
             }
         }
-        elementModel.recordIdApp = recordIdApp;
+       // elementModel.recordIdApp = recordIdApp;
     }
     
     [self manageCheckBoxElement];
