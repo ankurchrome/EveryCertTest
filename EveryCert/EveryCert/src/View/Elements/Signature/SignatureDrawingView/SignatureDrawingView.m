@@ -100,6 +100,7 @@
     [_image drawAtPoint:CGPointZero];
     [[UIColor blackColor] setStroke];
     [_bezierPath stroke];
+    [self.layer renderInContext:UIGraphicsGetCurrentContext()]; // Image Modification Issue Solved
     _image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 }

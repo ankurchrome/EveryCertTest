@@ -12,33 +12,51 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gv9-xc-7T7" id="f5o-i4-PvY">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JM6-eh-Zzj" userLabel="Separator">
-                        <rect key="frame" x="0.0" y="83" width="568" height="1"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="s7H-ra-8eB"/>
-                        </constraints>
-                    </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f3z-Dd-zg6">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f3z-Dd-zg6">
                         <rect key="frame" x="0.0" y="8" width="568" height="21"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ksm-yd-oMa">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ksm-yd-oMa">
                         <rect key="frame" x="0.0" y="41" width="568" height="33"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ISO-rK-Xjv">
-                        <rect key="frame" x="0.0" y="80" width="600" height="3"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ISO-rK-Xjv">
+                        <rect key="frame" x="0.0" y="81" width="568" height="3"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="3" id="Ft1-qA-hI5"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JM6-eh-Zzj" userLabel="Separator">
+                        <rect key="frame" x="0.0" y="83" width="568" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="j7P-mp-854"/>
+                            <constraint firstAttribute="height" constant="1" id="s7H-ra-8eB"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="ksm-yd-oMa" firstAttribute="leading" secondItem="f5o-i4-PvY" secondAttribute="leading" id="1rI-Em-X0i"/>
+                    <constraint firstItem="f3z-Dd-zg6" firstAttribute="top" secondItem="f5o-i4-PvY" secondAttribute="top" constant="8" id="7Vw-cJ-pbI"/>
+                    <constraint firstItem="ISO-rK-Xjv" firstAttribute="top" secondItem="ksm-yd-oMa" secondAttribute="bottom" constant="7" id="DI4-kW-uVx"/>
+                    <constraint firstAttribute="trailing" secondItem="ISO-rK-Xjv" secondAttribute="trailing" id="F6G-0e-D6D"/>
+                    <constraint firstAttribute="trailing" secondItem="ksm-yd-oMa" secondAttribute="trailing" id="LN4-kW-x4A"/>
                     <constraint firstItem="JM6-eh-Zzj" firstAttribute="leading" secondItem="f5o-i4-PvY" secondAttribute="leading" id="Mor-et-R0o"/>
+                    <constraint firstItem="ISO-rK-Xjv" firstAttribute="leading" secondItem="f5o-i4-PvY" secondAttribute="leading" id="OVG-a5-AYl"/>
+                    <constraint firstAttribute="trailing" secondItem="JM6-eh-Zzj" secondAttribute="trailing" id="RZS-e9-mgr"/>
                     <constraint firstAttribute="bottom" secondItem="JM6-eh-Zzj" secondAttribute="bottom" id="SxW-x0-rBo"/>
+                    <constraint firstItem="f3z-Dd-zg6" firstAttribute="leading" secondItem="f5o-i4-PvY" secondAttribute="leading" id="XPe-96-14C"/>
+                    <constraint firstItem="JM6-eh-Zzj" firstAttribute="leading" secondItem="f5o-i4-PvY" secondAttribute="leading" id="atr-Yz-N9c"/>
+                    <constraint firstAttribute="bottom" secondItem="ISO-rK-Xjv" secondAttribute="bottom" id="bif-jv-j9s"/>
+                    <constraint firstAttribute="bottom" secondItem="JM6-eh-Zzj" secondAttribute="bottom" id="kt1-ix-bki"/>
+                    <constraint firstItem="ksm-yd-oMa" firstAttribute="top" secondItem="f3z-Dd-zg6" secondAttribute="bottom" constant="12" id="tFM-bG-2s9"/>
+                    <constraint firstItem="ksm-yd-oMa" firstAttribute="top" secondItem="f3z-Dd-zg6" secondAttribute="bottom" constant="12" id="ugt-vm-A6L"/>
+                    <constraint firstAttribute="trailing" secondItem="f3z-Dd-zg6" secondAttribute="trailing" id="wWR-vG-3vc"/>
                     <constraint firstAttribute="trailing" secondItem="JM6-eh-Zzj" secondAttribute="trailing" id="wlj-sS-nDZ"/>
                 </constraints>
             </tableViewCellContentView>
