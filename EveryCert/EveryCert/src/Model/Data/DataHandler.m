@@ -39,19 +39,25 @@
     dataModel.isDirty = true;
     dataModel.uuid = [[NSUUID new] UUIDString];
 
-    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    self.db = self.db ? :[FMDBDataSource sharedDatabase];
     
-    [databaseQueue inDatabase:^(FMDatabase *db)
-     {
+    [self.db closeOpenResultSets];
+    
+    if (![self.db open]) return success;
+
+//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+//    
+//    [databaseQueue inDatabase:^(FMDatabase *db)
+//     {
          NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?)", self.tableName, DataId, CertificateIdApp, ElementId, RecordIdApp, DataValue, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
          
-         success = [db executeUpdate:query, @(dataModel.dataId), @(dataModel.certificateIdApp), @(dataModel.elementId), @(dataModel.recordIdApp), dataModel.data, @(dataModel.modifiedTimestampApp), @(dataModel.modifiedTimestamp), @(dataModel.archive), dataModel.uuid, @(dataModel.isDirty), @(dataModel.companyId)];
+         success = [self.db executeUpdate:query, @(dataModel.dataId), @(dataModel.certificateIdApp), @(dataModel.elementId), @(dataModel.recordIdApp), dataModel.data, @(dataModel.modifiedTimestampApp), @(dataModel.modifiedTimestamp), @(dataModel.archive), dataModel.uuid, @(dataModel.isDirty), @(dataModel.companyId)];
          
          if (success)
          {
-             dataModel.dataIdApp = [db lastInsertRowId];
+             dataModel.dataIdApp = [self.db lastInsertRowId];
          }
-     }];
+//     }];
     
     FUNCTION_END;
     return success;

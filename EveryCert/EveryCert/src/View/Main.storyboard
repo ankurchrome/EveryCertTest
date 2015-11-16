@@ -1204,7 +1204,7 @@
                         <outlet property="_menuButton" destination="DLn-Yi-ZKB" id="P9T-gi-IXw"/>
                         <outlet property="_nextSectionButton" destination="kry-fF-vYo" id="gfk-kO-zaO"/>
                         <outlet property="_prevSectionButton" destination="JJe-lc-unb" id="NZJ-bk-hL9"/>
-                        <outlet property="_previewBarButton" destination="iIO-Ci-XXF" id="5nS-Dg-V9j"/>
+                        <outlet property="_previewBarButton" destination="rqH-dx-oky" id="H50-7d-4Lu"/>
                         <outlet property="_sectionFadedView" destination="eSx-7N-FCz" id="Kda-fe-mNp"/>
                         <outlet property="_sectionTableView" destination="PYB-A8-BKd" id="zjX-F0-QLK"/>
                         <outlet property="_sectionTitleLabel" destination="OOt-5j-nld" id="AuT-XJ-NP0"/>

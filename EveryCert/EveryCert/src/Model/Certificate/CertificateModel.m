@@ -60,14 +60,11 @@
 {
     FUNCTION_START;
     
-    NSString *formPdfName = [NSString stringWithFormat:@"%ld", (long)self.formId];
-    NSString *pdfPath = [FORMS_BACKGROUND_LAYOUT_DIR stringByAppendingPathComponent:formPdfName];
-    pdfPath = [pdfPath stringByAppendingPathExtension:FILE_TYPE_PDF];
-    
-    NSURL *pdfUrl = [NSURL fileURLWithPath:pdfPath];
+    NSString *formPdfPath = [FORMS_BACKGROUND_LAYOUT_DIR stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.pdf", (long)self.formId]];
+    NSURL *formPdfUrl = [NSURL fileURLWithPath:formPdfPath];
     
     FUNCTION_END;
-    return pdfUrl;
+    return formPdfUrl;
 }
 
 @end

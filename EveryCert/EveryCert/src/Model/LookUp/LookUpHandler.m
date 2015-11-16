@@ -32,20 +32,26 @@
 - (NSInteger)getLookupIdAppOfFieldNo:(NSInteger)fieldNumber record:(NSInteger)recordIdApp
 {
     __block NSInteger lookupIdApp = 0;
+
+    self.db = self.db ? :[FMDBDataSource sharedDatabase];
     
-    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    [self.db closeOpenResultSets];
     
-    [databaseQueue inDatabase:^(FMDatabase *db)
-     {
+    if (![self.db open]) return lookupIdApp;
+
+//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+//    
+//    [databaseQueue inDatabase:^(FMDatabase *db)
+//     {
          NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ? AND %@ = ?", LookUpIdApp, self.tableName, LookUpFieldNumber, RecordIdApp];
          
-         FMResultSet *result = [db executeQuery:query, @(fieldNumber), @(recordIdApp)];
+         FMResultSet *result = [self.db executeQuery:query, @(fieldNumber), @(recordIdApp)];
          
          if ([result next])
          {
              lookupIdApp = [result intForColumn:LookUpIdApp];
          }
-     }];
+//     }];
     
     return lookupIdApp;
 }
@@ -59,21 +65,27 @@
     lookupModel.isDirty = true;
     lookupModel.uuid = [[NSUUID new] UUIDString];
     
-    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    self.db = self.db ? :[FMDBDataSource sharedDatabase];
     
-    [databaseQueue inDatabase:^(FMDatabase *db)
-     {
+    [self.db closeOpenResultSets];
+    
+    if (![self.db open]) return rowId;
+    
+//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+//    
+//    [databaseQueue inDatabase:^(FMDatabase *db)
+//     {
          BOOL success = false;
          
          NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", self.tableName, LookUpId, LookUpListId, RecordIdApp, LookUpLinkedRecordIdApp, LookUpFieldNumber, LookUpOption, LookUpDataValue, LookUpSequenceOrder, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
          
-         success = [db executeUpdate:query, @(lookupModel.lookUpId), @(lookupModel.lookUpListId), @(lookupModel.recordIdApp), @(lookupModel.linkedRecordIdApp), @(lookupModel.fieldNumber), lookupModel.option, lookupModel.dataValue, @(lookupModel.sequenceOrder), @(lookupModel.modifiedTimestampApp).stringValue, @(lookupModel.modifiedTimestamp).stringValue, @(lookupModel.archive), lookupModel.uuid, @(lookupModel.isDirty), @(lookupModel.companyId)];
+         success = [self.db executeUpdate:query, @(lookupModel.lookUpId), @(lookupModel.lookUpListId), @(lookupModel.recordIdApp), @(lookupModel.linkedRecordIdApp), @(lookupModel.fieldNumber), lookupModel.option, lookupModel.dataValue, @(lookupModel.sequenceOrder), @(lookupModel.modifiedTimestampApp).stringValue, @(lookupModel.modifiedTimestamp).stringValue, @(lookupModel.archive), lookupModel.uuid, @(lookupModel.isDirty), @(lookupModel.companyId)];
          
          if (success)
          {
-             rowId = (NSInteger)[db lastInsertRowId];
+             rowId = (NSInteger)[self.db lastInsertRowId];
          }
-     }];
+//     }];
     
     return rowId;
 }

@@ -194,7 +194,7 @@ NSString *const FormStatusShow = @"UnHide";
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:APP_DELEGATE.window animated:YES];
     hud.detailsLabelText = HudTitleFormDownloading;
     
-    NSString *formPdfPath = [FORMS_BACKGROUND_LAYOUT_DIR stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld %@.pdf", formModel.formId, formModel.name]];
+    NSString *formPdfPath = [FORMS_BACKGROUND_LAYOUT_DIR stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.pdf", formModel.formId]];
     NSURL *destinationUrl = [NSURL fileURLWithPath:formPdfPath];
     
     FormHandler *formHandler = [FormHandler new];
