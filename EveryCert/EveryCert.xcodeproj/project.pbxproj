@@ -1313,14 +1313,14 @@
 			baseConfigurationReference = 4EE41FB74DDDF2865D00F8CF /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Software Works for You Ltd (YYK27J32TT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tulloch Priest (A4F6J4E7M6)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = EveryCert/EveryCert.pch;
 				INFOPLIST_FILE = EveryCert/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6a17333e-e3c2-491d-bce5-ab23bc2cfb44";
+				PROVISIONING_PROFILE = "de03a764-9b81-4aad-824b-39cb9bbf99a4";
 			};
 			name = Debug;
 		};
@@ -1329,15 +1329,15 @@
 			baseConfigurationReference = 5A067339331CE3E7D6EA518F /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Software Works for You Ltd (YYK27J32TT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Software Works for You Ltd (YYK27J32TT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tulloch Priest (A4F6J4E7M6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tulloch Priest (A4F6J4E7M6)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = EveryCert/EveryCert.pch;
 				INFOPLIST_FILE = EveryCert/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6a17333e-e3c2-491d-bce5-ab23bc2cfb44";
+				PROVISIONING_PROFILE = "de03a764-9b81-4aad-824b-39cb9bbf99a4";
 			};
 			name = Release;
 		};
