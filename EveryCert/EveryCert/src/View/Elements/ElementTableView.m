@@ -209,13 +209,14 @@ NSString *const ElementCellReuseIdentifier = @"ElementCellReuseIdentifier";
             
         case ElementTypeTextView:
         {
-            reuseIdentifier =ElementCellReuseIdentifierTextView;
+            reuseIdentifier = ElementCellReuseIdentifierTextView;
         }
             break;
             
         case ElementTypePicker:
         {
-            reuseIdentifier =ElementCellReuseIdentifierPicker;
+            reuseIdentifier = ElementCellReuseIdentifierPicker;
+//            reuseIdentifier = ElementCellReuseIdentifierLookUp;
         }
             break;
             

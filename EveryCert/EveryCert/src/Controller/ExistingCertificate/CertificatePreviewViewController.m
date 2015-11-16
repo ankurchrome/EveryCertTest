@@ -123,7 +123,7 @@
         ElementModel *filteredModel = [[APP_DELEGATE.certificateVC.formElements filteredArrayUsingPredicate:predicate] firstObject];
         
         
-        if([CommonUtils isValidString:filteredModel.fieldName])
+        if([CommonUtils isValidString:filteredModel.fieldName] && [CommonUtils isValidString:filteredModel.dataValue])
         {
             [subjectString appendString: filteredModel.dataValue];
             [subjectString appendString: @" "];

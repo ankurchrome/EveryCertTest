@@ -38,10 +38,8 @@
     _existingCertsTableView.superview.layer.shadowOffset = CGSizeMake(0,5);
     _existingCertsTableView.superview.layer.shadowOpacity = 0.5;
     
-    _existingCertsTableView.layer.masksToBounds = YES;
-    _existingCertsTableView.layer.cornerRadius = 10.0f;
-
-    
+    _existingCertsTableView.backgroundColor = APP_BG_COLOR;
+    self.view.backgroundColor = APP_BG_COLOR;
     _certHandler = [CertificateHandler new];
     _existingCertsList = [_certHandler getAllExistingCertificatesOfCompany:APP_DELEGATE.loggedUserCompanyId];
 }

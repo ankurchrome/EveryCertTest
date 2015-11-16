@@ -6,29 +6,56 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ElementCellPicker" id="tpu-ca-p5U" customClass="PickListElementCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ElementCellPicker" rowHeight="130" id="tpu-ca-p5U" customClass="PickListElementCell">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="130"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tpu-ca-p5U" id="FzC-XB-Qgq">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Picker" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gpe-6x-AYJ">
-                        <rect key="frame" x="10" y="10" width="200" height="21"/>
+                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="WPy-XG-aY8" customClass="ElementTableView">
+                        <rect key="frame" x="20" y="61" width="560" height="40"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </tableView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CmE-A8-9tV" userLabel="Separator">
+                        <rect key="frame" x="15" y="128" width="585" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="200" id="A7x-8a-7ir"/>
-                            <constraint firstAttribute="height" constant="21" id="hEa-Wj-H2U"/>
+                            <constraint firstAttribute="height" constant="1" id="3js-mg-0ff"/>
+                        </constraints>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hwR-lS-rQ0">
+                        <rect key="frame" x="8" y="8" width="584" height="40"/>
+                        <color key="backgroundColor" red="0.094117647060000004" green="0.41176470590000003" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="zgO-P3-Ugf"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <state key="normal" title="Add New Appliance">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="onClickAddNewApplianceButton:" destination="tpu-ca-p5U" eventType="touchUpInside" id="9SO-UD-8mf"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Gpe-6x-AYJ" firstAttribute="top" secondItem="FzC-XB-Qgq" secondAttribute="top" constant="10" id="1Ki-dI-bDc"/>
-                    <constraint firstItem="Gpe-6x-AYJ" firstAttribute="leading" secondItem="FzC-XB-Qgq" secondAttribute="leading" constant="10" id="vcN-6X-Sic"/>
+                    <constraint firstAttribute="bottom" secondItem="CmE-A8-9tV" secondAttribute="bottom" id="0qv-qc-P3s"/>
+                    <constraint firstAttribute="trailing" secondItem="hwR-lS-rQ0" secondAttribute="trailing" constant="8" id="1QX-HO-UN8"/>
+                    <constraint firstItem="hwR-lS-rQ0" firstAttribute="top" secondItem="FzC-XB-Qgq" secondAttribute="top" constant="8" id="2TW-1x-kIo"/>
+                    <constraint firstItem="WPy-XG-aY8" firstAttribute="top" secondItem="hwR-lS-rQ0" secondAttribute="bottom" constant="13" id="77I-RF-TbQ"/>
+                    <constraint firstItem="WPy-XG-aY8" firstAttribute="leading" secondItem="FzC-XB-Qgq" secondAttribute="leading" constant="20" id="7ts-co-Rrp"/>
+                    <constraint firstAttribute="trailing" secondItem="WPy-XG-aY8" secondAttribute="trailing" constant="20" id="CdB-7l-zvS"/>
+                    <constraint firstItem="CmE-A8-9tV" firstAttribute="top" secondItem="WPy-XG-aY8" secondAttribute="bottom" constant="27" id="EJa-nU-0LN"/>
+                    <constraint firstItem="CmE-A8-9tV" firstAttribute="leading" secondItem="FzC-XB-Qgq" secondAttribute="leading" constant="15" id="aQc-Ju-p4b"/>
+                    <constraint firstAttribute="trailing" secondItem="CmE-A8-9tV" secondAttribute="trailing" id="qXc-gj-fnK"/>
+                    <constraint firstItem="hwR-lS-rQ0" firstAttribute="leading" secondItem="FzC-XB-Qgq" secondAttribute="leading" constant="8" id="vYI-Hp-ISX"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="259" y="174"/>
+            <connections>
+                <outlet property="seperatorView" destination="CmE-A8-9tV" id="Ubq-0a-Vld"/>
+            </connections>
+            <point key="canvasLocation" x="367" y="138"/>
         </tableViewCell>
     </objects>
 </document>

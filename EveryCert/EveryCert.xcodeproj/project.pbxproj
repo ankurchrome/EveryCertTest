@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		775C73891BE0A73E004CE738 /* FormPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775C73881BE0A73E004CE738 /* FormPreviewViewController.m */; };
+		778977B21BF9F8E400D9A97E /* LookUpElementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 778977B11BF9F8E400D9A97E /* LookUpElementsViewController.m */; };
+		778977B91BF9F93700D9A97E /* LookUpListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 778977B81BF9F93700D9A97E /* LookUpListViewController.m */; };
 		779637A71B747CDF0001ADC2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 779637A61B747CDF0001ADC2 /* libsqlite3.0.dylib */; };
 		779A9D851B7C7D0700D86FED /* LookupElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 779A9D501B7C7D0700D86FED /* LookupElementCell.m */; };
 		779A9D861B7C7D0700D86FED /* LookupElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779A9D511B7C7D0700D86FED /* LookupElementCell.xib */; };
@@ -118,6 +120,10 @@
 		6BDC13634B5A75B79FB745AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		775C73871BE0A73E004CE738 /* FormPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FormPreviewViewController.h; path = FormPreview/FormPreviewViewController.h; sourceTree = "<group>"; };
 		775C73881BE0A73E004CE738 /* FormPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormPreviewViewController.m; path = FormPreview/FormPreviewViewController.m; sourceTree = "<group>"; };
+		778977B01BF9F8E400D9A97E /* LookUpElementsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookUpElementsViewController.h; sourceTree = "<group>"; };
+		778977B11BF9F8E400D9A97E /* LookUpElementsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookUpElementsViewController.m; sourceTree = "<group>"; };
+		778977B71BF9F93700D9A97E /* LookUpListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookUpListViewController.h; sourceTree = "<group>"; };
+		778977B81BF9F93700D9A97E /* LookUpListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookUpListViewController.m; sourceTree = "<group>"; };
 		779637A61B747CDF0001ADC2 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		779A9D4F1B7C7D0700D86FED /* LookupElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupElementCell.h; sourceTree = "<group>"; };
 		779A9D501B7C7D0700D86FED /* LookupElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupElementCell.m; sourceTree = "<group>"; };
@@ -331,6 +337,24 @@
 			path = Form;
 			sourceTree = "<group>";
 		};
+		778977AF1BF9F8E400D9A97E /* LookUpElementsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				778977B01BF9F8E400D9A97E /* LookUpElementsViewController.h */,
+				778977B11BF9F8E400D9A97E /* LookUpElementsViewController.m */,
+			);
+			path = LookUpElementsViewController;
+			sourceTree = "<group>";
+		};
+		778977B61BF9F93700D9A97E /* LookUpListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				778977B71BF9F93700D9A97E /* LookUpListViewController.h */,
+				778977B81BF9F93700D9A97E /* LookUpListViewController.m */,
+			);
+			path = LookUpListViewController;
+			sourceTree = "<group>";
+		};
 		779637A81B747D400001ADC2 /* FrameWork */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,6 +391,8 @@
 		779A9D4E1B7C7D0700D86FED /* Lookup */ = {
 			isa = PBXGroup;
 			children = (
+				778977B61BF9F93700D9A97E /* LookUpListViewController */,
+				778977AF1BF9F8E400D9A97E /* LookUpElementsViewController */,
 				779A9D4F1B7C7D0700D86FED /* LookupElementCell.h */,
 				779A9D501B7C7D0700D86FED /* LookupElementCell.m */,
 				779A9D511B7C7D0700D86FED /* LookupElementCell.xib */,
@@ -1154,6 +1180,7 @@
 				C38E89C01B9705D500790752 /* CompanyUserModel.m in Sources */,
 				C38E89C21B9705D500790752 /* DataModel.m in Sources */,
 				C38E89D01B9705D500790752 /* SubElementModel.m in Sources */,
+				778977B21BF9F8E400D9A97E /* LookUpElementsViewController.m in Sources */,
 				779A9D8E1B7C7D0700D86FED /* SignatureDrawingView.m in Sources */,
 				C38E89CB1B9705D500790752 /* LookUpHandler.m in Sources */,
 				C3EEB9551BB2E5B80090C4B0 /* LineElementCell.m in Sources */,
@@ -1167,6 +1194,7 @@
 				C3EEB9801BB2E7040090C4B0 /* Constant.m in Sources */,
 				C38E89C41B9705D500790752 /* DataBinaryModel.m in Sources */,
 				C3EEB9871BB2E7040090C4B0 /* DrawingPDF.m in Sources */,
+				778977B91BF9F93700D9A97E /* LookUpListViewController.m in Sources */,
 				C38E89C81B9705D500790752 /* FormModel.m in Sources */,
 				C38E89C91B9705D500790752 /* FormSectionHandler.m in Sources */,
 				C3DA80B01BB95C6A00384F50 /* LookupSearchViewController.m in Sources */,

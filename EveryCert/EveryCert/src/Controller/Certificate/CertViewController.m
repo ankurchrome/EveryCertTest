@@ -129,9 +129,6 @@ enum Section_Image_Status
     _elementTableView.superview.layer.shadowOffset = CGSizeMake(0,5);
     _elementTableView.superview.layer.shadowOpacity = 0.5;
     
-    _elementTableView.layer.masksToBounds = YES;
-    _elementTableView.layer.cornerRadius = 10.0f;
-    
     
     FormSectionHandler *sectionHandler = [FormSectionHandler new];
     _formSections = [sectionHandler getAllSectionsOfForm:_certificate.formId];
