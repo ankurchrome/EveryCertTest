@@ -33,25 +33,19 @@
 {
     __block NSInteger lookupIdApp = 0;
 
-    self.db = self.db ? :[FMDBDataSource sharedDatabase];
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
-    [self.db closeOpenResultSets];
-    
-    if (![self.db open]) return lookupIdApp;
-
-//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
-//    
-//    [databaseQueue inDatabase:^(FMDatabase *db)
-//     {
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
          NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ? AND %@ = ?", LookUpIdApp, self.tableName, LookUpFieldNumber, RecordIdApp];
          
-         FMResultSet *result = [self.db executeQuery:query, @(fieldNumber), @(recordIdApp)];
+         FMResultSet *result = [db executeQuery:query, @(fieldNumber), @(recordIdApp)];
          
          if ([result next])
          {
              lookupIdApp = [result intForColumn:LookUpIdApp];
          }
-//     }];
+     }];
     
     return lookupIdApp;
 }
@@ -65,27 +59,21 @@
     lookupModel.isDirty = true;
     lookupModel.uuid = [[NSUUID new] UUIDString];
     
-    self.db = self.db ? :[FMDBDataSource sharedDatabase];
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
-    [self.db closeOpenResultSets];
-    
-    if (![self.db open]) return rowId;
-    
-//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
-//    
-//    [databaseQueue inDatabase:^(FMDatabase *db)
-//     {
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
          BOOL success = false;
          
          NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", self.tableName, LookUpId, LookUpListId, RecordIdApp, LookUpLinkedRecordIdApp, LookUpFieldNumber, LookUpOption, LookUpDataValue, LookUpSequenceOrder, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
          
-         success = [self.db executeUpdate:query, @(lookupModel.lookUpId), @(lookupModel.lookUpListId), @(lookupModel.recordIdApp), @(lookupModel.linkedRecordIdApp), @(lookupModel.fieldNumber), lookupModel.option, lookupModel.dataValue, @(lookupModel.sequenceOrder), @(lookupModel.modifiedTimestampApp).stringValue, @(lookupModel.modifiedTimestamp).stringValue, @(lookupModel.archive), lookupModel.uuid, @(lookupModel.isDirty), @(lookupModel.companyId)];
+         success = [db executeUpdate:query, @(lookupModel.lookUpId), @(lookupModel.lookUpListId), @(lookupModel.recordIdApp), @(lookupModel.linkedRecordIdApp), @(lookupModel.fieldNumber), lookupModel.option, lookupModel.dataValue, @(lookupModel.sequenceOrder), @(lookupModel.modifiedTimestampApp).stringValue, @(lookupModel.modifiedTimestamp).stringValue, @(lookupModel.archive), lookupModel.uuid, @(lookupModel.isDirty), @(lookupModel.companyId)];
          
          if (success)
          {
-             rowId = (NSInteger)[self.db lastInsertRowId];
+             rowId = (NSInteger)[db lastInsertRowId];
          }
-//     }];
+     }];
     
     return rowId;
 }
@@ -149,7 +137,7 @@
     return timestamp;
 }
 
-- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info
+- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info db:(FMDatabase *)db
 {
     NSInteger recordId = [info[RecordId] integerValue];
     NSInteger linkedRecordId = [info[LookUpLinkedRecordId] integerValue];
@@ -157,8 +145,7 @@
     NSMutableDictionary *newRecordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:info];
     
     RecordHandler *recordHandler = [RecordHandler new];
-    recordHandler.db = self.db;
-    NSInteger recordIdApp = recordId > 0 ? [recordHandler getAppId:recordId] : 0;
+    NSInteger recordIdApp = recordId > 0 ? [recordHandler getAppId:recordId db:db] : 0;
     
     if (recordIdApp <= 0)
     {
@@ -167,8 +154,7 @@
 
     [newRecordInfo setObject:@(recordIdApp).stringValue forKey:RecordIdApp];
     
-    NSInteger linkedRecordIdApp = linkedRecordId > 0 ? [recordHandler getAppId:linkedRecordId] : 0;
-    
+    NSInteger linkedRecordIdApp = linkedRecordId > 0 ? [recordHandler getAppId:linkedRecordId db:db] : 0;
     [newRecordInfo setObject:@(linkedRecordIdApp).stringValue forKey:LookUpLinkedRecordIdApp];
     
     // Initialise modified timestamp app with modified timestamp server for new records

@@ -150,6 +150,8 @@
 {
     if (LOGS_ON) NSLog(@"Sync Finished response. Error: %@", notification);
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SyncFinishedNotification object:nil];
+
     CompanyUserHandler *companyUserHandler = [CompanyUserHandler new];
     
     [companyUserHandler logoutUserSuccess:^(ECHttpResponseModel *response)

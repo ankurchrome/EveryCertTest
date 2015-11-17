@@ -1173,9 +1173,6 @@
                                     <action selector="homeButtonTapped:" destination="I9P-LX-HXB" eventType="touchUpInside" id="F0y-Q9-53t"/>
                                 </connections>
                             </button>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
-                            </userDefinedRuntimeAttributes>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="iIO-Ci-XXF">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="rqH-dx-oky">

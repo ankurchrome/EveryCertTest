@@ -108,9 +108,9 @@
      }];
 }
 
-- (NSMutableDictionary *)populateInfoForServerOnlyExistingRecord:(NSDictionary *)info
+- (NSMutableDictionary *)populateInfoForServerOnlyExistingRecord:(NSDictionary *)info db:(FMDatabase *)db
 {
-    NSMutableDictionary *recordInfo = [super populateInfoForServerOnlyExistingRecord:info];
+    NSMutableDictionary *recordInfo = [super populateInfoForServerOnlyExistingRecord:info db:db];
     
     [recordInfo setObject:@(false) forKey:FormStatus];
     

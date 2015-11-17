@@ -39,25 +39,19 @@
     dataModel.isDirty = true;
     dataModel.uuid = [[NSUUID new] UUIDString];
 
-    self.db = self.db ? :[FMDBDataSource sharedDatabase];
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
-    [self.db closeOpenResultSets];
-    
-    if (![self.db open]) return success;
-
-//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
-//    
-//    [databaseQueue inDatabase:^(FMDatabase *db)
-//     {
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
          NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?)", self.tableName, DataId, CertificateIdApp, ElementId, RecordIdApp, DataValue, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
          
-         success = [self.db executeUpdate:query, @(dataModel.dataId), @(dataModel.certificateIdApp), @(dataModel.elementId), @(dataModel.recordIdApp), dataModel.data, @(dataModel.modifiedTimestampApp), @(dataModel.modifiedTimestamp), @(dataModel.archive), dataModel.uuid, @(dataModel.isDirty), @(dataModel.companyId)];
+         success = [db executeUpdate:query, @(dataModel.dataId), @(dataModel.certificateIdApp), @(dataModel.elementId), @(dataModel.recordIdApp), dataModel.data, @(dataModel.modifiedTimestampApp), @(dataModel.modifiedTimestamp), @(dataModel.archive), dataModel.uuid, @(dataModel.isDirty), @(dataModel.companyId)];
          
          if (success)
          {
-             dataModel.dataIdApp = [self.db lastInsertRowId];
+             dataModel.dataIdApp = [db lastInsertRowId];
          }
-//     }];
+     }];
     
     FUNCTION_END;
     return success;
@@ -157,42 +151,6 @@
     return linkedRecordIdApp;
 }
 
-#pragma mark - ServerSync Methods
-
-- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info
-{
-    NSMutableDictionary *newRecordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:info];
-
-    //Save cert id app
-    CertificateHandler *certificateHandler = [CertificateHandler new];
-    certificateHandler.db = self.db;
-    NSInteger certificateId = [info[CertificateId] integerValue];
-    NSInteger certificateIdApp = certificateId > 0 ? [certificateHandler getAppId:certificateId] : 0;
-    
-    if (certificateIdApp <= 0)
-    {
-        if (LOGS_ON) NSLog(@"Certificate not found: %ld", certificateIdApp); return nil;
-    }
-
-    [newRecordInfo setObject:@(certificateIdApp).stringValue forKey:CertificateIdApp];
-    
-    //Save record id app
-    RecordHandler *recordHandler = [RecordHandler new];
-    recordHandler.db = self.db;
-    NSInteger recordId = [info[RecordId] integerValue];
-    NSInteger recordIdApp = recordId > 0 ? [recordHandler getAppId:recordId] : 0;
-    [newRecordInfo setObject:@(recordIdApp).stringValue forKey:RecordIdApp];
-    
-    // Initialise modified timestamp app with modified timestamp server for new records
-    if ([info valueForKey:ModifiedTimeStampServer])
-    {
-        [newRecordInfo setObject:[info valueForKey:ModifiedTimeStampServer] forKey:ModifiedTimeStamp];
-        [newRecordInfo setObject:[info valueForKey:ModifiedTimeStampServer] forKey:ModifiedTimestampApp];
-    }
-    
-    return newRecordInfo;
-}
-
 - (NSString *)getDataFromCertModel:(CertificateModel *)certModel FieldName:(NSString *)fieldName
 {
     __block NSString *data = [NSString new];
@@ -213,6 +171,40 @@
      }];
     
     return data;
+}
+
+#pragma mark - ServerSync Methods
+
+- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info db:(FMDatabase *)db
+{
+    NSMutableDictionary *newRecordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:info];
+
+    //Save cert id app
+    CertificateHandler *certificateHandler = [CertificateHandler new];
+    NSInteger certId = [info[CertificateId] integerValue];
+    NSInteger certIdApp = certId > 0 ? [certificateHandler getAppId:certId db:db] : 0;
+    
+    if (certIdApp <= 0)
+    {
+        if (LOGS_ON) NSLog(@"Certificate not found: %ld", certIdApp); return nil;
+    }
+
+    [newRecordInfo setObject:@(certIdApp).stringValue forKey:CertificateIdApp];
+    
+    //Save record id app
+    RecordHandler *recordHandler = [RecordHandler new];
+    NSInteger recordId = [info[RecordId] integerValue];
+    NSInteger recordIdApp = recordId > 0 ? [recordHandler getAppId:recordId db:db] : 0;
+    [newRecordInfo setObject:@(recordIdApp).stringValue forKey:RecordIdApp];
+    
+    // Initialise modified timestamp app with modified timestamp server for new records
+    if ([info valueForKey:ModifiedTimeStampServer])
+    {
+        [newRecordInfo setObject:[info valueForKey:ModifiedTimeStampServer] forKey:ModifiedTimeStamp];
+        [newRecordInfo setObject:[info valueForKey:ModifiedTimeStampServer] forKey:ModifiedTimestampApp];
+    }
+    
+    return newRecordInfo;
 }
 
 @end
