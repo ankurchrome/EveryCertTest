@@ -182,7 +182,7 @@ enum Section_Image_Status
     UIFont *font = [UIFont boldSystemFontOfSize:18];
     label.font   = font;
     self.navigationItem.titleView = label;
-
+    
     self.view.backgroundColor = APP_BG_COLOR;
     
     _elementTableView.superview.clipsToBounds = NO;
@@ -262,16 +262,16 @@ enum Section_Image_Status
                     //linked element hasn't filled yet, back to previous screen
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:ALERT_TITLE_WARNING
                                                                                              message:_currentSearchElementModel.popUpMessage
-                                                                                    preferredStyle:UIAlertControllerStyleAlert];
+                                                                                      preferredStyle:UIAlertControllerStyleAlert];
                     
                     UIAlertAction *okAction = [UIAlertAction actionWithTitle:ALERT_ACTION_TITLE_OK
                                                                        style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
                                                {
-                                                    [APP_DELEGATE.certificateVC backToPreviousSection];
+                                                   [APP_DELEGATE.certificateVC backToPreviousSection];
                                                }];
                     
                     [alertController addAction:okAction];
-                  
+                    
                     [self presentViewController:alertController animated:YES completion:nil];
                 }
             }
@@ -455,96 +455,88 @@ enum Section_Image_Status
 {
     FUNCTION_START;
     
-    __block BOOL isSaved = false;
-
+    BOOL isSaved = false;
+    
     _dataHandler   = _dataHandler ? _dataHandler : [DataHandler new];
     _lookupHandler = _lookupHandler ? _lookupHandler : [LookUpHandler new];
-
-    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
-    [databaseQueue inDatabase:^(FMDatabase *db)
+    elementModel.dataValue = elementModel.dataValue ? elementModel.dataValue : EMPTY_STRING;
+    
+    if (_isLookupSection)
     {
-        _dataHandler.db = db;
-        _lookupHandler.db = db;
+        NSInteger lookupIdApp = [_lookupHandler getLookupIdAppOfFieldNo:elementModel.fieldNumberExisting record:_currentSectionRecordIdApp];
         
-        elementModel.dataValue = elementModel.dataValue ? elementModel.dataValue : EMPTY_STRING;
-        
-        if (_isLookupSection)
+        if (lookupIdApp > 0)
         {
-            NSInteger lookupIdApp = [_lookupHandler getLookupIdAppOfFieldNo:elementModel.fieldNumberExisting record:_currentSectionRecordIdApp];
-            
-            if (lookupIdApp > 0)
-            {
-                //update lookup fields data with element data
-                NSDictionary *columnInfo = @{
-                                             LookUpDataValue: elementModel.dataValue,
-                                             ModifiedTimestampApp: @([[NSDate date] timeIntervalSince1970]),
-                                             IsDirty: @(true)
-                                             };
-                
-                isSaved = [_lookupHandler updateInfo:columnInfo recordIdApp:lookupIdApp];
-            }
-            else
-            {
-                if ([CommonUtils isValidString:elementModel.dataValue])
-                {
-                    //Insert field data with newly created lookup record
-                    LookUpModel *lookupModel = [LookUpModel new];
-                    
-                    lookupModel.lookUpListId  = elementModel.lookUpListIdExisting;
-                    lookupModel.recordIdApp   = _currentSectionRecordIdApp;
-                    lookupModel.fieldNumber   = elementModel.fieldNumberExisting;
-                    lookupModel.option        = EMPTY_STRING;
-                    lookupModel.dataValue     = elementModel.dataValue;
-                    lookupModel.sequenceOrder = elementModel.sequenceOrder;
-                    lookupModel.companyId     = APP_DELEGATE.loggedUserCompanyId;
-                    
-                    if (_linkedSearchElementModel)
-                    {
-                        lookupModel.linkedRecordIdApp = _linkedSearchElementModel.recordIdApp;
-                    }
-                    
-                    [_lookupHandler insertLookupModel:lookupModel];
-                }
-            }
-        }
-        
-        if (elementModel.dataIdApp > 0)
-        {
-            //update existing data with modified data
+            //update lookup fields data with element data
             NSDictionary *columnInfo = @{
-                                         DataValue: elementModel.dataValue,
+                                         LookUpDataValue: elementModel.dataValue,
                                          ModifiedTimestampApp: @([[NSDate date] timeIntervalSince1970]),
                                          IsDirty: @(true)
                                          };
             
-            isSaved = [_dataHandler updateInfo:columnInfo recordIdApp:elementModel.dataIdApp];
+            isSaved = [_lookupHandler updateInfo:columnInfo recordIdApp:lookupIdApp];
         }
         else
         {
-            //Allow empty data to insert for search type element only
-            if ([CommonUtils isValidString:elementModel.dataValue] && elementModel.fieldType != ElementTypeSearch)
+            if ([CommonUtils isValidString:elementModel.dataValue])
             {
-                DataModel *dataModel = [DataModel new];
-                dataModel.certificateIdApp = _certificate.certIdApp;
-                dataModel.elementId   = elementModel.elementId;
-                dataModel.recordIdApp = _currentSectionRecordIdApp;
-                dataModel.data        = elementModel.dataValue;
-                dataModel.companyId   = APP_DELEGATE.loggedUserCompanyId;
-                dataModel.formId      = _certificate.formId;
+                //Insert field data with newly created lookup record
+                LookUpModel *lookupModel = [LookUpModel new];
                 
-                isSaved = [_dataHandler insertDataModel:dataModel];
+                lookupModel.lookUpListId  = elementModel.lookUpListIdExisting;
+                lookupModel.recordIdApp   = _currentSectionRecordIdApp;
+                lookupModel.fieldNumber   = elementModel.fieldNumberExisting;
+                lookupModel.option        = EMPTY_STRING;
+                lookupModel.dataValue     = elementModel.dataValue;
+                lookupModel.sequenceOrder = elementModel.sequenceOrder;
+                lookupModel.companyId     = APP_DELEGATE.loggedUserCompanyId;
                 
-                if (isSaved)
+                if (_linkedSearchElementModel)
                 {
-                    if (LOGS_ON) NSLog(@"saved data model: %@", dataModel);
-                    
-                    elementModel.recordIdApp = _currentSectionRecordIdApp;
-                    elementModel.dataIdApp = dataModel.dataIdApp;
+                    lookupModel.linkedRecordIdApp = _linkedSearchElementModel.recordIdApp;
                 }
+                
+                [_lookupHandler insertLookupModel:lookupModel];
             }
         }
-    }];
+    }
+    
+    if (elementModel.dataIdApp > 0)
+    {
+        //update existing data with modified data
+        NSDictionary *columnInfo = @{
+                                     DataValue: elementModel.dataValue,
+                                     ModifiedTimestampApp: @([[NSDate date] timeIntervalSince1970]),
+                                     IsDirty: @(true)
+                                     };
+        
+        isSaved = [_dataHandler updateInfo:columnInfo recordIdApp:elementModel.dataIdApp];
+    }
+    else
+    {
+        //Allow empty data to insert for search type element only
+        if ([CommonUtils isValidString:elementModel.dataValue] && elementModel.fieldType != ElementTypeSearch)
+        {
+            DataModel *dataModel = [DataModel new];
+            dataModel.certificateIdApp = _certificate.certIdApp;
+            dataModel.elementId   = elementModel.elementId;
+            dataModel.recordIdApp = _currentSectionRecordIdApp;
+            dataModel.data        = elementModel.dataValue;
+            dataModel.companyId   = APP_DELEGATE.loggedUserCompanyId;
+            dataModel.formId      = _certificate.formId;
+            
+            isSaved = [_dataHandler insertDataModel:dataModel];
+            
+            if (isSaved)
+            {
+                if (LOGS_ON) NSLog(@"saved data model: %@", dataModel);
+                
+                elementModel.recordIdApp = _currentSectionRecordIdApp;
+                elementModel.dataIdApp = dataModel.dataIdApp;
+            }
+        }
+    }
     
     FUNCTION_END;
     return isSaved;
@@ -570,7 +562,6 @@ enum Section_Image_Status
                                      ModifiedTimestampApp: @([[NSDate date] timeIntervalSince1970]),
                                      IsDirty: @(true)
                                      };
-        
         isSaved = [_dataBinaryHandler updateInfo:columnInfo recordIdApp:elementModel.dataBinaryIdApp];
     }
     else
@@ -684,7 +675,7 @@ enum Section_Image_Status
                 elementModel.dataValue = lookupRecordField.dataValue;
             }
         }
-       // elementModel.recordIdApp = recordIdApp;
+        // elementModel.recordIdApp = recordIdApp;
     }
     
     [self manageCheckBoxElement];

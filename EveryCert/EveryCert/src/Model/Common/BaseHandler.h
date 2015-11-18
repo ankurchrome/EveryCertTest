@@ -26,7 +26,7 @@ typedef void(^ErrorCallback)(NSError *error);
 @property(nonatomic, strong) NSArray  *tableColumns;
 @property(nonatomic, assign) BOOL noLocalRecord;
 
-@property(nonatomic, strong) FMDatabase *db;
+//@property(nonatomic, strong) FMDatabase *db;
 
 @property(nonatomic, strong) BaseHandler *nextSyncHandler;
 
@@ -36,48 +36,57 @@ typedef void(^ErrorCallback)(NSError *error);
 
 - (NSString *)updateQueryForInfo:(NSDictionary *)recordInfo;
 
+- (NSInteger)insertInfo:(NSDictionary *)columnInfo;
+
 /**
  Insert into table with columns and their data defined in the columnInfo and return the app id generated locally
  @param  columnInfo A NSDictionary object which contains column names with their data to insert
+ @param  db A FMDatabase object to execute all the database queries
  @return NSInteger returns a last row id inserted by database if record inserted successfully otherwise returns 0
  */
-- (NSInteger)insertInfo:(NSDictionary *)columnInfo;
+- (NSInteger)insertInfo:(NSDictionary *)columnInfo db:(FMDatabase *)db;
+
+- (BOOL)updateInfo:(NSDictionary *)columnInfo recordIdApp:(NSInteger)recordIdApp;
 
 /**
  Update into table with columns and their data defined in the columnInfo for the given recordIdApp
  @param  columnInfo A NSDictionary object which contains column names with their data to update
  @param  recordIdApp Local id of a record to be update in table
+ @param  db A FMDatabase object to execute all the database queries
  @return BOOL returns true if record updated successfully otherwise false
  */
-- (BOOL)updateInfo:(NSDictionary *)columnInfo recordIdApp:(NSInteger)recordIdApp;
+- (BOOL)updateInfo:(NSDictionary *)columnInfo recordIdApp:(NSInteger)recordIdApp db:(FMDatabase *)db;
 
 // Returns local Record id for given server Id.
-- (NSInteger)getAppId:(NSInteger)serverId;
+- (NSInteger)getAppId:(NSInteger)serverId db:(FMDatabase *)db;
 
 // Returns server id for given app Id.
-- (NSInteger)getServerId:(NSInteger)appId;
+- (NSInteger)getServerId:(NSInteger)appId db:(FMDatabase *)db;
 
 // Returns record info from active table for given app id
-- (NSDictionary *)getRecordInfoWithAppId:(NSInteger)appId;
+- (NSDictionary *)getRecordInfoWithAppId:(NSInteger)appId db:(FMDatabase *)db;
 
 #pragma mark - ServerSync Methods
 
 #pragma mark Info
+
 - (NSTimeInterval)getSyncTimestampOfTableForCompany:(NSInteger)companyId;
 - (BOOL)updateTableSyncTimestamp:(NSTimeInterval)timestamp company:(NSInteger)companyId;
 - (NSString *)getApiCallWithTimestamp:(NSTimeInterval)timestamp;
 - (NSArray *)getAllDirtyRecords;
 
 #pragma mark Sync
+
 - (void)syncWithServer;
 
 #pragma mark Response
+
 - (void)saveGetRecords:(NSArray *)records;
 - (void)saveGetRecordsForServerOnlyTable:(NSArray *)records;
 - (void)savePutRecords:(NSArray *)records;
-- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info;
-- (NSMutableDictionary *)populateInfoForExistingRecord:(NSDictionary *)info appId:(NSInteger)appId;
-- (NSMutableDictionary *)populateInfoForServerOnlyExistingRecord:(NSDictionary *)info;
+- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info db:(FMDatabase *)db;
+- (NSMutableDictionary *)populateInfoForExistingRecord:(NSDictionary *)info appId:(NSInteger)appId db:(FMDatabase *)db;
+- (NSMutableDictionary *)populateInfoForServerOnlyExistingRecord:(NSDictionary *)info db:(FMDatabase *)db;
 - (void)startNextSyncOperation;
 - (void)finishSyncWithError:(NSError *)error;
 

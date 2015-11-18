@@ -55,7 +55,7 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
     }
     
     NSString *query = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)", self.tableName, columnString, valueString];
-
+    
     return query;
 }
 
@@ -80,191 +80,165 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
     }
     
     NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE %@ = :%@", self.tableName, columnString, self.appIdField, self.appIdField];
-
+    
     return query;
 }
 
-// Insert into table with columns and their data defined in the columnInfo and return the app id generated locally
 - (NSInteger)insertInfo:(NSDictionary *)columnInfo
 {
     __block NSInteger appId = 0;
     
-    if (!columnInfo || columnInfo.count <= 0) return appId;
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
     
-    self.db = self.db ? :[FMDBDataSource sharedDatabase];
-    
-    [self.db closeOpenResultSets];
-    
-    if (![self.db open]) return appId;
-    
-//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
-//    
-//    [databaseQueue inDatabase:^(FMDatabase *db)
-//     {
-         //Make column string to bind the column data from dictionary
-         NSMutableString *columnString = [NSMutableString new];
-         NSMutableString *valueString  = [NSMutableString new];
-         
-         for (NSString *key in self.tableColumns)
-         {
-             if ([columnInfo objectForKey:key])
-             {
-                 [columnString appendFormat:@"%@, ", key];
-                 [valueString  appendFormat:@":%@, ", key];
-             }
-         }
-         
-         if ([columnString hasSuffix:@", "])
-         {
-             //remove the extra separator from the end
-             [columnString deleteCharactersInRange:NSMakeRange(columnString.length-2, 2)];
-         }
-         
-         if ([valueString hasSuffix:@", "])
-         {
-             //remove the extra separator from the end
-             [valueString deleteCharactersInRange:NSMakeRange(valueString.length-2, 2)];
-         }
-         
-         NSString *query = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)", self.tableName, columnString, valueString];
-         
-         if ([self.db executeUpdate:query withParameterDictionary:columnInfo])
-         {
-             appId = [self.db lastInsertRowId];
-         }
-//     }];
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         appId = [self insertInfo:columnInfo db:db];
+     }];
     
     return appId;
 }
 
-// Update into table with columns and their data defined in the columnInfo for the given recordIdApp
+// Insert into table with columns and their data defined in the columnInfo and return the app id generated locally
+- (NSInteger)insertInfo:(NSDictionary *)columnInfo db:(FMDatabase *)db
+{
+    NSInteger appId = 0;
+    
+    if (!columnInfo || columnInfo.count <= 0) return appId;
+    
+    //Make column string to bind the column data from dictionary
+    NSMutableString *columnString = [NSMutableString new];
+    NSMutableString *valueString  = [NSMutableString new];
+    
+    for (NSString *key in self.tableColumns)
+    {
+        if ([columnInfo objectForKey:key])
+        {
+            [columnString appendFormat:@"%@, ", key];
+            [valueString  appendFormat:@":%@, ", key];
+        }
+    }
+    
+    if ([columnString hasSuffix:@", "])
+    {
+        //remove the extra separator from the end
+        [columnString deleteCharactersInRange:NSMakeRange(columnString.length-2, 2)];
+    }
+    
+    if ([valueString hasSuffix:@", "])
+    {
+        //remove the extra separator from the end
+        [valueString deleteCharactersInRange:NSMakeRange(valueString.length-2, 2)];
+    }
+    
+    NSString *query = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)", self.tableName, columnString, valueString];
+    
+    if ([db executeUpdate:query withParameterDictionary:columnInfo])
+    {
+        appId = [db lastInsertRowId];
+    }
+    
+    return appId;
+}
+
 - (BOOL)updateInfo:(NSDictionary *)columnInfo recordIdApp:(NSInteger)recordIdApp
 {
-    __block BOOL success = false;
+    __block BOOL isSaved = false;
+    
+    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
+    
+    [databaseQueue inDatabase:^(FMDatabase *db)
+     {
+         isSaved = [self updateInfo:columnInfo recordIdApp:recordIdApp db:db];
+     }];
+
+    return isSaved;
+}
+
+// Update into table with columns and their data defined in the columnInfo for the given recordIdApp
+- (BOOL)updateInfo:(NSDictionary *)columnInfo recordIdApp:(NSInteger)recordIdApp db:(FMDatabase *)db
+{
+    BOOL success = false;
     
     if (!columnInfo || columnInfo.count <= 0 || recordIdApp <=0) return success;
     
-    self.db = self.db ? :[FMDBDataSource sharedDatabase];
+    NSMutableDictionary *updatedColumnInfo = [[NSMutableDictionary alloc] initWithDictionary:columnInfo];
     
-    [self.db closeOpenResultSets];
+    //Make column string to bind the column data from dictionary
+    NSMutableString *columnString = [NSMutableString new];
     
-    if (![self.db open]) return success;
+    for (NSString *key in [updatedColumnInfo allKeys])
+    {
+        
+        [columnString appendFormat:@"%@ = :%@, ", key, key];
+    }
     
-//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
-//    
-//    [databaseQueue inDatabase:^(FMDatabase *db)
-//     {
-         NSMutableDictionary *updatedColumnInfo = [[NSMutableDictionary alloc] initWithDictionary:columnInfo];
-
-         //Make column string to bind the column data from dictionary
-         NSMutableString *columnString = [NSMutableString new];
-         
-         for (NSString *key in [updatedColumnInfo allKeys])
-         {
-             
-             [columnString appendFormat:@"%@ = :%@, ", key, key];
-         }
-
-         if ([columnString hasSuffix:@", "])
-         {
-             //remove the extra separator from the end
-             [columnString deleteCharactersInRange:NSMakeRange(columnString.length-2, 2)];
-         }
-         
-         NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE %@ = :%@", self.tableName, columnString, self.appIdField, self.appIdField];
-
-         [updatedColumnInfo setObject:@(recordIdApp) forKey:self.appIdField];
-         success = [self.db executeUpdate:query withParameterDictionary:updatedColumnInfo];
-//     }];
+    if ([columnString hasSuffix:@", "])
+    {
+        //remove the extra separator from the end
+        [columnString deleteCharactersInRange:NSMakeRange(columnString.length-2, 2)];
+    }
+    
+    NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE %@ = :%@", self.tableName, columnString, self.appIdField, self.appIdField];
+    
+    [updatedColumnInfo setObject:@(recordIdApp) forKey:self.appIdField];
+    
+    success = [db executeUpdate:query withParameterDictionary:updatedColumnInfo];
     
     return success;
 }
 
 //returns local Record id for given server Id.
-- (NSInteger)getAppId:(NSInteger)serverId
+- (NSInteger)getAppId:(NSInteger)serverId db:(FMDatabase *)db
 {
     FUNCTION_START;
     
-    __block NSInteger appId = 0;
+    NSInteger appId = 0;
     
     if (serverId <= 0 || ![CommonUtils isValidString:self.appIdField]) return appId;
     
-    self.db = self.db ? :[FMDBDataSource sharedDatabase];
+    NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ?", self.appIdField, self.tableName, self.serverIdField];
     
-    [self.db closeOpenResultSets];
+    FMResultSet *result = [db executeQuery:query, @(serverId)];
     
-    if (![self.db open]) return appId;
-    
-//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
-//    
-//    [databaseQueue inDatabase:^(FMDatabase *db)
-//     {
-         NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ?", self.appIdField, self.tableName, self.serverIdField];
-         
-         FMResultSet *result = [self.db executeQuery:query, @(serverId)];
-         
-         if ([result next])
-         {
-             appId = [result intForColumn:self.appIdField];
-         }
-//     }];
+    if ([result next])
+    {
+        appId = [result intForColumn:self.appIdField];
+    }
     
     return appId;
 }
 
 //returns server id for given app Id.
-- (NSInteger)getServerId:(NSInteger)appId
+- (NSInteger)getServerId:(NSInteger)appId db:(FMDatabase *)db
 {
-    __block NSInteger serverId = 0;
+    NSInteger serverId = 0;
     
     if (appId <= 0 || ![CommonUtils isValidString:self.appIdField]) return serverId;
     
-    self.db = self.db ? :[FMDBDataSource sharedDatabase];
+    NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ?", self.serverIdField, self.tableName, self.appIdField];
     
-    [self.db closeOpenResultSets];
+    FMResultSet *result = [db executeQuery:query, @(appId)];
     
-    if (![self.db open]) return appId;
-    
-//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
-//    
-//    [databaseQueue inDatabase:^(FMDatabase *db)
-//     {
-         NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ?", self.serverIdField, self.tableName, self.appIdField];
-         
-         FMResultSet *result = [self.db executeQuery:query, @(appId)];
-         
-         if ([result next])
-         {
-             serverId = [result intForColumn:self.appIdField];
-         }
-//     }];
+    if ([result next])
+    {
+        serverId = [result intForColumn:self.appIdField];
+    }
     
     return serverId;
 }
 
-- (NSDictionary *)getRecordInfoWithAppId:(NSInteger)appId
+- (NSDictionary *)getRecordInfoWithAppId:(NSInteger)appId db:(FMDatabase *)db
 {
-    __block NSDictionary *recordInfo = nil;
+    NSDictionary *recordInfo = nil;
     
-    self.db = self.db ? :[FMDBDataSource sharedDatabase];
+    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = ?", self.tableName, self.appIdField];
     
-    [self.db closeOpenResultSets];
+    FMResultSet *result = [db executeQuery:query, @(appId)];
     
-    if (![self.db open]) return recordInfo;
-    
-//    FMDatabaseQueue *databaseQueue = [[FMDBDataSource sharedManager] databaseQueue];
-//    
-//    [databaseQueue inDatabase:^(FMDatabase *db)
-//     {
-         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = ?", self.tableName, self.appIdField];
-         
-         FMResultSet *result = [self.db executeQuery:query, @(appId)];
-         
-         if ([result next])
-         {
-             recordInfo = [result resultDictionary];
-         }
-//     }];
+    if ([result next])
+    {
+        recordInfo = [result resultDictionary];
+    }
     
     return recordInfo;
 }
@@ -419,40 +393,37 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
     
     [databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback)
      {
-         self.db = db;
-         [self.db closeOpenResultSets];
-    
-    for (NSDictionary *responseInfo in records)
-    {
-        BOOL success = false;
-        
-        NSInteger serverId = [[responseInfo objectForKey:self.serverIdField] integerValue];
-        NSInteger appId = [self getAppId:serverId];
-        
-        if (appId > 0)
-        {
-            NSDictionary *recordInfo = [self populateInfoForExistingRecord:responseInfo appId:appId];
-            
-            if (recordInfo)
-            {
-                success = [self updateInfo:recordInfo recordIdApp:appId];
-            }
-        }
-        else
-        {
-            NSDictionary *recordInfo = [self populateInfoForNewRecord:responseInfo];
-            
-            if (recordInfo)
-            {
-                success = ([self insertInfo:recordInfo] > 0);
-            }
-        }
-        
-        if (!success)
-        {
-            if (LOGS_ON) NSLog(@"Update Failed(GET - %@): %@", self.tableName, responseInfo);
-        }
-    }
+         for (NSDictionary *responseInfo in records)
+         {
+             BOOL success = false;
+             
+             NSInteger serverId = [[responseInfo objectForKey:self.serverIdField] integerValue];
+             NSInteger appId = [self getAppId:serverId db:db];
+             
+             if (appId > 0)
+             {
+                 NSDictionary *recordInfo = [self populateInfoForExistingRecord:responseInfo appId:appId db:db];
+                 
+                 if (recordInfo)
+                 {
+                     success = [self updateInfo:recordInfo recordIdApp:appId db:db];
+                 }
+             }
+             else
+             {
+                 NSDictionary *recordInfo = [self populateInfoForNewRecord:responseInfo db:db];
+                 
+                 if (recordInfo)
+                 {
+                     success = ([self insertInfo:recordInfo db:db] > 0);
+                 }
+             }
+             
+             if (!success)
+             {
+                 if (LOGS_ON) NSLog(@"Update Failed(GET - %@): %@", self.tableName, responseInfo);
+             }
+         }
      }];
 }
 
@@ -462,33 +433,30 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
     
     [databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback)
      {
-         self.db = db;
-         [self.db closeOpenResultSets];
-         
-        for (NSDictionary *responseInfo in records)
-        {
-            BOOL success = false;
-            
-            NSDictionary *recordInfo = [self populateInfoForServerOnlyExistingRecord:responseInfo];
-            
-            NSInteger serverId = [[recordInfo objectForKey:self.serverIdField] integerValue];
-            
-            //In ServeryOnly tables there is no app id (server id is being treated as app id)
-            
-            if ([self getRecordInfoWithAppId:serverId])//self.appIdField & self.serverIdField will contain same column
-            {
-                success = [self updateInfo:recordInfo recordIdApp:serverId];
-            }
-            else
-            {
-                success = [self insertInfo:recordInfo];
-            }
-            
-            if (!success)
-            {
-                if (LOGS_ON) NSLog(@"Update Failed(GET - %@): %@", self.tableName, responseInfo);
-            }
-        }
+         for (NSDictionary *responseInfo in records)
+         {
+             BOOL success = false;
+             
+             NSDictionary *recordInfo = [self populateInfoForServerOnlyExistingRecord:responseInfo db:db];
+             
+             NSInteger serverId = [[recordInfo objectForKey:self.serverIdField] integerValue];
+             
+             //In ServeryOnly tables there is no app id (server id is being treated as app id)
+             
+             if ([self getRecordInfoWithAppId:serverId db:db])//self.appIdField & self.serverIdField will contain same column
+             {
+                 success = [self updateInfo:recordInfo recordIdApp:serverId db:db];
+             }
+             else
+             {
+                 success = [self insertInfo:recordInfo db:db];
+             }
+             
+             if (!success)
+             {
+                 if (LOGS_ON) NSLog(@"Update Failed(GET - %@): %@", self.tableName, responseInfo);
+             }
+         }
      }];
 }
 
@@ -498,27 +466,24 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
     
     [databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback)
      {
-         self.db = db;
-         [self.db closeOpenResultSets];
-
-     for (NSDictionary *responseInfo in records)
-     {
-         NSDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:responseInfo];
-         
-         NSInteger appId = [[recordInfo objectForKey:self.appIdField] integerValue];
-         
-         if (appId > 0)
+         for (NSDictionary *responseInfo in records)
          {
-             if (![self updateInfo:recordInfo recordIdApp:appId])
+             NSDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:responseInfo];
+             
+             NSInteger appId = [[recordInfo objectForKey:self.appIdField] integerValue];
+             
+             if (appId > 0)
              {
-                if (LOGS_ON) NSLog(@"Update Failed(PUT - %@): %@", self.tableName, recordInfo);
+                 if (![self updateInfo:recordInfo recordIdApp:appId db:db])
+                 {
+                     if (LOGS_ON) NSLog(@"Update Failed(PUT - %@): %@", self.tableName, recordInfo);
+                 }
              }
          }
-     }
      }];
 }
 
-- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info
+- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info db:(FMDatabase *)db
 {
     NSMutableDictionary *newRecordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:info];
     
@@ -532,7 +497,7 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
     return newRecordInfo;
 }
 
-- (NSMutableDictionary *)populateInfoForExistingRecord:(NSDictionary *)info appId:(NSInteger)appId
+- (NSMutableDictionary *)populateInfoForExistingRecord:(NSDictionary *)info appId:(NSInteger)appId db:(FMDatabase *)db
 {
     //Get all fields of table from record info
     NSMutableDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:info];
@@ -545,7 +510,7 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
         [recordInfo setObject:[info valueForKey:ModifiedTimeStampServer] forKey:ModifiedTimeStamp];
     }
     
-    NSDictionary *appRecordInfo = [self getRecordInfoWithAppId:appId];
+    NSDictionary *appRecordInfo = [self getRecordInfoWithAppId:appId db:db];
     BOOL isDirty = [[appRecordInfo objectForKey:IsDirty] boolValue];
     
     if (isDirty)
@@ -571,7 +536,7 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
     return recordInfo;
 }
 
-- (NSMutableDictionary *)populateInfoForServerOnlyExistingRecord:(NSDictionary *)info
+- (NSMutableDictionary *)populateInfoForServerOnlyExistingRecord:(NSDictionary *)info db:(FMDatabase *)db
 {
     //Get all fields of table from record info
     NSMutableDictionary *recordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:info];
@@ -651,7 +616,7 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
                                     NSLocalizedDescriptionKey: @"Request Timeout"
                                     };
         NSError *error = [NSError errorWithDomain:ErrorDomainRequestFailed code:0 userInfo:errorInfo];
-
+        
         errorResponse(error);
     };
     
@@ -695,7 +660,7 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
         
         errorResponse(error);
     };
-
+    
     ECHttpClient *httpClient = [ECHttpClient sharedHttpClient];
     
     if (LOGS_ON) NSLog(@"Request: PUT %@", self.apiName);
@@ -725,43 +690,6 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
 
 - (void)downloadFileWithUrl:(NSString *)urlString destinationUrl:(NSURL *)destinationUrl retryCount:(NSInteger)retryCount completion:(ErrorCallback)completion
 {
-//    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-//    
-//    NSURL *URL = [NSURL URLWithString:urlString];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-//    
-//    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response)
-//    {
-////        NSURL *documentsDirectoryPath = [NSURL fileURLWithPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]];
-////        return [documentsDirectoryPath URLByAppendingPathComponent:@"testing1.pdf"];
-//        
-//        return destinationUrl;
-//    }
-//                                                            completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error)
-//    {
-//        NSLog(@"File downloaded to: %@", filePath);
-//    }];
-//    
-//    [downloadTask resume];
-    
-    
-    
-//    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-//    
-//    NSURL *url = [NSURL URLWithString:urlString];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-//    
-//    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response)
-//    {
-//          return destinationUrl;
-//    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error)
-//      {
-//          NSLog(@"%@", filePath);
-//      }];
-//    
-//    [downloadTask resume];
-    
     if (retryCount <= 0)
     {
         NSDictionary *errorInfo = @{ NSLocalizedDescriptionKey: @"Request Timeout" };
@@ -777,25 +705,25 @@ NSString *const SyncFinishedNotification = @"ECSyncFinishedNotification";
     urlSessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     NSURLSessionDownloadTask *downloadTask = [urlSessionManager downloadTaskWithRequest:urlRequest progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response)
-    {
-        return destinationUrl;
-    }
-        completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error)
-    {
-        if (LOGS_ON) NSLog(@"File Path: %@", filePath);
-        
-        if (error)
-        {
-            [self downloadFileWithUrl:urlString
-                       destinationUrl:destinationUrl
-                           retryCount:retryCount - 1
-                           completion:completion];
-        }
-        else
-        {
-            completion(error);
-        }
-    }];
+      {
+          return destinationUrl;
+      }
+                              completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error)
+      {
+          if (LOGS_ON) NSLog(@"File Path: %@", filePath);
+          
+          if (error)
+          {
+              [self downloadFileWithUrl:urlString
+                         destinationUrl:destinationUrl
+                             retryCount:retryCount - 1
+                             completion:completion];
+          }
+          else
+          {
+              completion(error);
+          }
+      }];
     
     [downloadTask resume];
 }

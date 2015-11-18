@@ -117,22 +117,21 @@
 
 #pragma mark - ServerSync Methods
 
-- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info
+- (NSMutableDictionary *)populateInfoForNewRecord:(NSDictionary *)info db:(FMDatabase *)db
 {
     NSMutableDictionary *newRecordInfo = [CommonUtils getInfoWithKeys:self.tableColumns fromDictionary:info];
     
     //Save cert id app
     CertificateHandler *certificateHandler = [CertificateHandler new];
-    certificateHandler.db = self.db;
-    NSInteger certificateId = [info[CertificateId] integerValue];
-    NSInteger certificateIdApp = certificateId > 0 ? [certificateHandler getAppId:certificateId] : 0;
+    NSInteger certId = [info[CertificateId] integerValue];
+    NSInteger certIdApp = certId > 0 ? [certificateHandler getAppId:certId db:db] : 0;
     
-    if (certificateIdApp <= 0)
+    if (certIdApp <= 0)
     {
-        if (LOGS_ON) NSLog(@"Certificate not found: %ld", (long)certificateId); return nil;
+        if (LOGS_ON) NSLog(@"Certificate not found: %ld", (long)certId); return nil;
     }
     
-    [newRecordInfo setObject:@(certificateIdApp).stringValue forKey:CertificateIdApp];
+    [newRecordInfo setObject:@(certIdApp).stringValue forKey:CertificateIdApp];
     
     // Initialise modified timestamp app with modified timestamp server for new records
     if ([info valueForKey:ModifiedTimeStampServer])
@@ -169,9 +168,6 @@
              
              [databaseQueue inDatabase:^(FMDatabase *db)
              {
-                 self.db = db;
-                 [self.db closeOpenResultSets];
-                 
                  NSInteger recordIdApp = [dataBinaryInfo[DataBinaryIdApp] integerValue];
                  
                  if (responseObject && [responseObject isKindOfClass:[UIImage class]])
@@ -180,7 +176,7 @@
                      
                      NSDictionary *info = @{ DataBinaryValue: imageData };
                      
-                     [self updateInfo:info recordIdApp:recordIdApp];
+                     [self updateInfo:info recordIdApp:recordIdApp db:db];
                  }
              }];
          }
