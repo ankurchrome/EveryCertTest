@@ -171,7 +171,7 @@
     
     if (certificateIdApp <= 0)
     {
-        if (LOGS_ON) NSLog(@"Certificate not found: %ld", certificateIdApp); return nil;
+        if (LOGS_ON) NSLog(@"Certificate not found: %ld", (long)certificateIdApp); return nil;
     }
 
     [newRecordInfo setObject:@(certificateIdApp).stringValue forKey:CertificateIdApp];

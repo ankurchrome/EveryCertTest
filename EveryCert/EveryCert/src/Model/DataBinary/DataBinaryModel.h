@@ -15,5 +15,6 @@
 @property (nonatomic, assign) NSInteger certificateIdApp;
 @property (nonatomic, assign) NSInteger elementId;
 @property (nonatomic, assign) NSData   *dataBinary;
+@property (nonatomic, strong) NSString *fileName;
 
 @end

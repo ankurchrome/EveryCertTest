@@ -118,7 +118,9 @@
     //Reload the view
     [self setNeedsDisplay];
     
-    _image = nil;
+    // Clear Image Color by remove Opaque by No
+    UIGraphicsBeginImageContextWithOptions(_image.size, NO, _image.scale);
+    _image = UIGraphicsGetImageFromCurrentImageContext();
 }
 
 @end

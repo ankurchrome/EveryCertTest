@@ -12,6 +12,7 @@
 #import "ElementHandler.h"
 #import "CompanyUserHandler.h"
 #import "DataBinaryHandler.h"
+#import "MenuViewController.h"
 
 @interface SettingViewController ()
 {
@@ -53,6 +54,10 @@
 - (IBAction)saveButtonTapped:(id)sender
 {
     [self saveAllElements:_settingElements];
+    if (APP_DELEGATE.homeVC)
+    {
+        [self.navigationController popToViewController:APP_DELEGATE.homeVC animated:YES];
+    }
 }
 
 //Save the data for all given elements
@@ -103,6 +108,7 @@
                 break;
                 
             case ElementTypeSignature:
+            case ElementTypePhoto:
             {
                 [self saveElementDataBinary:elementModel];
             }
@@ -177,7 +183,7 @@
                                      IsDirty: @(true)
                                      };
         
-        isSaved = [_companyUserHandler updateInfo:columnInfo
+        isSaved = [_dataBinaryHandler updateInfo:columnInfo
                                       recordIdApp:elementModel.dataBinaryIdApp];
     }
     else
@@ -191,7 +197,7 @@
         dataBinaryModel.companyId  = APP_DELEGATE.loggedUserCompanyId;
         dataBinaryModel.elementId  = elementModel.elementId;
         dataBinaryModel.dataBinary = elementModel.dataBinaryValue;
-        
+       
         isSaved = [_dataBinaryHandler insertDataBinaryModel:dataBinaryModel];
     }
     

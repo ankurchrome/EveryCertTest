@@ -42,9 +42,9 @@
     
     [databaseQueue inDatabase:^(FMDatabase *db)
      {
-         NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?)", self.tableName, DataBinaryIdApp, DataBinaryId, CertificateIdApp, ElementId, DataBinaryValue, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId];
+         NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@) VALUES (?,?,?,?,?,?,?,?,?,?,?)", self.tableName, DataBinaryId, CertificateIdApp, ElementId, DataBinaryValue, ModifiedTimestampApp, ModifiedTimeStamp, Archive, Uuid, IsDirty, CompanyId, DataBinaryFileName];
          
-         success = [db executeUpdate:query, @(dataBinaryModel.dataBinaryIdApp), @(dataBinaryModel.dataBinaryId), @(dataBinaryModel.certificateIdApp), @(dataBinaryModel.elementId), dataBinaryModel.dataBinary, dataBinaryModel.modifiedTimestampApp, dataBinaryModel.modifiedTimestamp, @(dataBinaryModel.archive), dataBinaryModel.uuid, @(dataBinaryModel.isDirty), @(dataBinaryModel.companyId)];
+         success = [db executeUpdate:query, @(dataBinaryModel.dataBinaryId), @(dataBinaryModel.certificateIdApp), @(dataBinaryModel.elementId), dataBinaryModel.dataBinary, @(dataBinaryModel.modifiedTimestampApp).stringValue, @(dataBinaryModel.modifiedTimestamp).stringValue, @(dataBinaryModel.archive), dataBinaryModel.uuid, @(dataBinaryModel.isDirty), @(dataBinaryModel.companyId), dataBinaryModel.fileName];
      }];
     
     return success;
@@ -129,7 +129,7 @@
     
     if (certificateIdApp <= 0)
     {
-        if (LOGS_ON) NSLog(@"Certificate not found: %ld", certificateId); return nil;
+        if (LOGS_ON) NSLog(@"Certificate not found: %ld", (long)certificateId); return nil;
     }
     
     [newRecordInfo setObject:@(certificateIdApp).stringValue forKey:CertificateIdApp];

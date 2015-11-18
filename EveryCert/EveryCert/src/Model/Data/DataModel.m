@@ -10,6 +10,17 @@
 
 @implementation DataModel
 
+// Override init
+- (id)init
+{
+    self = [super init];
+    if(self)
+    {
+        self.data = EMPTY_STRING;
+    }
+    return self;
+}
+
 // Initialize object with the info stored in ResultSet
 - (void)setFromResultSet: (FMResultSet *)resultSet
 {

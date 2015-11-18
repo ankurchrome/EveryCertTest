@@ -10,6 +10,21 @@
 
 @implementation ElementModel
 
+// Override init
+- (id)init
+{
+    self = [super init];
+    if(self)
+    {
+        self.companyUserDataValue = EMPTY_STRING;
+        self.dataValue            = EMPTY_STRING;
+        self.popUpMessage         = EMPTY_STRING;
+        self.label                = EMPTY_STRING;
+        self.fieldName            = EMPTY_STRING;
+    }
+    return self;
+}
+
 // Initialize object with the info stored in ResultSet
 - (void)setFromResultSet: (FMResultSet *)resultSet
 {

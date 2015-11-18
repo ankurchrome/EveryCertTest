@@ -10,6 +10,18 @@
 
 @implementation LookUpModel
 
+// Override init
+- (id)init
+{
+    self = [super init];
+    if(self)
+    {
+        self.dataValue = EMPTY_STRING;
+        self.option    = EMPTY_STRING;
+    }
+    return self;
+}
+
 // Initialize object with the info stored in ResultSet
 - (void)setFromResultSet: (FMResultSet *)resultSet
 {

@@ -10,6 +10,20 @@
 
 @implementation FormSectionModel
 
+// Override init
+- (id)init
+{
+    self = [super init];
+    if(self)
+    {
+        self.title  = EMPTY_STRING;
+        self.footer = EMPTY_STRING;
+        self.header = EMPTY_STRING;
+        self.label  = EMPTY_STRING;
+    }
+    return self;
+}
+
 // Initialize object with the info stored in ResultSet
 - (void)setFromResultSet: (FMResultSet *)resultSet
 {

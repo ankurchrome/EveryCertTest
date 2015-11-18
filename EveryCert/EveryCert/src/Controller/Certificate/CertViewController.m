@@ -600,7 +600,8 @@ enum Section_Image_Status
     
     for (ElementModel *elementModel in _currentSectionElements)
     {
-        if ([CommonUtils isValidString:elementModel.dataValue])
+        if ([CommonUtils isValidString:elementModel.dataValue] ||
+            [CommonUtils isValidObject:elementModel.dataBinaryValue])
         {
             result = YES;
             break;
@@ -632,10 +633,10 @@ enum Section_Image_Status
         [_elementTableView reloadWithElements:[_currentSectionElements filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.fieldType != 10"]]];
     }
     
-    [_elementTableView setContentOffset:CGPointZero animated:NO];
+    [_elementTableView setContentOffset:CGPointZero animated:NO];   // Table View to First Position when next
 }
 
-// Delete DataValue from ElementModel thos who are having linked with Record id
+// Delete DataValue from ElementModel those who are having linked with Record id
 - (void)deleteDataFromElementModel:(ElementModel *)elementModel
 {
     NSArray *sectionElementsList = [_formElements filteredArrayUsingPredicate: [NSPredicate predicateWithFormat: @"self.sectionId = %d", elementModel.sectionId]];
@@ -702,13 +703,13 @@ enum Section_Image_Status
     
     _currentSectionRecordIdApp = 0;
     
-    for (ElementModel *elementModel in _currentSectionElements)
-    {
-        elementModel.recordIdApp = 0;
-        elementModel.dataValue   = EMPTY_STRING;
-    }
+    [self deleteDataFromElementModel: _currentSearchElementModel];
+//    for (ElementModel *elementModel in _currentSectionElements)
+//    {
+//        elementModel.recordIdApp = 0;
+//        elementModel.dataValue   = EMPTY_STRING;
+//    }
     
-    //[_elementTableView reloadData];
     [self manageCheckBoxElement];
 }
 

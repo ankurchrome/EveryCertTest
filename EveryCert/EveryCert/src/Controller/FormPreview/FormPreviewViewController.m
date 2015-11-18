@@ -9,7 +9,9 @@
 #import "FormPreviewViewController.h"
 
 @interface FormPreviewViewController ()
-
+{
+    __weak IBOutlet UIWebView *_webView;
+}
 @end
 
 @implementation FormPreviewViewController
@@ -22,6 +24,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;  // Change Status Bar color
+    // self.navigationController.title = <Certificate Title Here> ;
 }
 
 #pragma mark- IBActions
@@ -31,6 +34,5 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 @end

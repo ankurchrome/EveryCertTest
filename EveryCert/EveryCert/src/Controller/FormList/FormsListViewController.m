@@ -194,7 +194,7 @@ NSString *const FormStatusShow = @"UnHide";
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:APP_DELEGATE.window animated:YES];
     hud.detailsLabelText = HudTitleFormDownloading;
     
-    NSString *formPdfPath = [FORMS_BACKGROUND_LAYOUT_DIR stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.pdf", formModel.formId]];
+    NSString *formPdfPath = [FORMS_BACKGROUND_LAYOUT_DIR stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.pdf", (long)formModel.formId]];
     NSURL *destinationUrl = [NSURL fileURLWithPath:formPdfPath];
     
     FormHandler *formHandler = [FormHandler new];
@@ -412,6 +412,13 @@ NSString *const FormStatusShow = @"UnHide";
     {
         NSIndexPath *indexPath = [_formListTableView indexPathForSelectedRow];
         FormModel *formModel = _filteredArray[indexPath.row];
+        
+        // If form is Header then Not Go Forward
+        if(formModel.sequenceOrder == 0)
+        {
+            [_formListTableView reloadData];
+            return NO;
+        }
         
         //Download the form from server if it is not already installed in the app
         if (!formModel.status)

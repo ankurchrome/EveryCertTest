@@ -140,7 +140,9 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = info[UIImagePickerControllerOriginalImage];
-    self.elementModel.dataBinaryValue = UIImagePNGRepresentation(image);
+    // Compress Photo
+    self.elementModel.dataBinaryValue = UIImageJPEGRepresentation(image, .4f);
+
     _imageView.image = image;
     
     if(self.elementModel.dataBinaryValue == nil)

@@ -58,7 +58,7 @@
 
 - (NSString *)getApiCallWithFormId:(NSInteger)formId
 {
-    return [NSString stringWithFormat:@"%@/%ld",self.apiName, formId];
+    return [NSString stringWithFormat:@"%@/%ld",self.apiName, (long)formId];
 }
 
 - (void)syncWithServer

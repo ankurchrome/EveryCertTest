@@ -10,6 +10,19 @@
 
 @implementation FormModel
 
+// Override init
+- (id)init
+{
+    self = [super init];
+    if(self)
+    {
+        self.name  = EMPTY_STRING;
+        self.title = EMPTY_STRING;
+        self.backgroundLayout = EMPTY_STRING;
+    }
+    return self;
+}
+
 // Initialize object with the info stored in ResultSet
 - (void)setFromResultSet: (FMResultSet *)resultSet
 {

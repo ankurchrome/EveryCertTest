@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		775C73891BE0A73E004CE738 /* FormPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775C73881BE0A73E004CE738 /* FormPreviewViewController.m */; };
 		778977B21BF9F8E400D9A97E /* LookUpElementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 778977B11BF9F8E400D9A97E /* LookUpElementsViewController.m */; };
 		778977B91BF9F93700D9A97E /* LookUpListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 778977B81BF9F93700D9A97E /* LookUpListViewController.m */; };
 		779637A71B747CDF0001ADC2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 779637A61B747CDF0001ADC2 /* libsqlite3.0.dylib */; };
@@ -32,6 +31,7 @@
 		779BD7D21BDF881200D090CB /* NewEverycertDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 779BD7D11BDF881200D090CB /* NewEverycertDB.sqlite */; };
 		77C035BE1B789794009228F1 /* FormsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C035BD1B789794009228F1 /* FormsListViewController.m */; };
 		77C035C21B7897E3009228F1 /* CertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C035C11B7897E3009228F1 /* CertViewController.m */; };
+		77C700301BFB4FC3009770A2 /* FormPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C7002F1BFB4FC3009770A2 /* FormPreviewViewController.m */; };
 		77DBB9181B6F553900F02932 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DBB9151B6F553900F02932 /* AppDelegate.m */; };
 		77DBB91B1B6F555C00F02932 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77DBB9191B6F555C00F02932 /* LaunchScreen.xib */; };
 		77DBB91C1B6F555C00F02932 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77DBB91A1B6F555C00F02932 /* Main.storyboard */; };
@@ -118,8 +118,6 @@
 		4EE41FB74DDDF2865D00F8CF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5A067339331CE3E7D6EA518F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6BDC13634B5A75B79FB745AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		775C73871BE0A73E004CE738 /* FormPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FormPreviewViewController.h; path = FormPreview/FormPreviewViewController.h; sourceTree = "<group>"; };
-		775C73881BE0A73E004CE738 /* FormPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormPreviewViewController.m; path = FormPreview/FormPreviewViewController.m; sourceTree = "<group>"; };
 		778977B01BF9F8E400D9A97E /* LookUpElementsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookUpElementsViewController.h; sourceTree = "<group>"; };
 		778977B11BF9F8E400D9A97E /* LookUpElementsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookUpElementsViewController.m; sourceTree = "<group>"; };
 		778977B71BF9F93700D9A97E /* LookUpListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookUpListViewController.h; sourceTree = "<group>"; };
@@ -158,6 +156,8 @@
 		77C035BD1B789794009228F1 /* FormsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormsListViewController.m; path = EveryCert/src/Controller/FormList/FormsListViewController.m; sourceTree = SOURCE_ROOT; };
 		77C035C01B7897E3009228F1 /* CertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertViewController.h; sourceTree = "<group>"; };
 		77C035C11B7897E3009228F1 /* CertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertViewController.m; sourceTree = "<group>"; };
+		77C7002E1BFB4FC3009770A2 /* FormPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormPreviewViewController.h; sourceTree = "<group>"; };
+		77C7002F1BFB4FC3009770A2 /* FormPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormPreviewViewController.m; sourceTree = "<group>"; };
 		77DBB9141B6F553900F02932 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		77DBB9151B6F553900F02932 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		77DBB9191B6F555C00F02932 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -316,15 +316,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		775C73861BE0A6A7004CE738 /* FormPreview */ = {
-			isa = PBXGroup;
-			children = (
-				775C73871BE0A73E004CE738 /* FormPreviewViewController.h */,
-				775C73881BE0A73E004CE738 /* FormPreviewViewController.m */,
-			);
-			name = FormPreview;
-			sourceTree = "<group>";
-		};
 		778522F21B7378BD00EA8455 /* FormsList */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,6 +323,7 @@
 				77C035BD1B789794009228F1 /* FormsListViewController.m */,
 				C3E441731BA059180020700F /* FormTypeTableViewCell.h */,
 				C3E441741BA059180020700F /* FormTypeTableViewCell.m */,
+				77C7002D1BFB4FC3009770A2 /* FormPreview */,
 			);
 			name = FormsList;
 			path = Form;
@@ -533,6 +525,16 @@
 			path = Certificate;
 			sourceTree = "<group>";
 		};
+		77C7002D1BFB4FC3009770A2 /* FormPreview */ = {
+			isa = PBXGroup;
+			children = (
+				77C7002E1BFB4FC3009770A2 /* FormPreviewViewController.h */,
+				77C7002F1BFB4FC3009770A2 /* FormPreviewViewController.m */,
+			);
+			name = FormPreview;
+			path = EveryCert/src/Controller/FormPreview;
+			sourceTree = SOURCE_ROOT;
+		};
 		77DBB90B1B6F553900F02932 /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -552,7 +554,6 @@
 				77DBB9121B6F553900F02932 /* Registration */,
 				77DBB9111B6F553900F02932 /* Menu */,
 				778522F21B7378BD00EA8455 /* FormsList */,
-				775C73861BE0A6A7004CE738 /* FormPreview */,
 				77C035BF1B7897C4009228F1 /* Certificate */,
 				77DBB92C1B6F590D00F02932 /* ExistingCertificate */,
 				77DBB92E1B6F590D00F02932 /* Setting */,
@@ -1189,7 +1190,6 @@
 				77DBB9251B6F563500F02932 /* RegistrationViewController.m in Sources */,
 				C38E89BF1B9705D500790752 /* CompanyUserHandler.m in Sources */,
 				779A9D8D1B7C7D0700D86FED /* RadioButtonView.m in Sources */,
-				775C73891BE0A73E004CE738 /* FormPreviewViewController.m in Sources */,
 				C38E89BE1B9705D500790752 /* BaseModel.m in Sources */,
 				C3EEB9801BB2E7040090C4B0 /* Constant.m in Sources */,
 				C38E89C41B9705D500790752 /* DataBinaryModel.m in Sources */,
@@ -1212,6 +1212,7 @@
 				C38E89C31B9705D500790752 /* DataBinaryHandler.m in Sources */,
 				C3DA80B31BB966D400384F50 /* LookupRecordTableViewCell.m in Sources */,
 				C38E89BC1B9705D500790752 /* CertificateModel.m in Sources */,
+				77C700301BFB4FC3009770A2 /* FormPreviewViewController.m in Sources */,
 				779A9D931B7C7D0700D86FED /* SubElementCell.m in Sources */,
 				C3E441751BA059180020700F /* FormTypeTableViewCell.m in Sources */,
 				C38E89BB1B9705D500790752 /* CertificateHandler.m in Sources */,

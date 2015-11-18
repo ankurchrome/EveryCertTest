@@ -98,7 +98,7 @@
     
     [databaseQueue inDatabase:^(FMDatabase *db)
      {
-         NSString *query = [NSString stringWithFormat:@"SELECT %@, %@, group_concat(data,', ') AS %@ FROM %@ WHERE %@ = ? AND %@ = ? AND %@ != 1 AND %@ = ? GROUP BY %@ ORDER BY %@, %@", LookUpListId, RecordIdApp, LookUpRecordTitleColumnAlias, self.tableName, LookUpListId, LookUpLinkedRecordIdApp, Archive, CompanyId, RecordIdApp, RecordIdApp, LookUpSequenceOrder];
+         NSString *query = [NSString stringWithFormat:@"SELECT %@, %@, group_concat(data,', ') AS %@ FROM %@ WHERE %@ = ? AND %@ = ? AND %@ != 1 AND %@ = ? AND LENGTH(data) > 0 GROUP BY %@ ORDER BY %@, %@", LookUpListId, RecordIdApp, LookUpRecordTitleColumnAlias, self.tableName, LookUpListId, LookUpLinkedRecordIdApp, Archive, CompanyId, RecordIdApp, RecordIdApp, LookUpSequenceOrder];
          
          FMResultSet *result = [db executeQuery:query, @(lookupListId), @(linkedRecordIdApp), @(companyId)];
          
@@ -162,7 +162,7 @@
     
     if (recordIdApp <= 0)
     {
-        if (LOGS_ON) NSLog(@"Record not found: %ld", recordId); return nil;
+        if (LOGS_ON) NSLog(@"Record not found: %ld", (long)recordId); return nil;
     }
 
     [newRecordInfo setObject:@(recordIdApp).stringValue forKey:RecordIdApp];

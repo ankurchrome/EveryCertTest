@@ -10,6 +10,18 @@
 
 @implementation CompanyUserModel
 
+// Override init
+- (id)init
+{
+    self = [super init];
+    if(self)
+    {
+        self.fieldName = EMPTY_STRING;
+        self.data      = EMPTY_STRING;
+    }
+    return self;
+}
+
 // Initialize object with the info stored in ResultSet
 - (void)setFromResultSet: (FMResultSet *)resultSet
 {
